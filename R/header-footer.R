@@ -107,7 +107,3 @@ x = list(
   hf_line('line 5a', 'line 5b', align='split')
 )
 
-# View titles
-view_titles <- function(doc) {
-  # TODO: Coerce hf_line to a data frame for easy viewing
-}

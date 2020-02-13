@@ -11,6 +11,7 @@ view_hf <- function(doc, type=NULL) {
   rows <- length(lines)
 
   # Create the template data frame
+
   df <- data.frame(
     text1 = character(rows),
     text2 = character(rows),
@@ -33,6 +34,7 @@ view_hf <- function(doc, type=NULL) {
   }
 
   View(df)
+  df
 }
 
 # Simplified for titles

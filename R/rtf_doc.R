@@ -15,7 +15,7 @@
 
 supported_table_types <- c('huxtable')
 
-as_rtf_doc <- function(table) {
+as_rtf_doc <- function(table, titles=list(), footnotes=list()) {
 
   # Make sure the input tbale type is a supported class
   assert_that(
@@ -25,14 +25,18 @@ as_rtf_doc <- function(table) {
                 supported_table_types)
   )
 
+  # Put the object together
   doc <- list(
     table = table,
-    titles = list(),
-    footnotes = list(),
-    fonts = pharmaRTF:::get_fonts(table)
+    titles = titles,
+    footnotes = footnotes
   )
 
+  # Set the class
   class(doc) <- 'rtf_doc'
+
+  # Add fonts
+  doc$fonts <- pharmaRTF:::get_font(doc)
   doc
 }
 
