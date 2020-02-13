@@ -36,4 +36,11 @@ as_rtf_doc <- function(table) {
   doc
 }
 
-# rtf_doc <- as_rtf_doc(ht)
+library(huxtable)
+
+ht <- as_hux(cars, add_colnames=T)
+doc <- as_rtf_doc(ht)
+
+doc <- add_hf(doc,   hf_line('line 4a', 'line 4b', align='split', index=2),
+              hf_line('line 5', index=4),
+              hf_line('line 3', index=3), to='titles')

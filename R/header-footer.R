@@ -1,43 +1,5 @@
 library(assertthat)
 
-## Auto formatting page numbers ----
-# TODO: Roxygen header - but this function creates the field to calculate page number
-# Make sure this is an internal function
-page_num <- function() {
-
-  # TODO: Add style and font support
-  page_str <- "{\\field\\flddirty{\\*\\fldinst{  PAGE   \\\\* MERGEFORMAT }}}"
-  page_str
-}
-
-# TODO: Roxygen header - but this function creates the field to hold the total number of pages
-# Make sure this is an internal function
-page_total <- function() {
-
-  tot_str <- "{\\field{\\*\\fldinst{ NUMPAGES}}}"
-  tot_str
-}
-
-add_page_num <- function(format="Page %s of %s") {
-
-  # Make sure there's only a replacement for current and total pages
-  token_ct <- unlist(gregexpr("\\%s", format))
-  assert_that(length(token_ct) <= 2,
-              msg = "Too many replacement strings - limited to 2 for current page and total pages.")
-
-  # Split out the tokens of the string, apply brackets, and bring them back together
-  chunks <- unlist(strsplit(format, "%s"))
-  fmt_str <- paste(paste0("{", chunks, "}"), collapse="%s")
-
-  # If the last replacement token was found at the second to last character, then it was not maintained
-  # with the string split, so add it back on
-  if (token_ct[length(token_ct)] == nchar(format) - 1) fmt_str <- paste(fmt_str, "%s", sep="")
-
-  # Format in the
-  page_str <- sprintf(fmt_str, page_num(type=type), page_total(type=type))
-  page_str
-}
-
 ## Title line container ----
 hf_line <- function(..., align="center", bold=FALSE, italic=FALSE, font='Courier New', index=NULL) {
 
@@ -70,33 +32,7 @@ hf_line <- function(..., align="center", bold=FALSE, italic=FALSE, font='Courier
   line
 }
 
-# S3 Generic
-add_titles <- function(doc, ...) UseMethod('rtf_doc')
-
-# rtf_doc method
-add_hf <- function(doc, ..., to=NULL) {
-
-  # Get lines from doc
-  lines = doc[[to]]
-
-  # Add lines to be added
-  lines <- append(lines, list(...))
-
-  # Make sure each provided object is an hf_line
-  assert_that(all(sapply(titles, inherits, what='hf_line')),
-              msg = 'Provided titles must be hf_line objects- see pharmaRTF::hf_line')
-
-}
-
-# Overwrite the base filter because I need an additional argument
-Filter <- function (f, x, ...)
-{
-  ind <- as.logical(unlist(lapply(x, f, ...)))
-  x[which(ind)]
-}
-
-
-# Extract index
+# Extract index from an hf_line object
 extract_ind <- function(x, i) {
   ind = attr(x, 'ind')
   if (is.null(ind)) return(FALSE)
@@ -128,14 +64,47 @@ order_hf <- function(lines) {
   new_lines
 }
 
+# rtf_doc method
+add_hf <- function(doc, ..., to=NULL) {
+
+  # Get lines from doc
+  lines = doc[[to]]
+
+  # Add lines to be added
+  lines <- append(lines, list(...))
+
+  # Make sure each provided object is an hf_line
+  assert_that(all(sapply(lines, inherits, what='hf_line')),
+              msg = 'Provided titles must be hf_line objects- see pharmaRTF::hf_line')
+
+  # Sort
+  lines <- pharmaRTF:::order_hf(lines)
+
+  # Add to the document object
+  doc[[to]] <- lines
+
+  doc
+
+}
+
+
+# Simplified for titles
+add_titles <- function(doc, ...) {
+  pharmaRTF:::add_hf(doc, ..., to='titles')
+}
+
+# Simplified for footnoes
+add_footnoes <- function(doc, ...) {
+  pharmaRTF:::add_hf(doc, ..., to='footnoes')
+}
 
 x = list(
-  hf_line('line 5a', 'line 5b', align='split'),
+  hf_line('line 4a', 'line 4b', align='split', index=2),
+  hf_line('line 5', index=4),
   hf_line('line 3', index=3),
   hf_line('line 2', index=2),
   hf_line('line 1', index=1),
-  hf_line('line 4a', 'line 4b', align='split'),
-  hf_line('line 5', index=4)
+  hf_line('line 5a', 'line 5b', align='split')
 )
 
 # View titles
