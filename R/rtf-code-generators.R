@@ -16,6 +16,7 @@ page_total <- function() {
   tot_str
 }
 
+# TODO: Roxygen header - but this forms the actual page number string
 add_page_num <- function(format="Page %s of %s") {
 
   # Make sure there's only a replacement for current and total pages
@@ -34,4 +35,23 @@ add_page_num <- function(format="Page %s of %s") {
   # Format in the
   page_str <- sprintf(fmt_str, page_num(type=type), page_total(type=type))
   page_str
+}
+
+## Font table ----
+# Very slight modication of huxtable::font_table_string to fit with rtf_doc object
+font_table_string <- function(doc){
+  fonts <- get_font(doc)
+  font_tbl_body <- paste0("  {\\f", seq(0, along = fonts), " ", fonts, ";}", collapse = "\n")
+  paste("{\\fonttbl", font_tbl_body , "}", sep = "\n")
+}
+
+## Color Table ----
+# Not investing in this as the moment so write out a default blank table
+color_table_string <- function(doc){
+  paste('{\\colortbl;;}')
+}
+
+doc_properties <- function(doc){
+
+
 }

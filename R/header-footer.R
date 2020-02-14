@@ -1,15 +1,14 @@
 library(assertthat)
 
 ## Title line container ----
-hf_line <- function(..., align="center", bold=FALSE, italic=FALSE, font='Courier New', index=NULL) {
+hf_line <- function(..., align=c('center', 'left', 'right', 'split'), bold=FALSE, italic=FALSE, font='Courier New', index=NULL) {
 
   line = list()
 
-  line$text <- list(...)
+  line$text <- unlist(list(...))
 
-  # Check alignment
-  assert_that(align %in% c('left', 'right', 'center', 'split'),
-              msg="Invalid alignment entry. Must be left, right, center, or split")
+  # Make sure alignment is valid
+  align <- match.arg(align)
 
   # Check that no more than two entries were provided
   assert_that(length(line$text) <= 2, msg="No more than two entries may be provided per line")
@@ -17,8 +16,17 @@ hf_line <- function(..., align="center", bold=FALSE, italic=FALSE, font='Courier
   # Check that if the alignment was split, that two entries were provided
   assert_that({
     if (align == 'split') length(line$text) == 2
-    else length(line$text) == 1
+    else TRUE
   }, msg = "Two text entries must be provided if alignment is 'split', otherwise only one may be entered.")
+
+  # Make sure the other arguments are logicals
+  sapply(c(bold, italic), function(x) assert_that(is.logical(x)))
+
+  # Make sure index is numeric or null
+  assert_that(is.numeric(index) | is.null(index))
+
+  # Make sure font is character
+  assert_that(is.character(font))
 
   # Assign attributes
   attr(line, 'align') <- align
@@ -41,7 +49,7 @@ extract_ind <- function(x, i) {
 }
 
 # Internal function - do not export
-order_hf <- function(lines) {
+order_lines <- function(lines) {
 
   # Take out the indices
   inds <- unlist(sapply(lines, FUN=attr, which='index'))
@@ -78,7 +86,7 @@ add_hf <- function(doc, ..., to=NULL) {
               msg = 'Provided titles must be hf_line objects- see pharmaRTF::hf_line')
 
   # Sort
-  lines <- pharmaRTF:::order_hf(lines)
+  lines <- pharmaRTF:::order_lines(lines)
 
   # Add to the document object
   doc[[to]] <- lines

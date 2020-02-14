@@ -5,7 +5,7 @@ view_hf <- function(doc, type=NULL) {
 
   # Stop if nothing to view
   assert_that(length(lines) > 0,
-              msg = sprinf('No %s to view', type))
+              msg = sprintf('No %s to view', type))
 
   # Get the row length
   rows <- length(lines)
@@ -25,12 +25,12 @@ view_hf <- function(doc, type=NULL) {
   # Loop the lines and update rows in data frame
   for (i in 1:length(lines)) {
     l <- lines[[i]]
-    df$text1[i] <- l$text[[1]]
-    if (length(l$text) > 1) df$text2[[i]] <- l$text[[2]]
-    df$align[i] <- attr(l, 'align')
-    df$bold[i] <- attr(l, 'bold')
-    df$italic[i] <- attr(l, 'italic')
-    df$font[i] <- attr(l, 'font')
+    df$text1[i] <- pharmaRTF::text(l)[1]
+    df$text2[i] <- pharmaRTF::text(l)[2]
+    df$align[i] <- pharmaRTF::align(l)
+    df$bold[i] <- pharmaRTF::bold(l)
+    df$italic[i] <- pharmaRTF::italic(l)
+    df$font[i] <- pharmaRTF::font(l)
   }
 
   View(df)

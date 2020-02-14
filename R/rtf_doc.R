@@ -32,11 +32,18 @@ as_rtf_doc <- function(table, titles=list(), footnotes=list()) {
     footnotes = footnotes
   )
 
+  # Set some document properties
+  attr(doc, 'margins') = c(top=1, bottom=1, left=1, right=1)
+  attr(doc, 'orientation') = 'landscape'
+  attr(doc, 'header_height') = .5
+  attr(doc, 'footer_height') = .5
+  attr(doc, 'pagesize') = c(length=8.5, width=11)
+
   # Set the class
   class(doc) <- 'rtf_doc'
 
   # Add fonts
-  doc$fonts <- pharmaRTF:::get_font(doc)
+  doc$fonts <- pharmaRTF:::font(doc)
   doc
 }
 
@@ -45,6 +52,6 @@ library(huxtable)
 ht <- as_hux(cars, add_colnames=T)
 doc <- as_rtf_doc(ht)
 
-doc <- add_hf(doc,   hf_line('line 4a', 'line 4b', align='split', index=2),
+doc <- add_hf(doc,   hf_line('line 4a', 'line 4b', align='split', index=2, font='Helvetica'),
               hf_line('line 5', index=4),
               hf_line('line 3', index=3), to='titles')
