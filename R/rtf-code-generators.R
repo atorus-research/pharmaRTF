@@ -33,14 +33,14 @@ add_page_num <- function(format="Page %s of %s") {
   if (token_ct[length(token_ct)] == nchar(format) - 1) fmt_str <- paste(fmt_str, "%s", sep="")
 
   # Format in the
-  page_str <- sprintf(fmt_str, page_num(type=type), page_total(type=type))
+  page_str <- sprintf(fmt_str, page_num(), page_total())
   page_str
 }
 
 ## Font table ----
 # Very slight modication of huxtable::font_table_string to fit with rtf_doc object
 font_table_string <- function(doc){
-  fonts <- get_font(doc)
+  fonts <- font(doc)
   font_tbl_body <- paste0("  {\\f", seq(0, along = fonts), " ", fonts, ";}", collapse = "\n")
   paste("{\\fonttbl", font_tbl_body , "}", sep = "\n")
 }
@@ -51,7 +51,36 @@ color_table_string <- function(doc){
   paste('{\\colortbl;;}')
 }
 
+## Generate document properties string ----
 doc_properties <- function(doc){
 
+  # Get margins and convert to twips
+  mrgs <- sapply(margins(doc), function(x) x*1440)
+  # Make margin string
+  mrg_str <- sprintf("\\margl%s\\margr%s\\margt%s\\margb%s\\n", mrgs['left'], mrgs['right'], mrgs['top'], mrgs['bottom'])
+
+  # Height and width string
+  ps <- pagesize(doc)
+  # Make the height and width string
+  ht_wd <- sprintf('\\paperw%s\\paperh%s', ps['width'] * 1440, ps['height'] * 1440)
+
+  # Header and footer heights
+  hf_ht <- sprintf("\\headery%s\\footery%s", header_height(doc) * 1440, footer_height(doc) * 1440)
+
+  # Get orientation string
+  if (orientation(doc) == 'landscape') ortn <- '\\lndscpsxn\\n'
+  else ortn <- ''
+
+  # Other information
+  other <- '\\widowctrl\\ftnbj\\fet0\\sectd\\linex0\\n'
+
+  cat(paste(ht_wd, other, mrg_str, hf_ht, sep=''))
 
 }
+
+
+## MAIN RTF WRITING FUNCTION ####
+write_rtf <- function(doc) {
+
+}
+

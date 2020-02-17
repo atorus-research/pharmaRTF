@@ -25,6 +25,7 @@ as_rtf_doc <- function(table, titles=list(), footnotes=list()) {
                 supported_table_types)
   )
 
+
   # Put the object together
   doc <- list(
     table = table,
@@ -33,17 +34,19 @@ as_rtf_doc <- function(table, titles=list(), footnotes=list()) {
   )
 
   # Set some document properties
-  attr(doc, 'margins') = c(top=1, bottom=1, left=1, right=1)
-  attr(doc, 'orientation') = 'landscape'
-  attr(doc, 'header_height') = .5
-  attr(doc, 'footer_height') = .5
-  attr(doc, 'pagesize') = c(length=8.5, width=11)
+  attr(doc, 'margins') <- c(top=1, bottom=1, left=1, right=1)
+  attr(doc, 'orientation') <- 'landscape'
+  attr(doc, 'header_height') <- .5
+  attr(doc, 'footer_height') <- .5
+  attr(doc, 'pagesize') <- c(height=8.5, width=11)
+  attr(doc, 'font') <- 'Courier New'
+  attr(doc, 'font_size') <- 12
 
   # Set the class
   class(doc) <- 'rtf_doc'
 
-  # Add fonts
-  doc$fonts <- pharmaRTF:::font(doc)
+  # Add fonts from any contributing portions of the document
+  # attr(doc, 'font') <- pharmaRTF:::font(doc)
   doc
 }
 
@@ -55,3 +58,5 @@ doc <- as_rtf_doc(ht)
 doc <- add_hf(doc,   hf_line('line 4a', 'line 4b', align='split', index=2, font='Helvetica'),
               hf_line('line 5', index=4),
               hf_line('line 3', index=3), to='titles')
+
+font(doc)

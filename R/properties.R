@@ -1,6 +1,7 @@
 # Property extraction of different rtf_doc and child objects ####
 
-## HF_LINE PROPERTIES (and attributes that spread to rtf_doc level) ####
+## FONT SPECIFIC GETTERS AND SETTERS (special because they work across multiple levels)
+
 ## Fonts (getters) ----
 # S3 Generic
 font <- function(table, ...) UseMethod('font')
@@ -18,13 +19,13 @@ font.rtf_doc <- function(doc) {
   # Get all title fonts
   titles <- sapply(doc$titles, font)
   # Get all footnote fonts
-  footnotes <- sapply(doc$titles, font)
+  footnotes <- sapply(doc$footnotes, font)
   # Get the table fonts
-  table <- font(doc$table)
+  table <- c(font(doc$table))
   # Toss them together
-  combined <- c(titles, footnotes, table)
+  combined <- c(attr(doc, 'font'), titles, footnotes, table)
   # Remove any NA elements
-  combined <- unique(combined[!is.na(combined)])
+  combined <- unlist(unique(combined[!is.na(combined)]))
   combined
 }
 
@@ -32,12 +33,40 @@ font.rtf_doc <- function(doc) {
 'font<-' <- function(x, value) UseMethod('font<-')
 
 'font<-.hf_line' <- function(line, value) {
+  assert_that(is.character(value))
   attr(line, 'font') <- value
 }
 
 'font<-.rtf_doc' <- function(line, value) {
+  assert_that(is.character(value))
   attr(line, 'font') <- value
 }
+
+## Font size (getters) ----
+font_size <- function(table, ...) UseMethod('font_size')
+
+font_size.rtf_doc <- function(line) {
+  attr(line, 'font_size')
+}
+
+font_size.hf_line <- function(line) {
+  attr(line, 'font_size')
+}
+
+## Font size (setters) ----
+'font_size<-' <- function(x, value) UseMethod('font_size<-')
+
+'font_size<-.hf_line' <- function(line, value) {
+  assert_that(is.numeric(value))
+  attr(line, 'font_size') <- value
+}
+
+'font_size<-.rtf_doc' <- function(line, value) {
+  assert_that(is.numeric(value))
+  attr(line, 'font_size') <- value
+}
+
+## HF_LINE PROPERTIES (and attributes that spread to rtf_doc level) ####
 
 ## Alignment (getters) ----
 align <- function(...) UseMethod('align')
@@ -252,8 +281,8 @@ pagesize.rtf_doc <- function(doc) {
   values <- unlist(value)
 
   # Make sure that the parameters entered were valid
-  assert_that(all(names(values) %in% c('length', 'width')),
-              msg = 'Invalid parameters - must be length or width')
+  assert_that(all(names(values) %in% c('height', 'width')),
+              msg = 'Invalid parameters - must be height or width')
 
   # Make sure all the entries are numeric
   lapply(values, function(x) assert_that(is.numeric(x)))

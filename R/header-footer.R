@@ -1,7 +1,8 @@
 library(assertthat)
 
 ## Title line container ----
-hf_line <- function(..., align=c('center', 'left', 'right', 'split'), bold=FALSE, italic=FALSE, font='Courier New', index=NULL) {
+hf_line <- function(..., align=c('center', 'left', 'right', 'split'), bold=FALSE,
+                    italic=FALSE, font=NA, font_size=NaN, index=NULL) {
 
   line = list()
 
@@ -26,26 +27,22 @@ hf_line <- function(..., align=c('center', 'left', 'right', 'split'), bold=FALSE
   assert_that(is.numeric(index) | is.null(index))
 
   # Make sure font is character
-  assert_that(is.character(font))
+  assert_that(is.character(font) | is.na(font))
+
+  # Make sure font size is numeric
+  assert_that(is.numeric(font_size))
 
   # Assign attributes
   attr(line, 'align') <- align
   attr(line, 'bold') <- bold
   attr(line, 'italic') <- italic
   attr(line, 'font') <- font
+  attr(line, 'font_size') <- font_size
   attr(line, 'index') <- index
 
   # Assign the class
   class(line) <- 'hf_line'
   line
-}
-
-# Extract index from an hf_line object
-extract_ind <- function(x, i) {
-  ind = attr(x, 'ind')
-  if (is.null(ind)) return(FALSE)
-  else if (ind == i) return(TRUE)
-  else return(FALSE)
 }
 
 # Internal function - do not export
@@ -73,13 +70,15 @@ order_lines <- function(lines) {
 }
 
 # rtf_doc method
-add_hf <- function(doc, ..., to=NULL) {
+add_hf <- function(doc, ..., to=NULL, replace=FALSE) {
 
-  # Get lines from doc
-  lines = doc[[to]]
-
-  # Add lines to be added
-  lines <- append(lines, list(...))
+  # Get lines from doc (if specified to replace)
+  if (!replace) {
+    lines = doc[[to]]
+    lines <- append(lines, list(...))
+  } else {
+    lines <- list(...)
+  }
 
   # Make sure each provided object is an hf_line
   assert_that(all(sapply(lines, inherits, what='hf_line')),
@@ -94,7 +93,6 @@ add_hf <- function(doc, ..., to=NULL) {
   doc
 
 }
-
 
 # Simplified for titles
 add_titles <- function(doc, ...) {
