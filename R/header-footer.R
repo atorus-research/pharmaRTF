@@ -100,16 +100,6 @@ add_titles <- function(doc, ...) {
 }
 
 # Simplified for footnoes
-add_footnoes <- function(doc, ...) {
-  pharmaRTF:::add_hf(doc, ..., to='footnoes')
+add_footnotes <- function(doc, ...) {
+  pharmaRTF:::add_hf(doc, ..., to='footnotes')
 }
-
-x = list(
-  hf_line('line 4a', 'line 4b', align='split', index=2),
-  hf_line('line 5', index=4),
-  hf_line('line 3', index=3),
-  hf_line('line 2', index=2),
-  hf_line('line 1', index=1),
-  hf_line('line 5a', 'line 5b', align='split')
-)
-

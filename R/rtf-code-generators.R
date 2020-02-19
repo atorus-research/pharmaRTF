@@ -73,7 +73,7 @@ doc_properties_string <- function(doc){
   else ortn <- ''
 
   # Font size
-  fs <- sprintf("\\fs%s\n", font_size(doc))
+  fs <- sprintf("\\fs%s\n", font_size(doc)*2)
 
   # Other information
   other <- '\\widowctrl\\ftnbj\\fet0\\sectd\\linex0\n'
@@ -151,7 +151,7 @@ hf_string <- function(doc, type=NULL) {
   # Generate the final string
   if (type == "titles") {
     # If generating titles then take the headers of the table
-    paste('{', command, body, to_rtf(doc$table[1:1, ]), '\n}', sep='')
+    paste('{', command, body, '\n\\par\n', to_rtf(doc$table[1:1, ]), '\n}', sep='')
   } else {
 
     paste('{', command, body, '\n}', sep='')
@@ -179,8 +179,9 @@ write_rtf <- function(doc, file='test.rtf') {
   cat(doc_properties_string(doc))
   cat("\n\n\n")
   cat(header_string(doc))
-  cat("\n}")
+  cat("\n")
   cat(footer_string(doc))
+  cat(to_rtf(doc$table[2:nrow(doc$table), ]))
   cat("\n}")
   sink()
 
