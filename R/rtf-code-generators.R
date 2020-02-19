@@ -41,7 +41,7 @@ add_page_num <- function(format="Page %s of %s", properties='') {
 ## Font table ----
 # Very slight modication of huxtable::font_table_string to fit with rtf_doc object
 font_table_string <- function(doc){
-  fonts <- font(doc)
+  fonts <- unique(c("Times", font(doc)))
   font_tbl_body <- paste0("  {\\f", seq(0, along = fonts), " ", fonts, ";}", collapse = "\n")
   paste("{\\fonttbl", font_tbl_body , "}", sep = "\n")
 }
@@ -86,7 +86,7 @@ doc_properties_string <- function(doc){
 hf_line_string <- function(line, doc=NULL) {
 
   # Placeholders
-  ft <- '\\f0' # Font (comes from a list, so defaults to \f0 without needing a string)
+  ft <- '\\f1' # Font (comes from a list, but using \f0 doesn't seem to work)
   fs <- sprintf("\\fs%s", font_size(doc) * 2) # Font size - no way to set universal document font size, just defaults to 12
                                               # so use the documents set size
   bd <- '' # Bold (On or off - default off)
@@ -97,7 +97,10 @@ hf_line_string <- function(line, doc=NULL) {
   # Read the font information
   # If font is overridden generate the string
   if (!is.na(font(line))) {
-    ft <- sprintf("\\f%s", match(font(line), font(doc)) - 1)
+    # In huxtable they subtract one because the font list is 0 based, but instead of
+    # storing an unused font in the font attribute of the document, I'm just writing out an used font
+    # to the font table in the RTF document and matching the index as if it were 1 based.
+    ft <- sprintf("\\f%s", match(font(line), font(doc)))
   }
 
   # If font is overridden generate the string
@@ -124,6 +127,7 @@ hf_line_string <- function(line, doc=NULL) {
   }
   txt_string <- sapply(line$text, format_text_string, properties = properties, USE.NAMES=FALSE)
 
+  # Patch
   if (length(txt_string) > 1) {
     txt_string <- paste(txt_string[1], tabs, txt_string[2], sep='')
   }
@@ -145,8 +149,13 @@ hf_string <- function(doc, type=NULL) {
   else if (type == 'footnotes') command <- '\\footer\n'
 
   # Generate the final string
-  paste('{', command, body, '\n}', sep='')
+  if (type == "titles") {
+    # If generating titles then take the headers of the table
+    paste('{', command, body, to_rtf(doc$table[1:1, ]), '\n}', sep='')
+  } else {
 
+    paste('{', command, body, '\n}', sep='')
+  }
 }
 
 # Simplified for header
@@ -163,11 +172,15 @@ footer_string <- function(doc) {
 write_rtf <- function(doc, file='test.rtf') {
 
   sink(file)
-  cat("{\\rtf1\\ansi\\deff0\n")
+  cat("{\\rtf1\\ansi\\deff1\n")
   cat(font_table_string(doc))
   cat(color_table_string(doc))
+  cat("\n\n\n")
   cat(doc_properties_string(doc))
+  cat("\n\n\n")
   cat(header_string(doc))
+  cat("\n}")
+  cat(footer_string(doc))
   cat("\n}")
   sink()
 
