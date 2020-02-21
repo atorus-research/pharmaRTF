@@ -151,9 +151,8 @@ hf_string <- function(doc, type=NULL) {
   # Generate the final string
   if (type == "titles") {
     # If generating titles then take the headers of the table
-    paste('{', command, body, '\n\\par\n', to_rtf(doc$table[1:1, ]), '\n}', sep='')
+    paste('{', command, body, '\n\\par\n', get_column_headers(doc), '\n}', sep='')
   } else {
-
     paste('{', command, body, '\n}', sep='')
   }
 }
@@ -181,13 +180,11 @@ write_rtf <- function(doc, file='test.rtf') {
   cat(header_string(doc))
   cat("\n")
   cat(footer_string(doc))
-  cat(to_rtf(doc$table[2:nrow(doc$table), ]))
+  cat(get_table_body(doc))
   cat("\n}")
   sink()
 
 }
-
-
 
 
 

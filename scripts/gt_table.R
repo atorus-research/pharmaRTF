@@ -1,8 +1,11 @@
 ## Make the table in GT ----
 
 source('./scripts/assemble_data.R')
+library(assertthat)
 library(gt)
+library(pharmaRTF)
 
+# Create the GT table
 t <- final %>%
   select(rowlbl1, rowlbl2, Pbo, Xan_Lo, Xan_Hi, Tot) %>%
   # Create the table object
@@ -21,10 +24,30 @@ t <- final %>%
     style=cell_text(align='center'),
     locations = cells_column_labels(everything()) # this formats incorrectly but noted in bug 439
   ) %>%
-  as_rtf()
+  cols_width(
+    vars(rowlbl1) ~ px(150),
+    vars(rowlbl2) ~ px(150),
+    vars(Pbo) ~ px(150),
+    vars(Xan_Hi) ~ px(150),
+    vars(Xan_Lo) ~ px(150),
+    vars(Tot) ~ px(150)
+  ) %>%
+  tab_header('THIS IS A TITLE')
 
-t %>%
-  gtsave('./test.html')
+# Create the RTF document
+doc <- as_rtf_doc(t) %>%
+  add_titles(
+    hf_line('Protocol: CDISCPILOT01', 'PAGE_FORMAT: Page %s of %s', italic=TRUE, bold=TRUE, align='split'),
+    hf_line('Population: Intent-to-Treat', italic=TRUE, bold=TRUE, align='left'),
+    hf_line('Table 14-2.01', italic=TRUE, bold=TRUE, align='center'),
+    hf_line('Summary of Demographic and Baseline Characteristics', italic=TRUE, bold=TRUE)
+  ) %>%
+  add_footnotes(
+    hf_line("NOTE: Duration of disease is computed as months between date of enrollment and date of onset of the first definite symptoms of Alzheimer's disease.",
+            italic=TRUE, align='left')
+  )
 
-## TODO: Dig into the GT package to and make an edit of the as_rtf function. Steal the components but write just the header
-##       to the titles and write the body to the body. gt::as_rtf() is located in export.R.
+# write out
+write_rtf(doc, file='./test_gt.rtf')
+
+

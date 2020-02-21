@@ -11,6 +11,10 @@ font.huxtable <- function(table) {
   unique(c(attr(table, 'font')))
 }
 
+font.gt_tbl <- function(table) {
+  character(1) # I haven't found an actual font attribute in GT? gt:::rtf_head() actually has Helvetica hard coded
+}
+
 font.hf_line <- function(line) {
   attr(line, 'font')
 }

@@ -13,9 +13,12 @@
 #  - Object holding
 #  - Document writing
 
-supported_table_types <- c('huxtable')
+supported_table_types <- c('huxtable', 'gt_tbl')
 
 as_rtf_doc <- function(table, titles=list(), footnotes=list()) {
+
+  ## TODO: Come back to this and rebuild following recommended practice:
+  ##       -> https://adv-r.hadley.nz/s3.html#s3-classes Section 13.3.1
 
   # Make sure the input tbale type is a supported class
   assert_that(
@@ -25,6 +28,16 @@ as_rtf_doc <- function(table, titles=list(), footnotes=list()) {
                 supported_table_types)
   )
 
+  if (inherits(table, 'huxtable')) {
+    if (!is.na(huxtable::caption(table))) message('Huxtable contains caption - this will be stripped off ',
+                                        'in RTF document generation.')
+  }
+  if (inherits(table, 'gt_tbl')) {
+    warning('GT does not fully support RTF at this time. Results will not be as expected')
+    if (!all(sapply(table[['_heading']], is.null))) {
+      message('GT contains title/subtitle - this will be stripped off in RTF document generation')
+    }
+  }
 
   # Put the object together
   doc <- list(

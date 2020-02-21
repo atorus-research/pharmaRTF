@@ -13,6 +13,7 @@ huxtable::bottom_border(ht)[1, ] <- 1
 huxtable::bold(ht)[1, ] <- TRUE
 huxtable::width(ht) <- 1.5
 huxtable::escape_contents(ht) <- FALSE
+huxtable::caption(ht) <- 'Some title'
 
 doc <- as_rtf_doc(ht) %>%
   add_titles(

@@ -4,6 +4,8 @@ library(assertthat)
 hf_line <- function(..., align=c('center', 'left', 'right', 'split'), bold=FALSE,
                     italic=FALSE, font=NA, font_size=NaN, index=NULL) {
 
+  ## TODO: Come back to this and rebuild following recommended practice:
+  ##       -> https://adv-r.hadley.nz/s3.html#s3-classes Section 13.3.1
   line = list()
 
   line$text <- unlist(list(...))
