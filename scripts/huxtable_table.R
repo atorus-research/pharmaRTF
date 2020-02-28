@@ -1,5 +1,7 @@
 ## Make table in huxtable ----
+library(assertthat)
 library(huxtable)
+library(pharmaRTF)
 
 source('./scripts/assemble_data.R')
 
@@ -27,4 +29,5 @@ doc <- as_rtf_doc(ht) %>%
             italic=TRUE, align='left')
   )
 
-write_rtf(doc)
+# write_rtf(doc)
+df <- view_titles(doc)

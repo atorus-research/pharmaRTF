@@ -36,4 +36,15 @@ extract_ind <- function(x, i) {
   else return(FALSE)
 }
 
+# Return the expected type given an hf_line parameter
+correct_types <- function(x) {
+  switch(x,
+         text1=,
+         text2=,
+         align=,
+         font='character',
+         bold=,
+         italic='logical'
+  )
+}
 
