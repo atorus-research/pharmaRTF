@@ -1,0 +1,5 @@
+text1,text2,align,bold,italic,font
+Protocol: CDISCPILOT01,PAGE_FORMAT: Page %s of %s,split,TRUE,TRUE,
+Population: Intent-to-Treat,,left,TRUE,TRUE,
+Table 14-2.01,,center,TRUE,TRUE,
+Summary of Demographic and Baseline Characteristics,,center,TRUE,TRUE,
