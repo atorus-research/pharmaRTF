@@ -103,7 +103,7 @@ hf_line_string <- function(line, doc=NULL) {
     ft <- sprintf("\\f%s", match(font(line), font(doc)))
   }
 
-  # If font is overridden generate the string
+  # If font size is overridden generate the string
   if (!is.na(font_size(line))) {
     fs <- sprintf("\\fs%s", font_size(line))
   }

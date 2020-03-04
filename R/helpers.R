@@ -14,15 +14,54 @@ is_page_format <- function(string) {
 
 # Extract the format from a page format string
 get_page_format <- function(string) {
-  trimws(unlist(strsplit(string, ":"))[2])
+  # Should revisit this - but separate at the semicolon, remove the first section, and
+  # patch it back together
+  trimws(paste(unlist(strsplit(string, ":"))[-1], collapse=':'))
+}
+
+# Identify if string is a page format
+is_date_format <- function(string) {
+  substr(string, 1, 12) == "DATE_FORMAT:"
+}
+
+# Extract the format from a date format string
+get_date_format <- get_page_format # it's the same thing - just attach another name to it
+
+# Identify if string is requesting the executing file path
+is_file_format <- function(string) {
+  trimws(string) == '<FILE_PATH>'
+}
+
+# Extract the executing file path from the R Session
+get_file_path <- function(){
+  if (interactive()) {
+    # If run in interactive mode then capture that
+    string <- '<run interactively>'
+  } else {
+    # Grab the string through other means
+    initial.options <- commandArgs(trailingOnly = FALSE)
+    # File command line argument that we'll seach for
+    file.arg.name <- "--file="
+    # Pick that off and remove the argument syntax
+    string <- sub(file.arg.name, "", initial.options[grep(file.arg.name, initial.options)])
+  }
+  return(string)
 }
 
 # Take a string of text and format it to write in a block of RTF with properties
 # If determined to be a page number format, return that string
 format_text_string <- function(text, properties='') {
   if (is_page_format(text)) {
+    # Page formats
     string <- add_page_num(get_page_format(text), properties=properties)
-  } else {
+  } else if (is_date_format(text)){
+    # Date formats
+    string <- paste('{', properties, format(Sys.time(), get_date_format(text)), '}', sep='')
+  } else if (is_file_format(text)) {
+    # File paths
+    string <- paste('{', properties, get_file_path(), '}', sep = '')
+  }else {
+    # Standard strings
     string <- paste('{', properties, text, '}', sep='')
   }
   string
