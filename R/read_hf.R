@@ -22,30 +22,20 @@ read_hf <- function(from=NULL, from.file=NULL, type=NULL, reader=NULL, ...) {
   }
 
   # df is loaded - make sure it's compliant
-  validate_hf_dataframe(df)
+  required_columns <- c("type", "text1", "text2", "align", "bold", "italic", "font", "index")
+  validate_hf_dataframe(df, required_columns)
+  df[required_columns]
 
 }
 
-correct_types <- function(x) {
-  switch(x,
-         text1=,
-         text2=,
-         align=,
-         font='character',
-         bold=,
-         italic='logical'
-         )
-}
-
-validate_hf_dataframe <- function(df) {
+validate_hf_dataframe <- function(df, required_columns) {
 
   # Flag for whether any errors were encountered
   e <- FALSE
 
   # Make sure the required columns all exist
-  r_cols <- c("align", "bold", "font", "italic", "text1", "text2")
   cols <- sort(names(df))
-  missing_cols <- setdiff(r_cols, cols)
+  missing_cols <- setdiff(required_columns, cols)
 
   # Message an error for every missing column
   if (length(missing_cols) > 0) {
@@ -54,7 +44,7 @@ validate_hf_dataframe <- function(df) {
   }
 
   # Check each of the required columns type for correctness
-  correct <- sapply(intersect(names(df), r_cols), function(x) class(df[[x]]) == correct_types(x))
+  correct <- sapply(intersect(names(df), required_columns), eval_type, df=df)
 
   # Might be obnoxious but automatically write out any incorrect column type
   if (any(!correct)) {
@@ -67,15 +57,32 @@ validate_hf_dataframe <- function(df) {
                 ' vector')
          )
 
+  }
+
+  # Check that there are no other values in title than title or footnote
+  if ('type' %in% names(df)) {
+
+    invalid_values <- setdiff(unique(df$type), c('title', 'footnote'))
+
+    if (length(invalid_values) > 0) {
+      # Show error and list each invalid value
+      message('Error: Only values of "footnote" and "title" are allowed in the `type` column')
+      message(paste0('       -> "', invalid_values, '" is not a valid value'))
+      e <- TRUE
+    }
+
+  }
+
+
   # If errors were
   if (e) stop('Errors were encountered in data.frame validation.')
-  }
 
 }
 
 # Examples code
-# read_hf(from.file='./data/titles.csv',
-#         reader=read.csv,
-#         fileEncoding='WINDOWS-1252',
-#         stringsAsFactors=FALSE,
-#         colClasses=c('character', 'character', 'character', 'logical', 'logical', 'character'))
+classes <- c('character', 'character', 'character', 'character', 'character', 'logical', 'logical', 'character', 'numeric')
+.df <- read_hf(from.file='./data/titles.csv',
+        reader=read.csv,
+        stringsAsFactors=FALSE,
+        colClasses=classes
+)

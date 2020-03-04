@@ -105,3 +105,67 @@ add_titles <- function(doc, ...) {
 add_footnotes <- function(doc, ...) {
   pharmaRTF:::add_hf(doc, ..., to='footnotes')
 }
+
+
+# Attach header and footer objects to a document from a data frame
+titles_and_footnotes_from_df <- function(doc, df) {
+
+  # Make sure the columns are in the correct order
+  df <- df[, c("type", "text1", "text2", "align", "bold", "italic", "font", "index")]
+
+  # Subset into pieces and tranpose the rows into separate lists
+  titles_ <- transpose(df[df$type == 'title', -1])
+  footnotes_ <- transpose(df[df$type == 'footnote', -1])
+
+  # Turn all of the separate rows into hf_line objects for the titles and footnotes
+  titles <- lapply(titles_, function(x) do.call(hf_line, x))
+  footnotes <- lapply(footnotes_, function(x) do.call(hf_line, x))
+
+  # Add the titles and the footnotes to the doc object
+  doc <- do.call(add_titles, append(doc, titles, 1))
+  doc <- do.call(add_footnotes, append(doc, footnotes, 1)) #TODO: <--- this is broken
+  doc
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

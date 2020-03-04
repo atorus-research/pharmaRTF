@@ -39,12 +39,27 @@ extract_ind <- function(x, i) {
 # Return the expected type given an hf_line parameter
 correct_types <- function(x) {
   switch(x,
+         type=,
          text1=,
          text2=,
          align=,
          font='character',
          bold=,
-         italic='logical'
+         italic='logical',
+         index='numeric'
   )
+}
+
+# Check if the column type is valid for hf_line data.frame validation
+eval_type <- function(x, df) {
+  # Get the command as a string
+  # Using `is.` commands instead of just evaluating class because of integer vs.
+  # double columns. Both are valid.
+  expr_str <- paste('is.', correct_types(x), sep='')
+  # Parse it into syntax
+  expr <- parse(text=expr_str)
+  # Evaluate
+  eval(expr)(df[[x]])
+
 }
 
