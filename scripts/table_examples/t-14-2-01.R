@@ -7,9 +7,8 @@ library(haven)
 library(assertthat)
 library(pharmaRTF)
 
-
-source('./scripts/config.R')
-source('./scripts/funcs.R')
+source('./scripts/table_examples/config.R')
+source('./scripts/table_examples/funcs.R')
 
 
 # Import and explore the data frame ----
@@ -24,8 +23,6 @@ adsl_ <- adsl %>%
           mutate(TRTPCD = 'Tot',
                  TRTP = 'Total',
                  TRTPN = 99))
-
-rm(adsl)
 
 # Get the header N's ----
 header_n_m <- adsl_ %>%
@@ -47,20 +44,25 @@ header_n_v2 <- header_n_m %>% select(TRTPCD, labels) %>%
 
 # The start of some weirdness - header as named list
 header <- as.list(header_n_v2)
-header
 
 ## Exploring Age ----
 
 # Descriptive stats
 age_1 <- desc_stats(AGE)
+age_p <- adsl %>% aov_p(AGE ~ TRTP) # anova
+
+age_1 <- attach_p(age_1, age_p)
 
 # Categorical n counts
 age_2 <- sum_subgrp(AGEGRP)
 
+agegrp_p <- adsl %>% chi_p(AGEGRP, TRTP)
+age_2 <- attach_p(age_2, agegrp_p)
+
 age <- rbind(age_1, age_2) %>%
   mutate(rowlbl1 = "Age (y)")
 
-rm(age_1, age_2)
+rm(age_1, age_2, age_p, agegrp_p)
 
 ## Exploring sex ----
 sex = sum_subgrp(SEX) %>%
@@ -69,6 +71,12 @@ sex = sum_subgrp(SEX) %>%
            rowlbl2 == "F" ~ 'Female',
            rowlbl2 == 'M' ~ 'Male'
          ))
+
+sex_p <- adsl %>% chi_p(SEX, TRTP)
+
+sex <- attach_p(sex, sex_p)
+
+rm(sex_p)
 
 ## Exploring race ----
 race = sum_subgrp(RACE) %>%
@@ -95,19 +103,35 @@ race = sum_subgrp(RACE) %>%
       )
   )
 
+race_p <- adsl %>% chi_p(RACE, TRTP)
+
+race <- attach_p(race, race_p)
+
+rm(race_p)
+
 ## Exploring MMSE ---
 mmse <- desc_stats(MMSETOT) %>%
   mutate(
     rowlbl1 = 'MMSE'
   )
 
+mmse_p <- adsl %>% aov_p(MMSETOT ~ TRTP)
+
+mmse <- attach_p(mmse, mmse_p)
+
+rm(mmse_p)
+
 ## Exploring disease duration ----
 
 # Descriptive
 durdis_1 <- desc_stats(DURDIS)
+durdis_1p <- adsl %>% aov_p(DURDIS ~ TRTP)
+durdis_1 <- attach_p(durdis_1, durdis_1p)
 
 # Categorical
 durdis_2 <- sum_subgrp(DURDISGR)
+durdis_2p <- adsl %>% chi_p(DURDISGR, TRTP)
+durdis_2 <- attach_p(durdis_2, durdis_2p)
 
 durdis <- durdis_1 %>%
   union(durdis_2) %>%
@@ -115,40 +139,56 @@ durdis <- durdis_1 %>%
     rowlbl1 = 'Duration of Disease'
   )
 
-rm(durdis_1, durdis_2)
+rm(durdis_1, durdis_2, durdis_1p, durdis_2p)
 
 ## Years of education ----
 educlvl <- desc_stats(EDUCLVL) %>%
   mutate(
     rowlbl1 = 'Years of education'
   )
+educlvl_p <- adsl %>% aov_p(EDUCLVL ~ TRTP)
+educlvl <- attach_p(educlvl, educlvl_p)
+
+rm(educlvl_p)
 
 ## Baseline weight ----
 weightbl <- desc_stats(WEIGHTBL) %>%
   mutate(
     rowlbl1 = 'Baseline weight(kg)'
   )
+weightbl_p <- adsl %>% aov_p(WEIGHTBL ~ TRTP)
+weightbl <- attach_p(weightbl, weightbl_p)
+
+rm(weightbl_p)
 
 ## Baseline height ----
 heightbl <- desc_stats(HEIGHTBL) %>%
   mutate(
     rowlbl1 = 'Baseline height(cm)'
   )
+heightbl_p <- adsl %>% aov_p(HEIGHTBL ~ TRTP)
+heightbl <- attach_p(heightbl, heightbl_p)
+
+rm(heightbl_p)
 
 ## Baseline BMI ----
 
 # Descriptive
 bmi_1 <- desc_stats(BMIBL)
+bmi_1p <- adsl %>% aov_p(BMIBL ~ TRTP)
+bmi_1 <- attach_p(bmi_1, bmi_1p)
 
 # Categorical
 bmi_2 <- sum_subgrp(BMIBLGRP)
+bmi_2p <- adsl %>% chi_p(BMIBLGRP, TRTP)
+bmi_2 <- attach_p(bmi_2, bmi_2p)
 
 bmi <- rbind(bmi_1, bmi_2) %>%
   mutate(
     rowlbl1 = 'Baseline BMI'
   )
 
-rm(bmi_1, bmi_2)
+rm(bmi_1, bmi_2, bmi_1p, bmi_2p)
 
 ## Stack together final tables ---
 final <- rbind(age, sex, race, mmse, durdis, educlvl, weightbl, heightbl, bmi) %>%
@@ -162,7 +202,7 @@ rm(age, sex, race, mmse, durdis, educlvl, weightbl, heightbl, bmi)
 ## Table build and RTF Output
 ht <- final %>%
   # Huxtable uses variable names so invert the header list to get the header values as variable names
-  select(" "=rowlbl1, "  "=rowlbl2, !!!header) %>%
+  select(" "=rowlbl1, "  "=rowlbl2, !!!header, 'p-value\\line [1]'=p) %>%
   huxtable::as_hux(add_colnames=TRUE)
 
 # ht <- as_hux(mtcars, add_colnames = TRUE)
@@ -171,18 +211,11 @@ huxtable::bold(ht)[1, ] <- TRUE
 huxtable::width(ht) <- 1.5
 huxtable::escape_contents(ht) <- FALSE
 
-doc <- as_rtf_doc(ht) %>%
-  add_titles(
-    hf_line('Protocol: CDISCPILOT01', 'PAGE_FORMAT: Page %s of %s', italic=TRUE, bold=TRUE, align='split'),
-    hf_line('Population: Intent-to-Treat', italic=TRUE, bold=TRUE, align='left'),
-    hf_line('Table 14-2.01', italic=TRUE, bold=TRUE, align='center'),
-    hf_line('Summary of Demographic and Baseline Characteristics', italic=TRUE, bold=TRUE)
-  ) %>%
-  add_footnotes(
-    hf_line("NOTE: Duration of disease is computed as months between date of enrollment and date of onset of the first definite symptoms of Alzheimer's disease.",
-            italic=TRUE, align='left')
-  )
+# Write into doc object and pull titles/footnotes from excel file
+doc <- as_rtf_doc(ht) %>% titles_and_footnotes_from_df(
+  from.file='./scripts/table_examples/titles.xlsx',
+  reader=example_custom_reader,
+  table_number='14-2.01')
 
-# write_rtf(doc)
-df <- view_titles(doc)
-
+# Write out the RTF
+write_rtf(doc, file='./scripts/table_examples/outputs/14-2.01.rtf')

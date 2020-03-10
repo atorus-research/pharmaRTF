@@ -39,6 +39,7 @@ as_rtf_doc <- function(table, titles=list(), footnotes=list()) {
     }
   }
 
+
   # Put the object together
   doc <- list(
     table = table,

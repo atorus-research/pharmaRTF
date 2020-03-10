@@ -8,28 +8,28 @@ Filter <- function (f, x, ...){
 }
 
 # Identify if string is a page format
-is_page_format <- function(string) {
-  substr(string, 1, 12) == "PAGE_FORMAT:"
+is_page_format <- function(txt) {
+  substr(txt, 1, 12) == "PAGE_FORMAT:"
 }
 
 # Extract the format from a page format string
-get_page_format <- function(string) {
+get_page_format <- function(txt) {
   # Should revisit this - but separate at the semicolon, remove the first section, and
   # patch it back together
-  trimws(paste(unlist(strsplit(string, ":"))[-1], collapse=':'))
+  trimws(paste(unlist(strsplit(txt, ":"))[-1], collapse=':'))
 }
 
 # Identify if string is a page format
-is_date_format <- function(string) {
-  substr(string, 1, 12) == "DATE_FORMAT:"
+is_date_format <- function(txt) {
+  substr(txt, 1, 12) == "DATE_FORMAT:"
 }
 
 # Extract the format from a date format string
 get_date_format <- get_page_format # it's the same thing - just attach another name to it
 
 # Identify if string is requesting the executing file path
-is_file_path <- function(string) {
-  substr(string, 1, 10) == "FILE_PATH:"
+is_file_path <- function(txt) {
+  substr(txt, 1, 10) == "FILE_PATH:"
 }
 
 # Get
@@ -39,7 +39,7 @@ get_filepath_format <- get_page_format # Again same idea
 add_filepath <- function(text){
 
   # This will populate if the file is sourced
-  string <- sys.frame(1)$ofile
+  .string <- sys.frame(1)$ofile
 
   # If not, go further
   if (is.null(string)){

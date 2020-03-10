@@ -108,11 +108,14 @@ add_footnotes <- function(doc, ...) {
 
 
 # Attach header and footer objects to a document from a data frame
-titles_and_footnotes_from_df <- function(doc, df) {
+titles_and_footnotes_from_df <- function(doc, ...) {
+
+  df <- read_hf(...) # Refer to read_hf in read_hf.R
 
   # Note: there's a lot of do call in here, but I'm just translating the data.frame
   # to a list, and then submitting the list as arguments to the function. See the do.call
   # documentation for more information
+
 
   # Make sure the columns are in the correct order
   df <- df[, c("type", "text1", "text2", "align", "bold", "italic", "font", "index")]

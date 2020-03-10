@@ -80,9 +80,9 @@ validate_hf_dataframe <- function(df, required_columns) {
 }
 
 # Examples code
-classes <- c('character', 'character', 'character', 'character', 'character', 'logical', 'logical', 'character', 'numeric')
-.df <- read_hf(from.file='./data/titles.csv',
-        reader=read.csv,
-        stringsAsFactors=FALSE,
-        colClasses=classes
-)
+# classes <- c('character', 'character', 'character', 'character', 'character', 'logical', 'logical', 'character', 'numeric')
+# .df <- read_hf(from.file='./data/titles.csv',
+#         reader=read.csv,
+#         stringsAsFactors=FALSE,
+#         colClasses=classes
+# )
