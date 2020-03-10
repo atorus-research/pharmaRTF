@@ -28,24 +28,34 @@ is_date_format <- function(string) {
 get_date_format <- get_page_format # it's the same thing - just attach another name to it
 
 # Identify if string is requesting the executing file path
-is_file_format <- function(string) {
-  trimws(string) == '<FILE_PATH>'
+is_file_path <- function(string) {
+  substr(string, 1, 10) == "FILE_PATH:"
 }
 
+# Get
+get_filepath_format <- get_page_format # Again same idea
+
 # Extract the executing file path from the R Session
-get_file_path <- function(){
-  if (interactive()) {
-    # If run in interactive mode then capture that
-    string <- '<run interactively>'
-  } else {
-    # Grab the string through other means
-    initial.options <- commandArgs(trailingOnly = FALSE)
-    # File command line argument that we'll seach for
-    file.arg.name <- "--file="
-    # Pick that off and remove the argument syntax
-    string <- sub(file.arg.name, "", initial.options[grep(file.arg.name, initial.options)])
+add_filepath <- function(text){
+
+  # This will populate if the file is sourced
+  string <- sys.frame(1)$ofile
+
+  # If not, go further
+  if (is.null(string)){
+    # Interactively you can't be sure of location
+    if (interactive()) {
+      string <- '<run interactively>'
+    } else {
+      # If run in batch, use the command line arguments
+      initial.options <- commandArgs(trailingOnly = FALSE)
+      # File command line argument that we'll seach for
+      file.arg.name <- "--file="
+      # Pick that off and remove the argument syntax
+      string <- sub(file.arg.name, "", initial.options[grep(file.arg.name, initial.options)])
+    }
   }
-  return(string)
+  sprintf(text, string)
 }
 
 # Take a string of text and format it to write in a block of RTF with properties
@@ -57,9 +67,9 @@ format_text_string <- function(text, properties='') {
   } else if (is_date_format(text)){
     # Date formats
     string <- paste('{', properties, format(Sys.time(), get_date_format(text)), '}', sep='')
-  } else if (is_file_format(text)) {
+  } else if (is_file_path(text)) {
     # File paths
-    string <- paste('{', properties, get_file_path(), '}', sep = '')
+    string <- paste('{', properties, add_filepath(get_filepath_format(text)), '}', sep = '')
   }else {
     # Standard strings
     string <- paste('{', properties, text, '}', sep='')
