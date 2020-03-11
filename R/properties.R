@@ -39,11 +39,13 @@ font.rtf_doc <- function(doc) {
 'font<-.hf_line' <- function(line, value) {
   assert_that(is.character(value))
   attr(line, 'font') <- value
+  line
 }
 
-'font<-.rtf_doc' <- function(line, value) {
+'font<-.rtf_doc' <- function(doc, value) {
   assert_that(is.character(value))
-  attr(line, 'font') <- value
+  attr(doc, 'font') <- value
+  doc
 }
 
 ## Font size (getters) ----
@@ -63,11 +65,13 @@ font_size.hf_line <- function(line) {
 'font_size<-.hf_line' <- function(line, value) {
   assert_that(is.numeric(value))
   attr(line, 'font_size') <- value
+  line
 }
 
-'font_size<-.rtf_doc' <- function(line, value) {
+'font_size<-.rtf_doc' <- function(doc, value) {
   assert_that(is.numeric(value))
-  attr(line, 'font_size') <- value
+  attr(doc, 'font_size') <- value
+  doc
 }
 
 ## HF_LINE PROPERTIES (and attributes that spread to rtf_doc level) ####

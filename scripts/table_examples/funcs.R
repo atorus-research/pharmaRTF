@@ -141,7 +141,7 @@ aov_p <- function(data, forumula) {
   p <- summary(a)[[1]][['Pr(>F)']][1]
   # Format the output
 
-  format(round(p, 4), width=6, nsmall=4)
+  format(round(p, 4), width=10, nsmall=4)
 }
 
 # P-value for chi-squared
@@ -154,7 +154,7 @@ chi_p <- function(data, results, categories) {
   res <- factor(eval(arguments$results, data))
 
   p <- chisq.test(res, cats)$p.value
-  format(round(p, 4), width=6, nsmall=4)
+  format(round(p, 4), width=10, nsmall=4)
 }
 
 # Attach P-value to the first row of a dataframe

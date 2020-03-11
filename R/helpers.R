@@ -39,23 +39,23 @@ get_filepath_format <- get_page_format # Again same idea
 add_filepath <- function(text){
 
   # This will populate if the file is sourced
-  .string <- sys.frame(1)$ofile
+  string_ <- sys.frame(1)$ofile
 
   # If not, go further
-  if (is.null(string)){
+  if (is.null(string_)){
     # Interactively you can't be sure of location
     if (interactive()) {
-      string <- '<run interactively>'
+      string_ <- '<run interactively>'
     } else {
       # If run in batch, use the command line arguments
       initial.options <- commandArgs(trailingOnly = FALSE)
       # File command line argument that we'll seach for
       file.arg.name <- "--file="
       # Pick that off and remove the argument syntax
-      string <- sub(file.arg.name, "", initial.options[grep(file.arg.name, initial.options)])
+      string_ <- sub(file.arg.name, "", initial.options[grep(file.arg.name, initial.options)])
     }
   }
-  sprintf(text, string)
+  sprintf(text, string_)
 }
 
 # Take a string of text and format it to write in a block of RTF with properties

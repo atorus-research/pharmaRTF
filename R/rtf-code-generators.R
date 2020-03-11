@@ -123,7 +123,7 @@ hf_line_string <- function(line, doc=NULL) {
   # Split will align left and designate tab locations, where the right most is flush right
   else if (align(line) == 'split')  {
     al <- "\\ql\\tx7245\\tqr\\tx12960\n"
-    tabs <- '\\tab \\tab \n'
+    tabs <- '\\pmartabqr \n'
   }
   txt_string <- sapply(line$text, format_text_string, properties = properties, USE.NAMES=FALSE)
 
@@ -192,7 +192,7 @@ write_rtf <- function(doc, file='test.rtf') {
     cat(get_table_body(doc))
     cat("\n}")
   },
-    error = identity,
+    error = function(err) {stop(paste(err))},
     finally = {sink()}
   )
 }

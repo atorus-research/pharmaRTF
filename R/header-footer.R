@@ -9,6 +9,8 @@ hf_line <- function(..., align=c('center', 'left', 'right', 'split'), bold=FALSE
   line = list()
 
   line$text <- unlist(list(...))
+  # Depending on input source NA might come through, so toss it
+  line$text <- line$text[!is.na(line$text)]
 
   # Make sure alignment is valid
   align <- match.arg(align)

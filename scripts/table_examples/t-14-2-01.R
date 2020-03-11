@@ -208,14 +208,18 @@ ht <- final %>%
 # ht <- as_hux(mtcars, add_colnames = TRUE)
 huxtable::bottom_border(ht)[1, ] <- 1
 huxtable::bold(ht)[1, ] <- TRUE
+huxtable::align(ht)[1, ] <- 'center'
 huxtable::width(ht) <- 1.5
 huxtable::escape_contents(ht) <- FALSE
+huxtable::col_width(ht) <- c(.2, .2, .12, .12, .12, .12, .12)
 
 # Write into doc object and pull titles/footnotes from excel file
 doc <- as_rtf_doc(ht) %>% titles_and_footnotes_from_df(
   from.file='./scripts/table_examples/titles.xlsx',
   reader=example_custom_reader,
   table_number='14-2.01')
+
+font_size(doc) <- 10
 
 # Write out the RTF
 write_rtf(doc, file='./scripts/table_examples/outputs/14-2.01.rtf')
