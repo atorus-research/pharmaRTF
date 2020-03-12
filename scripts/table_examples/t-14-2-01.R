@@ -69,7 +69,8 @@ sex = sum_subgrp(SEX) %>%
   mutate(rowlbl1 = "Sex",
          rowlbl2 = case_when(
            rowlbl2 == "F" ~ 'Female',
-           rowlbl2 == 'M' ~ 'Male'
+           rowlbl2 == 'M' ~ 'Male',
+           rowlbl2 == 'n' ~ 'n'
          ))
 
 sex_p <- adsl %>% chi_p(SEX, TRTP)
@@ -98,6 +99,7 @@ race = sum_subgrp(RACE) %>%
               )
             )
           ),
+        rowlbl2 == 'n' ~ 'n',
         # Catch all if none found
         TRUE ~ str_to_title(rowlbl2)
       )
@@ -212,6 +214,8 @@ huxtable::align(ht)[1, ] <- 'center'
 huxtable::width(ht) <- 1.5
 huxtable::escape_contents(ht) <- FALSE
 huxtable::col_width(ht) <- c(.2, .2, .12, .12, .12, .12, .12)
+huxtable::bottom_padding(ht) <- 0
+huxtable::top_padding(ht) <- 0
 
 # Write into doc object and pull titles/footnotes from excel file
 doc <- as_rtf_doc(ht) %>% titles_and_footnotes_from_df(
@@ -219,6 +223,7 @@ doc <- as_rtf_doc(ht) %>% titles_and_footnotes_from_df(
   reader=example_custom_reader,
   table_number='14-2.01')
 
+# Set default font size for document down to 10
 font_size(doc) <- 10
 
 # Write out the RTF

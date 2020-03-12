@@ -64,16 +64,17 @@ n_pct <- function(n, pct) {
   )
 }
 
-sum_subgrp <- function(subgroup_var) {
+sum_subgrp <- function(subgroup_var, include.n=TRUE, pad.row=TRUE) {
   # Create n (%) subgroups by TRTPCD
 
   # Convert string subgroup into a symbol that can be
   # unquoted with !!
 
   # Pull from adsl with totals
-  adsl_ %>%
+  df <- adsl_ %>%
     # Keep only the gtwo group variables and group byC:\Users\16105\OneDrive - ATorus\Documents\Projects\Explore\test2.rtf
     select(TRTPCD, {{ subgroup_var }}) %>%
+    filter(!is.na({{ subgroup_var }})) %>%
     group_by(TRTPCD, {{ subgroup_var }}) %>%
     # Summarize counts
     summarize(
@@ -94,11 +95,31 @@ sum_subgrp <- function(subgroup_var) {
     replace(is.na(.), '  0       ') %>%
     # Rename row label column
     rename(rowlbl2 = {{ subgroup_var }})
+
+  if (include.n){
+    df <- rbind(desc_stats({{subgroup_var}}, include='n')[1,], df)
+  }
+
+  pad_row(df)
+
 }
 
-desc_stats <- function(var, na.rm=TRUE) {
+desc_stats <- function(var, na.rm=TRUE, include=c('n', 'Mean', 'SD', 'Median', 'Min', 'Max')) {
   # Provides descriptive statistics of provided variable, by TRTPCD
   # n, Mean, SD, Median, Min, Max
+
+  # Ensure that the include argument was valid
+  include = match.arg(include, several.ok=TRUE)
+
+  # This is gonna get wonky - store each summary as an expression
+  summaries <- list(
+    n      = rlang::expr(num_fmt(n())),
+    Mean   = rlang::expr(num_fmt(   mean({{ var }}), 1)),
+    SD     = rlang::expr(num_fmt(     sd({{ var }}), 2)),
+    Median = rlang::expr(num_fmt( median({{ var }}), 1)),
+    Min    = rlang::expr(num_fmt(    min({{ var }}), 1)),
+    Max    = rlang::expr(num_fmt(    max({{ var }}), 1))
+  )[include] # this is a named list, so subset based on the input arguments
 
   # Pull from ADSL with totals
   adsl_ %>%
@@ -109,18 +130,12 @@ desc_stats <- function(var, na.rm=TRUE) {
     # Group by treatment
     group_by(TRTPCD) %>%
     # Summarize each statistic and use num_fmt for rounding/formatting
-    summarize(
-      n      = num_fmt(n()),
-      Mean   = num_fmt(   mean({{ var }}), 1),
-      SD     = num_fmt(     sd({{ var }}), 2),
-      Median = num_fmt( median({{ var }}), 1),
-      Min    = num_fmt(    min({{ var }}), 1),
-      Max    = num_fmt(    max({{ var }}), 1)
-    ) %>%
+    summarize(!!!summaries) %>% # unpack the expressions into syntax to be evaluated
     # Transpose statistics into one column
     pivot_longer(-TRTPCD, names_to = 'rowlbl2', values_to = 'temp') %>%
     # Transpose treatments into separate columns
-    pivot_wider(names_from = TRTPCD, values_from = temp)
+    pivot_wider(names_from = TRTPCD, values_from = temp) %>%
+    pad_row()
 }
 
 invert.list <- function (NL) {
@@ -167,6 +182,11 @@ attach_p <- function(data, p_value) {
 
 }
 
+# Add an empty row
+pad_row <- function(df) {
+  df[nrow(df)+1, ] <- ""
+  df
+}
 
 
 
