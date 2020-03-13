@@ -221,10 +221,8 @@ huxtable::top_padding(ht) <- 0
 doc <- as_rtf_doc(ht) %>% titles_and_footnotes_from_df(
   from.file='./scripts/table_examples/titles.xlsx',
   reader=example_custom_reader,
-  table_number='14-2.01')
-
-# Set default font size for document down to 10
-font_size(doc) <- 10
+  table_number='14-2.01') %>%
+  set_font_size(10)
 
 # Write out the RTF
 write_rtf(doc, file='./scripts/table_examples/outputs/14-2.01.rtf')

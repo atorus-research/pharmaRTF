@@ -36,6 +36,8 @@ font.rtf_doc <- function(doc) {
 ## Fonts (setters) ----
 'font<-' <- function(x, value) UseMethod('font<-')
 
+set_font <- function(x, value) UseMethod('font<-')
+
 'font<-.hf_line' <- function(line, value) {
   assert_that(is.character(value))
   attr(line, 'font') <- value
@@ -47,6 +49,8 @@ font.rtf_doc <- function(doc) {
   attr(doc, 'font') <- value
   doc
 }
+
+
 
 ## Font size (getters) ----
 font_size <- function(table, ...) UseMethod('font_size')
@@ -61,6 +65,8 @@ font_size.hf_line <- function(line) {
 
 ## Font size (setters) ----
 'font_size<-' <- function(x, value) UseMethod('font_size<-')
+
+set_font_size <- function(x, value) UseMethod('font_size<-')
 
 'font_size<-.hf_line' <- function(line, value) {
   assert_that(is.numeric(value))
@@ -86,6 +92,8 @@ align.hf_line <- function(line) {
 ## Alignment (setters) ----
 'align<-' <- function(x, value) UseMethod('align<-')
 
+set_align <- function(x, value) UseMethod('align<-')
+
 'align<-.hf_line' <- function(line, value = c('left', 'right', 'center', 'split')) {
   # Check that argument is valid
   match.arg(value)
@@ -108,6 +116,9 @@ bold.hf_line <- function(line) {
 ## Bold (setters) ----
 'bold<-' <- function(x, value) UseMethod('bold<-')
 
+set_bold <- function(x, value) UseMethod('bold<-')
+
+
 'bold<-.hf_line' <- function(line, value) {
   # Check that argument is valid
   assert_that(is.logical(value))
@@ -126,6 +137,8 @@ italic.hf_line <- function(line) {
 
 ## Italic (setters) ----
 'italic<-' <- function(x, value) UseMethod('italic<-')
+
+set_italic <- function(x, value) UseMethod('italic<-')
 
 'italic<-.hf_line' <- function(line, value) {
   # Check that argument is valid
@@ -151,6 +164,8 @@ text.hf_line <- function(line) {
 ## Text (setters) ----
 'text<-' <- function(x, value) UseMethod('text<-')
 
+set_text <- function(x, value) UseMethod('text<-')
+
 'text<-.hf_line' <- function(line, value) {
   # Check that argument is valid
   value <- unlist(value)
@@ -175,6 +190,8 @@ index.hf_line <- function(line) {
 ## Bold (setters) ----
 'index<-' <- function(x, value) UseMethod('index<-')
 
+set_index <- function(x, value) UseMethod('index<-')
+
 'index<-.hf_line' <- function(line, value) {
   # Check that argument is valid
   assert_that(is.numeric(value) | is.null(value))
@@ -194,6 +211,8 @@ margins.rtf_doc <- function(doc) {
 
 ## Text (setters) ----
 'margins<-' <- function(x, value) UseMethod('margins<-')
+
+set_margins <- function(x, value) UseMethod('margins<-')
 
 'margins<-.rtf_doc' <- function(doc, value) {
 
@@ -227,6 +246,8 @@ orientation.rtf_doc <- function(doc) {
 ## Orientation (setters) ----
 'orientation<-' <- function(x, value) UseMethod('orientation<-')
 
+set_orientation <- function(x, value) UseMethod('orientation<-')
+
 'orientation<-.rtf_doc' <- function(doc, value = c('landscape', 'portrait')) {
   # Make sure the value is valid
   value <- match.arg(value)
@@ -248,6 +269,8 @@ header_height.rtf_doc <- function(doc) {
 ## Header height (setters) ----
 'header_height<-' <- function(x, value) UseMethod('header_height<-')
 
+set_header_height <- function(x, value) UseMethod('header_height<-')
+
 'header_height<-.rtf_doc' <- function(doc, value) {
   # Make sure the value is valid
   assert_that(is.numeric(value))
@@ -266,6 +289,8 @@ footer_height.rtf_doc <- function(doc) {
 ## Footer height (setters) ----
 'footer_height<-' <- function(x, value) UseMethod('footer_height<-')
 
+set_footer_height <- function(x, value) UseMethod('footer_height<-')
+
 'footer_height<-.rtf_doc' <- function(doc, value) {
   # Make sure the value is valid
   assert_that(is.numeric(value))
@@ -283,6 +308,8 @@ pagesize.rtf_doc <- function(doc) {
 
 ## Page size(setters) ----
 'pagesize<-' <- function(x, value) UseMethod('pagesize<-')
+
+set_pagesize <- function(x, value) UseMethod('pagesize<-')
 
 'pagesize<-.rtf_doc' <- function(doc, value) {
 
