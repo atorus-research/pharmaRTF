@@ -55,9 +55,11 @@ bw_stats[bw_stats$VISIT != "BASELINE", "ARM"] <- NA
 bw_stats[!(bw_stats$ARM %in% "Placebo"), "Measure"] <- NA
 bw_stats <- add_column(bw_stats, "N" = apply(bw_stats,
                            1,
-                           function(x) {sum(dm[,"ARM"] == x["ARM"], na.rm = TRUE)}),
+                           function(x) {aSum <- sum(dm[,"ARM"] == x["ARM"], na.rm = TRUE)
+                           ifelse(aSum == 0, NA, aSum)}),
            .before = 3)
-
+# Pad blank row
+bw_stats[nrow(bw_stats)+1,] <- NA
 
 # Create table for baseline changes
 bw_bl <- ddply(vs_1,
@@ -93,14 +95,15 @@ bw_bl_1[!(bw_bl_1$ARM %in% "Placebo"), "Measure"] <- NA
 
 bw_bl_1 <- add_column(bw_bl_1, "N" = apply(bw_bl_1,
                                              1,
-                                             function(x) {sum(dm[,"ARM"] == x["ARM"], na.rm = TRUE)}),
+                                             function(x) {aSum <- sum(dm[,"ARM"] == x["ARM"], na.rm = TRUE)
+                                             ifelse(aSum == 0, NA, aSum)}),
                        .before = 3)
 
 
 
 combinedTable <- rbind(bw_stats, bw_bl_1)
 names(combinedTable)[2] <- "Treatment"
-names(combinedTable)[3] <- "Planned Relative Time"
+names(combinedTable)[4] <- "Planned Relative Time"
 
 
 
@@ -115,7 +118,7 @@ huxtable::width(ht) <- 1.5
 huxtable::escape_contents(ht) <- FALSE
 huxtable::bottom_padding(ht) <- 0
 huxtable::top_padding(ht) <- 0
-huxtable::col_width(ht) <- c(0.15, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1)
+huxtable::col_width(ht) <- c(0.15, 0.1, 0.05, 0.1, 0.05, 0.1, 0.1, 0.1, 0.1, 0.1)
 
 
 
