@@ -44,5 +44,5 @@ view_titles <- function(doc) {
 
 # Simplified for footnotes
 view_footnotes <- function(doc) {
-  pharmaRTF:::view_hf(doc, type='footnoes')
+  pharmaRTF:::view_hf(doc, type='footnotes')
 }

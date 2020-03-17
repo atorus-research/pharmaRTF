@@ -103,7 +103,7 @@ hf_line_string <- function(line, doc=NULL) {
     ft <- sprintf("\\f%s", match(font(line), font(doc)))
   }
 
-  # If font is overridden generate the string
+  # If font size is overridden generate the string
   if (!is.na(font_size(line))) {
     fs <- sprintf("\\fs%s", font_size(line))
   }
@@ -123,7 +123,7 @@ hf_line_string <- function(line, doc=NULL) {
   # Split will align left and designate tab locations, where the right most is flush right
   else if (align(line) == 'split')  {
     al <- "\\ql\\tx7245\\tqr\\tx12960\n"
-    tabs <- '\\tab \\tab \n'
+    tabs <- '\\pmartabqr \n'
   }
   txt_string <- sapply(line$text, format_text_string, properties = properties, USE.NAMES=FALSE)
 
@@ -170,20 +170,31 @@ footer_string <- function(doc) {
 # write the RTF document out
 write_rtf <- function(doc, file='test.rtf') {
 
+  # Write to the specified file
   sink(file)
-  cat("{\\rtf1\\ansi\\deff1\n")
-  cat(font_table_string(doc))
-  cat(color_table_string(doc))
-  cat("\n\n\n")
-  cat(doc_properties_string(doc))
-  cat("\n\n\n")
-  cat(header_string(doc))
-  cat("\n")
-  cat(footer_string(doc))
-  cat(get_table_body(doc))
-  cat("\n}")
-  sink()
-
+  tryCatch({
+    # RTF Header line
+    cat("{\\rtf1\\ansi\\deff1\n")
+    # Fot table
+    cat(font_table_string(doc))
+    # Color table
+    cat(color_table_string(doc))
+    cat("\n\n\n")
+    # Document properties
+    cat(doc_properties_string(doc))
+    cat("\n\n\n")
+    # Titles
+    cat(header_string(doc))
+    cat("\n")
+    # Footnotes
+    cat(footer_string(doc))
+    # Table content
+    cat(get_table_body(doc))
+    cat("\n}")
+  },
+    error = function(err) {stop(paste(err))},
+    finally = {sink()}
+  )
 }
 
 

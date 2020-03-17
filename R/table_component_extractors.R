@@ -4,8 +4,17 @@ get_column_headers <- function(doc) UseMethod('get_column_headers', object=doc$t
 
 # Huxtable method
 get_column_headers.huxtable <- function(doc) {
+
+  # Get the column header
+  col_headers <- doc$table[1, ]
+
+  # Now reset the font size to the default for all the NAs because default doesn't carry forward
+  cfs <- huxtable::font_size(col_headers)
+  cfs[is.na(cfs)] <- font_size(doc)
+  huxtable::font_size(col_headers) <- cfs
+
   # For huxtable it's simply the first row of the table
-  huxtable::to_rtf(doc$table[1:1, ])
+  huxtable::to_rtf(col_headers)
 }
 
 # GT Method

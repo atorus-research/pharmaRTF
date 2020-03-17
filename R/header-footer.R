@@ -9,6 +9,8 @@ hf_line <- function(..., align=c('center', 'left', 'right', 'split'), bold=FALSE
   line = list()
 
   line$text <- unlist(list(...))
+  # Depending on input source NA might come through, so toss it
+  line$text <- line$text[!is.na(line$text)]
 
   # Make sure alignment is valid
   align <- match.arg(align)
@@ -105,3 +107,76 @@ add_titles <- function(doc, ...) {
 add_footnotes <- function(doc, ...) {
   pharmaRTF:::add_hf(doc, ..., to='footnotes')
 }
+
+
+# Attach header and footer objects to a document from a data frame
+titles_and_footnotes_from_df <- function(doc, ...) {
+
+  df <- read_hf(...) # Refer to read_hf in read_hf.R
+
+  # Note: there's a lot of do call in here, but I'm just translating the data.frame
+  # to a list, and then submitting the list as arguments to the function. See the do.call
+  # documentation for more information
+
+
+  # Make sure the columns are in the correct order
+  df <- df[, c("type", "text1", "text2", "align", "bold", "italic", "font", "index")]
+
+  # Subset into pieces and tranpose the rows into separate lists
+  # Split off the column type column because it's just for subset
+  titles_ <- transpose(df[df$type == 'title', -1])
+  footnotes_ <- transpose(df[df$type == 'footnote', -1])
+
+  # Turn all of the separate rows into hf_line objects for the titles and footnotes
+  titles <- lapply(titles_, function(x) do.call(hf_line, x))
+  footnotes <- lapply(footnotes_, function(x) do.call(hf_line, x))
+
+  # Add the titles and the footnotes to the doc object
+  # doc is the first argument so append that to the front of the list of titles
+  doc <- do.call(add_titles, append(titles, list(doc), 0))
+  doc <- do.call(add_footnotes, append(footnotes, list(doc), 0))
+  doc
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
