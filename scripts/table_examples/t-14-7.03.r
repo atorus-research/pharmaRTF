@@ -43,8 +43,8 @@ vs_1$VISIT <- ordered(vs_1$VISIT, c("BASELINE", "WEEK 24", "End of Trt."))
 
 # Create table for stats
 bw_stats <- vs_1 %>%
-  group_by(ARM, VISIT) %>%
-  summarise(n = n(),
+  dplyr::group_by(ARM, VISIT) %>%
+  dplyr::summarise(n = n(),
             Mean = mean(VSSTRESN),
             SD = sd(VSSTRESN),
             Median = median(VSSTRESN),
@@ -80,8 +80,8 @@ bw_bl$ARM <- ordered(bw_bl$ARM, c("Placebo", "Xanomeline Low Dose", "Xanomeline 
 bw_bl$VISIT <- ordered(bw_bl$VISIT,c("WEEK 24", "End of Trt."))
 
 bw_bl_1 <- bw_bl %>%
-  group_by(ARM, VISIT) %>%
-  summarise(n = sum(!is.na(change)),
+  dplyr::group_by(ARM, VISIT) %>%
+  dplyr::summarise(n = sum(!is.na(change)),
             Mean = mean(change, na.rm = TRUE),
             SD = sd(change, na.rm = TRUE),
             Median = median(change, na.rm = TRUE),
@@ -115,7 +115,7 @@ huxtable::width(ht) <- 1.5
 huxtable::escape_contents(ht) <- FALSE
 huxtable::bottom_padding(ht) <- 0
 huxtable::top_padding(ht) <- 0
-# huxtable::col_width(ht[,1]) <- 30
+huxtable::col_width(ht) <- c(0.15, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1)
 
 
 
@@ -123,7 +123,8 @@ huxtable::top_padding(ht) <- 0
 doc <- as_rtf_doc(ht) %>% titles_and_footnotes_from_df(
   from.file='./scripts/table_examples/titles.xlsx',
   reader=example_custom_reader,
-  table_number='14-7.03')
+  table_number='14-7.03') %>%
+  set_font_size(10)
 
 write_rtf(doc, file='./scripts/table_examples/outputs/14-7.03.rtf')
 
