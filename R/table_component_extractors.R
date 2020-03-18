@@ -6,7 +6,7 @@ get_column_headers <- function(doc) UseMethod('get_column_headers', object=doc$t
 get_column_headers.huxtable <- function(doc) {
 
   # Get the column header
-  col_headers <- doc$table[1, ]
+  col_headers <- doc$table[1:header_rows(doc$table), ]
 
   # Now reset the font size to the default for all the NAs because default doesn't carry forward
   cfs <- huxtable::font_size(col_headers)
@@ -30,7 +30,8 @@ get_table_body <- function(doc) UseMethod('get_table_body', object=doc$table)
 # Huxtable method
 get_table_body.huxtable <- function(doc) {
   # For huxtable it's simply the first row of the table
-  huxtable::to_rtf(doc$table[2:nrow(doc$table), ])
+  start_row <- header_rows(doc$table) + 1
+  huxtable::to_rtf(doc$table[start_row:nrow(doc$table), ])
 }
 
 # GT Method

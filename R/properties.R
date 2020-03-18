@@ -50,8 +50,6 @@ set_font <- function(x, value) UseMethod('font<-')
   doc
 }
 
-
-
 ## Font size (getters) ----
 font_size <- function(table, ...) UseMethod('font_size')
 
@@ -209,7 +207,7 @@ margins.rtf_doc <- function(doc) {
   attr(doc, 'margins')
 }
 
-## Text (setters) ----
+## Margins (setters) ----
 'margins<-' <- function(x, value) UseMethod('margins<-')
 
 set_margins <- function(x, value) UseMethod('margins<-')
@@ -331,3 +329,45 @@ set_pagesize <- function(x, value) UseMethod('pagesize<-')
   attr(doc, 'pagesize') <- pagesize
   doc
 }
+
+## Additional Table Properties Necessary ####
+
+## Header rows (getters) ----
+header_rows <- function(...) UseMethod('header_rows')
+
+header_rows.rtf_doc <- function(doc) {
+  header_rows(doc$table)
+}
+
+header_rows.huxtable <- function(table) {
+  attr(table, 'header.rows')
+}
+
+header_rows.gt_tbl <- function(table) {
+  stop('GT tables do not require header rows to be set')
+}
+
+## Header rows (setters) ----
+'header_rows<-' <- function(x, value) UseMethod('header_rows<-')
+
+set_header_rows <- function(x, value) UseMethod('header_rows<-')
+
+'header_rows<-.rtf_doc' <- function(doc, value) {
+
+  header_rows(doc$table) <- value
+  doc
+}
+
+'header_rows<-.huxtable' <- function(table, value) {
+  # Must be a number
+  assert_that(is.numeric(value) && (value %% 1 == 0), msg='Header rows must be a whole number')
+
+  # Set the attribute
+  attr(table, 'header.rows') <- value
+  table
+}
+
+'header_rows<-.gt_tbl' <- function(table, value) {
+  stop('GT tables do not require header rows to be set')
+}
+

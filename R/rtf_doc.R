@@ -15,7 +15,7 @@
 
 supported_table_types <- c('huxtable', 'gt_tbl')
 
-as_rtf_doc <- function(table, titles=list(), footnotes=list()) {
+as_rtf_doc <- function(table, titles=list(), footnotes=list(), header.rows=1) {
 
   ## TODO: Come back to this and rebuild following recommended practice:
   ##       -> https://adv-r.hadley.nz/s3.html#s3-classes Section 13.3.1
@@ -31,6 +31,9 @@ as_rtf_doc <- function(table, titles=list(), footnotes=list()) {
   if (inherits(table, 'huxtable')) {
     if (!is.na(huxtable::caption(table))) message('Huxtable contains caption - this will be stripped off ',
                                         'in RTF document generation.')
+
+    # Huxtable table's column headers are rows of the data.frame, so store how many to grab
+    attr(table, 'header.rows') <- header.rows
   }
   if (inherits(table, 'gt_tbl')) {
     warning('GT does not fully support RTF at this time. Results will not be as expected')
@@ -38,7 +41,6 @@ as_rtf_doc <- function(table, titles=list(), footnotes=list()) {
       message('GT contains title/subtitle - this will be stripped off in RTF document generation')
     }
   }
-
 
   # Put the object together
   doc <- list(

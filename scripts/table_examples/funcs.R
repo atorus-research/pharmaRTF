@@ -104,7 +104,7 @@ sum_subgrp <- function(subgroup_var, include.n=TRUE, pad.row=TRUE) {
 
 }
 
-desc_stats <- function(var, na.rm=TRUE, include=c('n', 'Mean', 'SD', 'Median', 'Min', 'Max')) {
+desc_stats <- function(var, na.rm=TRUE, int_len=3, size=10, include=c('n', 'Mean', 'SD', 'Median', 'Min', 'Max')) {
   # Provides descriptive statistics of provided variable, by TRTPCD
   # n, Mean, SD, Median, Min, Max
 
@@ -112,13 +112,14 @@ desc_stats <- function(var, na.rm=TRUE, include=c('n', 'Mean', 'SD', 'Median', '
   include = match.arg(include, several.ok=TRUE)
 
   # This is gonna get wonky - store each summary as an expression
+  #TODO: Allow flexibility in significant digits - right now it's hard coded
   summaries <- list(
-    n      = rlang::expr(num_fmt(n())),
-    Mean   = rlang::expr(num_fmt(   mean({{ var }}), 1)),
-    SD     = rlang::expr(num_fmt(     sd({{ var }}), 2)),
-    Median = rlang::expr(num_fmt( median({{ var }}), 1)),
-    Min    = rlang::expr(num_fmt(    min({{ var }}), 1)),
-    Max    = rlang::expr(num_fmt(    max({{ var }}), 1))
+    n      = rlang::expr(num_fmt(      n()         , digits=0, int_len=int_len, size=size)),
+    Mean   = rlang::expr(num_fmt(   mean({{ var }}), digits=1, int_len=int_len, size=size)),
+    SD     = rlang::expr(num_fmt(     sd({{ var }}), digits=2, int_len=int_len, size=size)),
+    Median = rlang::expr(num_fmt( median({{ var }}), digits=1, int_len=int_len, size=size)),
+    Min    = rlang::expr(num_fmt(    min({{ var }}), digits=1, int_len=int_len, size=size)),
+    Max    = rlang::expr(num_fmt(    max({{ var }}), digits=1, int_len=int_len, size=size))
   )[include] # this is a named list, so subset based on the input arguments
 
   # Pull from ADSL with totals

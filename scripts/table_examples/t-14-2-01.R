@@ -209,6 +209,7 @@ ht <- final %>%
 
 # ht <- as_hux(mtcars, add_colnames = TRUE)
 huxtable::bottom_border(ht)[1, ] <- 1
+huxtable::valign(ht)[1, ] <- 'bottom'
 huxtable::bold(ht)[1, ] <- TRUE
 huxtable::align(ht)[1, ] <- 'center'
 huxtable::width(ht) <- 1.5
