@@ -1,8 +1,6 @@
 ### Table 14-7.03 pg 148 Summary of Weight Change from Baseline at End of Treatment
 
 
-## Bugs:
-# I'm getting two extra records in the EOT items.
 library(plyr)
 library(dplyr)
 library(glue)
