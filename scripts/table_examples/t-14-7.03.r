@@ -115,10 +115,34 @@ bw_bl_1 <- add_column(bw_bl_1, "N" = apply(bw_bl_1,
                        .before = 3)
 bw_bl_1 <- pad_row(bw_bl_1, which(bw_bl_1$VISIT == "End of Trt.") + 1)
 
-
+### Combine Tables and match output
 combinedTable <- rbind(bw_stats, bw_bl_1)
 names(combinedTable)[2] <- "Treatment"
 names(combinedTable)[4] <- "Planned Relative Time"
+combinedTable[,"Treatment"] <- apply(combinedTable, 1, function(x){
+  switch(x["Treatment"],
+         "Placebo" = "Placebo",
+         "Xanomeline Low Dose" = "Xan.Low",
+         "Xanomeline High Dose" = "Xan.High",
+         NA)
+})
+combinedTable[,"Planned Relative Time"] <- apply(combinedTable, 1, function(x){
+  switch(x["Planned Relative Time"],
+         "BASELINE" = "Baseline",
+         "WEEK 24" = "Week 24",
+         "End of Trt." = "End of Trt.",
+         NA)
+})
+combinedTable[!is.na(combinedTable$Mean),"Mean"] <- unlist(combinedTable[!is.na(combinedTable$Mean),"Mean"]) %>%
+  aaply(.margins = 1, .fun = num_fmt, digits = 1, size = 3, int_len = 2)
+combinedTable[!is.na(combinedTable$SD),"SD"] <- unlist(combinedTable[!is.na(combinedTable$SD),"SD"]) %>%
+  aaply(.margins = 1, .fun = num_fmt, digits = 2, size = 4, int_len = 2)
+combinedTable[!is.na(combinedTable$Median),"Median"] <- unlist(combinedTable[!is.na(combinedTable$Median),"Median"]) %>%
+  aaply(.margins = 1, .fun = num_fmt, digits = 1, size = 3, int_len = 2)
+combinedTable[!is.na(combinedTable$`Min.`),"Min."] <- unlist(combinedTable[!is.na(combinedTable$`Min.`),"Min."]) %>%
+  aaply(.margins = 1, .fun = num_fmt, digits = 1, size = 3, int_len = 2)
+combinedTable[!is.na(combinedTable$`Max.`),"Max."] <- unlist(combinedTable[!is.na(combinedTable$`Max.`),"Max."]) %>%
+  aaply(.margins = 1, .fun = num_fmt, digits = 1, size = 3, int_len = 2)
 
 
 ht <- combinedTable %>%
@@ -133,7 +157,8 @@ huxtable::width(ht) <- 1.5
 # huxtable::escape_contents(ht) <- FALSE
 huxtable::bottom_padding(ht) <- 0
 huxtable::top_padding(ht) <- 0
-huxtable::col_width(ht) <- c(0.15, 0.1, 0.05, 0.1, 0.05, 0.1, 0.1, 0.075, 0.075, 0.075)
+huxtable::col_width(ht) <- c(0.15, 0.1, 0.05, 0.1, 0.05, 0.075, 0.075, 0.075, 0.075, 0.075)
+huxtable::valign(ht)[1,] <- "bottom"
 
 
 
