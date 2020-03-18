@@ -22,7 +22,8 @@ vs <- read_xpt(glue("{sdtm_lib}/vs.xpt")) %>%
 vs_eot <- ddply(vs,
                 "USUBJID",
                 function(x) {
-                  x <- x[x$VISITDY <= 168,]
+                  x <- x[x$VISITDY <= 168 & x$VSBLFL != "Y",]
+                  if(max(x$VSDY) < 0) return()
                   x[x$VSDY == max(x$VSDY),]
                 })
 vs_eot[,"VISIT"] <- "End of Trt."
@@ -152,13 +153,14 @@ ht <- combinedTable %>%
 huxtable::bottom_border(ht)[1, ] <- 1
 huxtable::bold(ht)[1, ] <- TRUE
 huxtable::align(ht)[1, ] <- 'center'
+huxtable::align(ht)[,c(3, 5:10)] <- "center"
 huxtable::width(ht) <- 1.5
-# Does anything need to be escaped here?
-# huxtable::escape_contents(ht) <- FALSE
 huxtable::bottom_padding(ht) <- 0
 huxtable::top_padding(ht) <- 0
-huxtable::col_width(ht) <- c(0.15, 0.1, 0.05, 0.1, 0.05, 0.075, 0.075, 0.075, 0.075, 0.075)
+huxtable::col_width(ht) <- c(0.15, 0.1, 0.05, 0.1, 0.04, 0.065, 0.065, 0.065, 0.065, 0.065)
 huxtable::valign(ht)[1,] <- "bottom"
+
+
 
 
 
