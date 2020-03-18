@@ -3,7 +3,6 @@
 
 ## Bugs:
 # I'm getting two extra records in the EOT items.
-
 library(plyr)
 library(dplyr)
 library(glue)
@@ -23,6 +22,7 @@ vs <- read_xpt(glue("{sdtm_lib}/vs.xpt")) %>%
 vs_eot <- ddply(vs,
                 "USUBJID",
                 function(x) {
+                  x <- x[x$VISITDY <= 168,]
                   x[x$VSDY == max(x$VSDY),]
                 })
 vs_eot[,"VISIT"] <- "End of Trt."
@@ -43,8 +43,8 @@ vs_1$VISIT <- ordered(vs_1$VISIT, c("BASELINE", "WEEK 24", "End of Trt."))
 
 # Create table for stats
 bw_stats <- vs_1 %>%
-  dplyr::group_by(ARM, VISIT) %>%
-  dplyr::summarise(n = n(),
+  group_by(ARM, VISIT) %>%
+  summarise(n = n(),
             Mean = mean(VSSTRESN),
             SD = sd(VSSTRESN),
             Median = median(VSSTRESN),
@@ -58,9 +58,24 @@ bw_stats <- add_column(bw_stats, "N" = apply(bw_stats,
                            function(x) {aSum <- sum(dm[,"ARM"] == x["ARM"], na.rm = TRUE)
                            ifelse(aSum == 0, NA, aSum)}),
            .before = 3)
-# Pad blank row
-bw_stats[nrow(bw_stats)+1,] <- NA
+# Pad blank rows after End of Trt. rows
+pad_row <- function(df, r) {
+  #df - dataframe to insert pad
+  #r - row number to pad
+  for(i in seq(along = r)) {
+    if(r[i] + i - 1 < nrow(df)){
+      df[seq(r[i] + i, nrow(df) + 1),] <- df[seq(r[i] + (i - 1), nrow(df)),]
+      df[r[i] + (i - 1),] <- NA
+    } else {
+      df[r[i] + (i - 1),] <- NA
+    }
+  }
+  df
+}
+bw_stats <- pad_row(bw_stats, which(bw_stats$VISIT == "End of Trt.",) + 1)
 
+
+### Weight Change from Baseline table
 # Create table for baseline changes
 bw_bl <- ddply(vs_1,
                 "USUBJID",
@@ -82,8 +97,8 @@ bw_bl$ARM <- ordered(bw_bl$ARM, c("Placebo", "Xanomeline Low Dose", "Xanomeline 
 bw_bl$VISIT <- ordered(bw_bl$VISIT,c("WEEK 24", "End of Trt."))
 
 bw_bl_1 <- bw_bl %>%
-  dplyr::group_by(ARM, VISIT) %>%
-  dplyr::summarise(n = sum(!is.na(change)),
+  group_by(ARM, VISIT) %>%
+  summarise(n = sum(!is.na(change)),
             Mean = mean(change, na.rm = TRUE),
             SD = sd(change, na.rm = TRUE),
             Median = median(change, na.rm = TRUE),
@@ -98,13 +113,12 @@ bw_bl_1 <- add_column(bw_bl_1, "N" = apply(bw_bl_1,
                                              function(x) {aSum <- sum(dm[,"ARM"] == x["ARM"], na.rm = TRUE)
                                              ifelse(aSum == 0, NA, aSum)}),
                        .before = 3)
-
+bw_bl_1 <- pad_row(bw_bl_1, which(bw_bl_1$VISIT == "End of Trt.") + 1)
 
 
 combinedTable <- rbind(bw_stats, bw_bl_1)
 names(combinedTable)[2] <- "Treatment"
 names(combinedTable)[4] <- "Planned Relative Time"
-
 
 
 ht <- combinedTable %>%
@@ -115,10 +129,11 @@ huxtable::bottom_border(ht)[1, ] <- 1
 huxtable::bold(ht)[1, ] <- TRUE
 huxtable::align(ht)[1, ] <- 'center'
 huxtable::width(ht) <- 1.5
-huxtable::escape_contents(ht) <- FALSE
+# Does anything need to be escaped here?
+# huxtable::escape_contents(ht) <- FALSE
 huxtable::bottom_padding(ht) <- 0
 huxtable::top_padding(ht) <- 0
-huxtable::col_width(ht) <- c(0.15, 0.1, 0.05, 0.1, 0.05, 0.1, 0.1, 0.1, 0.1, 0.1)
+huxtable::col_width(ht) <- c(0.15, 0.1, 0.05, 0.1, 0.05, 0.1, 0.1, 0.075, 0.075, 0.075)
 
 
 
