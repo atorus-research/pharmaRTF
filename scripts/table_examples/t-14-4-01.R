@@ -77,7 +77,7 @@ huxtable::bottom_padding(ht) <- 0
 huxtable::top_padding(ht) <- 0
 
 # Write into doc object and pull titles/footnotes from excel file
-doc <- as_rtf_doc(ht) %>% titles_and_footnotes_from_df(
+doc <- as_rtf_doc(ht, header.rows = 2) %>% titles_and_footnotes_from_df(
   from.file='./scripts/table_examples/titles.xlsx',
   reader=example_custom_reader,
   table_number='14-4.01') %>%
