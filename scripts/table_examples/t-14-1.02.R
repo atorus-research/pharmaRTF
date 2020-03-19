@@ -90,7 +90,13 @@ term_df["\tMissing", ] <- "  0 (  0%)"
 term_p_1 <- adsl %>%
   fish_p(DSREASAE, ARM)
 term_df <- attach_p(term_df, term_p_1)
-### TODO: FIgure out the p value derivation on 'Lack of Efficacy'
+
+term_p_2 <- adsl %>%
+  select(ARM, DSDECOD) %>%
+  mutate(loefl = ifelse(DSDECOD %in% 'LACK OF EFFICACY, PATIENT CAREGIVER PERCEPTION', 1, 0)) %>%
+  fish_p(ARM ,loefl, width = 6)
+term_df[5,] <- attach_p(term_df[5,], term_p_2)
+
 
 ## Add Table lables
 comp_df <- add_column(comp_df, " " = row.names(comp_df), .before = 1)
@@ -113,7 +119,7 @@ headers_2 <- adsl %>%
   mutate(ARM = "Total")
 headers_3 <- rbind(headers, headers_2) %>%
   mutate(labels = str_replace_all(str_wrap(glue('{ARM} (N={N})'), width=10), "\n", function(x) "\\line "))
-headers_4 <- c(" ", headers_3$labels, "p-value\\line [1]")
+headers_4 <- c(" ", headers_3$labels, "p-value [1]")
 names(combinedTable) <- headers_4
 
 ht <- combinedTable %>%

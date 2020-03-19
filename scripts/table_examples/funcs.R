@@ -174,7 +174,7 @@ chi_p <- function(data, results, categories) {
 }
 
 # P-vaule for fisher's test
-fish_p <- function(data, results, categories) {
+fish_p <- function(data, results, categories, width = 10) {
   # get the arguments as a off of the function call
   arguments <- as.list(match.call())
   # Evaluate the arguments within the dataframe environment
@@ -184,7 +184,7 @@ fish_p <- function(data, results, categories) {
 
   p <- fisher.test(res, cats)$p.value
   if(round(p, 4) == 0) return("<.0001")
-  format(round(p, 4), width=10, nsmall=4)
+  format(round(p, 4), width=width, nsmall=4)
 }
 
 # Attach P-value to the first row of a dataframe
