@@ -31,15 +31,19 @@ comp_stat <- adsl %>%
 
 #Make data.frame for table, unnamed so the cols are named correctly
 comp_df <- data.frame(
-  "Placebo" = unname(comp_stat[c(1, 4), "n"]),
-  "Xanomeline Low Dose" = unname(comp_stat[c(2, 5), "n"]),
-  "Xanomeline High Dose" = unname(comp_stat[c(3, 5), "n"]),
-  "Total" = c(sum(comp_stat[1:3, "n"]), sum(comp_stat[4:6, "n"])),
-  row.names = c("Completed Week 24", "Early Termination (prior to Week 24)")
+  "Placebo" = n_pct(unlist(comp_stat[c(1,4), "n"]), sum(unlist(comp_stat[c(1,4), "n"]))),
+  "Xanomeline Low Dose" = n_pct(unlist(comp_stat[c(1,4), "n"]), sum(unlist(comp_stat[c(1,4), "n"]))),
+  "Xanomeline High Dose" = n_pct(unlist(comp_stat[c(1,4), "n"]), sum(unlist(comp_stat[c(1,4), "n"]))),
+  "Total" = c(n_pct(sum(comp_stat[1:3, "n"]), sum(comp_stat[,"n"])),
+              n_pct(sum(comp_stat[4:6, "n"]), sum(comp_stat[,"n"]))),
+  row.names = c("\tCompleted Week 24", "\tEarly Termination (prior to Week 24)"),
+  #Stop data.frame from adding periods
+  check.names = FALSE, stringsAsFactors = FALSE
 )
+# Add tabs to row.names
 
 # Add missing row. TODO: probably a more elegant way of doing this.
-comp_df["Missing", ] <- 0
+comp_df["\tMissing", ] <- "  0 (  0%)"
 
 # p-value
 comp_p <- fish_p(adsl, adsl$COMPLT24, adsl$ARM)
@@ -60,24 +64,27 @@ term_reas_tot <- adsl %>%
   complete(nesting(DSDECOD, ARM)) %>%
   summarise(n = n())
 
+
 term_df <- data.frame(
-  "Placebo" = unname(term_reas[seq(1, 27, 3), "n"]),
-  "Xanomeline Low Dose" = unname(term_reas[seq(2, 27, 3), "n"]),
-  "Xanomeline High Dose" = unname(term_reas[seq(3, 27, 3),"n"]),
-  "Total" = unname(term_reas_tot[,"n"]),
+  "Placebo" = n_pct(unlist(term_reas[seq(1, 27, 3), "n"]), sum(adsl %>% filter(ARM == "Placebo") %>% summarise(n = n()))),
+  "Xanomeline Low Dose" = n_pct(unlist(term_reas[seq(2, 27, 3), "n"]), sum(adsl %>% filter(ARM == "Xanomeline Low Dose") %>% summarise(n = n()))),
+  "Xanomeline High Dose" = n_pct(unlist(term_reas[seq(3, 27, 3), "n"]), sum(adsl %>% filter(ARM == "Xanomeline High Dose") %>% summarise(n = n()))),
+  "Total" = n_pct(unlist(term_reas_tot[, "n"]), sum(adsl %>% summarise(n = n()))),
   row.names = c(
-    "Adverse Event",
-    "Death",
-    "Lack of Efficacy[2]",
-    "Lost to Follow-up",
-    "Subject decided to withdraw",
-    "Physician decided to withdraw subject",
-    "Protocol criteria not met",
-    "Protocol violation",
-    "Sponsor decision"
-  )
+    "\tAdverse Event",
+    "\tDeath",
+    "\tLack of Efficacy[2]",
+    "\tLost to Follow-up",
+    "\tSubject decided to withdraw",
+    "\tPhysician decided to withdraw subject",
+    "\tProtocol criteria not met",
+    "\tProtocol violation",
+    "\tSponsor decision"
+  ),
+  #Stop data.frame from adding periods
+  check.names = FALSE, stringsAsFactors = FALSE
 )
-term_df["Missing", ] <- 0
+term_df["\tMissing", ] <- "  0 (  0%)"
 
 # p-value
 term_p_1 <- adsl %>%
@@ -94,8 +101,41 @@ term_df <- add_column(term_df, " " = row.names(term_df), .before = 1)
 term_df <- add_row(term_df, " " = "Reason for Early Termination (prior to Week 24):", .before = 1)
 term_df <- add_row(term_df, " " = "", .before = 1)
 
+combinedTable <- rbind(comp_df, term_df)
+# Rename to get rid of period seperation
+names(combinedTable)
+
+headers <- adsl %>%
+  group_by(ARM) %>%
+  summarise(N = n())
+headers_2 <- adsl %>%
+  summarise(N = n()) %>%
+  mutate(ARM = "Total")
+headers_3 <- rbind(headers, headers_2) %>%
+  mutate(labels = str_replace_all(str_wrap(glue('{ARM} (N={N})'), width=10), "\n", function(x) "\\line "))
+headers_4 <- c(" ", headers_3$labels, "p-value\\line [1]")
+names(combinedTable) <- headers_4
+
+ht <- combinedTable %>%
+  huxtable::as_hux(add_colnames=TRUE)
+
+huxtable::bottom_border(ht)[1, ] <- 1
+huxtable::bold(ht)[1, ] <- TRUE
+huxtable::align(ht)[1, ] <- 'center'
+huxtable::width(ht) <- 1.5
+huxtable::escape_contents(ht) <- FALSE
+huxtable::col_width(ht) <- c(.4, .12, .12, .12, .12, .12)
+huxtable::bottom_padding(ht) <- 0
+huxtable::top_padding(ht) <- 0
+huxtable::valign(ht)[1,] <- "bottom"
 
 
+# Write into doc object and pull titles/footnotes from excel file
+doc <- as_rtf_doc(ht) %>% titles_and_footnotes_from_df(
+  from.file='./scripts/table_examples/titles.xlsx',
+  reader=example_custom_reader,
+  table_number='14-1.02') %>%
+  set_font_size(10)
 
-
-
+# Write out the RTF
+write_rtf(doc, file='./scripts/table_examples/outputs/14-1.02.rtf')

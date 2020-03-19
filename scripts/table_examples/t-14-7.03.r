@@ -132,6 +132,8 @@ combinedTable[,"Planned Relative Time"] <- apply(combinedTable, 1, function(x){
          "End of Trt." = "End of Trt.",
          NA)
 })
+
+### Number formatting
 combinedTable[!is.na(combinedTable$Mean),"Mean"] <- unlist(combinedTable[!is.na(combinedTable$Mean),"Mean"]) %>%
   aaply(.margins = 1, .fun = num_fmt, digits = 1, size = 3, int_len = 2)
 combinedTable[!is.na(combinedTable$SD),"SD"] <- unlist(combinedTable[!is.na(combinedTable$SD),"SD"]) %>%
