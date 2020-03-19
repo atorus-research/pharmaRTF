@@ -143,7 +143,7 @@ combinedTable[!is.na(combinedTable$Median),"Median"] <- unlist(combinedTable[!is
 combinedTable[!is.na(combinedTable$`Min.`),"Min."] <- unlist(combinedTable[!is.na(combinedTable$`Min.`),"Min."]) %>%
   aaply(.margins = 1, .fun = num_fmt, digits = 1, size = 3, int_len = 2)
 combinedTable[!is.na(combinedTable$`Max.`),"Max."] <- unlist(combinedTable[!is.na(combinedTable$`Max.`),"Max."]) %>%
-  aaply(.margins = 1, .fun = num_fmt, digits = 1, size = 3, int_len = 2)
+  aaply(.margins = 1, .fun = num_fmt, digits = 1, size = 3, int_len = 3)
 
 
 ht <- combinedTable %>%
