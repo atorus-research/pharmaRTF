@@ -12,6 +12,19 @@ library(tibble)
 source('./scripts/table_examples/config.R')
 source('./scripts/table_examples/funcs.R')
 
+## Modified n_pct function
+n_pct <- function(n, pct) {
+  # n (%) formatted string. e.g. 50 ( 75%)
+  return(
+    # Suppress conversion warnings
+    as.character(
+      # Form the string using glue and format
+      glue('{format(n, width=3)} ({format(round((n/pct) * 100))}%)')
+    )
+  )
+}
+
+
 cm <- read_xpt(glue("{sdtm_lib}/cm.xpt"))
 adsl <- read_xpt(glue("{adam_lib}/adsl.xpt"))
 adsl$ARM <- ordered(adsl$ARM, c("Placebo", "Xanomeline Low Dose", "Xanomeline High Dose"))
@@ -51,6 +64,9 @@ df <- ldply(cm_class, function(class_i){
     stringsAsFactors = FALSE, check.names = FALSE, row.names = FALSE
   )
 
+  #Pad Row
+  df_1 <- add_row(df_1, "Therapeutic class, n (%)" = "", .before = 1)
+
   #Coded medication names
   cm_medi <- unlist(unique(cm[cm$CMCLAS == class_i, "CMDECOD"]), use.names = FALSE)
 
@@ -61,18 +77,23 @@ df <- ldply(cm_class, function(class_i){
       group_by(ARM) %>%
       summarise(n = sum(USUBJID %in% unlist(unique(cm[cm$CMDECOD == medi_i, "USUBJID"])))))
 
-    data.frame(
+
+    df_3 <- data.frame(
       "Therapeutic class, n (%)" = paste0("\t", unname(medi_i)),
       "Placebo" = unname(ifelse(medi_by_arm[1, "n"] == 0, "  0  ", n_pct(medi_by_arm[1, "n"], cm_1[1, "total"]))),
-      "Xanomeline Low Dose" = unname(ifelse(medi_by_arm[2, "n"] == 0, "   0  ", n_pct(medi_by_arm[2, "n"], cm_1[2, "total"]))),
-      "Xanomeline High Dose" = unname(ifelse(medi_by_arm[3, "n"] == 0, "   0  ", n_pct(medi_by_arm[3, "n"], cm_1[3, "total"]))),
+      "Xanomeline Low Dose" = unname(ifelse(medi_by_arm[2, "n"] == 0, "  0  ", n_pct(medi_by_arm[2, "n"], cm_1[2, "total"]))),
+      "Xanomeline High Dose" = unname(ifelse(medi_by_arm[3, "n"] == 0, "  0  ", n_pct(medi_by_arm[3, "n"], cm_1[3, "total"]))),
       stringsAsFactors = FALSE, check.names = FALSE, row.names = FALSE
     )
   })
+  ## Order Medications. Order Descending by placebo count and ascending alphabetically
+  # radix used because its the only method that supports a decreasing vector.
+  df_2 <- df_2[order(df_2$Placebo, df_2[,1], decreasing = c(TRUE, FALSE), method = "radix"),]
   rbind(df_1, df_2)
 })
 
 
+combinedTable <- rbind(cm_2, df)
 
 
 ### Add Headers
@@ -83,8 +104,6 @@ headers <- adsl %>%
 names(combinedTable) <- c("Therapeutic class, n (%)", headers$labels)
 
 
-combinedTable <- rbind(cm_2, df)
-
 ht <- combinedTable %>%
   huxtable::as_hux(add_colnames=TRUE)
 
@@ -92,12 +111,14 @@ ht <- combinedTable %>%
 huxtable::bottom_border(ht)[1, ] <- 1
 huxtable::bold(ht)[1, ] <- TRUE
 huxtable::align(ht)[1, ] <- 'center'
-huxtable::width(ht) <- 1.5
+huxtable::align(ht)[1, 1] <- "left"
+huxtable::width(ht) <- 1.2
 huxtable::bottom_padding(ht) <- 0
 huxtable::top_padding(ht) <- 0
-huxtable::col_width(ht) <- c(.5, .2, .2, .2)
+huxtable::col_width(ht) <- c(.6, .15, .15, .15)
 huxtable::valign(ht)[1,] <- "bottom"
-
+huxtable::escape_contents(ht) <- FALSE
+huxtable::align(ht)[-1,2:4] <- "center"
 
 
 
