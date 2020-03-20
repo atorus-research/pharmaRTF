@@ -9,7 +9,7 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'
 
-container: 'rocker/tidyverse'
+container: 'rocker/tidyverse:latest'
 
 steps:
 - script: Rscript -e 'R.version'
