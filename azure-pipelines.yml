@@ -15,7 +15,7 @@ steps:
 - script: Rscript -e 'R.version'
   displayName: 'R Version'
 
-- script: Rscript -e 'install.packages("devtools")'
+- script: Rscript -e 'install.packages("devtools", lib = dir.create("library"))'
   displayName: 'Install Devtools'
 
 - script:
