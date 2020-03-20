@@ -53,13 +53,13 @@ num_fmt <- function(var, digits=0, size=10, int_len=3) {
   ))
 }
 
-n_pct <- function(n, pct) {
+n_pct <- function(n, pct, n_width=3, pct_width=3) {
   # n (%) formatted string. e.g. 50 ( 75%)
   return(
     # Suppress conversion warnings
     as.character(
       # Form the string using glue and format
-      glue('{format(n, width=3)} ({format(round((n/pct) * 100), width=3)}%)')
+      glue('{format(n, width=n_width)} ({format(round((n/pct) * 100), width=pct_width)}%)')
     )
   )
 }
@@ -184,8 +184,8 @@ attach_p <- function(data, p_value) {
 }
 
 # Add an empty row
-pad_row <- function(df) {
-  df[nrow(df)+1, ] <- ""
+pad_row <- function(df, n=1) {
+  df[(nrow(df)+1):(nrow(df)+n), ] <- ""
   df
 }
 
