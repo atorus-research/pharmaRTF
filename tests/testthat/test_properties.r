@@ -10,6 +10,10 @@ ht_tab <- hux(
   column2 = letters[1:5]
 )
 
+huxtable::font(ht_tab)[1,1] <- "Times New Roman"
+huxtable::font(ht_tab)[2,2] <- "Comic Sans"
+huxtable::font(ht_tab)[4,2] <- "Windings"
+
 
 test_that("Font getters property return all font(s)", {
 
