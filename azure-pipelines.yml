@@ -9,6 +9,8 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'
 
+container: 'rocker/r-ver:3.6.2'
+
 steps:
 - script: Rscript -e 'R.version'
   displayName: 'R Version'
