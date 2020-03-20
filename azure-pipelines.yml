@@ -19,5 +19,5 @@ steps:
   displayName: 'Install Devtools'
 
 - script:
-    Rscript -e 'devtools::check()'
+    Rscript -e 'library("devtools"); devtools::check()'
   displayName: 'Package Check'
