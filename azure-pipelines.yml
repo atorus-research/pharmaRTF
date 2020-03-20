@@ -9,11 +9,11 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'
 
-container: 'rocker/r-ver'
+container: 'rocker/tidyverse'
 
 steps:
 - script: Rscript -e 'R.version'
   displayName: 'R Version'
 
-- script: Rscript -e 'dir.create("library"); install.packages("devtools", lib = "library", repos="https://mran.microsoft.com/snapshot/2019-09-20/"); library("devtools", lib.loc = "library"); devtools::check()'
+- script: Rscript -e 'library("devtools"); devtools::check()'
   displayName: 'Package Check'
