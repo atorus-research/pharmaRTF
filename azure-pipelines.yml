@@ -12,10 +12,8 @@ pool:
 container: 'rocker/r-ver:3.6.2'
 
 steps:
-- script: |
-    apt-get -y build-dep libcurl4-gnutls-dev
-    apt-get -y install libcurl4-gnutls-dev
-  displayName: 'Download libcurl4-gnutls-dev'
+- script: sudo apt-get install libcurl4-openssl-dev libssl-dev
+  displayName: 'Install libcurl4-gnutls-dev'
 
 - script: Rscript -e 'R.version'
   displayName: 'R Version'
