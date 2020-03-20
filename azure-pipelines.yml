@@ -16,5 +16,5 @@ steps:
   displayName: 'R Version'
 
 - script:
-    Rscript -e 'devtools::check()
+    Rscript -e 'devtools::check()'
   displayName: 'Package Check'
