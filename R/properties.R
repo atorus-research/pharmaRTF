@@ -371,3 +371,57 @@ set_header_rows <- function(x, value) UseMethod('header_rows<-')
   stop('GT tables do not require header rows to be set')
 }
 
+## Ignore Cell Padding (getters) ----
+ignore_cell_padding <- function(...) UseMethod('ignore_cell_padding')
+
+ignore_cell_padding.rtf_doc <- function(table) {
+  attr(table, 'ignore_cell_padding')
+}
+
+## Ignore Cell Padding (setters) ----
+'ignore_cell_padding<-' <- function(x, value) UseMethod('ignore_cell_padding<-')
+
+set_ignore_cell_padding <- function(x, value) UseMethod('ignore_cell_padding<-')
+
+
+'ignore_cell_padding<-.rtf_doc' <- function(doc, value) {
+  # Check that argument is valid
+  assert_that(is.logical(value))
+
+  attr(doc, 'ignore_cell_padding') <- value
+  doc
+}
+
+## Column header buffer (getter)
+column_header_buffer <- function(...) UseMethod('column_header_buffer')
+
+column_header_buffer.rtf_doc <- function(doc) {
+  attr(doc, 'column_header_buffer')
+}
+
+## Ignore Cell Padding (setters) ----
+'column_header_buffer<-' <- function(x, value) UseMethod('column_header_buffer<-')
+
+set_column_header_buffer <- function(x, top, bottom) UseMethod('set_column_header_buffer')
+
+set_column_header_buffer.rtf_doc <- function(doc, top=0, bottom=0) {
+
+  # Check the inputs
+  valid <- all(sapply(c(top, bottom), function(x) is.numeric(x) && x%%1==0))
+  assert_that(valid, msg= "Top and bottom values must be whole numbers")
+
+  attr(doc, 'column_header_buffer') <- c(top=top, bottom=bottom)
+  doc
+}
+
+'column_header_buffer<-.rtf_doc' <- function(doc, value) {
+  # Check that argument is valid
+  assert_that(length(setdiff(names(value), c('top', 'bottom'))) == 0,
+              msg = 'Invalid named element: only top and bottom allowed')
+  # Check that values are appropriate
+  valid <- all(sapply(value, function(x) is.numeric(x) && x%%1==0))
+  assert_that(valid, msg= "Top and bottom values must be whole numbers")
+
+  attr(doc, 'column_header_buffer') <- value
+  doc
+}
