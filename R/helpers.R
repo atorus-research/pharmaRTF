@@ -112,3 +112,54 @@ eval_type <- function(x, df) {
 
 }
 
+# Replace out RTF strings to ignore cell padding
+replace_cell_padding <- function(txt) {
+
+  replacements <- c('\\\\clpadfl3' = '\\\\clpadfl0',
+                    '\\\\clpadft3' = '\\\\clpadft0',
+                    '\\\\clpadfb3' = '\\\\clpadfb0',
+                    '\\\\clpadfr3' = '\\\\clpadfr0')
+
+  str_replace_all(txt, replacements)
+}
+
+
+# Helper to check if any buffer is required
+needs_buffer <- function(doc){
+  # Are either top or bottom greater than 0?
+  sum(column_header_buffer(doc)) > 0
+}
+
+# Create necessary buffer rows
+insert_buffer <- function(doc, col_headers){
+
+  rows <- column_header_buffer(doc)
+
+  # Copy col headers and blank it out
+  top <- col_headers
+  bottom <- col_headers
+  # Turn off borders
+  huxtable::bottom_border(top) <- 0
+  huxtable::bottom_border(bottom) <- 0
+
+  # Insert the desired amount of space above
+  if (rows['top'] > 0) {
+    # Create the set number of blank rows
+    top[1:rows['top'], ] <- ''
+    # attach it to the top of the column headers
+    col_headers <- rbind(top, col_headers)
+  }
+
+  if (rows['bottom'] > 0) {
+    # Create hte set number of blank rows
+    bottom[1:rows['bottom'], ] <- ''
+    # Switch the border style and thickness down to the bottom and clean off the bottom column header row
+    huxtable::bottom_border(bottom[nrow(bottom), ]) <- huxtable::bottom_border(col_headers[nrow(col_headers), ])
+    huxtable::bottom_border(col_headers[nrow(col_headers), ]) <- 0
+    huxtable::bottom_border_style(bottom[nrow(bottom), ]) <- huxtable::bottom_border_style(col_headers[nrow(col_headers), ])
+    # Bind the space to the bottom
+    col_headers <- rbind(col_headers, bottom)
+  }
+
+  col_headers
+}

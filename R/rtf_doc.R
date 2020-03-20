@@ -57,6 +57,8 @@ as_rtf_doc <- function(table, titles=list(), footnotes=list(), header.rows=1) {
   attr(doc, 'pagesize') <- c(height=8.5, width=11)
   attr(doc, 'font') <- 'Courier New'
   attr(doc, 'font_size') <- 12
+  attr(doc, 'ignore_cell_padding') <- FALSE
+  attr(doc, 'column_header_buffer') <- c(top=0, bottom=0)
 
   # Set the class
   class(doc) <- 'rtf_doc'
