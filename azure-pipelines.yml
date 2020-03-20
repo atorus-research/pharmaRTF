@@ -12,11 +12,8 @@ pool:
 container: 'rocker/r-ver:3.6.2'
 
 steps:
-- script: apt-get -y install libcurl4-openssl-dev libssl-dev
-  displayName: 'Install libcurl4-gnutls-dev'
-
 - script: Rscript -e 'R.version'
   displayName: 'R Version'
 
-- script: Rscript -e 'dir.create("library"); install.packages("devtools", lib = "library"); library("devtools"); devtools::check()'
+- script: Rscript -e 'dir.create("library"); install.packages("devtools", lib = "library", repos="https://mran.microsoft.com/snapshot/2019-09-20/""); library("devtools"); devtools::check()'
   displayName: 'Package Check'
