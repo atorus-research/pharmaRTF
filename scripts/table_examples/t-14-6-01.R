@@ -14,7 +14,7 @@ source('./scripts/table_examples/funcs.R')
 adlbc <- read_xpt(glue("{adam_lib}/adlbc.xpt")) %>%
   filter(SAFETY == 'Y')
 adlbh <- read_xpt(glue("{adam_lib}/adlbh.xpt")) %>%
-  filter(SAFETY == 'Y' & !(LBTEST %in% c('ANISOCYTOSIS', 'POIKILOCYTOSIS', 'MICROCYTES')))
+  filter(SAFETY == 'Y' & !(LBTEST %in% c('ANISOCYTOSIS', 'POIKILOCYTOSIS', 'MICROCYTES', 'MACROCYTES')))
 
 # Template for assigning display visit values
 visit_names <- data.frame(
@@ -64,7 +64,7 @@ test_summary <- function(x, df_=NULL) {
       msc =
         ifelse(
           !is.na(mean_cbl),
-          as.character(glue('{num_fmt(mean_cbl, size=5, digits=1, int_len=3)} ({num_fmt(mean_cbl, size=6, digits=2, int_len=3)})')),
+          as.character(glue('{num_fmt(mean_cbl, size=5, digits=1, int_len=3)} ({num_fmt(sd_cbl, size=6, digits=2, int_len=3)})')),
           '')
     ) %>%
     # Transpose the treatments out
