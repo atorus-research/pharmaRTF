@@ -1,3 +1,4 @@
+# Toy example
 library(assertthat)
 library(huxtable)
 
