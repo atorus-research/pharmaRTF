@@ -124,11 +124,15 @@ huxtable::align(ht)[-1,2:4] <- "center"
 
 
 # Write into doc object and pull titles/footnotes from excel file
-doc <- as_rtf_doc(ht) %>% titles_and_footnotes_from_df(
+doc <- rtf_doc(ht) %>% titles_and_footnotes_from_df(
   from.file='./scripts/table_examples/titles.xlsx',
   reader=example_custom_reader,
   table_number='14-7.04') %>%
-  set_font_size(10)
+  set_font_size(10) %>%
+  set_ignore_cell_padding(TRUE) %>%
+  set_header_height(1) %>%
+  set_column_header_buffer(1,0) %>%
+  set_footer_height(1)
 
 write_rtf(doc, file='./scripts/table_examples/outputs/14-7.04.rtf')
 

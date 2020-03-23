@@ -1,46 +1,66 @@
 #
-# You can learn more about package authoring with RStudio at:
-#
-#   http://r-pkgs.had.co.nz/
-#
-# Some useful keyboard shortcuts for package authoring:
-#
-#   Install Package:           'Ctrl + Shift + B'
-#   Check Package:             'Ctrl + Shift + E'
-#   Test Package:              'Ctrl + Shift + T'
+# TODO: I want to try to pass ... to dispatch instead of titles, footnotes, header.rows
 
-# RTF document functions
-#  - Object holding
-#  - Document writing
+
+
 
 supported_table_types <- c('huxtable', 'gt_tbl')
 
-as_rtf_doc <- function(table, titles=list(), footnotes=list(), header.rows=1) {
+rtf_doc <- function(table, titles = list(), footnotes = list(), header.rows = 1) {
+  # Return a null object of class rtf_doc if no table is passed.
+  if(missing(table)) return(structure(logical(0), class = "rtf_doc"))
+  as_rtf_doc(table, titles = titles, footnotes = footnotes, header.rows = header.rows)
+}
 
-  ## TODO: Come back to this and rebuild following recommended practice:
-  ##       -> https://adv-r.hadley.nz/s3.html#s3-classes Section 13.3.1
+## Method dispatch
+as_rtf_doc <- function(table, titles, footnotes, header.rows) {
+  UseMethod("as_rtf_doc")
+}
 
-  # Make sure the input tbale type is a supported class
-  assert_that(
-    any(sapply(supported_table_types, function(c) inherits(table, c))),
-    msg=sprintf("Unsupported table type %s. Currently support types are: %s",
-                class(table)[[1]],
-                supported_table_types)
-  )
+## For rtf_doc, return the table
+as_rtf_doc.rtf_doc <- function(table, titles, footnotes, header.rows) {
+  table
+}
 
-  if (inherits(table, 'huxtable')) {
-    if (!is.na(huxtable::caption(table))) message('Huxtable contains caption - this will be stripped off ',
-                                        'in RTF document generation.')
+## For huxtable
+as_rtf_doc.huxtable <- function(table, titles, footnotes, header.rows) {
 
-    # Huxtable table's column headers are rows of the data.frame, so store how many to grab
-    attr(table, 'header.rows') <- header.rows
+  if (!is.na(huxtable::caption(table))) message('Huxtable contains caption - this will be stripped off ',
+                                                'in RTF document generation.')
+
+  # Huxtable table's column headers are rows of the data.frame, so store how many to grab
+  attr(table, 'header.rows') <- header.rows
+
+  new_rtf_doc(table, titles, footnotes)
+}
+
+## For GT Table
+as_rtf_doc.gt_tbl <- function(table, titles, footnotes, header.rows) {
+
+
+  warning('GT does not fully support RTF at this time. Results will not be as expected')
+
+  if (!all(sapply(table[['_heading']], is.null))) {
+    message('GT contains title/subtitle - this will be stripped off in RTF document generation')
   }
-  if (inherits(table, 'gt_tbl')) {
-    warning('GT does not fully support RTF at this time. Results will not be as expected')
-    if (!all(sapply(table[['_heading']], is.null))) {
-      message('GT contains title/subtitle - this will be stripped off in RTF document generation')
-    }
-  }
+
+  new_rtf_doc(table, titles, footnotes)
+
+}
+
+## Unsupported table
+as_rtf_doc.default <- function(table, ...) {
+  stop(paste0(
+    "Unsupported table type ",
+    class(table),
+    "currently supported types are: ",
+    supported_table_types
+  ))
+}
+
+new_rtf_doc <- function(table, titles, footnotes, header.rows) {
+
+  validate_rtf_doc(table, titles, footnotes, header.rows)
 
   # Put the object together
   doc <- list(
@@ -66,4 +86,8 @@ as_rtf_doc <- function(table, titles=list(), footnotes=list(), header.rows=1) {
   # Add fonts from any contributing portions of the document
   # attr(doc, 'font') <- pharmaRTF:::font(doc)
   doc
+}
+
+validate_rtf_doc <- function(tables, titles, footnotes, header.rows) {
+  return()
 }
