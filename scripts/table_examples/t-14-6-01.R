@@ -146,7 +146,7 @@ final <- rbind(col_headers, ht) %>%
   huxtable::set_top_padding(0)
 
 # Write into doc object and pull titles/footnotes from excel file
-doc <- as_rtf_doc(final, header.rows = 2) %>% titles_and_footnotes_from_df(
+doc <- rtf_doc(final, header.rows = 2) %>% titles_and_footnotes_from_df(
   from.file='./scripts/table_examples/titles.xlsx',
   reader=example_custom_reader,
   table_number='14-6.01') %>%
