@@ -18,9 +18,9 @@ hf_line <- function(..., align=c('center', 'left', 'right', 'split'), bold=FALSE
 }
 
 
-new_hf_line(text, align, bold, italic, font, font_size, index) {
+new_hf_line <- function(line, align, bold, italic, font, font_size, index) {
 
-  validate_hf_line(text, align, bold, italic, font, font_size, index)
+  validate_hf_line(line, align, bold, italic, font, font_size, index)
 
   # Assign attributes
   attr(line, 'align') <- align
@@ -35,7 +35,7 @@ new_hf_line(text, align, bold, italic, font, font_size, index) {
   line
 }
 
-validate_hf_line <- function(text, align, bold,italic, font, font_size, index) {
+validate_hf_line <- function(line, align, bold,italic, font, font_size, index) {
 
   # Check that no more than two entries were provided
   assert_that(length(line$text) <= 2, msg="No more than two entries may be provided per line")
