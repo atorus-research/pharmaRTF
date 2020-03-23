@@ -1,5 +1,8 @@
 context("helpers")
 
-test_that("placeholder", {
-  expect_true(TRUE)
-})
+
+# Not sure how testthat runs these
+# test_that("Add filepath returns correct filepath", {
+#   expect_equal(add_filepath("%s"), "<run interactively>")
+# })
+

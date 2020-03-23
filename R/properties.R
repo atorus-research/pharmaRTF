@@ -178,14 +178,14 @@ set_text <- function(x, value) UseMethod('text<-')
   line
 }
 
-## Bold (getters) ----
+## Index (getters) ----
 index <- function(...) UseMethod('index')
 
 index.hf_line <- function(line) {
   attr(line, 'index')
 }
 
-## Bold (setters) ----
+## Index (setters) ----
 'index<-' <- function(x, value) UseMethod('index<-')
 
 set_index <- function(x, value) UseMethod('index<-')
