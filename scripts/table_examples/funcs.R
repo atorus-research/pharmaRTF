@@ -53,13 +53,13 @@ num_fmt <- function(var, digits=0, size=10, int_len=3) {
   ))
 }
 
-n_pct <- function(n, pct) {
+n_pct <- function(n, pct, n_width=3, pct_width=3) {
   # n (%) formatted string. e.g. 50 ( 75%)
   return(
     # Suppress conversion warnings
     as.character(
       # Form the string using glue and format
-      glue('{format(n, width=3)} ({format(round((n/pct) * 100), width=3)}%)')
+      glue('{format(n, width=n_width)} ({format(round((n/pct) * 100), width=pct_width)}%)')
     )
   )
 }
@@ -170,11 +170,26 @@ chi_p <- function(data, results, categories) {
   res <- factor(eval(arguments$results, data))
 
   p <- chisq.test(res, cats)$p.value
+  if(round(p, 4) == 0) return("<.0001")
   format(round(p, 4), width=10, nsmall=4)
 }
 
+# P-vaule for fisher's test
+fish_p <- function(data, results, categories, width = 10) {
+  # get the arguments as a off of the function call
+  arguments <- as.list(match.call())
+  # Evaluate the arguments within the dataframe environment
+  # This is all just so I can allow acceptance of variables without quotes
+  cats <- factor(eval(arguments$categories, data))
+  res <- factor(eval(arguments$results, data))
+
+  p <- fisher.test(res, cats)$p.value
+  if(round(p, 4) == 0) return("<.0001")
+  format(round(p, 4), width=width, nsmall=4)
+}
+
 # Attach P-value to the first row of a dataframe
-attach_p <- function(data, p_value) {
+attach_p <- function(data, p_value, digits = 4) {
   # Empty column
   data[['p']] = character(nrow(data))
   data[1, 'p'] = p_value
@@ -184,8 +199,8 @@ attach_p <- function(data, p_value) {
 }
 
 # Add an empty row
-pad_row <- function(df) {
-  df[nrow(df)+1, ] <- ""
+pad_row <- function(df, n=1) {
+  df[(nrow(df)+1):(nrow(df)+n), ] <- ""
   df
 }
 
