@@ -11,14 +11,11 @@ test_that("rtf_doc returns a list with a table, title, and footnotes", {
   )
   rtf <- as_rtf_doc(ht)
 
-
+  expect_length(nrow(rtf$table), 5)
+  expect_length(ncol(rtf$table), 2)
   expect_length(rtf, 3)
   expect_named(rtf, c("table", "titles", "footnotes"))
 })
-
-
-
-
 
 
 #### Errors/Warnings/Notes ####
