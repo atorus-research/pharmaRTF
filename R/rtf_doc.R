@@ -31,30 +31,7 @@ as_rtf_doc.huxtable <- function(table, titles, footnotes, header.rows) {
   # Huxtable table's column headers are rows of the data.frame, so store how many to grab
   attr(table, 'header.rows') <- header.rows
 
-  # Put the object together
-  doc <- list(
-    table = table,
-    titles = titles,
-    footnotes = footnotes
-  )
-
-  # Set some document properties
-  attr(doc, 'margins') <- c(top=1, bottom=1, left=1, right=1)
-  attr(doc, 'orientation') <- 'landscape'
-  attr(doc, 'header_height') <- .5
-  attr(doc, 'footer_height') <- .5
-  attr(doc, 'pagesize') <- c(height=8.5, width=11)
-  attr(doc, 'font') <- 'Courier New'
-  attr(doc, 'font_size') <- 12
-  attr(doc, 'ignore_cell_padding') <- FALSE
-  attr(doc, 'column_header_buffer') <- c(top=0, bottom=0)
-
-  # Set the class
-  class(doc) <- 'rtf_doc'
-
-  # Add fonts from any contributing portions of the document
-  # attr(doc, 'font') <- pharmaRTF:::font(doc)
-  doc
+  new_rtf_doc(table, titles, footnotes)
 }
 
 ## For GT Table
@@ -83,7 +60,7 @@ as_rtf_doc.default <- function(table, ...) {
 
 new_rtf_doc <- function(table, titles, footnotes, header.rows) {
 
-  validate_rtf_doc(table, ...)
+  validate_rtf_doc(table, titles, footnotes, header.rows)
 
   # Put the object together
   doc <- list(
