@@ -9,7 +9,7 @@ supported_table_types <- c('huxtable', 'gt_tbl')
 rtf_doc <- function(table, titles = list(), footnotes = list(), header.rows = 1) {
   # Return a null object of class rtf_doc if no table is passed.
   if(missing(table)) return(structure(logical(0), class = "rtf_doc"))
-  as_rtf_doc(table, titles = titles, footnotes = footnotes, header.rows = header.rows)
+  as_rtf_doc(table, titles, footnotes, header.rows)
 }
 
 ## Method dispatch
@@ -58,9 +58,9 @@ as_rtf_doc.default <- function(table, ...) {
   ))
 }
 
-new_rtf_doc <- function(table, titles, footnotes, header.rows) {
+new_rtf_doc <- function(table, titles, footnotes) {
 
-  validate_rtf_doc(table, titles, footnotes, header.rows)
+  validate_rtf_doc(table, titles, footnotes)
 
   # Put the object together
   doc <- list(
