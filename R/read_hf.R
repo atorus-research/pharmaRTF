@@ -1,3 +1,15 @@
+#' Title
+#'
+#' @param from
+#' @param from.file
+#' @param type
+#' @param reader
+#' @param ...
+#'
+#' @return
+#' @export
+#'
+#' @examples
 read_hf <- function(from=NULL, from.file=NULL, type=NULL, reader=NULL, ...) {
   # Parameter checks
   assert_that(xor(is.null(from), is.null(from.file)),

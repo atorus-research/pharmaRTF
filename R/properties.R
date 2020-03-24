@@ -4,21 +4,58 @@
 
 ## Fonts (getters) ----
 # S3 Generic
+#' Title
+#'
+#' @param table
+#' @param ...
+#'
+#' @return
+#' @export
 font <- function(table, ...) UseMethod('font')
 
 # Get all of the unique fonts from a huxtable table
+#' Title
+#'
+#' @param table
+#'
+#' @return
+#' @export
 font.huxtable <- function(table) {
   unique(c(attr(table, 'font')))
 }
 
+#' Title
+#'
+#' @param table
+#'
+#' @return
+#' @export
+#'
+#' @examples
 font.gt_tbl <- function(table) {
   character(1) # I haven't found an actual font attribute in GT? gt:::rtf_head() actually has Helvetica hard coded
 }
 
+#' Title
+#'
+#' @param line
+#'
+#' @return
+#' @export
+#'
+#' @examples
 font.hf_line <- function(line) {
   attr(line, 'font')
 }
 
+#' Title
+#'
+#' @param doc
+#'
+#' @return
+#' @export
+#'
+#' @examples
 font.rtf_doc <- function(doc) {
   # Get all title fonts
   titles <- sapply(doc$titles, font)

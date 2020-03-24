@@ -1,3 +1,9 @@
+#' View header and footer information
+#'
+#' @param doc RTF document
+#' @param type type
+#'
+#' @import utils
 view_hf <- function(doc, type=NULL) {
 
   # Take out the lines
@@ -33,16 +39,32 @@ view_hf <- function(doc, type=NULL) {
     df$font[i] <- pharmaRTF::font(l)
   }
 
-  View(df)
+  utils::View(df)
   df
 }
 
 # Simplified for titles
+#' Title
+#'
+#' @param doc
+#'
+#' @return
+#' @export
+#'
+#' @examples
 view_titles <- function(doc) {
   pharmaRTF:::view_hf(doc, type='titles')
 }
 
 # Simplified for footnotes
+#' Title
+#'
+#' @param doc
+#'
+#' @return
+#' @export
+#'
+#' @examples
 view_footnotes <- function(doc) {
   pharmaRTF:::view_hf(doc, type='footnotes')
 }
