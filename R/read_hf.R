@@ -40,6 +40,15 @@ read_hf <- function(from=NULL, from.file=NULL, type=NULL, reader=NULL, ...) {
 
 }
 
+#' Title
+#'
+#' @param df
+#' @param required_columns
+#'
+#' @return
+#' @export
+#'
+#' @examples
 validate_hf_dataframe <- function(df, required_columns) {
 
   # Flag for whether any errors were encountered

@@ -1,8 +1,12 @@
 ## Header extraction methods ----
 # S3 method
+#' Title
+#'
+#' @param doc
+#'
+#' @return
 get_column_headers <- function(doc) UseMethod('get_column_headers', object=doc$table)
 
-# Huxtable method
 get_column_headers.huxtable <- function(doc) {
 
   # Get the column header
@@ -25,7 +29,6 @@ get_column_headers.huxtable <- function(doc) {
   }
 }
 
-# GT Method
 get_column_headers.gt_tbl <- function(doc) {
   data <- gt:::build_data(doc$table, context='rtf')
   gt:::create_columns_component_r(data = data)
@@ -33,6 +36,11 @@ get_column_headers.gt_tbl <- function(doc) {
 
 ## Table Body extraction methods ----
 # S3 method
+#' Title
+#'
+#' @param doc
+#'
+#' @return
 get_table_body <- function(doc) UseMethod('get_table_body', object=doc$table)
 
 # Huxtable method

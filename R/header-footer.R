@@ -192,6 +192,7 @@ add_footnotes <- function(doc, ...) {
 #' @param doc RTF document
 #' @param ... header and footer inormation
 #'
+#'
 #' @import purrr
 titles_and_footnotes_from_df <- function(doc, ...) {
 

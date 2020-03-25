@@ -4,6 +4,7 @@
 #' @param type type
 #'
 #' @import utils
+#' @export
 view_hf <- function(doc, type=NULL) {
 
   # Take out the lines
