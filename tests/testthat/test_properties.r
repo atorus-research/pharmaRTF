@@ -242,7 +242,7 @@ test_that("column_header_buffer<-/set_column_header buffer throw errors as expec
 
   expect_error(set_column_header_buffer(rtf, "2", 1), "Top and bottom values must be positive whole numbers")
   expect_error(set_column_header_buffer(rtf, 2, 1.4), "Top and bottom values must be positive whole numbers")
-  expect_error(set_column_header_buffer(rtf, c(1,2), 2), "not implemented")
+  expect_error(set_column_header_buffer(rtf, c(1,2), 2), "Top and bottom values must be positive whole numbers")
   expect_error(column_header_buffer(rtf) <- val1, "Invalid named element")
   expect_error(column_header_buffer(rtf) <- val2, "Duplicate parameters entered")
   expect_error(column_header_buffer(rtf) <- val3, "whole numbers")
