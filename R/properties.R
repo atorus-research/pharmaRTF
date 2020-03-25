@@ -7,19 +7,19 @@
 font <- function(x, ...) UseMethod('font')
 
 # Get all of the unique fonts from a huxtable table
-font.huxtable <- function(x) {
+font.huxtable <- function(x, ...) {
   unique(c(attr(x, 'font')))
 }
 
-font.gt_tbl <- function(x) {
+font.gt_tbl <- function(x, ...) {
   character(1) # I haven't found an actual font attribute in GT? gt:::rtf_head() actually has Helvetica hard coded
 }
 
-font.hf_line <- function(x) {
+font.hf_line <- function(x, ...) {
   attr(x, 'font')
 }
 
-font.rtf_doc <- function(x) {
+font.rtf_doc <- function(x, ...) {
   # Get all title fonts
   titles <- sapply(x$titles, font)
   # Get all footnote fonts
@@ -38,13 +38,13 @@ font.rtf_doc <- function(x) {
 
 set_font <- function(x, ...) UseMethod('font<-')
 
-'font<-.hf_line' <- function(x, value) {
+'font<-.hf_line' <- function(x, value, ...) {
   assert_that(is.character(value))
   attr(x, 'font') <- value
   x
 }
 
-'font<-.rtf_doc' <- function(x, value) {
+'font<-.rtf_doc' <- function(x, value, ...) {
   assert_that(is.character(value))
   attr(x, 'font') <- value
   x
@@ -53,11 +53,11 @@ set_font <- function(x, ...) UseMethod('font<-')
 ## Font size (getters) ----
 font_size <- function(x, ...) UseMethod('font_size')
 
-font_size.rtf_doc <- function(x) {
+font_size.rtf_doc <- function(x, ...) {
   attr(x, 'font_size')
 }
 
-font_size.hf_line <- function(x) {
+font_size.hf_line <- function(x, ...) {
   attr(x, 'font_size')
 }
 
@@ -66,13 +66,13 @@ font_size.hf_line <- function(x) {
 
 set_font_size <- function(x, ...) UseMethod('font_size<-')
 
-'font_size<-.hf_line' <- function(x, value) {
+'font_size<-.hf_line' <- function(x, value, ...) {
   assert_that(is.numeric(value))
   attr(x, 'font_size') <- value
   x
 }
 
-'font_size<-.rtf_doc' <- function(x, value) {
+'font_size<-.rtf_doc' <- function(x, value, ...) {
   assert_that(is.numeric(value))
   attr(x, 'font_size') <- value
   x
@@ -83,7 +83,7 @@ set_font_size <- function(x, ...) UseMethod('font_size<-')
 ## Alignment (getters) ----
 align <- function(x, ...) UseMethod('align')
 
-align.hf_line <- function(x) {
+align.hf_line <- function(x, ...) {
   attr(x, 'align')
 }
 
@@ -92,7 +92,7 @@ align.hf_line <- function(x) {
 
 set_align <- function(x, ...) UseMethod('align<-')
 
-'align<-.hf_line' <- function(x, value = c('left', 'right', 'center', 'split')) {
+'align<-.hf_line' <- function(x, value = c('left', 'right', 'center', 'split'), ...) {
   # Check that argument is valid
   match.arg(value)
 
@@ -107,7 +107,7 @@ set_align <- function(x, ...) UseMethod('align<-')
 ## Bold (getters) ----
 bold <- function(x, ...) UseMethod('bold')
 
-bold.hf_line <- function(x) {
+bold.hf_line <- function(x, ...) {
   attr(x, 'bold')
 }
 
@@ -117,7 +117,7 @@ bold.hf_line <- function(x) {
 set_bold <- function(x, ...) UseMethod('bold<-')
 
 
-'bold<-.hf_line' <- function(x, value) {
+'bold<-.hf_line' <- function(x, value, ...) {
   # Check that argument is valid
   assert_that(is.logical(value))
 
@@ -128,7 +128,7 @@ set_bold <- function(x, ...) UseMethod('bold<-')
 ## Italic (getters) ----
 italic <- function(x, ...) UseMethod('italic')
 
-italic.hf_line <- function(x) {
+italic.hf_line <- function(x, ...) {
   attr(x, 'italic')
 }
 
@@ -138,7 +138,7 @@ italic.hf_line <- function(x) {
 
 set_italic <- function(x, ...) UseMethod('italic<-')
 
-'italic<-.hf_line' <- function(x, value) {
+'italic<-.hf_line' <- function(x, value, ...) {
   # Check that argument is valid
   assert_that(is.logical(value))
 
@@ -149,7 +149,7 @@ set_italic <- function(x, ...) UseMethod('italic<-')
 ## Text (getter) ----
 text <- function(x, ...) UseMethod('text')
 
-text.hf_line <- function(x) {
+text.hf_line <- function(x, ...) {
   # Extract the text element
   text <- x$text
 
@@ -164,7 +164,7 @@ text.hf_line <- function(x) {
 
 set_text <- function(x, ...) UseMethod('text<-')
 
-'text<-.hf_line' <- function(x, value) {
+'text<-.hf_line' <- function(x, value, ...) {
   # Check that argument is valid
   value <- unlist(value)
 
@@ -181,7 +181,7 @@ set_text <- function(x, ...) UseMethod('text<-')
 ## Index (getters) ----
 index <- function(x, ...) UseMethod('index')
 
-index.hf_line <- function(x) {
+index.hf_line <- function(x, ...) {
   attr(x, 'index')
 }
 
@@ -190,7 +190,7 @@ index.hf_line <- function(x) {
 
 set_index <- function(x, ...) UseMethod('index<-')
 
-'index<-.hf_line' <- function(x, value) {
+'index<-.hf_line' <- function(x, value, ...) {
   # Check that argument is valid
   assert_that(is.numeric(value) | is.null(value))
 
@@ -203,7 +203,7 @@ set_index <- function(x, ...) UseMethod('index<-')
 ## Margins (getters) ----
 margins <- function(x, ...) UseMethod('margins')
 
-margins.rtf_doc <- function(x) {
+margins.rtf_doc <- function(x, ...) {
   attr(x, 'margins')
 }
 
@@ -212,7 +212,7 @@ margins.rtf_doc <- function(x) {
 
 set_margins <- function(x, ...) UseMethod('margins<-')
 
-'margins<-.rtf_doc' <- function(x, value) {
+'margins<-.rtf_doc' <- function(x, value, ...) {
 
   values <- unlist(value)
 
@@ -242,7 +242,7 @@ set_margins <- function(x, ...) UseMethod('margins<-')
 ## Orientation (getters) ----
 orientation <- function(x, ...) UseMethod('orientation')
 
-orientation.rtf_doc <- function(x) {
+orientation.rtf_doc <- function(x, ...) {
   attr(x, 'orientation')
 }
 
@@ -265,7 +265,7 @@ set_orientation <- function(x, ...) UseMethod('orientation<-')
 ## Header height (getters)----
 header_height <- function(x, ...) UseMethod('header_height')
 
-header_height.rtf_doc <- function(x) {
+header_height.rtf_doc <- function(x, ...) {
   attr(x, 'header_height')
 }
 
@@ -274,7 +274,7 @@ header_height.rtf_doc <- function(x) {
 
 set_header_height <- function(x, ...) UseMethod('header_height<-')
 
-'header_height<-.rtf_doc' <- function(x, value) {
+'header_height<-.rtf_doc' <- function(x, value, ...) {
   # Make sure the value is valid
   assert_that(is.numeric(value))
 
@@ -285,7 +285,7 @@ set_header_height <- function(x, ...) UseMethod('header_height<-')
 ## Footer Height ----
 footer_height <- function(x, ...) UseMethod('footer_height')
 
-footer_height.rtf_doc <- function(x) {
+footer_height.rtf_doc <- function(x, ...) {
   attr(x, 'footer_height')
 }
 
@@ -294,7 +294,7 @@ footer_height.rtf_doc <- function(x) {
 
 set_footer_height <- function(x, ...) UseMethod('footer_height<-')
 
-'footer_height<-.rtf_doc' <- function(x, value) {
+'footer_height<-.rtf_doc' <- function(x, value, ...) {
   # Make sure the value is valid
   assert_that(is.numeric(value))
 
@@ -305,7 +305,7 @@ set_footer_height <- function(x, ...) UseMethod('footer_height<-')
 ## Page Size (getters) ----
 pagesize <- function(x, ...) UseMethod('pagesize')
 
-pagesize.rtf_doc <- function(x) {
+pagesize.rtf_doc <- function(x, ...) {
   attr(x, 'pagesize')
 }
 
@@ -314,7 +314,7 @@ pagesize.rtf_doc <- function(x) {
 
 set_pagesize <- function(x, ...) UseMethod('pagesize<-')
 
-'pagesize<-.rtf_doc' <- function(x, value) {
+'pagesize<-.rtf_doc' <- function(x, value, ...) {
 
   values <- unlist(value)
 
@@ -344,15 +344,15 @@ set_pagesize <- function(x, ...) UseMethod('pagesize<-')
 ## Header rows (getters) ----
 header_rows <- function(x, ...) UseMethod('header_rows')
 
-header_rows.rtf_doc <- function(x) {
+header_rows.rtf_doc <- function(x, ...) {
   header_rows(x$table)
 }
 
-header_rows.huxtable <- function(x) {
+header_rows.huxtable <- function(x, ...) {
   attr(x, 'header.rows')
 }
 
-header_rows.gt_tbl <- function(x) {
+header_rows.gt_tbl <- function(x, ...) {
   stop('GT tables do not require header rows to be set')
 }
 
@@ -361,13 +361,13 @@ header_rows.gt_tbl <- function(x) {
 
 set_header_rows <- function(x, ...) UseMethod('header_rows<-')
 
-'header_rows<-.rtf_doc' <- function(x, value) {
+'header_rows<-.rtf_doc' <- function(x, value, ...) {
 
   header_rows(x$table) <- value
   x
 }
 
-'header_rows<-.huxtable' <- function(x, value) {
+'header_rows<-.huxtable' <- function(x, value, ...) {
   # Must be a number
   assert_that(is.numeric(value) && (value %% 1 == 0) && (value >= 0), msg='Header rows must be a positive whole number')
 
@@ -376,14 +376,14 @@ set_header_rows <- function(x, ...) UseMethod('header_rows<-')
   x
 }
 
-'header_rows<-.gt_tbl' <- function(x, value) {
+'header_rows<-.gt_tbl' <- function(x, value, ...) {
   stop('GT tables do not require header rows to be set')
 }
 
 ## Ignore Cell Padding (getters) ----
 ignore_cell_padding <- function(x, ...) UseMethod('ignore_cell_padding')
 
-ignore_cell_padding.rtf_doc <- function(x) {
+ignore_cell_padding.rtf_doc <- function(x, ...) {
   attr(x, 'ignore_cell_padding')
 }
 
@@ -393,7 +393,7 @@ ignore_cell_padding.rtf_doc <- function(x) {
 set_ignore_cell_padding <- function(x, ...) UseMethod('ignore_cell_padding<-')
 
 
-'ignore_cell_padding<-.rtf_doc' <- function(x, value) {
+'ignore_cell_padding<-.rtf_doc' <- function(x, value, ...) {
   # Check that argument is valid
   assert_that(is.logical(value))
 
@@ -404,7 +404,7 @@ set_ignore_cell_padding <- function(x, ...) UseMethod('ignore_cell_padding<-')
 ## Column header buffer (getter)
 column_header_buffer <- function(x, ...) UseMethod('column_header_buffer')
 
-column_header_buffer.rtf_doc <- function(x) {
+column_header_buffer.rtf_doc <- function(x, ...) {
   attr(x, 'column_header_buffer')
 }
 
@@ -413,7 +413,7 @@ column_header_buffer.rtf_doc <- function(x) {
 
 set_column_header_buffer <- function(x, ...) UseMethod('set_column_header_buffer')
 
-set_column_header_buffer.rtf_doc <- function(x, top=0, bottom=0) {
+set_column_header_buffer.rtf_doc <- function(x, top=0, bottom=0, ...) {
 
   # Check the inputs
   valid <- all(sapply(list(top, bottom), function(x) length(x) == 1 && is.numeric(x) && x%%1==0 && x >= 0))
@@ -423,7 +423,7 @@ set_column_header_buffer.rtf_doc <- function(x, top=0, bottom=0) {
   x
 }
 
-'column_header_buffer<-.rtf_doc' <- function(x, value) {
+'column_header_buffer<-.rtf_doc' <- function(x, value, ...) {
 
   values <- unlist(value)
 
