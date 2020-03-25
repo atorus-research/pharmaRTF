@@ -251,7 +251,7 @@ orientation.rtf_doc <- function(x, ...) {
 
 set_orientation <- function(x, ...) UseMethod('orientation<-')
 
-'orientation<-.rtf_doc' <- function(x, value = c('landscape', 'portrait')) {
+'orientation<-.rtf_doc' <- function(x, value = c('landscape', 'portrait'), ...) {
   # Make sure the value is valid
   value <- match.arg(value)
 
