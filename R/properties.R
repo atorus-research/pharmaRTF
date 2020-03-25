@@ -220,8 +220,13 @@ set_margins <- function(x, value) UseMethod('margins<-')
   assert_that(all(names(values) %in% c('top', 'bottom', 'left', 'right')),
               msg = 'Invalid parameter - must be top, bottom, left, or right')
 
+  # Make sure duplicate parameters weren't entered
+  assert_that(length(unique(names(values))) == length(names(values)),
+              msg = "Duplicate parameters entered")
+
+
   # Make sure all the entries are numeric
-  lapply(values, function(x) assert_that(is.numeric(x)))
+  lapply(values, function(x) assert_that(is.numeric(x) && x >= 0, msg = "Margins must be positive numbers"))
 
   # Save out the original margins
   margins <- margins(doc)
@@ -317,8 +322,12 @@ set_pagesize <- function(x, value) UseMethod('pagesize<-')
   assert_that(all(names(values) %in% c('height', 'width')),
               msg = 'Invalid parameters - must be height or width')
 
+  # Make sure duplicate parameters weren't entered
+  assert_that(length(unique(names(values))) == length(names(values)),
+              msg = "Duplicate parameters entered")
+
   # Make sure all the entries are numeric
-  lapply(values, function(x) assert_that(is.numeric(x)))
+  lapply(values, function(x) assert_that(is.numeric(x) && x > 0, msg="Height and Width must be positive numbers"))
 
   # Save out the original pagesize
   pagesize <- pagesize(doc)
@@ -360,7 +369,7 @@ set_header_rows <- function(x, value) UseMethod('header_rows<-')
 
 'header_rows<-.huxtable' <- function(table, value) {
   # Must be a number
-  assert_that(is.numeric(value) && (value %% 1 == 0), msg='Header rows must be a whole number')
+  assert_that(is.numeric(value) && (value %% 1 == 0) && (value >= 0), msg='Header rows must be a positive whole number')
 
   # Set the attribute
   attr(table, 'header.rows') <- value
@@ -407,21 +416,35 @@ set_column_header_buffer <- function(x, top, bottom) UseMethod('set_column_heade
 set_column_header_buffer.rtf_doc <- function(doc, top=0, bottom=0) {
 
   # Check the inputs
-  valid <- all(sapply(c(top, bottom), function(x) is.numeric(x) && x%%1==0))
-  assert_that(valid, msg= "Top and bottom values must be whole numbers")
+  valid <- all(sapply(c(top, bottom), function(x) is.numeric(x) && x%%1==0 && x >= 0))
+  assert_that(valid, msg= "Top and bottom values must be positive whole numbers")
 
   attr(doc, 'column_header_buffer') <- c(top=top, bottom=bottom)
   doc
 }
 
 'column_header_buffer<-.rtf_doc' <- function(doc, value) {
-  # Check that argument is valid
-  assert_that(length(setdiff(names(value), c('top', 'bottom'))) == 0,
-              msg = 'Invalid named element: only top and bottom allowed')
-  # Check that values are appropriate
-  valid <- all(sapply(value, function(x) is.numeric(x) && x%%1==0))
-  assert_that(valid, msg= "Top and bottom values must be whole numbers")
 
-  attr(doc, 'column_header_buffer') <- value
+  values <- unlist(value)
+
+  # Check that argument is valid
+  assert_that(length(setdiff(names(values), c('top', 'bottom'))) == 0,
+              msg = 'Invalid named element: only top and bottom allowed')
+
+  # Make sure duplicate parameters weren't entered
+  assert_that(length(unique(names(values))) == length(names(values)),
+              msg = "Duplicate parameters entered")
+
+  # Check that values are appropriate
+  valid <- all(sapply(values, function(x) is.numeric(x) && x%%1==0 && x >= 0))
+  assert_that(valid, msg= "Top and bottom values must be positive whole numbers")
+
+  # Save out the original margins
+  column_header_buffer <- column_header_buffer(doc)
+
+  # Overwrite the current margin a value was provided
+  for (side in names(values)) column_header_buffer[[side]] <- values[[side]]
+
+  attr(doc, 'column_header_buffer') <- column_header_buffer
   doc
 }
