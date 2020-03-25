@@ -1,6 +1,9 @@
 ## Auto formatting page numbers ----
-# TODO: Roxygen header - but this function creates the field to calculate page number
-# Make sure this is an internal function
+#' Title
+#'
+#' @param properties properties
+#'
+#' @return num
 page_num <- function(properties='') {
 
   # TODO: Add style and font support
@@ -8,15 +11,23 @@ page_num <- function(properties='') {
   page_str
 }
 
-# TODO: Roxygen header - but this function creates the field to hold the total number of pages
-# Make sure this is an internal function
+#' Title
+#'
+#' @param properties properties
+#'
+#' @return total
 page_total <- function(properties='') {
 
   tot_str <- sprintf("{%s\\field{\\*\\fldinst{ NUMPAGES}}}", properties)
   tot_str
 }
 
-# TODO: Roxygen header - but this forms the actual page number string
+#' Title
+#'
+#' @param format format
+#' @param properties properties
+#'
+#' @return num
 add_page_num <- function(format="Page %s of %s", properties='') {
 
   # Make sure there's only a replacement for current and total pages
@@ -39,7 +50,11 @@ add_page_num <- function(format="Page %s of %s", properties='') {
 }
 
 ## Font table ----
-# Very slight modication of huxtable::font_table_string to fit with rtf_doc object
+#' Title
+#'
+#' @param doc doc
+#'
+#' @return string
 font_table_string <- function(doc){
   fonts <- unique(c("Times", font(doc)))
   font_tbl_body <- paste0("  {\\f", seq(0, along = fonts), " ", fonts, ";}", collapse = "\n")
@@ -48,11 +63,21 @@ font_table_string <- function(doc){
 
 ## Color Table ----
 # Not investing in this as the moment so write out a default blank table
+#' Title
+#'
+#' @param doc doc
+#'
+#' @return string
 color_table_string <- function(doc){
   paste('{\\colortbl;;}\n')
 }
 
 ## Generate document properties string ----
+#' Title
+#'
+#' @param doc doc
+#'
+#' @return string
 doc_properties_string <- function(doc){
 
   # Get margins and convert to twips
@@ -83,6 +108,12 @@ doc_properties_string <- function(doc){
 }
 
 ## Header and footer string generation ----
+#' Title
+#'
+#' @param line line
+#' @param doc doc
+#'
+#' @return string
 hf_line_string <- function(line, doc=NULL) {
 
   # Placeholders
@@ -137,6 +168,12 @@ hf_line_string <- function(line, doc=NULL) {
 }
 
 # General function to write the header or the footer
+#' Title
+#'
+#' @param doc doc
+#' @param type type
+#'
+#' @return string
 hf_string <- function(doc, type=NULL) {
   # Get a character vector of the formatted RTF string
   lines <- sapply(doc[[type]], hf_line_string, doc=doc)
@@ -158,16 +195,34 @@ hf_string <- function(doc, type=NULL) {
 }
 
 # Simplified for header
+#' Title
+#'
+#' @param doc doc
+#'
+#' @return string
 header_string <- function(doc) {
   hf_string(doc, type='titles')
 }
 
 # Simplified for footer
+#' Title
+#'
+#' @param doc doc
+#'
+#' @return string
 footer_string <- function(doc) {
   hf_string(doc, type='footnotes')
 }
 
 # write the RTF document out
+#' Title
+#'
+#' @param doc doc
+#' @param file file
+#'
+#' @export
+#'
+#'
 write_rtf <- function(doc, file='test.rtf') {
 
   # Write to the specified file
@@ -196,34 +251,6 @@ write_rtf <- function(doc, file='test.rtf') {
     finally = {sink()}
   )
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
