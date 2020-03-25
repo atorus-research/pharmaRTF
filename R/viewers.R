@@ -39,10 +39,10 @@ view_hf <- function(doc, type=NULL) {
 
 # Simplified for titles
 view_titles <- function(doc) {
-  pharmaRTF:::view_hf(doc, type='titles')
+  view_hf(doc, type='titles')
 }
 
 # Simplified for footnotes
 view_footnotes <- function(doc) {
-  pharmaRTF:::view_hf(doc, type='footnotes')
+  view_hf(doc, type='footnotes')
 }

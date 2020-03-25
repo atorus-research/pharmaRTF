@@ -31,7 +31,7 @@ as_rtf_doc.huxtable <- function(table, titles, footnotes, header.rows) {
   # Huxtable table's column headers are rows of the data.frame, so store how many to grab
   attr(table, 'header.rows') <- header.rows
 
-  new_rtf_doc(table, titles, footnotes)
+  new_rtf_doc(table, titles, footnotes, header.rows)
 }
 
 ## For GT Table
@@ -42,6 +42,10 @@ as_rtf_doc.gt_tbl <- function(table, titles, footnotes, header.rows) {
 
   if (!all(sapply(table[['_heading']], is.null))) {
     message('GT contains title/subtitle - this will be stripped off in RTF document generation')
+  }
+
+  if (header.rows != 1) {
+    warning('The header.rows parameter has no effect on GT tables')
   }
 
   new_rtf_doc(table, titles, footnotes)
@@ -69,25 +73,31 @@ new_rtf_doc <- function(table, titles, footnotes, header.rows) {
     footnotes = footnotes
   )
 
-  # Set some document properties
-  attr(doc, 'margins') <- c(top=1, bottom=1, left=1, right=1)
-  attr(doc, 'orientation') <- 'landscape'
-  attr(doc, 'header_height') <- .5
-  attr(doc, 'footer_height') <- .5
-  attr(doc, 'pagesize') <- c(height=8.5, width=11)
-  attr(doc, 'font') <- 'Courier New'
-  attr(doc, 'font_size') <- 12
-  attr(doc, 'ignore_cell_padding') <- FALSE
-  attr(doc, 'column_header_buffer') <- c(top=0, bottom=0)
-
-  # Set the class
-  class(doc) <- 'rtf_doc'
-
-  # Add fonts from any contributing portions of the document
-  # attr(doc, 'font') <- pharmaRTF:::font(doc)
-  doc
+  # Create the object
+  structure(doc,
+            margins= c(top=1, bottom=1, left=1, right=1),
+            orientation= 'landscape',
+            header_height= .5,
+            footer_height= .5,
+            pagesize= c(height=8.5, width=11),
+            font= 'Courier New',
+            font_size= 12,
+            ignore_cell_padding= FALSE,
+            column_header_buffer= c(top=0, bottom=0),
+            class= 'rtf_doc')
 }
 
 validate_rtf_doc <- function(tables, titles, footnotes, header.rows) {
-  return()
+  # Check that titles and footnotes are lists
+  assert_that(all(sapply(list(titles, footnotes), is.list)), msg = "Titles and footnotes must be lists of hf_line objects")
+  # Check that titles and footnotes are lists of hf_line objects
+  assert_that(all(sapply(c(titles, footnotes), inherits, what="hf_line")),
+              msg="Titles and footnotes must be lists of hf_line objects")
+
+  # Check that header.rows is positive whole number
+  assert_that(
+    header.rows %% 1 == 0,
+    header.rows >= 0,
+    msg = "header.rows must be a positive whole number greater than or equal to 0"
+  )
 }
