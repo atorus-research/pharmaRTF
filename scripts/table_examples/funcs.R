@@ -81,7 +81,7 @@ sum_subgrp <- function(subgroup_var, include.n=TRUE, pad.row=TRUE) {
       n = n()
     ) %>%
     # Merge with big Ns
-    left_join(header_n_m, by = 'TRTPCD') %>%
+    left_join(header_n, by = 'TRTPCD') %>%
     rowwise() %>%
     # Create the n (%) string
     mutate(

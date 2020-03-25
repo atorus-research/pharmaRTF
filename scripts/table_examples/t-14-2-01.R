@@ -25,7 +25,7 @@ adsl_ <- adsl %>%
                  TRTPN = 99))
 
 # Get the header N's ----
-header_n_m <- adsl_ %>%
+header_n <- adsl_ %>%
   group_by(TRTPCD, TRTP, TRTPN) %>%
   summarize(N = n()) %>%
   mutate(
@@ -36,10 +36,10 @@ header_n_m <- adsl_ %>%
   arrange(TRTPN) %>%
   select(-TRTP, -TRTPN)
 
-header_n_v <- header_n_m %>% select(TRTPCD, labels) %>%
+header_n_v <- header_n %>% select(TRTPCD, labels) %>%
   pivot_wider(names_from = TRTPCD, values_from = labels)
 
-header_n_v2 <- header_n_m %>% select(TRTPCD, labels) %>%
+header_n_v2 <- header_n %>% select(TRTPCD, labels) %>%
   pivot_wider(names_from = labels, values_from = TRTPCD)
 
 # The start of some weirdness - header as named list
@@ -94,7 +94,7 @@ race = sum_subgrp(RACE) %>%
             str_trim(
               # Substring to first parenthesis
               str_sub(
-                # str_locate to find the position of the first parenthesis (and pick it off)
+                # str_locate to find the position of fthe first parenthesis (and pick it off)
                 rowlbl2, 1, str_locate(rowlbl2, "\\(")[1] -1
               )
             )
