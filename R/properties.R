@@ -55,7 +55,7 @@ font.rtf_doc <- function(x, ...) {
 #' Title
 #'
 #' @param x x
-#' @param value ...
+#' @param ... ...
 #'
 #' @export
 set_font <- function(x, ...) UseMethod('font<-')
@@ -78,7 +78,7 @@ set_font <- function(x, ...) UseMethod('font<-')
 #' Title
 #'
 #' @param x x
-#' @param value ...
+#' @param ... ...
 #'
 #' @return font
 #' @export
@@ -98,7 +98,7 @@ font_size.hf_line <- function(x, ...) {
 #' Title
 #'
 #' @param x x
-#' @param value ...
+#' @param ... ...
 #'
 #' @export
 'font_size<-' <- function(x, ...) UseMethod('font_size<-')
@@ -106,7 +106,7 @@ font_size.hf_line <- function(x, ...) {
 #' Title
 #'
 #' @param x x
-#' @param value ...
+#' @param ... ...
 #'
 #' @export
 set_font_size <- function(x, ...) UseMethod('font_size<-')
@@ -131,7 +131,7 @@ set_font_size <- function(x, ...) UseMethod('font_size<-')
 #' Title
 #'
 #' @param x x
-#' @param value ...
+#' @param ... ...
 #'
 #' @return return
 #' @export
@@ -146,7 +146,7 @@ align.hf_line <- function(x, ...) {
 #' Title
 #'
 #' @param x x
-#' @param value ...
+#' @param ... ...
 #'
 #' @export
 'align<-' <- function(x, ...) UseMethod('align<-')
@@ -154,7 +154,7 @@ align.hf_line <- function(x, ...) {
 #' Title
 #'
 #' @param x x
-#' @param value ...
+#' @param ... ...
 #'
 #' @export
 set_align <- function(x, ...) UseMethod('align<-')
@@ -176,7 +176,7 @@ set_align <- function(x, ...) UseMethod('align<-')
 #' Title
 #'
 #' @param x x
-#' @param value ...
+#' @param ... ...
 #'
 #' @return return
 #' @export
@@ -191,7 +191,7 @@ bold.hf_line <- function(x, ...) {
 #' Title
 #'
 #' @param x x
-#' @param value ...
+#' @param ... ...
 #'
 #' @export
 'bold<-' <- function(x, ...) UseMethod('bold<-')
@@ -199,7 +199,7 @@ bold.hf_line <- function(x, ...) {
 #' Title
 #'
 #' @param x x
-#' @param value ...
+#' @param ... ...
 #'
 #' @export
 set_bold <- function(x, ...) UseMethod('bold<-')
@@ -217,7 +217,7 @@ set_bold <- function(x, ...) UseMethod('bold<-')
 #' Title
 #'
 #' @param x x
-#' @param value ...
+#' @param ... ...
 #'
 #' @return return
 #' @export
@@ -233,7 +233,7 @@ italic.hf_line <- function(x, ...) {
 #' Title
 #'
 #' @param x x
-#' @param value ...
+#' @param ... ...
 #'
 #' @export
 'italic<-' <- function(x, ...) UseMethod('italic<-')
@@ -241,7 +241,7 @@ italic.hf_line <- function(x, ...) {
 #' Title
 #'
 #' @param x x
-#' @param value ...
+#' @param ... ...
 #'
 #' @export
 set_italic <- function(x, ...) UseMethod('italic<-')
@@ -259,7 +259,7 @@ set_italic <- function(x, ...) UseMethod('italic<-')
 #' Title
 #'
 #' @param x x
-#' @param value ...
+#' @param ... ...
 #'
 #' @return return
 #' @export
@@ -280,7 +280,7 @@ text.hf_line <- function(x, ...) {
 #' Title
 #'
 #' @param x x
-#' @param value ...
+#' @param ... ...
 #'
 #' @export
 'text<-' <- function(x, ...) UseMethod('text<-')
@@ -288,7 +288,7 @@ text.hf_line <- function(x, ...) {
 #' Title
 #'
 #' @param x x
-#' @param value ...
+#' @param ... ...
 #'
 #' @export
 set_text <- function(x, ...) UseMethod('text<-')
@@ -312,7 +312,7 @@ set_text <- function(x, ...) UseMethod('text<-')
 #' Title
 #'
 #' @param x x
-#' @param value ...
+#' @param ... ...
 #'
 #' @return return
 #' @export
@@ -327,7 +327,7 @@ index.hf_line <- function(x, ...) {
 #' Title
 #'
 #' @param x x
-#' @param value ...
+#' @param ... ...
 #'
 #' @export
 'index<-' <- function(x, ...) UseMethod('index<-')
@@ -335,7 +335,7 @@ index.hf_line <- function(x, ...) {
 #' Title
 #'
 #' @param x x
-#' @param value ...
+#' @param ... ...
 #'
 #' @export
 set_index <- function(x, ...) UseMethod('index<-')
@@ -355,7 +355,7 @@ set_index <- function(x, ...) UseMethod('index<-')
 #' Title
 #'
 #' @param x x
-#' @param value ...
+#' @param ... ...
 #'
 #' @return return
 #' @export
@@ -370,7 +370,7 @@ margins.rtf_doc <- function(x, ...) {
 #' Title
 #'
 #' @param x x
-#' @param value ...
+#' @param ... ...
 #'
 #' @export
 'margins<-' <- function(x, ...) UseMethod('margins<-')
@@ -378,7 +378,7 @@ margins.rtf_doc <- function(x, ...) {
 #' Title
 #'
 #' @param x x
-#' @param value ...
+#' @param ... ...
 #'
 #' @export
 set_margins <- function(x, ...) UseMethod('margins<-')
@@ -415,7 +415,7 @@ set_margins <- function(x, ...) UseMethod('margins<-')
 #' Title
 #'
 #' @param x x
-#' @param value ...
+#' @param ... ...
 #'
 #' @return return
 #'
@@ -439,7 +439,7 @@ orientation.rtf_doc <- function(x, ...) {
 #' Title
 #'
 #' @param x x
-#' @param value ...
+#' @param ... ...
 #'
 #' @export
 set_orientation <- function(x, ...) UseMethod('orientation<-')
@@ -460,7 +460,7 @@ set_orientation <- function(x, ...) UseMethod('orientation<-')
 #' Title
 #'
 #' @param x x
-#' @param value ...
+#' @param ... ...
 #'
 #' @return return
 #'
@@ -476,7 +476,7 @@ header_height.rtf_doc <- function(x, ...) {
 #' Title
 #'
 #' @param x x
-#' @param value ...
+#' @param ... ...
 #'
 #' @export
 'header_height<-' <- function(x, ...) UseMethod('header_height<-')
@@ -484,7 +484,7 @@ header_height.rtf_doc <- function(x, ...) {
 #' Title
 #'
 #' @param x x
-#' @param value ...
+#' @param ... ...
 #'
 #' @export
 set_header_height <- function(x, ...) UseMethod('header_height<-')
@@ -502,7 +502,7 @@ set_header_height <- function(x, ...) UseMethod('header_height<-')
 #' Title
 #'
 #' @param x x
-#' @param value ...
+#' @param ... ...
 #'
 #' @return return
 #'
@@ -518,7 +518,7 @@ footer_height.rtf_doc <- function(x, ...) {
 #' Title
 #'
 #' @param x x
-#' @param value ...
+#' @param ... ...
 #'
 #' @export
 'footer_height<-' <- function(x, ...) UseMethod('footer_height<-')
@@ -526,7 +526,7 @@ footer_height.rtf_doc <- function(x, ...) {
 #' Title
 #'
 #' @param x x
-#' @param value ...
+#' @param ... ...
 #'
 #' @export
 set_footer_height <- function(x, ...) UseMethod('footer_height<-')
@@ -544,7 +544,7 @@ set_footer_height <- function(x, ...) UseMethod('footer_height<-')
 #' Title
 #'
 #' @param x x
-#' @param value ...
+#' @param ... ...
 #'
 #' @return return
 #'
@@ -560,7 +560,7 @@ pagesize.rtf_doc <- function(x, ...) {
 #' Title
 #'
 #' @param x x
-#' @param value ...
+#' @param ... ...
 #'
 #' @export
 'pagesize<-' <- function(x, ...) UseMethod('pagesize<-')
@@ -568,7 +568,7 @@ pagesize.rtf_doc <- function(x, ...) {
 #' Title
 #'
 #' @param x x
-#' @param value ...
+#' @param ... ...
 #'
 #' @export
 set_pagesize <- function(x, ...) UseMethod('pagesize<-')
@@ -605,7 +605,7 @@ set_pagesize <- function(x, ...) UseMethod('pagesize<-')
 #' Title
 #'
 #' @param x x
-#' @param value ...
+#' @param ... ...
 #'
 #' @return return
 #'
@@ -631,7 +631,7 @@ header_rows.gt_tbl <- function(x, ...) {
 #' Title
 #'
 #' @param x x
-#' @param value ...
+#' @param ... ...
 #'
 #' @export
 'header_rows<-' <- function(x, ...) UseMethod('header_rows<-')
@@ -639,7 +639,7 @@ header_rows.gt_tbl <- function(x, ...) {
 #' Title
 #'
 #' @param x x
-#' @param value ...
+#' @param ... ...
 #'
 #' @export
 set_header_rows <- function(x, ...) UseMethod('header_rows<-')
@@ -670,7 +670,7 @@ set_header_rows <- function(x, ...) UseMethod('header_rows<-')
 #' Title
 #'
 #' @param x x
-#' @param value ...
+#' @param ... ...
 #'
 #' @return return
 #'
@@ -686,7 +686,7 @@ ignore_cell_padding.rtf_doc <- function(x, ...) {
 #' Title
 #'
 #' @param x x
-#' @param value ...
+#' @param ... ...
 #'
 #' @export
 'ignore_cell_padding<-' <- function(x, ...) UseMethod('ignore_cell_padding<-')
@@ -694,7 +694,7 @@ ignore_cell_padding.rtf_doc <- function(x, ...) {
 #' Title
 #'
 #' @param x x
-#' @param value ...
+#' @param ... ...
 #'
 #' @export
 set_ignore_cell_padding <- function(x, ...) UseMethod('ignore_cell_padding<-')
@@ -712,7 +712,7 @@ set_ignore_cell_padding <- function(x, ...) UseMethod('ignore_cell_padding<-')
 #' Title
 #'
 #' @param x x
-#' @param value ...
+#' @param ... ...
 #'
 #' @return return
 #'
@@ -728,7 +728,7 @@ column_header_buffer.rtf_doc <- function(x, ...) {
 #' Title
 #'
 #' @param x x
-#' @param value ...
+#' @param ... ...
 #'
 #' @export
 'column_header_buffer<-' <- function(x, ...) UseMethod('column_header_buffer<-')
@@ -736,7 +736,7 @@ column_header_buffer.rtf_doc <- function(x, ...) {
 #' Title
 #'
 #' @param x x
-#' @param value ...
+#' @param ... ...
 #'
 #' @export
 set_column_header_buffer <- function(x, ...) UseMethod('set_column_header_buffer')
