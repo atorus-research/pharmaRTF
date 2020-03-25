@@ -74,28 +74,28 @@ test_that("validate_rtf_doc throws errors appropriately", {
   footnotes3 <- list()
 
   # All lists, should give no errors
-  expect_silent(validate_rtf_doc(rtf, titles = titles1, footnotes = footnotes1))
-  expect_silent(validate_rtf_doc(rtf, titles = titles1, footnotes = footnotes2))
-  expect_silent(validate_rtf_doc(rtf, titles = titles1, footnotes = footnotes3))
-  expect_silent(validate_rtf_doc(rtf, titles = titles2, footnotes = footnotes1))
-  expect_silent(validate_rtf_doc(rtf, titles = titles2, footnotes = footnotes2))
-  expect_silent(validate_rtf_doc(rtf, titles = titles2, footnotes = footnotes3))
-  expect_silent(validate_rtf_doc(rtf, titles = titles3, footnotes = footnotes1))
-  expect_silent(validate_rtf_doc(rtf, titles = titles3, footnotes = footnotes2))
-  expect_silent(validate_rtf_doc(rtf, titles = titles3, footnotes = footnotes3))
+  expect_silent(validate_rtf_doc(ht, titles = titles1, footnotes = footnotes1))
+  expect_silent(validate_rtf_doc(ht, titles = titles1, footnotes = footnotes2))
+  expect_silent(validate_rtf_doc(ht, titles = titles1, footnotes = footnotes3))
+  expect_silent(validate_rtf_doc(ht, titles = titles2, footnotes = footnotes1))
+  expect_silent(validate_rtf_doc(ht, titles = titles2, footnotes = footnotes2))
+  expect_silent(validate_rtf_doc(ht, titles = titles2, footnotes = footnotes3))
+  expect_silent(validate_rtf_doc(ht, titles = titles3, footnotes = footnotes1))
+  expect_silent(validate_rtf_doc(ht, titles = titles3, footnotes = footnotes2))
+  expect_silent(validate_rtf_doc(ht, titles = titles3, footnotes = footnotes3))
 
   # Passing a hf_line directly and a vector of them should raise an error
-  expect_error(validate_rtf_doc(rtf, titles = hf_line(), footnotes = footnotes1),
+  expect_error(validate_rtf_doc(ht, titles = hf_line(), footnotes = footnotes1),
                "Titles and footnotes must be lists of hf_line objects")
-  expect_error(validate_rtf_doc(rtf, titles = c(hf_line(), hf_line()), footnotes = footnotes1),
+  expect_error(validate_rtf_doc(ht, titles = c(hf_line(), hf_line()), footnotes = footnotes1),
                "Titles and footnotes must be lists of hf_line objects")
-  expect_error(validate_rtf_doc(rtf, titles = hf_line(), footnotes = footnotes2),
+  expect_error(validate_rtf_doc(ht, titles = hf_line(), footnotes = footnotes2),
                "Titles and footnotes must be lists of hf_line objects")
-  expect_error(validate_rtf_doc(rtf, titles = c(hf_line(), hf_line()), footnotes = footnotes2),
+  expect_error(validate_rtf_doc(ht, titles = c(hf_line(), hf_line()), footnotes = footnotes2),
                "Titles and footnotes must be lists of hf_line objects")
-  expect_error(validate_rtf_doc(rtf, titles = hf_line(), footnotes = footnotes3),
+  expect_error(validate_rtf_doc(ht, titles = hf_line(), footnotes = footnotes3),
                "Titles and footnotes must be lists of hf_line objects")
-  expect_error(validate_rtf_doc(rtf, titles = c(hf_line(), hf_line()), footnotes = footnotes3),
+  expect_error(validate_rtf_doc(ht, titles = c(hf_line(), hf_line()), footnotes = footnotes3),
                "Titles and footnotes must be lists of hf_line objects")
 })
 
