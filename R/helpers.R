@@ -2,17 +2,42 @@
 
 # Overwrite the base filter to be able to pass additional arguments
 # Internal
+# Internal
+#' Title
+#'
+#' @param f f
+#' @param x x
+#' @param ... ...
+#'
+#' @return filtered
+#' @export
+#'
+#'
 Filter <- function (f, x, ...){
   ind <- as.logical(unlist(lapply(x, f, ...)))
   x[which(ind)]
 }
 
 # Identify if string is a page format
+#' Title
+#'
+#' @param txt txt
+#'
+#' @return format
+#' @export
+#'
 is_page_format <- function(txt) {
   substr(txt, 1, 12) == "PAGE_FORMAT:"
 }
 
 # Extract the format from a page format string
+#' Title
+#'
+#' @param txt txt
+#'
+#' @return format
+#' @export
+#'
 get_page_format <- function(txt) {
   # Should revisit this - but separate at the semicolon, remove the first section, and
   # patch it back together
@@ -20,6 +45,13 @@ get_page_format <- function(txt) {
 }
 
 # Identify if string is a page format
+#' Title
+#'
+#' @param txt txt
+#'
+#' @return format
+#' @export
+#'
 is_date_format <- function(txt) {
   substr(txt, 1, 12) == "DATE_FORMAT:"
 }
@@ -28,6 +60,13 @@ is_date_format <- function(txt) {
 get_date_format <- get_page_format # it's the same thing - just attach another name to it
 
 # Identify if string is requesting the executing file path
+#' Title
+#'
+#' @param txt txt
+#'
+#' @return path
+#' @export
+#'
 is_file_path <- function(txt) {
   substr(txt, 1, 10) == "FILE_PATH:"
 }
@@ -36,6 +75,13 @@ is_file_path <- function(txt) {
 get_filepath_format <- get_page_format # Again same idea
 
 # Extract the executing file path from the R Session
+#' Title
+#'
+#' @param text text
+#'
+#' @return path
+#' @export
+#'
 add_filepath <- function(text){
 
   # This will populate if the file is sourced
@@ -60,6 +106,14 @@ add_filepath <- function(text){
 
 # Take a string of text and format it to write in a block of RTF with properties
 # If determined to be a page number format, return that string
+#' Title
+#'
+#' @param text text
+#' @param properties properties
+#'
+#' @return string
+#' @export
+#'
 format_text_string <- function(text, properties='') {
   if (is_page_format(text)) {
     # Page formats
@@ -78,6 +132,14 @@ format_text_string <- function(text, properties='') {
 }
 
 # Extract index from an hf_line object
+#' Title
+#'
+#' @param x x
+#' @param i i
+#'
+#' @return index
+#' @export
+#'
 extract_ind <- function(x, i) {
   ind = attr(x, 'index')
   if (is.null(ind)) return(FALSE)
@@ -86,6 +148,14 @@ extract_ind <- function(x, i) {
 }
 
 # Return the expected type given an hf_line parameter
+#' Title
+#'
+#' @param x x
+#'
+#' @return types
+#' @export
+#'
+#'
 correct_types <- function(x) {
   switch(x,
          type=,
@@ -100,6 +170,13 @@ correct_types <- function(x) {
 }
 
 # Check if the column type is valid for hf_line data.frame validation
+#' Title
+#'
+#' @param x x
+#' @param df df
+#'
+#' @return type
+#' @export
 eval_type <- function(x, df) {
   # Get the command as a string
   # Using `is.` commands instead of just evaluating class because of integer vs.
@@ -113,6 +190,13 @@ eval_type <- function(x, df) {
 }
 
 # Replace out RTF strings to ignore cell padding
+#' Create an Rich Text Format table document
+#'
+#' @param txt text of the rtf document
+#'
+#' @return replaced text without padding flags
+#'
+#' @import stringr
 replace_cell_padding <- function(txt) {
 
   replacements <- c('\\\\clpadfl3' = '\\\\clpadfl0',
@@ -125,12 +209,27 @@ replace_cell_padding <- function(txt) {
 
 
 # Helper to check if any buffer is required
+#' Title
+#'
+#' @param doc doc
+#'
+#' @return buffer
+#' @export
+#'
 needs_buffer <- function(doc){
   # Are either top or bottom greater than 0?
   sum(column_header_buffer(doc)) > 0
 }
 
 # Create necessary buffer rows
+#' Title
+#'
+#' @param doc doc
+#' @param col_headers col_headers
+#'
+#' @return buffer
+#' @export
+#'
 insert_buffer <- function(doc, col_headers){
 
   rows <- column_header_buffer(doc)

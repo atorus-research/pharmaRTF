@@ -1,5 +1,10 @@
 ## Header extraction methods ----
 # S3 method
+#' Title
+#'
+#' @param doc doc
+#'
+#' @return headers
 get_column_headers <- function(doc) UseMethod('get_column_headers', object=doc$table)
 
 # Huxtable method
@@ -33,6 +38,11 @@ get_column_headers.gt_tbl <- function(doc) {
 
 ## Table Body extraction methods ----
 # S3 method
+#' Title
+#'
+#' @param doc doc
+#'
+#' @return body
 get_table_body <- function(doc) UseMethod('get_table_body', object=doc$table)
 
 # Huxtable method

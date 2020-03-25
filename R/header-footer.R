@@ -1,6 +1,19 @@
 library(assertthat)
 
 ## Title line container ----
+#' Create a title line container
+#'
+#' @param ... A character list/vector
+#' @param align Alignment in the document
+#' @param bold Is bold?
+#' @param italic Is italic?
+#' @param font Font used in document, character
+#' @param font_size pt of font in document, numeric
+#' @param index order in document
+#'
+#' @return An object of class hf_line
+#'
+#' @export
 hf_line <- function(..., align=c('center', 'left', 'right', 'split'), bold=FALSE,
                     italic=FALSE, font=NA, font_size=NaN, index=NULL) {
 
@@ -16,7 +29,17 @@ hf_line <- function(..., align=c('center', 'left', 'right', 'split'), bold=FALSE
   new_hf_line(line, align, bold, italic, font, font_size, index)
 }
 
-
+#' Create a title line container
+#'
+#' @param line A character list/vector
+#' @param align Alignment in the document
+#' @param bold Is bold?
+#' @param italic Is italic?
+#' @param font Font used in document, character
+#' @param font_size pt of font in document, numeric
+#' @param index order in document
+#'
+#' @return An object of class hf_line
 new_hf_line <- function(line, align, bold, italic, font, font_size, index) {
 
   validate_hf_line(line, align, bold, italic, font, font_size, index)
@@ -34,6 +57,18 @@ new_hf_line <- function(line, align, bold, italic, font, font_size, index) {
   line
 }
 
+#' Validate a new title line container
+#'
+#' @param line A character list/vector
+#' @param align Alignment in the document
+#' @param bold Is bold?
+#' @param italic Is italic?
+#' @param font Font used in document, character
+#' @param font_size pt of font in document, numeric
+#' @param index order in document
+#'
+#' @import assertthat
+#' @importFrom assertthat assert_that
 validate_hf_line <- function(line, align, bold,italic, font, font_size, index) {
 
   # Check that no more than two entries were provided
@@ -58,8 +93,13 @@ validate_hf_line <- function(line, align, bold,italic, font, font_size, index) {
   assert_that(is.numeric(font_size))
 }
 
-
-# Internal function - do not export
+#' Title
+#'
+#' @param lines thelines
+#'
+#' @return order
+#'
+#'
 order_lines <- function(lines) {
 
   # Take out the indices
@@ -83,7 +123,17 @@ order_lines <- function(lines) {
   new_lines
 }
 
-# rtf_doc method
+#' Title
+#'
+#' @param doc doc
+#' @param ... ...
+#' @param to to
+#' @param replace replace
+#'
+#' @return hf
+#' @export
+#'
+#'
 add_hf <- function(doc, ..., to=NULL, replace=FALSE) {
 
   # Get lines from doc (if specified to replace)
@@ -109,17 +159,40 @@ add_hf <- function(doc, ..., to=NULL, replace=FALSE) {
 }
 
 # Simplified for titles
+#' Title
+#'
+#' @param doc doc
+#' @param ... ...
+#'
+#' @return titles
+#' @export
+#'
+#'
 add_titles <- function(doc, ...) {
   add_hf(doc, ..., to='titles')
 }
 
 # Simplified for footnoes
+#' Title
+#'
+#' @param doc doc
+#' @param ... ...
+#'
+#' @return footnotes
+#' @export
+#'
+#'
 add_footnotes <- function(doc, ...) {
   add_hf(doc, ..., to='footnotes')
 }
 
-
-# Attach header and footer objects to a document from a data frame
+#' Read titles and footnotes from a dataframe
+#'
+#' @param doc RTF document
+#' @param ... header and footer inormation
+#'
+#'
+#' @import purrr
 titles_and_footnotes_from_df <- function(doc, ...) {
 
   df <- read_hf(...) # Refer to read_hf in read_hf.R
@@ -148,45 +221,3 @@ titles_and_footnotes_from_df <- function(doc, ...) {
   doc
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

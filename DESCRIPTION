@@ -1,13 +1,22 @@
 Package: pharmaRTF
 Type: Package
-Title: What the Package Does (Title Case)
+Title: Enhanced RTF wrapper written in R for use with existing R tables packages such as huxtable or GT
 Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
+Authors@R: c(
+    person(family = "Miller", given = "Eli", email = "eli.miller@atorusresearch.com", role = "aut"), 
+    person(family = "Tarasiewicz", given = "Ashley", email = "Ashley.Tarasiewicz@atorusresearch.com", role = "aut"),
+    person(family = "Stackhouse", given = "Michael", email = "mike.stackhouse@atorusresearch.com", role = c("aut", "cre")))
 Description: More about what it does (maybe more than one line)
     Use four spaces when indenting paragraphs within the Description.
-License: What license is it under?
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
+Imports: 
+    assertthat (>= 0.2.1),
+    stringr (>= 1.4.0),
+    purrr (>= 0.3.3)
 Suggests: 
-    testthat (>= 2.1.0)
+    testthat (>= 2.1.0),
+    huxtable (>= 4.7.1),
+    gt
+RoxygenNote: 7.0.2
