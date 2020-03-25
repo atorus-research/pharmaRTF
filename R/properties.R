@@ -416,7 +416,7 @@ set_column_header_buffer <- function(x, top, bottom) UseMethod('set_column_heade
 set_column_header_buffer.rtf_doc <- function(doc, top=0, bottom=0) {
 
   # Check the inputs
-  valid <- all(sapply(c(top, bottom), function(x) is.numeric(x) && x%%1==0 && x >= 0))
+  valid <- all(sapply(list(top, bottom), function(x) length(x) == 1 && is.numeric(x) && x%%1==0 && x >= 0))
   assert_that(valid, msg= "Top and bottom values must be positive whole numbers")
 
   attr(doc, 'column_header_buffer') <- c(top=top, bottom=bottom)
