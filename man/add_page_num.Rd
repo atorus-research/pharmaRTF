@@ -7,10 +7,12 @@
 add_page_num(format = "Page \%s of \%s", properties = "")
 }
 \arguments{
-\item{properties}{}
+\item{format}{format}
+
+\item{properties}{properties}
 }
 \value{
-
+num
 }
 \description{
 Title

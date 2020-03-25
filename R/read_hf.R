@@ -1,15 +1,15 @@
 #' Title
 #'
-#' @param from
-#' @param from.file
-#' @param type
-#' @param reader
-#' @param ...
+#' @param from from
+#' @param from.file from.file
+#' @param type type
+#' @param reader reader
+#' @param ... ...
 #'
-#' @return
+#' @return hf
 #' @export
 #'
-#' @examples
+#'
 read_hf <- function(from=NULL, from.file=NULL, type=NULL, reader=NULL, ...) {
   # Parameter checks
   assert_that(xor(is.null(from), is.null(from.file)),
@@ -42,13 +42,13 @@ read_hf <- function(from=NULL, from.file=NULL, type=NULL, reader=NULL, ...) {
 
 #' Title
 #'
-#' @param df
-#' @param required_columns
+#' @param df df
+#' @param required_columns required_columns
 #'
-#' @return
+#' @return hf
 #' @export
 #'
-#' @examples
+#'
 validate_hf_dataframe <- function(df, required_columns) {
 
   # Flag for whether any errors were encountered

@@ -7,10 +7,14 @@
 Filter(f, x, ...)
 }
 \arguments{
-\item{...}{}
+\item{f}{f}
+
+\item{x}{x}
+
+\item{...}{...}
 }
 \value{
-
+filtered
 }
 \description{
 Title

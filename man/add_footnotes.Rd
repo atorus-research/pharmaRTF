@@ -7,10 +7,12 @@
 add_footnotes(doc, ...)
 }
 \arguments{
-\item{...}{}
+\item{doc}{doc}
+
+\item{...}{...}
 }
 \value{
-
+footnotes
 }
 \description{
 Title

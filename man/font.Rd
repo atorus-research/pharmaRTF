@@ -7,10 +7,12 @@
 font(table, ...)
 }
 \arguments{
-\item{...}{}
+\item{table}{table}
+
+\item{...}{...}
 }
 \value{
-
+font
 }
 \description{
 Return or set font

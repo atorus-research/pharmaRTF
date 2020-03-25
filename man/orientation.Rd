@@ -7,10 +7,10 @@
 orientation(...)
 }
 \arguments{
-\item{...}{}
+\item{...}{..}
 }
 \value{
-
+orientation
 }
 \description{
 title

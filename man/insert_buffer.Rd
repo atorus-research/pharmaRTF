@@ -7,10 +7,12 @@
 insert_buffer(doc, col_headers)
 }
 \arguments{
-\item{col_headers}{}
+\item{doc}{doc}
+
+\item{col_headers}{col_headers}
 }
 \value{
-
+buffer
 }
 \description{
 Title

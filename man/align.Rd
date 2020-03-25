@@ -7,10 +7,10 @@
 align(...)
 }
 \arguments{
-\item{...}{}
+\item{...}{...}
 }
 \value{
-
+alignment
 }
 \description{
 title

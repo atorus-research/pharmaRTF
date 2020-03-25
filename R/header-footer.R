@@ -29,7 +29,7 @@ hf_line <- function(..., align=c('center', 'left', 'right', 'split'), bold=FALSE
 
 #' Create a title line container
 #'
-#' @param ... A character list/vector
+#' @param line A character list/vector
 #' @param align Alignment in the document
 #' @param bold Is bold?
 #' @param italic Is italic?
@@ -57,7 +57,7 @@ new_hf_line <- function(line, align, bold, italic, font, font_size, index) {
 
 #' Validate a new title line container
 #'
-#' @param ... A character list/vector
+#' @param line A character list/vector
 #' @param align Alignment in the document
 #' @param bold Is bold?
 #' @param italic Is italic?
@@ -95,11 +95,11 @@ validate_hf_line <- function(line, align, bold,italic, font, font_size, index) {
 
 #' Title
 #'
-#' @param lines
+#' @param lines thelines
 #'
-#' @return
+#' @return order
 #'
-#' @examples
+#'
 order_lines <- function(lines) {
 
   # Take out the indices
@@ -125,15 +125,15 @@ order_lines <- function(lines) {
 
 #' Title
 #'
-#' @param doc
-#' @param ...
-#' @param to
-#' @param replace
+#' @param doc doc
+#' @param ... ...
+#' @param to to
+#' @param replace replace
 #'
-#' @return
+#' @return hf
 #' @export
 #'
-#' @examples
+#'
 add_hf <- function(doc, ..., to=NULL, replace=FALSE) {
 
   # Get lines from doc (if specified to replace)
@@ -161,13 +161,13 @@ add_hf <- function(doc, ..., to=NULL, replace=FALSE) {
 # Simplified for titles
 #' Title
 #'
-#' @param doc
-#' @param ...
+#' @param doc doc
+#' @param ... ...
 #'
-#' @return
+#' @return titles
 #' @export
 #'
-#' @examples
+#'
 add_titles <- function(doc, ...) {
   pharmaRTF:::add_hf(doc, ..., to='titles')
 }
@@ -175,13 +175,13 @@ add_titles <- function(doc, ...) {
 # Simplified for footnoes
 #' Title
 #'
-#' @param doc
-#' @param ...
+#' @param doc doc
+#' @param ... ...
 #'
-#' @return
+#' @return footnotes
 #' @export
 #'
-#' @examples
+#'
 add_footnotes <- function(doc, ...) {
   pharmaRTF:::add_hf(doc, ..., to='footnotes')
 }

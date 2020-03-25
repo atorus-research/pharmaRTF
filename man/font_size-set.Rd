@@ -7,7 +7,9 @@
 font_size(x) <- value
 }
 \arguments{
-\item{value}{}
+\item{x}{x}
+
+\item{value}{value}
 }
 \description{
 title

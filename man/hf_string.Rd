@@ -7,10 +7,12 @@
 hf_string(doc, type = NULL)
 }
 \arguments{
-\item{type}{}
+\item{doc}{doc}
+
+\item{type}{type}
 }
 \value{
-
+string
 }
 \description{
 Title

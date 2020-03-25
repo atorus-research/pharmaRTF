@@ -7,10 +7,12 @@
 eval_type(x, df)
 }
 \arguments{
-\item{df}{}
+\item{x}{x}
+
+\item{df}{df}
 }
 \value{
-
+type
 }
 \description{
 Title

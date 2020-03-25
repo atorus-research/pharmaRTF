@@ -7,10 +7,10 @@
 needs_buffer(doc)
 }
 \arguments{
-\item{doc}{}
+\item{doc}{doc}
 }
 \value{
-
+buffer
 }
 \description{
 Title

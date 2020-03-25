@@ -7,10 +7,12 @@
 hf_line_string(line, doc = NULL)
 }
 \arguments{
-\item{doc}{}
+\item{line}{line}
+
+\item{doc}{doc}
 }
 \value{
-
+string
 }
 \description{
 Title

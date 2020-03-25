@@ -7,10 +7,12 @@
 extract_ind(x, i)
 }
 \arguments{
-\item{i}{}
+\item{x}{x}
+
+\item{i}{i}
 }
 \value{
-
+index
 }
 \description{
 Title

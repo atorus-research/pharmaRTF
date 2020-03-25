@@ -7,10 +7,10 @@
 ignore_cell_padding(...)
 }
 \arguments{
-\item{...}{}
+\item{...}{...}
 }
 \value{
-
+ignore_cell_padding
 }
 \description{
 title

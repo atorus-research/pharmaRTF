@@ -7,10 +7,10 @@
 page_total(properties = "")
 }
 \arguments{
-\item{properties}{}
+\item{properties}{properties}
 }
 \value{
-
+total
 }
 \description{
 Title

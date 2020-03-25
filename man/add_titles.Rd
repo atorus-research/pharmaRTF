@@ -7,10 +7,12 @@
 add_titles(doc, ...)
 }
 \arguments{
-\item{...}{}
+\item{doc}{doc}
+
+\item{...}{...}
 }
 \value{
-
+titles
 }
 \description{
 Title

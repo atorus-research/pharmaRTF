@@ -7,10 +7,12 @@
 font_size(table, ...)
 }
 \arguments{
-\item{...}{}
+\item{table}{table}
+
+\item{...}{...}
 }
 \value{
-
+font_size
 }
 \description{
 Title

@@ -7,10 +7,10 @@
 index(...)
 }
 \arguments{
-\item{...}{}
+\item{...}{...}
 }
 \value{
-
+index
 }
 \description{
 title

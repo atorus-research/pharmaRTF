@@ -7,10 +7,10 @@
 header_rows(...)
 }
 \arguments{
-\item{...}{}
+\item{...}{...}
 }
 \value{
-
+header_rows
 }
 \description{
 title

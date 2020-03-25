@@ -7,10 +7,12 @@
 validate_hf_dataframe(df, required_columns)
 }
 \arguments{
-\item{required_columns}{}
+\item{df}{df}
+
+\item{required_columns}{required_columns}
 }
 \value{
-
+hf
 }
 \description{
 Title

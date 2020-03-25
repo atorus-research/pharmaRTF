@@ -7,10 +7,10 @@
 bold(...)
 }
 \arguments{
-\item{...}{}
+\item{...}{...}
 }
 \value{
-
+bold
 }
 \description{
 title

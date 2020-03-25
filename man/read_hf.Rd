@@ -7,10 +7,18 @@
 read_hf(from = NULL, from.file = NULL, type = NULL, reader = NULL, ...)
 }
 \arguments{
-\item{...}{}
+\item{from}{from}
+
+\item{from.file}{from.file}
+
+\item{type}{type}
+
+\item{reader}{reader}
+
+\item{...}{...}
 }
 \value{
-
+hf
 }
 \description{
 Title

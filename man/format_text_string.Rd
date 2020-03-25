@@ -7,10 +7,12 @@
 format_text_string(text, properties = "")
 }
 \arguments{
-\item{properties}{}
+\item{text}{text}
+
+\item{properties}{properties}
 }
 \value{
-
+string
 }
 \description{
 Title

@@ -7,10 +7,10 @@
 footer_height(...)
 }
 \arguments{
-\item{...}{}
+\item{...}{...}
 }
 \value{
-
+footer_height
 }
 \description{
 title

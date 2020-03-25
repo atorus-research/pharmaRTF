@@ -2,9 +2,9 @@
 # S3 method
 #' Title
 #'
-#' @param doc
+#' @param doc doc
 #'
-#' @return
+#' @return headers
 get_column_headers <- function(doc) UseMethod('get_column_headers', object=doc$table)
 
 get_column_headers.huxtable <- function(doc) {
@@ -38,9 +38,9 @@ get_column_headers.gt_tbl <- function(doc) {
 # S3 method
 #' Title
 #'
-#' @param doc
+#' @param doc doc
 #'
-#' @return
+#' @return body
 get_table_body <- function(doc) UseMethod('get_table_body', object=doc$table)
 
 # Huxtable method

@@ -7,10 +7,10 @@
 page_num(properties = "")
 }
 \arguments{
-\item{properties}{}
+\item{properties}{properties}
 }
 \value{
-
+num
 }
 \description{
 Title

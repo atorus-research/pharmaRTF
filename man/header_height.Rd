@@ -7,10 +7,10 @@
 header_height(...)
 }
 \arguments{
-\item{...}{}
+\item{...}{...}
 }
 \value{
-
+header_height
 }
 \description{
 title

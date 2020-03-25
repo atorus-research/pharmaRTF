@@ -7,10 +7,10 @@
 header_string(doc)
 }
 \arguments{
-\item{doc}{}
+\item{doc}{doc}
 }
 \value{
-
+string
 }
 \description{
 Title

@@ -7,10 +7,10 @@
 view_titles(doc)
 }
 \arguments{
-\item{doc}{}
+\item{doc}{doc}
 }
 \value{
-
+titles
 }
 \description{
 Title

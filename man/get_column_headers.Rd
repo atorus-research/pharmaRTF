@@ -7,10 +7,10 @@
 get_column_headers(doc)
 }
 \arguments{
-\item{doc}{}
+\item{doc}{doc}
 }
 \value{
-
+headers
 }
 \description{
 Title

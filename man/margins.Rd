@@ -7,10 +7,10 @@
 margins(...)
 }
 \arguments{
-\item{...}{}
+\item{...}{...}
 }
 \value{
-
+margins
 }
 \description{
 title

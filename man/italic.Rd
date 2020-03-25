@@ -7,10 +7,10 @@
 italic(...)
 }
 \arguments{
-\item{...}{}
+\item{...}{...}
 }
 \value{
-
+italic
 }
 \description{
 title

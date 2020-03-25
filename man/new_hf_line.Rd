@@ -7,6 +7,8 @@
 new_hf_line(line, align, bold, italic, font, font_size, index)
 }
 \arguments{
+\item{line}{A character list/vector}
+
 \item{align}{Alignment in the document}
 
 \item{bold}{Is bold?}
@@ -18,8 +20,6 @@ new_hf_line(line, align, bold, italic, font, font_size, index)
 \item{font_size}{pt of font in document, numeric}
 
 \item{index}{order in document}
-
-\item{...}{A character list/vector}
 }
 \value{
 An object of class hf_line

@@ -7,10 +7,10 @@
 view_footnotes(doc)
 }
 \arguments{
-\item{doc}{}
+\item{doc}{doc}
 }
 \value{
-
+footnotes
 }
 \description{
 Title

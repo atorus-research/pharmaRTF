@@ -7,10 +7,10 @@
 get_table_body(doc)
 }
 \arguments{
-\item{doc}{}
+\item{doc}{doc}
 }
 \value{
-
+body
 }
 \description{
 Title

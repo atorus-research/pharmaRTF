@@ -7,10 +7,10 @@
 is_page_format(txt)
 }
 \arguments{
-\item{txt}{}
+\item{txt}{txt}
 }
 \value{
-
+format
 }
 \description{
 Title

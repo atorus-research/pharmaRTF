@@ -6,10 +6,10 @@
 # S3 Generic
 #' Return or set font
 #'
-#' @param table
-#' @param ...
+#' @param table table
+#' @param ... ...
 #'
-#' @return
+#' @return font
 #' @export
 font <- function(table, ...) UseMethod('font')
 
@@ -46,16 +46,16 @@ font.rtf_doc <- function(doc) {
 ## Fonts (setters) ----
 #' Title
 #'
-#' @param x
-#' @param value
+#' @param x x
+#' @param value value
 #'
 #' @export
 'font<-' <- function(x, value) UseMethod('font<-')
 
 #' Title
 #'
-#' @param x
-#' @param value
+#' @param x x
+#' @param value value
 #'
 #' @export
 set_font <- function(x, value) UseMethod('font<-')
@@ -77,10 +77,10 @@ set_font <- function(x, value) UseMethod('font<-')
 ## Font size (getters) ----
 #' Title
 #'
-#' @param table
-#' @param ...
+#' @param table table
+#' @param ... ...
 #'
-#' @return
+#' @return font_size
 #' @export
 font_size <- function(table, ...) UseMethod('font_size')
 
@@ -97,16 +97,16 @@ font_size.hf_line <- function(line) {
 ## Font size (setters) ----
 #' title
 #'
-#' @param x
-#' @param value
+#' @param x x
+#' @param value value
 #'
 #' @export
 'font_size<-' <- function(x, value) UseMethod('font_size<-')
 
 #' title
 #'
-#' @param x
-#' @param value
+#' @param x x
+#' @param value value
 #'
 #' @export
 set_font_size <- function(x, value) UseMethod('font_size<-')
@@ -130,9 +130,9 @@ set_font_size <- function(x, value) UseMethod('font_size<-')
 ## Alignment (getters) ----
 #' title
 #'
-#' @param ...
+#' @param ... ...
 #'
-#' @return
+#' @return alignment
 #'
 #' @export
 align <- function(...) UseMethod('align')
@@ -145,16 +145,16 @@ align.hf_line <- function(line) {
 ## Alignment (setters) ----
 #' title
 #'
-#' @param x
-#' @param value
+#' @param x x
+#' @param value value
 #'
 #' @export
 'align<-' <- function(x, value) UseMethod('align<-')
 
 #' title
 #'
-#' @param x
-#' @param value
+#' @param x x
+#' @param value value
 #'
 #' @export
 set_align <- function(x, value) UseMethod('align<-')
@@ -175,9 +175,9 @@ set_align <- function(x, value) UseMethod('align<-')
 ## Bold (getters) ----
 #' title
 #'
-#' @param ...
+#' @param ... ...
 #'
-#' @return
+#' @return bold
 #' @export
 bold <- function(...) UseMethod('bold')
 
@@ -189,16 +189,16 @@ bold.hf_line <- function(line) {
 ## Bold (setters) ----
 #'title
 #'
-#' @param x
-#' @param value
+#' @param x x
+#' @param value value
 #'
 #' @export
 'bold<-' <- function(x, value) UseMethod('bold<-')
 
 #'title
 #'
-#' @param x
-#' @param value
+#' @param x x
+#' @param value value
 #'
 #' @export
 set_bold <- function(x, value) UseMethod('bold<-')
@@ -215,9 +215,9 @@ set_bold <- function(x, value) UseMethod('bold<-')
 ## Italic (getters) ----
 #' title
 #'
-#' @param ...
+#' @param ... ...
 #'
-#' @return
+#' @return italic
 #' @export
 italic <- function(...) UseMethod('italic')
 
@@ -230,16 +230,16 @@ italic.hf_line <- function(line) {
 ## Italic (setters) ----
 #' title
 #'
-#' @param x
-#' @param value
+#' @param x x
+#' @param value value
 #'
 #' @export
 'italic<-' <- function(x, value) UseMethod('italic<-')
 
 #' title
 #'
-#' @param x
-#' @param value
+#' @param x x
+#' @param value value
 #'
 #' @export
 set_italic <- function(x, value) UseMethod('italic<-')
@@ -256,9 +256,9 @@ set_italic <- function(x, value) UseMethod('italic<-')
 ## Text (getter) ----
 #' title
 #'
-#' @param ...
+#' @param ... ...
 #'
-#' @return
+#' @return text
 #' @export
 text <- function(...) UseMethod('text')
 
@@ -276,16 +276,16 @@ text.hf_line <- function(line) {
 ## Text (setters) ----
 #' title
 #'
-#' @param x
-#' @param value
+#' @param x x
+#' @param value value
 #'
 #' @export
 'text<-' <- function(x, value) UseMethod('text<-')
 
 #' title
 #'
-#' @param x
-#' @param value
+#' @param x x
+#' @param value value
 #'
 #' @export
 set_text <- function(x, value) UseMethod('text<-')
@@ -308,9 +308,9 @@ set_text <- function(x, value) UseMethod('text<-')
 ## Index (getters) ----
 #' title
 #'
-#' @param ...
+#' @param ... ...
 #'
-#' @return
+#' @return index
 #' @export
 index <- function(...) UseMethod('index')
 
@@ -322,16 +322,16 @@ index.hf_line <- function(line) {
 ## Index (setters) ----
 #' title
 #'
-#' @param x
-#' @param value
+#' @param x x
+#' @param value value
 #'
 #' @export
 'index<-' <- function(x, value) UseMethod('index<-')
 
 #' title
 #'
-#' @param x
-#' @param value
+#' @param x x
+#' @param value value
 #'
 #' @export
 set_index <- function(x, value) UseMethod('index<-')
@@ -350,9 +350,9 @@ set_index <- function(x, value) UseMethod('index<-')
 ## Margins (getters) ----
 #' title
 #'
-#' @param ...
+#' @param ... ...
 #'
-#' @return
+#' @return margins
 #' @export
 margins <- function(...) UseMethod('margins')
 
@@ -364,16 +364,16 @@ margins.rtf_doc <- function(doc) {
 ## Margins (setters) ----
 #' title
 #'
-#' @param x
-#' @param value
+#' @param x x
+#' @param value value
 #'
 #' @export
 'margins<-' <- function(x, value) UseMethod('margins<-')
 
 #' title
 #'
-#' @param x
-#' @param value
+#' @param x x
+#' @param value value
 #'
 #' @export
 set_margins <- function(x, value) UseMethod('margins<-')
@@ -404,9 +404,9 @@ set_margins <- function(x, value) UseMethod('margins<-')
 ## Orientation (getters) ----
 #' title
 #'
-#' @param ...
+#' @param ... ..
 #'
-#' @return
+#' @return orientation
 #' @export
 orientation <- function(...) UseMethod('orientation')
 
@@ -418,16 +418,16 @@ orientation.rtf_doc <- function(doc) {
 ## Orientation (setters) ----
 #' title
 #'
-#' @param x
-#' @param value
+#' @param x x
+#' @param value value
 #'
 #' @export
 'orientation<-' <- function(x, value) UseMethod('orientation<-')
 
 #' title
 #'
-#' @param x
-#' @param value
+#' @param x x
+#' @param value value
 #'
 #' @export
 set_orientation <- function(x, value) UseMethod('orientation<-')
@@ -447,9 +447,9 @@ set_orientation <- function(x, value) UseMethod('orientation<-')
 ## Header height (getters)----
 #' title
 #'
-#' @param ...
+#' @param ... ...
 #'
-#' @return
+#' @return header_height
 #' @export
 header_height <- function(...) UseMethod('header_height')
 
@@ -461,16 +461,16 @@ header_height.rtf_doc <- function(doc) {
 ## Header height (setters) ----
 #' title
 #'
-#' @param x
-#' @param value
+#' @param x x
+#' @param value value
 #'
 #' @export
 'header_height<-' <- function(x, value) UseMethod('header_height<-')
 
 #' title
 #'
-#' @param x
-#' @param value
+#' @param x x
+#' @param value value
 #'
 #' @export
 set_header_height <- function(x, value) UseMethod('header_height<-')
@@ -487,9 +487,9 @@ set_header_height <- function(x, value) UseMethod('header_height<-')
 ## Footer Height (getters) ----
 #' title
 #'
-#' @param ...
+#' @param ... ...
 #'
-#' @return
+#' @return footer_height
 #' @export
 footer_height <- function(...) UseMethod('footer_height')
 
@@ -501,16 +501,16 @@ footer_height.rtf_doc <- function(doc) {
 ## Footer height (setters) ----
 #' title
 #'
-#' @param x
-#' @param value
+#' @param x x
+#' @param value value
 #'
 #' @export
 'footer_height<-' <- function(x, value) UseMethod('footer_height<-')
 
 #' title
 #'
-#' @param x
-#' @param value
+#' @param x x
+#' @param value value
 #'
 #' @export
 set_footer_height <- function(x, value) UseMethod('footer_height<-')
@@ -527,9 +527,9 @@ set_footer_height <- function(x, value) UseMethod('footer_height<-')
 ## Page Size (getters) ----
 #' title
 #'
-#' @param ...
+#' @param ... ...
 #'
-#' @return
+#' @return pagesize
 #' @export
 pagesize <- function(...) UseMethod('pagesize')
 
@@ -541,16 +541,16 @@ pagesize.rtf_doc <- function(doc) {
 ## Page size(setters) ----
 #' title
 #'
-#' @param x
-#' @param value
+#' @param x x
+#' @param value value
 #'
 #' @export
 'pagesize<-' <- function(x, value) UseMethod('pagesize<-')
 
 #' title
 #'
-#' @param x
-#' @param value
+#' @param x x
+#' @param value value
 #'
 #' @export
 set_pagesize <- function(x, value) UseMethod('pagesize<-')
@@ -582,9 +582,9 @@ set_pagesize <- function(x, value) UseMethod('pagesize<-')
 ## Header rows (getters) ----
 #' title
 #'
-#' @param ...
+#' @param ... ...
 #'
-#' @return
+#' @return header_rows
 #' @export
 header_rows <- function(...) UseMethod('header_rows')
 
@@ -606,16 +606,16 @@ header_rows.gt_tbl <- function(table) {
 ## Header rows (setters) ----
 #' title
 #'
-#' @param x
-#' @param value
+#' @param x x
+#' @param value value
 #'
 #' @export
 'header_rows<-' <- function(x, value) UseMethod('header_rows<-')
 
 #' title
 #'
-#' @param x
-#' @param value
+#' @param x x
+#' @param value value
 #'
 #' @export
 set_header_rows <- function(x, value) UseMethod('header_rows<-')
@@ -645,9 +645,9 @@ set_header_rows <- function(x, value) UseMethod('header_rows<-')
 ## Ignore Cell Padding (getters) ----
 #' title
 #'
-#' @param ...
+#' @param ... ...
 #'
-#' @return
+#' @return ignore_cell_padding
 #' @export
 ignore_cell_padding <- function(...) UseMethod('ignore_cell_padding')
 
@@ -659,16 +659,16 @@ ignore_cell_padding.rtf_doc <- function(table) {
 ## Ignore Cell Padding (setters) ----
 #' title
 #'
-#' @param x
-#' @param value
+#' @param x x
+#' @param value value
 #'
 #' @export
 'ignore_cell_padding<-' <- function(x, value) UseMethod('ignore_cell_padding<-')
 
 #' title
 #'
-#' @param x
-#' @param value
+#' @param x x
+#' @param value value
 #'
 #' @export
 set_ignore_cell_padding <- function(x, value) UseMethod('ignore_cell_padding<-')
@@ -683,8 +683,15 @@ set_ignore_cell_padding <- function(x, value) UseMethod('ignore_cell_padding<-')
 }
 
 ## Column header buffer (getter)
+#' title
+#'
+#' @param ... ...
+#'
+#' @return column_header_buffer
+#' @export
 column_header_buffer <- function(...) UseMethod('column_header_buffer')
 
+#' @export
 column_header_buffer.rtf_doc <- function(doc) {
   attr(doc, 'column_header_buffer')
 }
@@ -692,16 +699,17 @@ column_header_buffer.rtf_doc <- function(doc) {
 ## Ignore Cell Padding (setters) ----
 #' title
 #'
-#' @param x
-#' @param value
+#' @param x x
+#' @param value value
 #'
 #' @export
 'column_header_buffer<-' <- function(x, value) UseMethod('column_header_buffer<-')
 
 #' title
 #'
-#' @param x
-#' @param value
+#' @param x x
+#' @param top value
+#' @param bottom bottom
 #'
 #' @export
 set_column_header_buffer <- function(x, top, bottom) UseMethod('set_column_header_buffer')

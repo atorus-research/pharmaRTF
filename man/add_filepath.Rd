@@ -7,10 +7,10 @@
 add_filepath(text)
 }
 \arguments{
-\item{text}{}
+\item{text}{text}
 }
 \value{
-
+path
 }
 \description{
 Title

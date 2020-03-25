@@ -7,7 +7,9 @@
 header_rows(x) <- value
 }
 \arguments{
-\item{value}{}
+\item{x}{x}
+
+\item{value}{value}
 }
 \description{
 title

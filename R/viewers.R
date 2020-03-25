@@ -47,12 +47,12 @@ view_hf <- function(doc, type=NULL) {
 # Simplified for titles
 #' Title
 #'
-#' @param doc
+#' @param doc doc
 #'
-#' @return
+#' @return titles
 #' @export
 #'
-#' @examples
+#'
 view_titles <- function(doc) {
   pharmaRTF:::view_hf(doc, type='titles')
 }
@@ -60,12 +60,12 @@ view_titles <- function(doc) {
 # Simplified for footnotes
 #' Title
 #'
-#' @param doc
+#' @param doc doc
 #'
-#' @return
+#' @return footnotes
 #' @export
 #'
-#' @examples
+#'
 view_footnotes <- function(doc) {
   pharmaRTF:::view_hf(doc, type='footnotes')
 }

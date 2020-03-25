@@ -7,10 +7,10 @@
 pagesize(...)
 }
 \arguments{
-\item{...}{}
+\item{...}{...}
 }
 \value{
-
+pagesize
 }
 \description{
 title

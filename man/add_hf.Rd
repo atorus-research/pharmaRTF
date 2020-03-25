@@ -7,10 +7,16 @@
 add_hf(doc, ..., to = NULL, replace = FALSE)
 }
 \arguments{
-\item{replace}{}
+\item{doc}{doc}
+
+\item{...}{...}
+
+\item{to}{to}
+
+\item{replace}{replace}
 }
 \value{
-
+hf
 }
 \description{
 Title

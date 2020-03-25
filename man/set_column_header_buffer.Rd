@@ -7,7 +7,11 @@
 set_column_header_buffer(x, top, bottom)
 }
 \arguments{
-\item{value}{}
+\item{x}{x}
+
+\item{top}{value}
+
+\item{bottom}{bottom}
 }
 \description{
 title

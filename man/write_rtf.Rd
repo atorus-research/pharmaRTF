@@ -7,10 +7,9 @@
 write_rtf(doc, file = "test.rtf")
 }
 \arguments{
-\item{file}{}
-}
-\value{
+\item{doc}{doc}
 
+\item{file}{file}
 }
 \description{
 Title
