@@ -13,7 +13,6 @@ hf_line <- function(..., align=c('center', 'left', 'right', 'split'), bold=FALSE
   # Make sure alignment is valid
   align <- match.arg(align)
 
-
   new_hf_line(line, align, bold, italic, font, font_size, index)
 }
 
@@ -22,16 +21,16 @@ new_hf_line <- function(line, align, bold, italic, font, font_size, index) {
 
   validate_hf_line(line, align, bold, italic, font, font_size, index)
 
-  # Assign attributes
-  attr(line, 'align') <- align
-  attr(line, 'bold') <- bold
-  attr(line, 'italic') <- italic
-  attr(line, 'font') <- font
-  attr(line, 'font_size') <- font_size
-  attr(line, 'index') <- index
+  # Assign attributes and build structure
+  line <- structure(line,
+                    align=align,
+                    bold=bold,
+                    italic=italic,
+                    font=font,
+                    font_size=font_size,
+                    index=index,
+                    class="hf_line")
 
-  # Assign the class
-  class(line) <- 'hf_line'
   line
 }
 

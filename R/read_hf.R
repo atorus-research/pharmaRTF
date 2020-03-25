@@ -1,4 +1,4 @@
-read_hf <- function(from=NULL, from.file=NULL, type=NULL, reader=NULL, ...) {
+read_hf <- function(from=NULL, from.file=NULL, reader=NULL, ...) {
   # Parameter checks
   assert_that(xor(is.null(from), is.null(from.file)),
               msg = "One of, and only one of, `from` or `from.file` must be populated")
