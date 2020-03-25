@@ -96,7 +96,7 @@ new_rtf_doc <- function(table, titles, footnotes) {
 
 validate_rtf_doc <- function(tables, titles, footnotes) {
   # Check that titles and footnotes are lists
-  assert_that(all(sapply(list(titles, footnotes), is.list)), msg = "Titles and footnotes must be lists of hf_line objects")
+  assert_that(all(c(class(titles), class(footnotes)) == "list"), msg = "Titles and footnotes must be lists of hf_line objects")
   # Check that titles and footnotes are lists of hf_line objects
   assert_that(all(sapply(c(titles, footnotes), inherits, what="hf_line")),
               msg="Titles and footnotes must be lists of hf_line objects")
