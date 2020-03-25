@@ -78,7 +78,7 @@ order_lines <- function(lines) {
   # Sort the indices and reverse the order
   for (i in rev(sort(inds))) {
     # Append the items in order to the front of the list - this results in ordered lines with nulls at the back
-    new_lines <- append(new_lines, pharmaRTF:::Filter(pharmaRTF:::extract_ind, lines, i=i), after=0)
+    new_lines <- append(new_lines, Filter(extract_ind, lines, i=i), after=0)
   }
 
   new_lines
@@ -100,7 +100,7 @@ add_hf <- function(doc, ..., to=NULL, replace=FALSE) {
               msg = 'Provided titles must be hf_line objects- see pharmaRTF::hf_line')
 
   # Sort
-  lines <- pharmaRTF:::order_lines(lines)
+  lines <- order_lines(lines)
 
   # Add to the document object
   doc[[to]] <- lines
@@ -111,12 +111,12 @@ add_hf <- function(doc, ..., to=NULL, replace=FALSE) {
 
 # Simplified for titles
 add_titles <- function(doc, ...) {
-  pharmaRTF:::add_hf(doc, ..., to='titles')
+  add_hf(doc, ..., to='titles')
 }
 
 # Simplified for footnoes
 add_footnotes <- function(doc, ...) {
-  pharmaRTF:::add_hf(doc, ..., to='footnotes')
+  add_hf(doc, ..., to='footnotes')
 }
 
 
