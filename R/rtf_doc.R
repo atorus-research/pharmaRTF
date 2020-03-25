@@ -28,13 +28,6 @@ as_rtf_doc.huxtable <- function(table, titles, footnotes, header.rows) {
   if (!is.na(huxtable::caption(table))) message('Huxtable contains caption - this will be stripped off ',
                                                 'in RTF document generation.')
 
-  # Check that header.rows is positive whole number
-  assert_that(
-    header.rows %% 1 == 0,
-    header.rows >= 0,
-    msg = "header.rows must be a positive whole number greater than or equal to 0"
-  )
-
   # Huxtable table's column headers are rows of the data.frame, so store how many to grab
   attr(table, 'header.rows') <- header.rows
 
@@ -94,11 +87,19 @@ new_rtf_doc <- function(table, titles, footnotes) {
             class= 'rtf_doc')
 }
 
-validate_rtf_doc <- function(tables, titles, footnotes) {
+validate_rtf_doc <- function(table, titles, footnotes) {
   # Check that titles and footnotes are lists
   assert_that(all(c(class(titles), class(footnotes)) == "list"), msg = "Titles and footnotes must be lists of hf_line objects")
   # Check that titles and footnotes are lists of hf_line objects
   assert_that(all(sapply(c(titles, footnotes), inherits, what="hf_line")),
               msg="Titles and footnotes must be lists of hf_line objects")
 
+  # Check that header.rows is positive whole number if the table is a huxtable table
+  if(inherits(table, "huxtable")){
+    assert_that(
+      attr(table, "header.rows") %% 1 == 0,
+      attr(table, "header.rows") >= 0,
+      msg = "header.rows must be a positive whole number greater than or equal to 0"
+    )
+  }
 }

@@ -16,7 +16,7 @@ test_that("font returns the correct vector for an rtf object", {
   aFooter <- hf_line("theFooter", font = "FontFooter")
   allFonts <- c("Courier New", "TableFont", "FontTitle", "FontFooter")
 
-  rtf <- rtf_doc(ht, aTitle, aFooter)
+  rtf <- rtf_doc(ht, list(aTitle), list(aFooter))
 
   expect_setequal(font(rtf), allFonts)
 })
@@ -114,10 +114,14 @@ test_that("margins throws error when given a bad parameter", {
     top = 4,
     top = 2
   )
+  rtf_mar4 <- list(
+    top = -2
+  )
 
   expect_error(margins(rtf) <- rtf_mar1, "Invalid parameter")
-  expect_error(margins(rtf) <- rtf_mar2, "x is not a numeric or integer vector")
-  expect_error(margins(rtf) <- rtf_mar3, "Not Implemented")
+  expect_error(margins(rtf) <- rtf_mar2, "Margins must be positive numbers")
+  expect_error(margins(rtf) <- rtf_mar3, "Duplicate parameters entered")
+  expect_error(margins(rtf) <- rtf_mar4, "Margins must be positive numbers")
 })
 
 test_that("orientation throws error when bad parameter is passed", {
@@ -172,11 +176,15 @@ test_that("pagesize throws error when bad parameter is passed", {
     height = 1,
     height = 4
   )
+  rtf_ps5 <- list(
+    height = -1
+  )
 
   expect_error(pagesize(rtf) <- rtf_ps1, "Invalid parameters")
-  expect_error(pagesize(rtf) <- rtf_ps2, "x is not a numeric or integer vector")
-  expect_error(pagesize(rtf) <- rtf_ps3, "x is not a numeric or integer vector")
-  expect_error(pagesize(rtf) <- rtf_ps4, "not implemented")
+  expect_error(pagesize(rtf) <- rtf_ps2, "Height and Width must be positive numbers")
+  expect_error(pagesize(rtf) <- rtf_ps3, "Height and Width must be positive numbers")
+  expect_error(pagesize(rtf) <- rtf_ps4, "Duplicate parameters entered")
+  expect_error(pagesize(rtf) <- rtf_ps5, "Height and Width must be positive numbers")
 })
 
 test_that("header_rows throws error when passed a gt table", {
@@ -193,8 +201,9 @@ test_that("header rows throws error when passed a bad parameter", {
     column2 = letters[1:5]
   )
 
-  expect_error(header_rows(ht) <- 1.5, "Header rows must be a whole number")
-  expect_error(header_rows(ht) <- "asdf", "Header rows must be a whole number")
+  expect_error(header_rows(ht) <- 1.5, "Header rows must be a positive whole number")
+  expect_error(header_rows(ht) <- "asdf", "Header rows must be a positive whole number")
+  expect_error(header_rows(ht) <- -1, "pos")
 })
 
 test_that("ignore_cell_padding throws error when passed a bad parameter", {
@@ -227,12 +236,17 @@ test_that("column_header_buffer<-/set_column_header buffer throw errors as expec
     top = "1",
     bottom = "2"
   )
+  val4 <- list(
+    top = -1
+  )
 
-  expect_error(set_column_header_buffer(rtf, "2", 1.4), "Top and bottom values must be whole numbers")
-  expect_error(set_column_header_buffer(rtf, c(1,2), 2), "not implemented")
+  expect_error(set_column_header_buffer(rtf, "2", 1), "Top and bottom values must be positive whole numbers")
+  expect_error(set_column_header_buffer(rtf, 2, 1.4), "Top and bottom values must be positive whole numbers")
+  expect_error(set_column_header_buffer(rtf, c(1,2), 2), "Top and bottom values must be positive whole numbers")
   expect_error(column_header_buffer(rtf) <- val1, "Invalid named element")
-  expect_error(column_header_buffer(rtf) <- val2, "Invalid named element")
+  expect_error(column_header_buffer(rtf) <- val2, "Duplicate parameters entered")
   expect_error(column_header_buffer(rtf) <- val3, "whole numbers")
+  expect_error(column_header_buffer(rtf) <- val4, "Top and bottom values must be positive whole numbers")
 })
 
 
