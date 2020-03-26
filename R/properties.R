@@ -4,21 +4,31 @@
 
 ## Fonts (getters) ----
 # S3 Generic
+#' Return or set font
+#'
+#' @param x table
+#' @param ... ...
+#'
+#' @return font
+#' @export
 font <- function(x, ...) UseMethod('font')
 
-# Get all of the unique fonts from a huxtable table
+#' @export
 font.huxtable <- function(x, ...) {
   unique(c(attr(x, 'font')))
 }
 
+#' @export
 font.gt_tbl <- function(x, ...) {
   character(1) # I haven't found an actual font attribute in GT? gt:::rtf_head() actually has Helvetica hard coded
 }
 
+#' @export
 font.hf_line <- function(x, ...) {
   attr(x, 'font')
 }
 
+#' @export
 font.rtf_doc <- function(x, ...) {
   # Get all title fonts
   titles <- sapply(x$titles, font)
@@ -34,16 +44,30 @@ font.rtf_doc <- function(x, ...) {
 }
 
 ## Fonts (setters) ----
+#' Title
+#'
+#' @param x x
+#' @param ... ...
+#'
+#' @export
 'font<-' <- function(x, ...) UseMethod('font<-')
 
+#' Title
+#'
+#' @param x x
+#' @param ... ...
+#'
+#' @export
 set_font <- function(x, ...) UseMethod('font<-')
 
+#' @export
 'font<-.hf_line' <- function(x, value, ...) {
   assert_that(is.character(value))
   attr(x, 'font') <- value
   x
 }
 
+#' @export
 'font<-.rtf_doc' <- function(x, value, ...) {
   assert_that(is.character(value))
   attr(x, 'font') <- value
@@ -51,27 +75,51 @@ set_font <- function(x, ...) UseMethod('font<-')
 }
 
 ## Font size (getters) ----
+#' Title
+#'
+#' @param x x
+#' @param ... ...
+#'
+#' @return font
+#' @export
 font_size <- function(x, ...) UseMethod('font_size')
 
+#' @export
 font_size.rtf_doc <- function(x, ...) {
   attr(x, 'font_size')
 }
 
+#' @export
 font_size.hf_line <- function(x, ...) {
   attr(x, 'font_size')
 }
 
 ## Font size (setters) ----
+
+#' Title
+#'
+#' @param x x
+#' @param ... ...
+#'
+#' @export
 'font_size<-' <- function(x, value, ...) UseMethod('font_size<-')
 
+#' Title
+#'
+#' @param x x
+#' @param ... ...
+#'
+#' @export
 set_font_size <- function(x, value, ...) UseMethod('font_size<-')
 
+#' @export
 'font_size<-.hf_line' <- function(x, value, ...) {
   assert_that(is.numeric(value))
   attr(x, 'font_size') <- value
   x
 }
 
+#' @export
 'font_size<-.rtf_doc' <- function(x, value, ...) {
   assert_that(is.numeric(value))
   attr(x, 'font_size') <- value
@@ -81,17 +129,38 @@ set_font_size <- function(x, value, ...) UseMethod('font_size<-')
 ## HF_LINE PROPERTIES (and attributes that spread to rtf_doc level) ####
 
 ## Alignment (getters) ----
+#' Title
+#'
+#' @param x x
+#' @param ... ...
+#'
+#' @return return
+#' @export
 align <- function(x, ...) UseMethod('align')
 
+#' @export
 align.hf_line <- function(x, ...) {
   attr(x, 'align')
 }
 
 ## Alignment (setters) ----
+#' Title
+#'
+#' @param x x
+#' @param ... ...
+#'
+#' @export
 'align<-' <- function(x, value, ...) UseMethod('align<-')
 
+#' Title
+#'
+#' @param x x
+#' @param ... ...
+#'
+#' @export
 set_align <- function(x, value, ...) UseMethod('align<-')
 
+#' @export
 'align<-.hf_line' <- function(x, value = c('left', 'right', 'center', 'split'), ...) {
   # Check that argument is valid
   match.arg(value)
@@ -105,17 +174,38 @@ set_align <- function(x, value, ...) UseMethod('align<-')
 }
 
 ## Bold (getters) ----
+#' Title
+#'
+#' @param x x
+#' @param ... ...
+#'
+#' @return return
+#' @export
 bold <- function(x, ...) UseMethod('bold')
 
+#' @export
 bold.hf_line <- function(x, ...) {
   attr(x, 'bold')
 }
 
 ## Bold (setters) ----
+#' Title
+#'
+#' @param x x
+#' @param ... ...
+#'
+#' @export
 'bold<-' <- function(x, value, ...) UseMethod('bold<-')
 
+#' Title
+#'
+#' @param x x
+#' @param ... ...
+#'
+#' @export
 set_bold <- function(x, value, ...) UseMethod('bold<-')
 
+#' @export
 'bold<-.hf_line' <- function(x, value, ...) {
   # Check that argument is valid
   assert_that(is.logical(value))
@@ -125,18 +215,39 @@ set_bold <- function(x, value, ...) UseMethod('bold<-')
 }
 
 ## Italic (getters) ----
+#' Title
+#'
+#' @param x x
+#' @param ... ...
+#'
+#' @return return
+#' @export
 italic <- function(x, ...) UseMethod('italic')
 
+#' @export
 italic.hf_line <- function(x, ...) {
   attr(x, 'italic')
 }
 
 
 ## Italic (setters) ----
+#' Title
+#'
+#' @param x x
+#' @param ... ...
+#'
+#' @export
 'italic<-' <- function(x, .value, ..) UseMethod('italic<-')
 
+#' Title
+#'
+#' @param x x
+#' @param ... ...
+#'
+#' @export
 set_italic <- function(x, value, ...) UseMethod('italic<-')
 
+#' @export
 'italic<-.hf_line' <- function(x, value, ...) {
   # Check that argument is valid
   assert_that(is.logical(value))
@@ -146,8 +257,16 @@ set_italic <- function(x, value, ...) UseMethod('italic<-')
 }
 
 ## Text (getter) ----
+#' Title
+#'
+#' @param x x
+#' @param ... ...
+#'
+#' @return return
+#' @export
 text <- function(x, ...) UseMethod('text')
 
+#' @export
 text.hf_line <- function(x, ...) {
   # Extract the text element
   text <- x$text
@@ -159,10 +278,23 @@ text.hf_line <- function(x, ...) {
 }
 
 ## Text (setters) ----
+#' Title
+#'
+#' @param x x
+#' @param ... ...
+#'
+#' @export
 'text<-' <- function(x, value, ...) UseMethod('text<-')
 
+#' Title
+#'
+#' @param x x
+#' @param ... ...
+#'
+#' @export
 set_text <- function(x, value, ...) UseMethod('text<-')
 
+#' @export
 'text<-.hf_line' <- function(x, value, ...) {
   # Check that argument is valid
   value <- unlist(value)
@@ -178,17 +310,38 @@ set_text <- function(x, value, ...) UseMethod('text<-')
 }
 
 ## Index (getters) ----
+#' Title
+#'
+#' @param x x
+#' @param ... ...
+#'
+#' @return return
+#' @export
 index <- function(x, ...) UseMethod('index')
 
+#' @export
 index.hf_line <- function(x, ...) {
   attr(x, 'index')
 }
 
 ## Index (setters) ----
+#' Title
+#'
+#' @param x x
+#' @param ... ...
+#'
+#' @export
 'index<-' <- function(x, value, ...) UseMethod('index<-')
 
+#' Title
+#'
+#' @param x x
+#' @param ... ...
+#'
+#' @export
 set_index <- function(x, value, ...) UseMethod('index<-')
 
+#' @export
 'index<-.hf_line' <- function(x, value, ...) {
   # Check that argument is valid
   assert_that(is.numeric(value) | is.null(value))
@@ -200,17 +353,38 @@ set_index <- function(x, value, ...) UseMethod('index<-')
 ## DOCUMENT PROPERTIES ####
 
 ## Margins (getters) ----
+#' Title
+#'
+#' @param x x
+#' @param ... ...
+#'
+#' @return return
+#' @export
 margins <- function(x, ...) UseMethod('margins')
 
+#' @export
 margins.rtf_doc <- function(x, ...) {
   attr(x, 'margins')
 }
 
 ## Margins (setters) ----
+#' Title
+#'
+#' @param x x
+#' @param ... ...
+#'
+#' @export
 'margins<-' <- function(x, value, ...) UseMethod('margins<-')
 
+#' Title
+#'
+#' @param x x
+#' @param ... ...
+#'
+#' @export
 set_margins <- function(x, value, ...) UseMethod('margins<-')
 
+#' @export
 'margins<-.rtf_doc' <- function(x, value, ...) {
 
   values <- unlist(value)
@@ -239,17 +413,39 @@ set_margins <- function(x, value, ...) UseMethod('margins<-')
 
 
 ## Orientation (getters) ----
+#' Title
+#'
+#' @param x x
+#' @param ... ...
+#'
+#' @return return
+#'
+#' @export
 orientation <- function(x, ...) UseMethod('orientation')
 
+#' @export
 orientation.rtf_doc <- function(x, ...) {
   attr(x, 'orientation')
 }
 
 ## Orientation (setters) ----
+#' Title
+#'
+#' @param x x
+#' @param value ...
+#'
+#' @export
 'orientation<-' <- function(x, value, ...) UseMethod('orientation<-')
 
+#' Title
+#'
+#' @param x x
+#' @param ... ...
+#'
+#' @export
 set_orientation <- function(x, value, ...) UseMethod('orientation<-')
 
+#' @export
 'orientation<-.rtf_doc' <- function(x, value = c('landscape', 'portrait'), ...) {
   # Make sure the value is valid
   value <- match.arg(value)
@@ -262,17 +458,39 @@ set_orientation <- function(x, value, ...) UseMethod('orientation<-')
 }
 
 ## Header height (getters)----
+#' Title
+#'
+#' @param x x
+#' @param ... ...
+#'
+#' @return return
+#'
+#' @export
 header_height <- function(x, ...) UseMethod('header_height')
 
+#' @export
 header_height.rtf_doc <- function(x, ...) {
   attr(x, 'header_height')
 }
 
 ## Header height (setters) ----
+#' Title
+#'
+#' @param x x
+#' @param ... ...
+#'
+#' @export
 'header_height<-' <- function(x, value, ...) UseMethod('header_height<-')
 
+#' Title
+#'
+#' @param x x
+#' @param ... ...
+#'
+#' @export
 set_header_height <- function(x, value, ...) UseMethod('header_height<-')
 
+#' @export
 'header_height<-.rtf_doc' <- function(x, value, ...) {
   # Make sure the value is valid
   assert_that(is.numeric(value))
@@ -282,17 +500,39 @@ set_header_height <- function(x, value, ...) UseMethod('header_height<-')
 }
 
 ## Footer Height ----
+#' Title
+#'
+#' @param x x
+#' @param ... ...
+#'
+#' @return return
+#'
+#' @export
 footer_height <- function(x, ...) UseMethod('footer_height')
 
+#' @export
 footer_height.rtf_doc <- function(x, ...) {
   attr(x, 'footer_height')
 }
 
 ## Footer height (setters) ----
+#' Title
+#'
+#' @param x x
+#' @param ... ...
+#'
+#' @export
 'footer_height<-' <- function(x, value, ...) UseMethod('footer_height<-')
 
+#' Title
+#'
+#' @param x x
+#' @param ... ...
+#'
+#' @export
 set_footer_height <- function(x, value, ...) UseMethod('footer_height<-')
 
+#' @export
 'footer_height<-.rtf_doc' <- function(x, value, ...) {
   # Make sure the value is valid
   assert_that(is.numeric(value))
@@ -302,17 +542,39 @@ set_footer_height <- function(x, value, ...) UseMethod('footer_height<-')
 }
 
 ## Page Size (getters) ----
+#' Title
+#'
+#' @param x x
+#' @param ... ...
+#'
+#' @return return
+#'
+#' @export
 pagesize <- function(x, ...) UseMethod('pagesize')
 
+#' @export
 pagesize.rtf_doc <- function(x, ...) {
   attr(x, 'pagesize')
 }
 
 ## Page size(setters) ----
+#' Title
+#'
+#' @param x x
+#' @param ... ...
+#'
+#' @export
 'pagesize<-' <- function(x, value, ...) UseMethod('pagesize<-')
 
+#' Title
+#'
+#' @param x x
+#' @param ... ...
+#'
+#' @export
 set_pagesize <- function(x, value, ...) UseMethod('pagesize<-')
 
+#' @export
 'pagesize<-.rtf_doc' <- function(x, value, ...) {
 
   values <- unlist(value)
@@ -341,31 +603,56 @@ set_pagesize <- function(x, value, ...) UseMethod('pagesize<-')
 ## Additional Table Properties Necessary ####
 
 ## Header rows (getters) ----
+#' Title
+#'
+#' @param x x
+#' @param ... ...
+#'
+#' @return return
+#'
+#' @export
 header_rows <- function(x, ...) UseMethod('header_rows')
 
+#' @export
 header_rows.rtf_doc <- function(x, ...) {
   header_rows(x$table)
 }
 
+#' @export
 header_rows.huxtable <- function(x, ...) {
   attr(x, 'header.rows')
 }
 
+#' @export
 header_rows.gt_tbl <- function(x, ...) {
   stop('GT tables do not require header rows to be set')
 }
 
 ## Header rows (setters) ----
+#' Title
+#'
+#' @param x x
+#' @param ... ...
+#'
+#' @export
 'header_rows<-' <- function(x, value, ...) UseMethod('header_rows<-')
 
+#' Title
+#'
+#' @param x x
+#' @param ... ...
+#'
+#' @export
 set_header_rows <- function(x, value, ...) UseMethod('header_rows<-')
 
+#' @export
 'header_rows<-.rtf_doc' <- function(x, value, ...) {
 
   header_rows(x$table) <- value
   x
 }
 
+#' @export
 'header_rows<-.huxtable' <- function(x, value, ...) {
   # Must be a number
   assert_that(is.numeric(value) && (value %% 1 == 0) && (value >= 0), msg='Header rows must be a positive whole number')
@@ -375,23 +662,45 @@ set_header_rows <- function(x, value, ...) UseMethod('header_rows<-')
   x
 }
 
+#' @export
 'header_rows<-.gt_tbl' <- function(x, value, ...) {
   stop('GT tables do not require header rows to be set')
 }
 
 ## Ignore Cell Padding (getters) ----
+#' Title
+#'
+#' @param x x
+#' @param ... ...
+#'
+#' @return return
+#'
+#' @export
 ignore_cell_padding <- function(x, ...) UseMethod('ignore_cell_padding')
 
+#' @export
 ignore_cell_padding.rtf_doc <- function(x, ...) {
   attr(x, 'ignore_cell_padding')
 }
 
 ## Ignore Cell Padding (setters) ----
+#' Title
+#'
+#' @param x x
+#' @param ... ...
+#'
+#' @export
 'ignore_cell_padding<-' <- function(x, value, ...) UseMethod('ignore_cell_padding<-')
 
+#' Title
+#'
+#' @param x x
+#' @param ... ...
+#'
+#' @export
 set_ignore_cell_padding <- function(x, value, ...) UseMethod('ignore_cell_padding<-')
 
-
+#' @export
 'ignore_cell_padding<-.rtf_doc' <- function(x, value, ...) {
   # Check that argument is valid
   assert_that(is.logical(value))
@@ -401,17 +710,39 @@ set_ignore_cell_padding <- function(x, value, ...) UseMethod('ignore_cell_paddin
 }
 
 ## Column header buffer (getter)
+#' Title
+#'
+#' @param x x
+#' @param ... ...
+#'
+#' @return return
+#'
+#' @export
 column_header_buffer <- function(x, ...) UseMethod('column_header_buffer')
 
+#' @export
 column_header_buffer.rtf_doc <- function(x, ...) {
   attr(x, 'column_header_buffer')
 }
 
 ## Ignore Cell Padding (setters) ----
+#' Title
+#'
+#' @param x x
+#' @param ... ...
+#'
+#' @export
 'column_header_buffer<-' <- function(x, value, ...) UseMethod('column_header_buffer<-')
 
+#' Title
+#'
+#' @param x x
+#' @param ... ...
+#'
+#' @export
 set_column_header_buffer <- function(x, ...) UseMethod('set_column_header_buffer')
 
+#' @export
 set_column_header_buffer.rtf_doc <- function(x, top=0, bottom=0, ...) {
 
   # Check the inputs
@@ -422,6 +753,7 @@ set_column_header_buffer.rtf_doc <- function(x, top=0, bottom=0, ...) {
   x
 }
 
+#' @export
 'column_header_buffer<-.rtf_doc' <- function(x, value, ...) {
 
   values <- unlist(value)

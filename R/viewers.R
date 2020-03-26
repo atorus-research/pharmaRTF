@@ -1,3 +1,10 @@
+#' View header and footer information
+#'
+#' @param doc RTF document
+#' @param type type
+#'
+#' @import utils
+#' @export
 view_hf <- function(doc, type=NULL) {
 
   # Take out the lines
@@ -38,6 +45,14 @@ view_hf <- function(doc, type=NULL) {
 }
 
 # Simplified for titles
+#' Title
+#'
+#' @param doc doc
+#'
+#' @return titles
+#' @export
+#'
+#'
 view_titles <- function(doc) {
   view_hf(doc, type='titles')
 }
