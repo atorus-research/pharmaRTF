@@ -32,7 +32,8 @@ as_rtf_doc <- function(table, titles, footnotes, header.rows) {
 
 ## For rtf_doc, return the table
 as_rtf_doc.rtf_doc <- function(table, titles, footnotes, header.rows) {
-  table
+  stop(paste('An `rtf_doc` object was provided - not a table. Supported table types are:',
+        paste(supported_table_types, collapse = ", ")))
 }
 
 ## For huxtable
