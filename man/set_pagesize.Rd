@@ -4,12 +4,12 @@
 \alias{set_pagesize}
 \title{Title}
 \usage{
-set_pagesize(x, ...)
+set_pagesize(x, value)
 }
 \arguments{
 \item{x}{x}
 
-\item{...}{...}
+\item{value}{value}
 }
 \description{
 Title

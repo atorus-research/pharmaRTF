@@ -4,12 +4,12 @@
 \alias{set_font}
 \title{Title}
 \usage{
-set_font(x, ...)
+set_font(x, value)
 }
 \arguments{
 \item{x}{x}
 
-\item{...}{...}
+\item{value}{value}
 }
 \description{
 Title

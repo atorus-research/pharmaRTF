@@ -4,12 +4,12 @@
 \alias{set_index}
 \title{Title}
 \usage{
-set_index(x, ...)
+set_index(x, value)
 }
 \arguments{
 \item{x}{x}
 
-\item{...}{...}
+\item{value}{value}
 }
 \description{
 Title

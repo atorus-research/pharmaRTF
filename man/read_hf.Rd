@@ -14,8 +14,6 @@ read_hf(from = NULL, from.file = NULL, reader = NULL, ...)
 \item{reader}{reader}
 
 \item{...}{...}
-
-\item{type}{type}
 }
 \value{
 hf

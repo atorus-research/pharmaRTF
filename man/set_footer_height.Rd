@@ -4,12 +4,12 @@
 \alias{set_footer_height}
 \title{Title}
 \usage{
-set_footer_height(x, ...)
+set_footer_height(x, value)
 }
 \arguments{
 \item{x}{x}
 
-\item{...}{...}
+\item{value}{value}
 }
 \description{
 Title

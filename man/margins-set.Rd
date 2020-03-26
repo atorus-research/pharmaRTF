@@ -4,12 +4,12 @@
 \alias{margins<-}
 \title{Title}
 \usage{
-margins(x, ...) <- value
+margins(x) <- value
 }
 \arguments{
 \item{x}{x}
 
-\item{...}{...}
+\item{value}{value}
 }
 \description{
 Title
