@@ -18,5 +18,6 @@ Imports:
 Suggests: 
     testthat (>= 2.1.0),
     huxtable (>= 4.7.1),
+    dplyr (>= 0.8.4),
     gt
 RoxygenNote: 7.0.2
