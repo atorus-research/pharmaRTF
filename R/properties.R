@@ -389,6 +389,10 @@ set_margins <- function(x, value) UseMethod('margins<-')
 
   values <- unlist(value)
 
+  # Must supply a named vector
+  assert_that(!is.null(names(values)),
+              msg="A named vector must be provided with the a combination of the names `top`, `bottom`, `left`, and `right`")
+
   # Make sure that the parameters entered were valid
   assert_that(all(names(values) %in% c('top', 'bottom', 'left', 'right')),
               msg = 'Invalid parameter - must be top, bottom, left, or right')
@@ -579,6 +583,9 @@ set_pagesize <- function(x, value) UseMethod('pagesize<-')
 
   values <- unlist(value)
 
+  # Must supply a named vector
+  assert_that(!is.null(names(values)), msg="A named vector must be provided with the names `height`, `width`, or both")
+
   # Make sure that the parameters entered were valid
   assert_that(all(names(values) %in% c('height', 'width')),
               msg = 'Invalid parameters - must be height or width')
@@ -757,6 +764,10 @@ set_column_header_buffer.rtf_doc <- function(x, top=0, bottom=0, ...) {
 'column_header_buffer<-.rtf_doc' <- function(x, value) {
 
   values <- unlist(value)
+
+  # Must supply a named vector
+  assert_that(!is.null(names(values)), msg="A named vector must be provided with the names `top`, `bottom`, or both")
+
 
   # Check that argument is valid
   assert_that(length(setdiff(names(values), c('top', 'bottom'))) == 0,
