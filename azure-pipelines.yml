@@ -14,6 +14,6 @@ steps:
 - script: Rscript -e 'R.version'
   displayName: 'R Version'
 
-- script: Rscript -e 'dir.create("library"); install.packages("huxtable", lib = "library"); library("devtools"); devtools::check()'
+- script: Rscript -e 'dir.create("‘/tmp/library"); install.packages("huxtable", lib = "/tmp/library"); library("huxtable", lib.loc = "/tmp/library")library("devtools"); devtools::check()'
   displayName: 'Package Check'
 
