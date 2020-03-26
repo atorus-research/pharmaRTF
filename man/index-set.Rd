@@ -4,12 +4,12 @@
 \alias{index<-}
 \title{Title}
 \usage{
-index(x, ...) <- value
+index(x) <- value
 }
 \arguments{
 \item{x}{x}
 
-\item{...}{...}
+\item{value}{value}
 }
 \description{
 Title

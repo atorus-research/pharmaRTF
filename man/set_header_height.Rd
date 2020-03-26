@@ -4,12 +4,12 @@
 \alias{set_header_height}
 \title{Title}
 \usage{
-set_header_height(x, ...)
+set_header_height(x, value)
 }
 \arguments{
 \item{x}{x}
 
-\item{...}{...}
+\item{value}{value}
 }
 \description{
 Title

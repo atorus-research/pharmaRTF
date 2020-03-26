@@ -4,12 +4,12 @@
 \alias{column_header_buffer<-}
 \title{Title}
 \usage{
-column_header_buffer(x, ...) <- value
+column_header_buffer(x) <- value
 }
 \arguments{
 \item{x}{x}
 
-\item{...}{...}
+\item{value}{value}
 }
 \description{
 Title
