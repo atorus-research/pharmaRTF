@@ -22,6 +22,11 @@ test_that("rtf_doc returns a logical(0) when passed no table", {
   expect_length(rtf_doc(), 0)
   expect_is(rtf_doc(), "rtf_doc")
 })
+
+test_that("rtf_doc generates and returns the expected items", {
+  #This check is waiting on issue 79
+  expect_true(TRUE)
+})
 #### Errors/Warnings/Notes ####
 test_that("rtf_doc throws error when passed unsupported class", {
   ht <- huxtable(
