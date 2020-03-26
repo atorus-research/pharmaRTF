@@ -7,13 +7,11 @@
 validate_rtf_doc(table, titles, footnotes)
 }
 \arguments{
+\item{table}{A table of a supported class}
+
 \item{titles}{An object/list of /code{hf_line}}
 
 \item{footnotes}{An object/list of /code{hf_line}}
-
-\item{tables}{A table of a supported class}
-
-\item{header.rows}{An integer determining how many rows of the table are headers.}
 }
 \value{
 nothing for now

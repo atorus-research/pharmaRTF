@@ -4,12 +4,12 @@
 \alias{ignore_cell_padding<-}
 \title{Title}
 \usage{
-ignore_cell_padding(x, ...) <- value
+ignore_cell_padding(x) <- value
 }
 \arguments{
 \item{x}{x}
 
-\item{...}{...}
+\item{value}{value}
 }
 \description{
 Title

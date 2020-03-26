@@ -4,12 +4,12 @@
 \alias{set_align}
 \title{Title}
 \usage{
-set_align(x, ...)
+set_align(x, value)
 }
 \arguments{
 \item{x}{x}
 
-\item{...}{...}
+\item{value}{value}
 }
 \description{
 Title

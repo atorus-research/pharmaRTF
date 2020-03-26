@@ -2,7 +2,6 @@
 #'
 #' @param from from
 #' @param from.file from.file
-#' @param type type
 #' @param reader reader
 #' @param ... ...
 #'

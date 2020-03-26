@@ -4,12 +4,12 @@
 \alias{font<-}
 \title{Title}
 \usage{
-font(x, ...) <- value
+font(x) <- value
 }
 \arguments{
 \item{x}{x}
 
-\item{...}{...}
+\item{value}{value}
 }
 \description{
 Title

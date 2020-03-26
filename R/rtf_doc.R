@@ -111,10 +111,9 @@ new_rtf_doc <- function(table, titles, footnotes) {
 
 #' Validate parameters passed to rtf_doc
 #'
-#' @param tables A table of a supported class
+#' @param table A table of a supported class
 #' @param titles An object/list of /code{hf_line}
 #' @param footnotes An object/list of /code{hf_line}
-#' @param header.rows An integer determining how many rows of the table are headers.
 #'
 #' @return nothing for now
 #'

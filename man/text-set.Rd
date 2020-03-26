@@ -4,12 +4,12 @@
 \alias{text<-}
 \title{Title}
 \usage{
-text(x, ...) <- value
+text(x) <- value
 }
 \arguments{
 \item{x}{x}
 
-\item{...}{...}
+\item{value}{value}
 }
 \description{
 Title
