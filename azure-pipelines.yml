@@ -16,3 +16,4 @@ steps:
 
 - script: Rscript -e 'dir.create("library"); install.packages("huxtable", lib = "library"); library("devtools"); devtools::check()'
   displayName: 'Package Check'
+
