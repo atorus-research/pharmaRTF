@@ -17,7 +17,21 @@ test_that("rtf_doc returns a list with a table, title, and footnotes", {
   expect_named(rtf, c("table", "titles", "footnotes"))
 })
 
+test_that("rtf_doc returns a logical(0) when passed no table", {
+  expect_true(is.logical(rtf_doc()))
+  expect_length(rtf_doc(), 0)
+  expect_is(rtf_doc(), "rtf_doc")
+})
 
+test_that("rtf_doc generates and returns the expected items", {
+  ht <- huxtable(
+    column1 = 1:5,
+    column2 = letters[1:5]
+  )
+  rtf <- rtf_doc(ht)
+
+  expect_error(rtf_doc(rtf), "An `rtf_doc` object was provided")
+})
 #### Errors/Warnings/Notes ####
 test_that("rtf_doc throws error when passed unsupported class", {
   ht <- huxtable(
@@ -85,21 +99,18 @@ test_that("validate_rtf_doc throws errors appropriately", {
   expect_silent(validate_rtf_doc(ht, titles = titles3, footnotes = footnotes3))
 
   # Passing a hf_line directly and a vector of them should raise an error
-  # Three of the tests below still pass despite not being passed a list.
-  # as hf_line is a list, a character vector of them is of class list. I think
-  # this is fine so I removed them.
-  expect_error(validate_rtf_doc(ht, titles = hf_line(), footnotes = footnotes1),
+  expect_error(validate_rtf_doc(ht, titles = hf_line("test"), footnotes = footnotes1),
                "Titles and footnotes must be lists of hf_line objects")
-  # expect_error(validate_rtf_doc(ht, titles = c(hf_line(), hf_line()), footnotes = footnotes1),
-  #              "Titles and footnotes must be lists of hf_line objects")
-  expect_error(validate_rtf_doc(ht, titles = hf_line(), footnotes = footnotes2),
+  expect_error(validate_rtf_doc(ht, titles = c(hf_line("test"), hf_line()), footnotes = footnotes1),
                "Titles and footnotes must be lists of hf_line objects")
-  # expect_error(validate_rtf_doc(ht, titles = c(hf_line(), hf_line()), footnotes = footnotes2),
-  #              "Titles and footnotes must be lists of hf_line objects")
-  expect_error(validate_rtf_doc(ht, titles = hf_line(), footnotes = footnotes3),
+  expect_error(validate_rtf_doc(ht, titles = hf_line("test"), footnotes = footnotes2),
                "Titles and footnotes must be lists of hf_line objects")
-  # expect_error(validate_rtf_doc(ht, titles = c(hf_line(), hf_line()), footnotes = footnotes3),
-  #              "Titles and footnotes must be lists of hf_line objects")
+  expect_error(validate_rtf_doc(ht, titles = c(hf_line("test"), hf_line()), footnotes = footnotes2),
+               "Titles and footnotes must be lists of hf_line objects")
+  expect_error(validate_rtf_doc(ht, titles = hf_line("test"), footnotes = footnotes3),
+               "Titles and footnotes must be lists of hf_line objects")
+  expect_error(validate_rtf_doc(ht, titles = c(hf_line("test"), hf_line()), footnotes = footnotes3),
+               "Titles and footnotes must be lists of hf_line objects")
 })
 
 

@@ -117,11 +117,18 @@ test_that("margins throws error when given a bad parameter", {
   rtf_mar4 <- list(
     top = -2
   )
+  rtf_mar5 <- list(
+    1,
+    2,
+    3,
+    4
+  )
 
   expect_error(margins(rtf) <- rtf_mar1, "Invalid parameter")
   expect_error(margins(rtf) <- rtf_mar2, "Margins must be positive numbers")
   expect_error(margins(rtf) <- rtf_mar3, "Duplicate parameters entered")
   expect_error(margins(rtf) <- rtf_mar4, "Margins must be positive numbers")
+  expect_error(margins(rtf) <- rtf_mar5, "som error")
 })
 
 test_that("orientation throws error when bad parameter is passed", {
@@ -179,12 +186,17 @@ test_that("pagesize throws error when bad parameter is passed", {
   rtf_ps5 <- list(
     height = -1
   )
+  rtf_ps6 <- list(
+    1,
+    2
+  )
 
   expect_error(pagesize(rtf) <- rtf_ps1, "Invalid parameters")
   expect_error(pagesize(rtf) <- rtf_ps2, "Height and Width must be positive numbers")
   expect_error(pagesize(rtf) <- rtf_ps3, "Height and Width must be positive numbers")
   expect_error(pagesize(rtf) <- rtf_ps4, "Duplicate parameters entered")
   expect_error(pagesize(rtf) <- rtf_ps5, "Height and Width must be positive numbers")
+  expect_error(pagesize(rtf) <- rtf_ps6, "Invalid parameters")
 })
 
 test_that("header_rows throws error when passed a gt table", {
@@ -239,6 +251,10 @@ test_that("column_header_buffer<-/set_column_header buffer throw errors as expec
   val4 <- list(
     top = -1
   )
+  val5 <- list(
+    1,
+    4
+  )
 
   expect_error(set_column_header_buffer(rtf, "2", 1), "Top and bottom values must be positive whole numbers")
   expect_error(set_column_header_buffer(rtf, 2, 1.4), "Top and bottom values must be positive whole numbers")
@@ -247,6 +263,7 @@ test_that("column_header_buffer<-/set_column_header buffer throw errors as expec
   expect_error(column_header_buffer(rtf) <- val2, "Duplicate parameters entered")
   expect_error(column_header_buffer(rtf) <- val3, "whole numbers")
   expect_error(column_header_buffer(rtf) <- val4, "Top and bottom values must be positive whole numbers")
+  expect_error(column_header_buffer(rtf) <- val5, "Missing Name Error Placeholder")
 })
 
 
