@@ -14,5 +14,6 @@ steps:
 - script: Rscript -e 'R.version'
   displayName: 'R Version'
 
-- script: Rscript -e 'library("devtools"); devtools::check()'
+- script: sudo Rscript -e 'install.packages("huxtable"); devtools::check()'
   displayName: 'Package Check'
+

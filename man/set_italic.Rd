@@ -4,12 +4,12 @@
 \alias{set_italic}
 \title{Title}
 \usage{
-set_italic(x, ...)
+set_italic(x, value)
 }
 \arguments{
 \item{x}{x}
 
-\item{...}{...}
+\item{value}{value}
 }
 \description{
 Title

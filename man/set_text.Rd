@@ -4,12 +4,12 @@
 \alias{set_text}
 \title{Title}
 \usage{
-set_text(x, ...)
+set_text(x, value)
 }
 \arguments{
 \item{x}{x}
 
-\item{...}{...}
+\item{value}{value}
 }
 \description{
 Title

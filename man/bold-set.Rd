@@ -4,12 +4,12 @@
 \alias{bold<-}
 \title{Title}
 \usage{
-bold(x, ...) <- value
+bold(x) <- value
 }
 \arguments{
 \item{x}{x}
 
-\item{...}{...}
+\item{value}{value}
 }
 \description{
 Title

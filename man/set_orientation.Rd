@@ -4,12 +4,12 @@
 \alias{set_orientation}
 \title{Title}
 \usage{
-set_orientation(x, ...)
+set_orientation(x, value)
 }
 \arguments{
 \item{x}{x}
 
-\item{...}{...}
+\item{value}{value}
 }
 \description{
 Title

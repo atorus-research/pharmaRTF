@@ -4,12 +4,12 @@
 \alias{set_header_rows}
 \title{Title}
 \usage{
-set_header_rows(x, ...)
+set_header_rows(x, value)
 }
 \arguments{
 \item{x}{x}
 
-\item{...}{...}
+\item{value}{value}
 }
 \description{
 Title
