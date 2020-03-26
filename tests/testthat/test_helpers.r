@@ -41,3 +41,23 @@ test_that("insert_buffer adds a blank column correctly", {
   expect_true(dplyr::all_equal(insert_buffer(rtf, rtf$table[1:header_rows(rtf$table)]), ht_head4))
 
 })
+
+test_that("needs_buffer returns the correct value", {
+  ht <- huxtable(
+    column1 = 1:5,
+    column2 = letters[1:5]
+  )
+  rtf <- rtf_doc(ht)
+
+  expect_false(needs_buffer(rtf))
+
+  column_header_buffer(rtf) <- c(top=1)
+  expect_true(needs_buffer(rtf))
+
+  column_header_buffer(rtf) <- c(top=0)
+  expect_false(needs_buffer(rtf))
+})
+
+test_that("format_test_string placeholder test", {
+  expect_true(TRUE)
+})
