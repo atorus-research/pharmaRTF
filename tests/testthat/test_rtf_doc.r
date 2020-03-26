@@ -17,7 +17,11 @@ test_that("rtf_doc returns a list with a table, title, and footnotes", {
   expect_named(rtf, c("table", "titles", "footnotes"))
 })
 
-
+test_that("rtf_doc returns a logical(0) when passed no table", {
+  expect_true(is.logical(rtf_doc()))
+  expect_length(rtf_doc(), 0)
+  expect_is(rtf_doc(), "rtf_doc")
+})
 #### Errors/Warnings/Notes ####
 test_that("rtf_doc throws error when passed unsupported class", {
   ht <- huxtable(
