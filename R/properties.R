@@ -62,9 +62,9 @@ font_size.hf_line <- function(x, ...) {
 }
 
 ## Font size (setters) ----
-'font_size<-' <- function(x, ...) UseMethod('font_size<-')
+'font_size<-' <- function(x, value, ...) UseMethod('font_size<-')
 
-set_font_size <- function(x, ...) UseMethod('font_size<-')
+set_font_size <- function(x, value, ...) UseMethod('font_size<-')
 
 'font_size<-.hf_line' <- function(x, value, ...) {
   assert_that(is.numeric(value))
@@ -88,9 +88,9 @@ align.hf_line <- function(x, ...) {
 }
 
 ## Alignment (setters) ----
-'align<-' <- function(x, ...) UseMethod('align<-')
+'align<-' <- function(x, value, ...) UseMethod('align<-')
 
-set_align <- function(x, ...) UseMethod('align<-')
+set_align <- function(x, value, ...) UseMethod('align<-')
 
 'align<-.hf_line' <- function(x, value = c('left', 'right', 'center', 'split'), ...) {
   # Check that argument is valid
@@ -112,10 +112,9 @@ bold.hf_line <- function(x, ...) {
 }
 
 ## Bold (setters) ----
-'bold<-' <- function(x, ...) UseMethod('bold<-')
+'bold<-' <- function(x, value, ...) UseMethod('bold<-')
 
-set_bold <- function(x, ...) UseMethod('bold<-')
-
+set_bold <- function(x, value, ...) UseMethod('bold<-')
 
 'bold<-.hf_line' <- function(x, value, ...) {
   # Check that argument is valid
@@ -134,9 +133,9 @@ italic.hf_line <- function(x, ...) {
 
 
 ## Italic (setters) ----
-'italic<-' <- function(x, ...) UseMethod('italic<-')
+'italic<-' <- function(x, .value, ..) UseMethod('italic<-')
 
-set_italic <- function(x, ...) UseMethod('italic<-')
+set_italic <- function(x, value, ...) UseMethod('italic<-')
 
 'italic<-.hf_line' <- function(x, value, ...) {
   # Check that argument is valid
@@ -160,9 +159,9 @@ text.hf_line <- function(x, ...) {
 }
 
 ## Text (setters) ----
-'text<-' <- function(x, ...) UseMethod('text<-')
+'text<-' <- function(x, value, ...) UseMethod('text<-')
 
-set_text <- function(x, ...) UseMethod('text<-')
+set_text <- function(x, value, ...) UseMethod('text<-')
 
 'text<-.hf_line' <- function(x, value, ...) {
   # Check that argument is valid
@@ -186,9 +185,9 @@ index.hf_line <- function(x, ...) {
 }
 
 ## Index (setters) ----
-'index<-' <- function(x, ...) UseMethod('index<-')
+'index<-' <- function(x, value, ...) UseMethod('index<-')
 
-set_index <- function(x, ...) UseMethod('index<-')
+set_index <- function(x, value, ...) UseMethod('index<-')
 
 'index<-.hf_line' <- function(x, value, ...) {
   # Check that argument is valid
@@ -208,9 +207,9 @@ margins.rtf_doc <- function(x, ...) {
 }
 
 ## Margins (setters) ----
-'margins<-' <- function(x, ...) UseMethod('margins<-')
+'margins<-' <- function(x, value, ...) UseMethod('margins<-')
 
-set_margins <- function(x, ...) UseMethod('margins<-')
+set_margins <- function(x, value, ...) UseMethod('margins<-')
 
 'margins<-.rtf_doc' <- function(x, value, ...) {
 
@@ -247,9 +246,9 @@ orientation.rtf_doc <- function(x, ...) {
 }
 
 ## Orientation (setters) ----
-'orientation<-' <- function(x, ...) UseMethod('orientation<-')
+'orientation<-' <- function(x, value, ...) UseMethod('orientation<-')
 
-set_orientation <- function(x, ...) UseMethod('orientation<-')
+set_orientation <- function(x, value, ...) UseMethod('orientation<-')
 
 'orientation<-.rtf_doc' <- function(x, value = c('landscape', 'portrait'), ...) {
   # Make sure the value is valid
@@ -270,9 +269,9 @@ header_height.rtf_doc <- function(x, ...) {
 }
 
 ## Header height (setters) ----
-'header_height<-' <- function(x, ...) UseMethod('header_height<-')
+'header_height<-' <- function(x, value, ...) UseMethod('header_height<-')
 
-set_header_height <- function(x, ...) UseMethod('header_height<-')
+set_header_height <- function(x, value, ...) UseMethod('header_height<-')
 
 'header_height<-.rtf_doc' <- function(x, value, ...) {
   # Make sure the value is valid
@@ -290,9 +289,9 @@ footer_height.rtf_doc <- function(x, ...) {
 }
 
 ## Footer height (setters) ----
-'footer_height<-' <- function(x, ...) UseMethod('footer_height<-')
+'footer_height<-' <- function(x, value, ...) UseMethod('footer_height<-')
 
-set_footer_height <- function(x, ...) UseMethod('footer_height<-')
+set_footer_height <- function(x, value, ...) UseMethod('footer_height<-')
 
 'footer_height<-.rtf_doc' <- function(x, value, ...) {
   # Make sure the value is valid
@@ -310,9 +309,9 @@ pagesize.rtf_doc <- function(x, ...) {
 }
 
 ## Page size(setters) ----
-'pagesize<-' <- function(x, ...) UseMethod('pagesize<-')
+'pagesize<-' <- function(x, value, ...) UseMethod('pagesize<-')
 
-set_pagesize <- function(x, ...) UseMethod('pagesize<-')
+set_pagesize <- function(x, value, ...) UseMethod('pagesize<-')
 
 'pagesize<-.rtf_doc' <- function(x, value, ...) {
 
@@ -357,9 +356,9 @@ header_rows.gt_tbl <- function(x, ...) {
 }
 
 ## Header rows (setters) ----
-'header_rows<-' <- function(x, ...) UseMethod('header_rows<-')
+'header_rows<-' <- function(x, value, ...) UseMethod('header_rows<-')
 
-set_header_rows <- function(x, ...) UseMethod('header_rows<-')
+set_header_rows <- function(x, value, ...) UseMethod('header_rows<-')
 
 'header_rows<-.rtf_doc' <- function(x, value, ...) {
 
@@ -388,9 +387,9 @@ ignore_cell_padding.rtf_doc <- function(x, ...) {
 }
 
 ## Ignore Cell Padding (setters) ----
-'ignore_cell_padding<-' <- function(x, ...) UseMethod('ignore_cell_padding<-')
+'ignore_cell_padding<-' <- function(x, value, ...) UseMethod('ignore_cell_padding<-')
 
-set_ignore_cell_padding <- function(x, ...) UseMethod('ignore_cell_padding<-')
+set_ignore_cell_padding <- function(x, value, ...) UseMethod('ignore_cell_padding<-')
 
 
 'ignore_cell_padding<-.rtf_doc' <- function(x, value, ...) {
@@ -409,7 +408,7 @@ column_header_buffer.rtf_doc <- function(x, ...) {
 }
 
 ## Ignore Cell Padding (setters) ----
-'column_header_buffer<-' <- function(x, ...) UseMethod('column_header_buffer<-')
+'column_header_buffer<-' <- function(x, value, ...) UseMethod('column_header_buffer<-')
 
 set_column_header_buffer <- function(x, ...) UseMethod('set_column_header_buffer')
 
