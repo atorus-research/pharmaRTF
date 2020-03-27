@@ -92,8 +92,8 @@ new_rtf_doc <- function(table, titles, footnotes) {
   # Put the object together
   doc <- list(
     table = table,
-    titles = titles,
-    footnotes = footnotes
+    titles = order_lines(titles),
+    footnotes = order_lines(footnotes)
   )
 
   # Create the object
