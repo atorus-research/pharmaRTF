@@ -1,5 +1,6 @@
 context("rtf-code-generators")
 library(huxtable)
+library(readr)
 
 test_that("font_table_string adds fonts correctly", {
   ht <- huxtable(
@@ -64,9 +65,30 @@ test_that("doc_properties_string populates correctly", {
 test_that("header_string lines populates correctly" ,{
   ht <- huxtable(
     column1 = 1:5,
+
     column2 = letters[1:5]
   )
-  rtf <- rtf_doc(ht)
+  rtf1 <- rtf_doc(ht)
+  headers1 <- header_string(rtf1)
+
+  headers_l <- list(
+    hf_line("Text1"),
+    hf_line("Text2", bold = TRUE),
+    hf_line("Text3", italic = TRUE),
+    hf_line("Text4", font = "Calibri"),
+    hf_line("Text5", font_size = 15),
+    hf_line(c("Text6", "Text7"), align = "split"),
+    hf_line("Text8", align = "right"),
+    hf_line("Text9", align = "left")
+  )
+  rtf2 <- rtf_doc(ht, titles = headers_l)
+  headers2 <- header_string(rtf2)
+
+  expect_equal(headers1, read_file("headers1.txt"))
+
+
+
+
 
   expect_true(TRUE)
 })
