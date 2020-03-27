@@ -17,6 +17,32 @@ test_that("rtf_doc returns a list with a table, title, and footnotes", {
   expect_named(rtf, c("table", "titles", "footnotes"))
 })
 
+test_that("rtf_doc returns the correct ordering of titles", {
+  ht <- huxtable(
+    column1 = 1:5,
+    column2 = letters[1:5]
+  )
+  rtf <- rtf_doc(ht)
+
+  titles_l <- list(
+    hf_line("test3"),
+    hf_line("test2", index=2),
+    hf_line("test1", index=1),
+    hf_line("test4")
+  )
+  footers_l <- list(
+    hf_line("ftest3"),
+    hf_line("ftest2", index=2),
+    hf_line("ftest1", index=1),
+    hf_line("ftest4")
+  )
+
+  rtf <- rtf_doc(ht, titles = titles_l, footnotes = footers_l)
+
+  expect_equal(unname(unlist(rtf$titles)), c("test1", "test2", "test3", "test4"))
+  expect_equal(unname(unlist(rtf$footnotes)), c("ftest1", "ftest2", "ftest3", "ftest4"))
+})
+
 test_that("rtf_doc returns a logical(0) when passed no table", {
   expect_true(is.logical(rtf_doc()))
   expect_length(rtf_doc(), 0)
