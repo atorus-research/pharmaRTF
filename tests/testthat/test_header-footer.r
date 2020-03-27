@@ -53,6 +53,23 @@ test_that("add_hf replaces lines when appropriate", {
   expect_equivalent(rtf$titles, list("123"))
 })
 
+test_that("add_titles/add_footnotes adds and replaces properly", {
+  ht <- huxtable(
+    column1 = 1:5,
+    column2 = letters[1:5]
+  )
+  rtf <- rtf_doc(ht)
+
+  rtf <- add_titles(rtf, hf_line("test2"), hf_line("test1", index = 1))
+  expect_equal(unname(unlist(rtf$titles)), c("test1", "test2"))
+  rtf <- add_footnotes(rtf, hf_line("test"))
+  expect_equal(unname(unlist(rtf$footnotes)), c("test"))
+
+  rtf <- add_titles(rtf, hf_line("test1b", "test2b"))
+  expect_equal(unname(unlist(rtf$titles)), c("test1", "test2", "test1b", "test2b"))
+  rtf <- add_footnotes(rtf, hf_line("ftest2"), hf_line("ftest1", index=1), replace = TRUE)
+  expect_equal(unname(unlist(rtf$footnotes)), c("ftest1", "ftest2"))
+})
 
 #### Errors ####
 test_that("hf_line throws error when given bad align", {
