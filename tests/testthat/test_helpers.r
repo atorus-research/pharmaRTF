@@ -43,7 +43,7 @@ test_that("insert_buffer adds a blank column correctly", {
   ### Testing when header.rows == 2
   rtf2 <- rtf_doc(ht, header.rows = 2)
   ht2_head1 <- huxtable(
-    column1 = as.integer(1, 2),
+    column1 = as.integer(c(1, 2)),
     column2 = c("a", "b")
   )
   ht2_head2 <- huxtable(
@@ -55,7 +55,7 @@ test_that("insert_buffer adds a blank column correctly", {
     column2 = c("", "a", "b", "", "")
   )
   ht2_head4 <- huxtable(
-    column1 = as.integer(1, 2),
+    column1 = as.integer(c(1, 2)),
     column2 = c("a", "b")
   )
 
