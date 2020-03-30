@@ -235,8 +235,8 @@ insert_buffer <- function(doc, col_headers){
   rows <- column_header_buffer(doc)
 
   # Copy col headers and blank it out
-  top <- col_headers
-  bottom <- col_headers
+  top <- col_headers[0, ]
+  bottom <- col_headers[0, ]
   # Turn off borders
   huxtable::bottom_border(top) <- 0
   huxtable::bottom_border(bottom) <- 0
