@@ -146,7 +146,8 @@ add_hf <- function(doc, ..., to=NULL, replace=FALSE) {
 
   # Make sure each provided object is an hf_line
   assert_that(all(sapply(lines, inherits, what='hf_line')),
-              msg = 'Provided titles must be hf_line objects- see pharmaRTF::hf_line')
+              msg = paste('Provided titles must be hf_line objects, not',class(lines[[1]]),
+                          '- see pharmaRTF::hf_line'))
 
   # Sort
   lines <- order_lines(lines)
