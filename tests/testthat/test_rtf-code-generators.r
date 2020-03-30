@@ -30,6 +30,7 @@ test_that("doc_properties_string populates correctly", {
   expect_equal(doc_properties_string(rtf),
                "\\paperw15840\\paperh12240\\widowctrl\\ftnbj\\fet0\\sectd\\linex0\n\\margl1440\\margr1440\\margt1440\\margb1440\n\\headery720\\footery720\\fs24\n")
 
+  ## TODO change the below when the landscape is corrected
   #Twips are 1/1440 inch
   pagesize(rtf) <- c(width = 10)
   expect_equal(doc_properties_string(rtf),
@@ -57,6 +58,9 @@ test_that("doc_properties_string populates correctly", {
                "\\paperw14400\\paperh14400\\widowctrl\\ftnbj\\fet0\\sectd\\linex0\n\\margl2880\\margr2880\\margt2880\\margb2880\n\\headery1440\\footery1440\\fs24\n")
   #font size is font_size * 2
   font_size(rtf) <- 5
+  expect_equal(doc_properties_string(rtf),
+               "\\paperw14400\\paperh14400\\widowctrl\\ftnbj\\fet0\\sectd\\linex0\n\\margl2880\\margr2880\\margt2880\\margb2880\n\\headery1440\\footery1440\\fs10\n")
+  orientation(rtf) <- "portrait"
   expect_equal(doc_properties_string(rtf),
                "\\paperw14400\\paperh14400\\widowctrl\\ftnbj\\fet0\\sectd\\linex0\n\\margl2880\\margr2880\\margt2880\\margb2880\n\\headery1440\\footery1440\\fs10\n")
 

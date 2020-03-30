@@ -112,6 +112,15 @@ test_that("reaplce_cell_padding replaces padding flags correctly", {
   expect_true(str_detect(read_file("test.rtf"), "\\\\clpadfr0"))
 })
 
-test_that("format_test_string placeholder test", {
-  expect_true(TRUE)
+test_that("format_text_string placeholder test", {
+  pgFormat1 <- "PAGE_FORMAT: abc123 %s and %s"
+  pgFormat2 <- "PAGE_FORMAT: abc123:: %s and %s"
+  expect_equal(format_text_string(pgFormat1),
+              "{abc123 }{\\field\\flddirty{\\*\\fldinst{  PAGE   \\\\* MERGEFORMAT }}}{ and }{\\field{\\*\\fldinst{ NUMPAGES}}}")
+  expect_equal(format_text_string(pgFormat2),
+               "{abc123:: }{\\field\\flddirty{\\*\\fldinst{  PAGE   \\\\* MERGEFORMAT }}}{ and }{\\field{\\*\\fldinst{ NUMPAGES}}}")
+
+  dtFormat1 <- "DATE_FORMAT: %Y-%m-%d"
+  expect_equal(format_text_string(dtFormat1), paste0("{", Sys.Date(), "}"))
+
 })
