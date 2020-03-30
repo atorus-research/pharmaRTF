@@ -85,6 +85,7 @@ test_that("header_string lines populates correctly" ,{
   headers2 <- header_string(rtf2)
 
 
+  expect_true(TRUE)
   # ## expect headers are equal to the check files, removes return line.
   # expect_equal(headers1,
   #              str_sub(read_file("headers1.txt"),
