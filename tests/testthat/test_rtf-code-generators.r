@@ -63,7 +63,7 @@ test_that("doc_properties_string populates correctly", {
                "\\paperw14400\\paperh14400\\widowctrl\\ftnbj\\fet0\\sectd\\linex0\n\\margl2880\\margr2880\\margt2880\\margb2880\n\\headery1440\\footery1440\\fs10\n")
   orientation(rtf) <- "landscape"
   expect_equal(doc_properties_string(rtf),
-               "\\paperw14400\\paperh14400\\lndscpsxn\nwidowctrl\\ftnbj\\fet0\\sectd\\linex0\n\\lndscpsxn\n\\margl2880\\margr2880\\margt2880\\margb2880\n\\headery1440\\footery1440\\fs10\n")
+               "\\paperw14400\\paperh14400\\widowctrl\\ftnbj\\fet0\\sectd\\linex0\n\\lndscpsxn\n\\margl2880\\margr2880\\margt2880\\margb2880\n\\headery1440\\footery1440\\fs10\n")
 
 })
 
