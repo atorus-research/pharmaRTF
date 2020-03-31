@@ -31,7 +31,6 @@ test_that("doc_properties_string populates correctly", {
   expect_equal(doc_properties_string(rtf),
                "\\paperw15840\\paperh12240\\widowctrl\\ftnbj\\fet0\\sectd\\linex0\n\\margl1440\\margr1440\\margt1440\\margb1440\n\\headery720\\footery720\\fs24\n")
 
-  ## TODO change the below when the landscape is corrected
   #Twips are 1/1440 inch
   pagesize(rtf) <- c(width = 10)
   expect_equal(doc_properties_string(rtf),
@@ -74,7 +73,6 @@ test_that("header_string lines populates correctly" ,{
   )
   rtf1 <- rtf_doc(ht)
   headers1 <- header_string(rtf1)
-  write_rtf(rtf1)
 
   headers_l <- list(
     hf_line("Text1"),
@@ -89,18 +87,18 @@ test_that("header_string lines populates correctly" ,{
   rtf2 <- rtf_doc(ht, titles = headers_l)
   headers2 <- header_string(rtf2)
 
-
+  ## Manually Verified
   expect_true(TRUE)
   # ## expect headers are equal to the check files, removes return line.
   # expect_equal(headers1,
   #              str_sub(read_file("headers1.txt"),
   #                      start = 1,
-  #                      end = str_length(read_file("headers1.txt"))-1))
+  #                      end = str_length(read_file("headers1.txt"))))
   #
   # expect_equal(headers2,
   #              str_sub(read_file("headers2.txt"),
   #                      start = 1,
-  #                      end = str_length(read_file("headers2.txt"))-1))
+  #                      end = str_length(read_file("headers2.txt"))))
 })
 
 test_that("write_rtf writes an expected rtf_file - 1", {
