@@ -23,10 +23,12 @@ get_column_headers.huxtable <- function(doc) {
   huxtable::font_size(col_headers) <- cfs
 
   # For huxtable simply return the header rows of the table - turn off cell padding if specified
+
+  out <- huxtable::to_rtf(col_headers, fc_tables = huxtable::rtf_fc_tables(ht, extra_fonts = c("Times", font(doc))))
   if (ignore_cell_padding(doc)) {
-    replace_cell_padding(huxtable::to_rtf(col_headers))
+    replace_cell_padding(out)
   } else {
-    huxtable::to_rtf(col_headers)
+    out
   }
 }
 
@@ -52,10 +54,11 @@ get_table_body.huxtable <- function(doc) {
   body <- doc$table[start_row:nrow(doc$table), ]
 
   # Turn off cell padding if specified
+  out <- huxtable::to_rtf(body, fc_tables = huxtable::rtf_fc_tables(ht, extra_fonts = c("Times", font(doc))))
   if (ignore_cell_padding(doc)) {
-    replace_cell_padding(huxtable::to_rtf(body))
+    replace_cell_padding(out)
   } else {
-    huxtable::to_rtf(body)
+    out
   }
 }
 
