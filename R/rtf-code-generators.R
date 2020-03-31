@@ -103,7 +103,7 @@ doc_properties_string <- function(doc){
   # Other information
   other <- '\\widowctrl\\ftnbj\\fet0\\sectd\\linex0\n'
 
-  paste(ht_wd, other, mrg_str, hf_ht, fs, sep='')
+  paste(ht_wd, other, ortn, mrg_str, hf_ht, fs, sep='')
 
 }
 
