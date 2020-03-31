@@ -9,7 +9,10 @@ titles_and_footnotes_from_df(doc, ...)
 \arguments{
 \item{doc}{RTF document}
 
-\item{...}{header and footer inormation}
+\item{...}{A \code{data.frame} with information to attach to an RTF document}
+}
+\value{
+RTF document with header/footer information attached
 }
 \description{
 Read titles and footnotes from a dataframe

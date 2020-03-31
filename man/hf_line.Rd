@@ -15,23 +15,44 @@ hf_line(
 )
 }
 \arguments{
-\item{...}{A character list/vector}
+\item{...}{A character list/vector. If \code{length(...)} is 2 and
+\code{align} is not 'split', values are pasted together.}
 
-\item{align}{Alignment in the document}
+\item{align}{Alignment in the document. Supports 'left', 'right', 'center'
+and 'split'}
 
-\item{bold}{Is bold?}
+\item{bold}{Bold - \code{TRUE} or \code{FALSE}}
 
-\item{italic}{Is italic?}
+\item{italic}{Italic - \code{TRUE} or \code{FALSE}}
 
-\item{font}{Font used in document, character}
+\item{font}{Font used in document, string}
 
 \item{font_size}{pt of font in document, numeric}
 
-\item{index}{order in document}
+\item{index}{order in document, numeric.}
 }
 \value{
-An object of class hf_line
+An object of class \code{hf_line}
 }
 \description{
-Create a title line container
+\code{hf_line} objects are passed to \code{rtf_doc} for display in the RTF
+document. A list of 0, 1, or 2 strings with attributes for display.
 }
+\details{
+Currently supports the following properties:
+\itemize{
+\item {Alignment}
+\item {Bold}
+\item {Italic}
+\item {Font}
+\item {Font Size}
+\item {Index}
+}
+}
+\seealso{
+Other hf_line: 
+\code{\link{add_footnotes}()},
+\code{\link{add_hf}()},
+\code{\link{add_titles}()}
+}
+\concept{hf_line}

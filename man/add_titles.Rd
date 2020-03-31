@@ -2,18 +2,25 @@
 % Please edit documentation in R/header-footer.R
 \name{add_titles}
 \alias{add_titles}
-\title{Title}
+\title{Add \code{hf_line} object(s) to a \code{rtf_doc} object}
 \usage{
 add_titles(doc, ...)
 }
 \arguments{
-\item{doc}{doc}
+\item{doc}{\code{rtf_doc} object to add header/footer lines to}
 
-\item{...}{...}
+\item{...}{A vector of \code{hf_line} objects to add.}
 }
 \value{
-titles
+\code{rtf_doc} object with \code{hf_line} objects attached.
 }
 \description{
-Title
+Add \code{hf_line} object(s) to a \code{rtf_doc} object
 }
+\seealso{
+Other hf_line: 
+\code{\link{add_footnotes}()},
+\code{\link{add_hf}()},
+\code{\link{hf_line}()}
+}
+\concept{hf_line}

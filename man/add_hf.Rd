@@ -2,22 +2,30 @@
 % Please edit documentation in R/header-footer.R
 \name{add_hf}
 \alias{add_hf}
-\title{Title}
+\title{Add \code{hf_line} object(s) to a \code{rtf_doc} object}
 \usage{
 add_hf(doc, ..., to = NULL, replace = FALSE)
 }
 \arguments{
-\item{doc}{doc}
+\item{doc}{\code{rtf_doc} object to add header/footer lines to}
 
-\item{...}{...}
+\item{...}{A vector of \code{hf_line} objects to add.}
 
-\item{to}{to}
+\item{to}{Either 'titles' or 'footnotes'}
 
-\item{replace}{replace}
+\item{replace}{If FALSE, lines will be appened/ordered with current
+header/footer lines. If TRUE, lines will replace whatever is there.}
 }
 \value{
-hf
+\code{rtf_doc} object with \code{hf_line} objects attached.
 }
 \description{
-Title
+Add \code{hf_line} object(s) to a \code{rtf_doc} object
 }
+\seealso{
+Other hf_line: 
+\code{\link{add_footnotes}()},
+\code{\link{add_titles}()},
+\code{\link{hf_line}()}
+}
+\concept{hf_line}
