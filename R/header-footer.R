@@ -28,6 +28,21 @@ library(assertthat)
 #'
 #' @return An object of class \code{hf_line}
 #'
+#' @examples
+#' # Adding lines during rtf_doc construction
+#' ht <- huxtable(
+#'  column1 = 1:5,
+#'  column2 = letters[1:5]
+#' )
+#' rtf <- rtf_doc(ht)
+#' titles_l <- list(
+#' hf_line("The Title")
+#' )
+#' rtf <- rtf_doc(ht, titles = titles_l)
+#'
+#' # Adding lines after rtf_doc construction
+#' rtf <- add_footnotes(rtf, hf_line("The Footnote"))
+#'
 #' @family hf_line
 #' @export
 hf_line <- function(..., align=c('center', 'left', 'right', 'split'), bold=FALSE,
@@ -179,11 +194,22 @@ add_footnotes <- function(doc, ...) {
 }
 
 #' Read titles and footnotes from a dataframe
-#'
-#' @param doc RTF document
+#' Reads a data frame with header/footnote information and attaches it to an
+#' \code{rtf_doc} object.
+#' Requires the following columns:
+#' \itemize{
+#' \item{type}
+#' \item{text1}
+#' \item{text2}
+#' \item{align}
+#' \item{bold}
+#' \item{italic}
+#' \item{font}
+#' \item{index}
+#' }
+#' Other columns will be ignored.
+#' @param doc \code{rtf_doc} object
 #' @param ... A \code{data.frame} with information to attach to an RTF document
-#'
-#'
 #'
 #' @return RTF document with header/footer information attached
 #' @import purrr

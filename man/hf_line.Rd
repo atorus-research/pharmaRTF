@@ -49,6 +49,22 @@ Currently supports the following properties:
 \item {Index}
 }
 }
+\examples{
+# Adding lines during rtf_doc construction
+ht <- huxtable(
+ column1 = 1:5,
+ column2 = letters[1:5]
+)
+rtf <- rtf_doc(ht)
+titles_l <- list(
+hf_line("The Title")
+)
+rtf <- rtf_doc(ht, titles = titles_l)
+
+# Adding lines after rtf_doc construction
+rtf <- add_footnotes(rtf, hf_line("The Footnote"))
+
+}
 \seealso{
 Other hf_line: 
 \code{\link{add_footnotes}()},
