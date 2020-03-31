@@ -122,7 +122,7 @@ hf_line_string <- function(line, doc=NULL) {
                                               # so use the documents set size
   bd <- '' # Bold (On or off - default off)
   it <- '' # Italic (One or off - default off)
-  al <- '\n' # Alignment (Defaults to left \ql - left aligned)
+  al <- '\\ql\n' # Alignment (Defaults to left \ql - left aligned)
   tabs <- '\\b' # Overwritten if split alignment
 
   # Read the font information
