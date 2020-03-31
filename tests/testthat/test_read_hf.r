@@ -33,6 +33,11 @@ test_that("read_hf throws error when presented a from thats not a df", {
   expect_error(read_hf(from = list()), "from does not inherit")
 })
 
+test_that("read_hf throws error for invalid from.file/reader", {
+  expect_error(read_hf(from.file = "SomeNonexistantFile.txt", reader = "abc"), "Path 'SomeNonexistantFile.txt' does not exist")
+  expect_error(read_hf(from.file = "headers1.txt", reader = "abc"), "reader is not a function")
+})
+
 test_that("validated_hf_dataframe throws errors for missing columns" ,{
   required_columns <- c("type", "text1", "text2", "align", "bold", "italic", "font", "index")
   df <- data.frame(

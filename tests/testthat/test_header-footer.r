@@ -71,6 +71,75 @@ test_that("add_titles/add_footnotes adds and replaces properly", {
   expect_equal(unname(unlist(rtf$footnotes)), c("ftest1", "ftest2"))
 })
 
+test_that("titles_and_footnotes_from_df attaches properly", {
+  ht <- huxtable(
+    column1 = 1:5,
+    column2 = letters[1:5]
+  )
+  rtf <- rtf_doc(ht)
+
+  df <- data.frame(
+    type =c(
+      "title",
+      "footnote",
+      "title"
+    ),
+    text1 =c(
+      "t1",
+      "f1",
+      "t2"
+    ),
+    text2 =c(
+      "",
+      "",
+      "t2b"
+    ),
+    align =c(
+      "left",
+      "right",
+      "split"
+    ),
+    bold =c(
+      FALSE,
+      TRUE,
+      FALSE
+    ),
+    italic =c(
+      FALSE,
+      TRUE,
+      FALSE
+    ),
+    font =c(
+      "Times",
+      "Times1",
+      "Times2"
+    ),
+    index = c(
+      2,
+      3,
+      1
+    ),
+    stringsAsFactors = FALSE
+  )
+
+  expect_equal(rtf$titles, list())
+  expect_equal(rtf$footnotes, list())
+
+  rtf <- titles_and_footnotes_from_df(rtf, df)
+  expect_equal(unlist(rtf$titles), c(
+    text.text1 = "t2",
+    text.text2 = "t2b",
+    text.text1 = "t1",
+    text.text2 = ""
+  ))
+  expect_equal(unlist(rtf$footnotes), c(
+    text.text1 = "f1",
+    text.text2 = ""
+  ))
+
+
+})
+
 #### Errors ####
 test_that("hf_line throws error when given bad align", {
   expect_error(hf_line("asdf", align = "middle"))
