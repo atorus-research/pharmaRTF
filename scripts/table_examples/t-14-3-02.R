@@ -12,11 +12,11 @@ source('./scripts/table_examples/config.R')
 source('./scripts/table_examples/funcs.R')
 
 # Read in the ADLB datasets ----
-adas <- read_xpt(glue("{adam_lib}/adqsadas.xpt")) %>%
+cibc <- read_xpt(glue("{adam_lib}/adqscibc.xpt")) %>%
   filter(EFFICACY == "Y" & ITTV=='Y')
 
 # Calculate the header Ns ----
-header_n <- adas %>%
+header_n <- cibc %>%
   distinct(USUBJID, TRTP, TRTPCD, TRTPN) %>%
   group_by(TRTPCD, TRTP, TRTPN) %>%
   summarize(N = n()) %>%
@@ -36,7 +36,7 @@ column_headers <- header_n %>%
 summary_data <- function(var, week, stub_header) {
 
   # Get the summary statistics
-  df <- adas %>%
+  df <- cibc %>%
     # Filter to analsis week
     filter(AVISITCD==week) %>%
     # Summary statistics
@@ -75,15 +75,11 @@ summary_data <- function(var, week, stub_header) {
 }
 
 # Run each group
-summary_portion <- bind_rows(summary_data(VAL, 'BL', 'Baseline'),
-                             summary_data(VAL, 'Wk24', 'Week 24'),
-                             summary_data(CHG, 'Wk24', 'Change from Baseline')) %>%
+summary_portion <- summary_data(VAL, 'Wk24', 'Week 24') %>%
   pad_row()
 
-summary_portion
-
 ## P - values ####
-week24 <- adas %>%
+week24 <- cibc %>%
   filter(AVISITCD == 'Wk24')
 
 ## Dose Response ---
@@ -98,7 +94,7 @@ week24 <- adas %>%
 op <- options(contrasts = c("contr.sum","contr.poly"))
 
 # Basic linear model
-model <- lm(CHG ~ TRTDOSE + SITEGRP + BASE, data=week24)
+model <- lm(VAL ~ TRTDOSE + SITEGRP, data=week24)
 
 # Use `car` package Anova test with type III SS.
 ancova <- car::Anova(model, type=3)
@@ -120,7 +116,7 @@ dose_response <- tibble(rowlbl1=c('p-value(Dose Response) [1] [2]'),
 week24['TRTPCD_F'] <- factor(week24$TRTPCD, levels=c('Xan_Hi', 'Xan_Lo', 'Pbo'))
 
 # Linear model but use treatment group as a factor now
-model <- lm(CHG ~ TRTPCD_F + SITEGRP + BASE, data=week24)
+model <- lm(VAL ~ TRTPCD_F + SITEGRP, data=week24)
 # LS Means and weight proportionately to match OM option on PROC GLM in SAS
 lsm <- emmeans::lsmeans(model, ~TRTPCD_F, weights='proportional')
 # Get pairwise contrast and remove P-values adjustment for multiple groups
@@ -201,13 +197,13 @@ ht
 doc <- rtf_doc(ht) %>% pharmaRTF:::titles_and_footnotes_from_df(
   from.file='./scripts/table_examples/titles.xlsx',
   reader=example_custom_reader,
-  table_number='14-3.01') %>%
+  table_number='14-3.02') %>%
   set_font_size(10) %>%
   set_ignore_cell_padding(TRUE) %>%
   set_column_header_buffer(top=1)
 
 # Write out the RTF
-write_rtf(doc, file='./scripts/table_examples/outputs/14-3.01.rtf')
+write_rtf(doc, file='./scripts/table_examples/outputs/14-3.02.rtf')
 
 
 
