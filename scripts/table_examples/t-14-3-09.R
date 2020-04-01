@@ -1,5 +1,5 @@
-# t-14-3-06.R
-#   CDISC Pilot Table 14-3.06
+# t-14-3-09.R
+#   CDISC Pilot Table 14-3.09
 
 library(glue)
 library(tidyverse)
@@ -12,11 +12,11 @@ source('./scripts/table_examples/config.R')
 source('./scripts/table_examples/funcs.R')
 
 # Read in the ADLB datasets ----
-cibc <- read_xpt(glue("{adam_lib}/adqscibc.xpt")) %>%
-  filter(EFFICACY == "Y" & ITTV=='Y')
+adas <- read_xpt(glue("{adam_lib}/adqsadas.xpt")) %>%
+  filter(EFFICACY == "Y" & ITTV=='Y' & SEX == "F")
 
 # Calculate the header Ns ----
-header_n <- cibc %>%
+header_n <- adas %>%
   distinct(USUBJID, TRTP, TRTPCD, TRTPN) %>%
   group_by(TRTPCD, TRTP, TRTPN) %>%
   summarize(N = n()) %>%
@@ -33,11 +33,13 @@ column_headers <- header_n %>%
   mutate(rowlbl1 = '')
 
 # Run each group
-summary_portion <- summary_data(cibc, VAL, 'Wk16', 'Week 16') %>%
+summary_portion <- bind_rows(summary_data(adas, VAL, 'BL', 'Baseline'),
+                             summary_data(adas, VAL, 'Wk24', 'Week 24'),
+                             summary_data(adas, CHG, 'Wk24', 'Change from Baseline')) %>%
   pad_row()
 
 # Gather the model data
-model_portion <- efficacy_models(cibc, 'VAL', 16)
+model_portion <- efficacy_models(adas, 'CHG', 24)
 
 final <- bind_rows(column_headers, summary_portion, model_portion) %>%
   select(rowlbl1, Pbo, Xan_Lo, Xan_Hi)
@@ -58,13 +60,13 @@ ht
 doc <- rtf_doc(ht) %>% pharmaRTF:::titles_and_footnotes_from_df(
   from.file='./scripts/table_examples/titles.xlsx',
   reader=example_custom_reader,
-  table_number='14-3.06') %>%
+  table_number='14-3.09') %>%
   set_font_size(10) %>%
   set_ignore_cell_padding(TRUE) %>%
   set_column_header_buffer(top=1)
 
 # Write out the RTF
-write_rtf(doc, file='./scripts/table_examples/outputs/14-3.06.rtf')
+write_rtf(doc, file='./scripts/table_examples/outputs/14-3.09.rtf')
 
 
 
