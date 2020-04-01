@@ -2,22 +2,40 @@
 % Please edit documentation in R/read_hf.R
 \name{read_hf}
 \alias{read_hf}
-\title{Title}
+\title{Read a \code{hf_line} object from a file or \code{data.frame}}
 \usage{
 read_hf(from = NULL, from.file = NULL, reader = NULL, ...)
 }
 \arguments{
-\item{from}{from}
+\item{from}{\code{data.frame} containing information to convert to
+\code{hf_line} object(s).}
 
-\item{from.file}{from.file}
+\item{from.file}{A file that contains information to convert to
+\code{hf_line} object(s). Information is extracted from the file with the
+supplied reader.}
 
-\item{reader}{reader}
+\item{reader}{A function to import the information from a file supplied.}
 
-\item{...}{...}
+\item{...}{Additional arguments passed to the reader.}
 }
 \value{
-hf
+A data.frame where each row represents a header or footnote object
 }
 \description{
-Title
+This reads in data from either an existing \code{data.frame} or a file that
+can be read in as a
+}
+\examples{
+#Reading from a file
+## Not run:
+\dontrun{
+# read in a csv document
+hfdf <- read_hf(from.file = "my_hf_file.csv", reader = read.csv)
+}
+
+## End(Not run)
+
+}
+\seealso{
+[titles_and_footnotes_from_df()]
 }

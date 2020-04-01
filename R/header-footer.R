@@ -1,6 +1,3 @@
-library(assertthat)
-
-## Title line container ----
 #' Create a title line container
 #'
 #' \code{hf_line} objects are passed to \code{rtf_doc} for display in the RTF
