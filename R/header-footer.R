@@ -1,7 +1,10 @@
 #' Create a title line container
 #'
+#' @description
 #' \code{hf_line} objects are passed to \code{rtf_doc} for display in the RTF
 #' document. A list of 0, 1, or 2 strings with attributes for display.
+#'
+#' Add info about formatting with PAGE_FORMAT etc
 #'
 #' @param ... A character list/vector. If \code{length(...)} is 2 and
 #'     \code{align} is not 'split', values are pasted together.

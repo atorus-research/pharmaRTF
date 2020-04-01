@@ -39,6 +39,8 @@ An object of class \code{hf_line}
 \description{
 \code{hf_line} objects are passed to \code{rtf_doc} for display in the RTF
 document. A list of 0, 1, or 2 strings with attributes for display.
+
+Add info about formatting with PAGE_FORMAT etc
 }
 \examples{
 # Adding lines during rtf_doc construction
