@@ -2,16 +2,16 @@
 % Please edit documentation in R/header-footer.R
 \name{order_lines}
 \alias{order_lines}
-\title{Title}
+\title{Order header/footer lines in an rtf_document}
 \usage{
 order_lines(lines)
 }
 \arguments{
-\item{lines}{thelines}
+\item{lines}{A list/vector of \code{hf_line} objects}
 }
 \value{
-order
+Reordered lines based on \code{index}
 }
 \description{
-Title
+Order header/footer lines in an rtf_document
 }

@@ -2,15 +2,46 @@
 % Please edit documentation in R/header-footer.R
 \name{titles_and_footnotes_from_df}
 \alias{titles_and_footnotes_from_df}
-\title{Read titles and footnotes from a dataframe}
+\title{Read titles and footnotes from a dataframe
+Reads a data frame with header/footnote information and attaches it to an
+\code{rtf_doc} object.
+Requires the following columns:
+\itemize{
+\item{type}
+\item{text1}
+\item{text2}
+\item{align}
+\item{bold}
+\item{italic}
+\item{font}
+\item{index}
+}
+Other columns will be ignored.}
 \usage{
 titles_and_footnotes_from_df(doc, ...)
 }
 \arguments{
-\item{doc}{RTF document}
+\item{doc}{\code{rtf_doc} object}
 
-\item{...}{header and footer inormation}
+\item{...}{A \code{data.frame} with information to attach to an RTF document}
+}
+\value{
+RTF document with header/footer information attached
 }
 \description{
 Read titles and footnotes from a dataframe
+Reads a data frame with header/footnote information and attaches it to an
+\code{rtf_doc} object.
+Requires the following columns:
+\itemize{
+\item{type}
+\item{text1}
+\item{text2}
+\item{align}
+\item{bold}
+\item{italic}
+\item{font}
+\item{index}
+}
+Other columns will be ignored.
 }
