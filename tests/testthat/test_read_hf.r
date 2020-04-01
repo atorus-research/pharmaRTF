@@ -35,7 +35,7 @@ test_that("read_hf throws error when presented a from thats not a df", {
 
 test_that("read_hf throws error for invalid from.file/reader", {
   expect_error(read_hf(from.file = "SomeNonexistantFile.txt", reader = "abc"), "Path 'SomeNonexistantFile.txt' does not exist")
-  expect_error(read_hf(from.file = "headers1.txt", reader = "abc"), "reader is not a function")
+  expect_error(read_hf(from.file = "test_read_hf.r", reader = "abc"), "reader is not a function")
 })
 
 test_that("validated_hf_dataframe throws errors for missing columns" ,{

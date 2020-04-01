@@ -17,10 +17,13 @@ add_footnotes(doc, ...)
 \description{
 Add \code{hf_line} object(s) to a \code{rtf_doc} object
 }
-\seealso{
-Other hf_line: 
-\code{\link{add_hf}()},
-\code{\link{add_titles}()},
-\code{\link{hf_line}()}
+\examples{
+# Adding lines after rtf_doc construction
+ht <- huxtable::huxtable(
+ column1 = 1:5,
+ column2 = letters[1:5]
+)
+rtf <- rtf_doc(ht)
+
+rtf <- add_footnotes(rtf, hf_line("The Footnote"))
 }
-\concept{hf_line}

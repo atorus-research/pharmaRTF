@@ -18,18 +18,20 @@ hf_line(
 \item{...}{A character list/vector. If \code{length(...)} is 2 and
 \code{align} is not 'split', values are pasted together.}
 
-\item{align}{Alignment in the document. Supports 'left', 'right', 'center'
-and 'split'}
+\item{align}{Text alignment as left, right, center, or split. Defaults to center.}
 
-\item{bold}{Bold - \code{TRUE} or \code{FALSE}}
+\item{bold}{\code{TRUE} or  \code{FALSE}. Defaults to FALSE.}
 
-\item{italic}{Italic - \code{TRUE} or \code{FALSE}}
+\item{italic}{\code{TRUE} or  \code{FALSE}. Defaults to FALSE.}
 
-\item{font}{Font used in document, string}
+\item{font}{A string to specify the font display. Ensure the intended RTF
+reader can display the selected font.}
 
-\item{font_size}{pt of font in document, numeric}
+\item{font_size}{Font size in half points. For example font_size = 20
+will display a 10 point font. Defaults to a 12 point font.}
 
-\item{index}{order in document, numeric.}
+\item{index}{Position to display header or footnote lines in the RTF
+document. Orderes in ascending order with NULLs last.}
 }
 \value{
 An object of class \code{hf_line}
@@ -38,20 +40,9 @@ An object of class \code{hf_line}
 \code{hf_line} objects are passed to \code{rtf_doc} for display in the RTF
 document. A list of 0, 1, or 2 strings with attributes for display.
 }
-\details{
-Currently supports the following properties:
-\itemize{
-\item {Alignment}
-\item {Bold}
-\item {Italic}
-\item {Font}
-\item {Font Size}
-\item {Index}
-}
-}
 \examples{
 # Adding lines during rtf_doc construction
-ht <- huxtable(
+ht <- huxtable::huxtable(
  column1 = 1:5,
  column2 = letters[1:5]
 )
@@ -65,10 +56,3 @@ rtf <- rtf_doc(ht, titles = titles_l)
 rtf <- add_footnotes(rtf, hf_line("The Footnote"))
 
 }
-\seealso{
-Other hf_line: 
-\code{\link{add_footnotes}()},
-\code{\link{add_hf}()},
-\code{\link{add_titles}()}
-}
-\concept{hf_line}
