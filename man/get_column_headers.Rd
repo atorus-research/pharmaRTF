@@ -2,16 +2,17 @@
 % Please edit documentation in R/table_component_extractors.R
 \name{get_column_headers}
 \alias{get_column_headers}
-\title{Title}
+\title{Return the RTF string for header columns}
 \usage{
 get_column_headers(doc)
 }
 \arguments{
-\item{doc}{doc}
+\item{doc}{\code{rtf_doc} object to return header string from.}
 }
 \value{
-headers
+A RTF encoding string containing the header information
 }
 \description{
-Title
+This function relys on the package that the table originated from to create
+a RTF string.
 }

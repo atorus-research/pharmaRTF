@@ -1,14 +1,31 @@
-#' Title
+#' Read a \code{hf_line} object from a file or \code{data.frame}
 #'
-#' @param from from
-#' @param from.file from.file
-#' @param reader reader
-#' @param ... ...
+#' This reads in data from either an existing \code{data.frame} or a file that
+#' can be read in as a
 #'
-#' @return hf
+#' @param from \code{data.frame} containing information to convert to
+#'   \code{hf_line} object(s).
+#' @param from.file A file that contains information to convert to
+#'   \code{hf_line} object(s). Information is extracted from the file with the
+#'   supplied reader.
+#' @param reader A function to import the information from a file supplied.
+#' @param ... Additional arguments passed to the reader.
+#'
+#' @return A data.frame where each row represents a header or footnote object
+#'
 #' @export
 #'
+#' @examples
+#' #Reading from a file
+#' ## Not run:
+#' \dontrun{
+#' # read in a csv document
+#' hfdf <- read_hf(from.file = "my_hf_file.csv", reader = read.csv)
+#' }
 #'
+#' ## End(Not run)
+#'
+#' @seealso [titles_and_footnotes_from_df()]
 read_hf <- function(from=NULL, from.file=NULL, reader=NULL, ...) {
   # Parameter checks
   assert_that(xor(is.null(from), is.null(from.file)),
@@ -39,15 +56,16 @@ read_hf <- function(from=NULL, from.file=NULL, reader=NULL, ...) {
 
 }
 
-#' Title
+#' Validate a \code{data.frame} of \code{hf_line} information
 #'
-#' @param df df
-#' @param required_columns required_columns
+#' Validates a \code{data.frame} with information that will be converted into
+#' \code{hf_line} object. This function checks for column names and data types.
 #'
-#' @return hf
-#' @export
+#' @param df \code{data.frame} to validate
+#' @param required_columns The required columns needed for valid \code{hf_line}
+#'   objects.
 #'
-#'
+#' @noRd
 validate_hf_dataframe <- function(df, required_columns) {
 
   # Flag for whether any errors were encountered

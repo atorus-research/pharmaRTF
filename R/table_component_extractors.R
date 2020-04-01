@@ -1,13 +1,14 @@
-## Header extraction methods ----
-# S3 method
-#' Title
+#' Return the RTF string for header columns
 #'
-#' @param doc doc
+#' This function relys on the package that the table originated from to create
+#' a RTF string.
 #'
-#' @return headers
+#' @param doc \code{rtf_doc} object to return header string from.
+#'
+#' @return A RTF encoding string containing the header information
 get_column_headers <- function(doc) UseMethod('get_column_headers', object=doc$table)
 
-# Huxtable method
+#' @noRd
 get_column_headers.huxtable <- function(doc) {
 
   # Get the column header
@@ -32,22 +33,23 @@ get_column_headers.huxtable <- function(doc) {
   }
 }
 
-# GT Method
+#' @noRd
 get_column_headers.gt_tbl <- function(doc) {
   data <- gt:::build_data(doc$table, context='rtf')
   gt:::create_columns_component_r(data = data)
 }
 
-## Table Body extraction methods ----
-# S3 method
-#' Title
+#' Return the RTF string for the body of a table
 #'
-#' @param doc doc
+#' This function relys on the package that the table originated from to create
+#' a RTF string.
 #'
-#' @return body
+#' @param doc \code{rtf_doc} object to return header string from.
+#'
+#' @return A RTF encoding string containing the header information
 get_table_body <- function(doc) UseMethod('get_table_body', object=doc$table)
 
-# Huxtable method
+#' @noRd
 get_table_body.huxtable <- function(doc) {
   # For huxtable take everything after the header riws
   start_row <- header_rows(doc$table) + 1
@@ -62,7 +64,7 @@ get_table_body.huxtable <- function(doc) {
   }
 }
 
-# GT Method
+#' @noRd
 get_table_body.gt_tbl <- function(doc) {
   data <- gt:::build_data(doc$table, context='rtf')
   gt:::create_body_component_r(data = data)

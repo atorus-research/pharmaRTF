@@ -22,10 +22,3 @@ header/footer lines. If TRUE, lines will replace whatever is there.}
 \description{
 Add \code{hf_line} object(s) to a \code{rtf_doc} object
 }
-\seealso{
-Other hf_line: 
-\code{\link{add_footnotes}()},
-\code{\link{add_titles}()},
-\code{\link{hf_line}()}
-}
-\concept{hf_line}

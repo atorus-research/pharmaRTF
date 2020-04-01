@@ -2,14 +2,14 @@
 % Please edit documentation in R/rtf_doc.R
 \name{rtf_doc}
 \alias{rtf_doc}
-\title{Create an Rich Text Format table document}
+\title{Create an \code{rtf_doc} object}
 \usage{
 rtf_doc(table, titles = list(), footnotes = list(), header.rows = 1)
 }
 \arguments{
 \item{table}{A table of a supported class}
 
-\item{titles}{An object/list of \code{hf_line}}
+\item{titles}{A list of \code{hf_line} objects.}
 
 \item{footnotes}{An object/list of \code{hf_line}}
 
@@ -17,7 +17,34 @@ rtf_doc(table, titles = list(), footnotes = list(), header.rows = 1)
 }
 \value{
 A list with a table, titles, and footnotes component. Class of "rtf_doc"
+
+\code{rtf_doc} object
 }
 \description{
-Create an Rich Text Format table document
+This constructs the main object that will be used to write the RTF document.
+The object is composed of a table, titles(s), and footnote(s).
+}
+\section{\code{rtf_doc} Properties}{
+
+\itemize{
+\item{font}
+\item{font Size}
+\item{margins}
+\item{orientation}
+\item{header_height}
+\item{footer_height}
+\item{pagesize}
+\item{header.rows}
+\item{ignore_cell_padding}
+}
+}
+
+\examples{
+# Adding lines during rtf_doc construction
+ht <- huxtable::huxtable(
+ column1 = 1:5,
+ column2 = letters[1:5]
+)
+rtf <- rtf_doc(ht)
+
 }

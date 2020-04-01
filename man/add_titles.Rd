@@ -7,20 +7,25 @@
 add_titles(doc, ...)
 }
 \arguments{
-\item{doc}{\code{rtf_doc} object to add header/footer lines to}
+\item{doc}{\code{rtf_doc} object to add header lines to}
 
-\item{...}{A vector of \code{hf_line} objects to add.}
+\item{...}{A vector of \code{hf_line} objects to add passed to
+\code{add_hf()}}
 }
 \value{
-\code{rtf_doc} object with \code{hf_line} objects attached.
+\code{rtf_doc} object with \code{hf_line} objects attached to titles.
 }
 \description{
 Add \code{hf_line} object(s) to a \code{rtf_doc} object
 }
-\seealso{
-Other hf_line: 
-\code{\link{add_footnotes}()},
-\code{\link{add_hf}()},
-\code{\link{hf_line}()}
+\examples{
+# Adding lines after rtf_doc construction
+ht <- huxtable::huxtable(
+ column1 = 1:5,
+ column2 = letters[1:5]
+)
+rtf <- rtf_doc(ht)
+
+rtf <- add_titles(rtf, hf_line("The Footnote"))
+
 }
-\concept{hf_line}
