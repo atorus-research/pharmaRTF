@@ -2,7 +2,7 @@
 % Please edit documentation in R/header-footer.R
 \name{add_titles}
 \alias{add_titles}
-\title{Add \code{hf_line} object(s) to a \code{rtf_doc} object}
+\title{Add \code{hf_line} title(s) to a \code{rtf_doc} object}
 \usage{
 add_titles(doc, ...)
 }
@@ -16,7 +16,7 @@ add_titles(doc, ...)
 \code{rtf_doc} object with \code{hf_line} objects attached to titles.
 }
 \description{
-Add \code{hf_line} object(s) to a \code{rtf_doc} object
+Add \code{hf_line} title(s) to a \code{rtf_doc} object
 }
 \examples{
 # Adding lines after rtf_doc construction
@@ -28,4 +28,7 @@ rtf <- rtf_doc(ht)
 
 rtf <- add_titles(rtf, hf_line("The Footnote"))
 
+}
+\seealso{
+\code{\link{add_hf}}
 }

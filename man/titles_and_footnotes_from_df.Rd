@@ -7,13 +7,13 @@
 titles_and_footnotes_from_df(doc, ...)
 }
 \arguments{
-\item{doc}{\code{rtf_doc} object to append header and footnote information.}
+\item{doc}{A \code{rtf_doc} object to append header and footnote information.}
 
 \item{...}{Parameters passed to \code{read_hf} where they are processed and
 constructed into \code{hf_line} objects.}
 }
 \value{
-RTF document with header/footnote information attached.
+A \code{rtf_doc} object with header/footnote information attached.
 }
 \description{
 Reads a data frame with header/footnote information and attaches it to an

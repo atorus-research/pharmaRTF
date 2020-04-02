@@ -53,10 +53,22 @@ supported_table_types <- c('huxtable', 'gt_tbl')
 #'  column1 = 1:5,
 #'  column2 = letters[1:5]
 #' )
+#' # Set table properties
+#' hf <- ht %>%
+#'   huxtable::bold(1, 1:ncol(ht), TRUE) %>%
+#'   huxtable::escape_contents(TRUE) %>%
+#'   huxtable::set_column_width(c(0.25, 0.75))
+#'
 #' rtf <- rtf_doc(ht, titles = list(hf_line("My Header")))
+#' # Set document properties
+#' rtf <- rtf %>%
+#'   set_font_size(15) %>%
+#'   set_ignore_cell_padding(TRUE)
 #'
 #' names(rtf)
 #' # >[1] "table" "titles" "footnotes"
+#'
+#' # write_rtf(rtf, file = "filePath/rtf.rtf")
 #'
 #' @seealso \code{\link{hf_line}}
 #'

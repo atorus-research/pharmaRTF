@@ -18,7 +18,9 @@ hf_line(
 \item{...}{A character list/vector. If \code{length(...)} is 2 and
 \code{align} is not 'split', values are pasted together.}
 
-\item{align}{Text alignment as left, right, center, or split. Defaults to center.}
+\item{align}{ext alignment in document. Options are 'center', 'left',
+'right', and 'split'. A 'split' alignment will left align the string in
+ the first text item and right align the second. Defaults to center.}
 
 \item{bold}{\code{TRUE} or  \code{FALSE}. Defaults to FALSE.}
 
@@ -34,11 +36,18 @@ will display a 10 point font. Defaults to a 12 point font.}
 document. Orderes in ascending order with NULLs last.}
 }
 \value{
-An object of class \code{hf_line}
+An object of class \code{hf_line} with the properties described in
+  the Arguments section.
 }
 \description{
 \code{hf_line} objects are passed to \code{rtf_doc} for display in the RTF
 document. A character vector of length <= 2 describes the text to display.
+A vector of length two can be passed to either split them with one item left
+aligned and the other right aligned, or the two will be pasted together if
+the alignment is anything other than split. Lines can either be passed in
+the call to \code{rtf_doc} added later with \code{add_titles} or
+\code{add_footnotes}. Supported properties are detailed in the Arguments
+section
 }
 \section{Supported Formatting}{
 
@@ -60,15 +69,14 @@ ht <- huxtable::huxtable(
  column1 = 1:5,
  column2 = letters[1:5]
 )
-rtf <- rtf_doc(ht)
 titles_l <- list(
-hf_line("The Title"),
-# the below will display 'Current Page 1 Total Pages 1
-hf_line("PAGE_FORMAT: Current Page \%s Total Pages \%s")
+  hf_line("The Title"),
+  # the below will display 'Current Page 1 Total Pages 1
+  hf_line("PAGE_FORMAT: Current Page \%s Total Pages \%s")
 )
 rtf <- rtf_doc(ht, titles = titles_l)
 
 # Adding lines after rtf_doc construction
-rtf <- add_footnotes(rtf, hf_line("The Footnote"))
+rtf <- add_footnotes(rtf, hf_line("The Footnote"), hf_line("Footnote 2"))
 
 }
