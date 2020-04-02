@@ -1,10 +1,19 @@
 #' Create a title line container
 #'
-#' @description
 #' \code{hf_line} objects are passed to \code{rtf_doc} for display in the RTF
-#' document. A list of 0, 1, or 2 strings with attributes for display.
+#' document. A character vector of length <= 2 describes the text to display.
 #'
-#' Add info about formatting with PAGE_FORMAT etc
+#' @section Supported Formatting:
+#' Several page formats are supported to display document data. When the
+#' \code{rtf_doc} is written, the package will determine if the text of an
+#' \code{hf_line} object starts with a keyword. Regular expresion matching and
+#' replacement is used for formatting.
+#' \itemize{
+#' \item{PAGE_FORMAT: - Can take up to two replacements to format current
+#'   page(first), and total number of pages(second)}
+#' \item{DATE_FORMAT: - Describes the date/time the document was generated}
+#' \item{FILE_PATH: - Describes the file path the R session was executed from}
+#' }
 #'
 #' @param ... A character list/vector. If \code{length(...)} is 2 and
 #'     \code{align} is not 'split', values are pasted together.
@@ -28,7 +37,9 @@
 #' )
 #' rtf <- rtf_doc(ht)
 #' titles_l <- list(
-#' hf_line("The Title")
+#' hf_line("The Title"),
+#' # the below will display 'Current Page 1 Total Pages 1
+#' hf_line("PAGE_FORMAT: Current Page %s Total Pages %s")
 #' )
 #' rtf <- rtf_doc(ht, titles = titles_l)
 #'

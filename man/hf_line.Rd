@@ -38,10 +38,22 @@ An object of class \code{hf_line}
 }
 \description{
 \code{hf_line} objects are passed to \code{rtf_doc} for display in the RTF
-document. A list of 0, 1, or 2 strings with attributes for display.
-
-Add info about formatting with PAGE_FORMAT etc
+document. A character vector of length <= 2 describes the text to display.
 }
+\section{Supported Formatting}{
+
+Several page formats are supported to display document data. When the
+\code{rtf_doc} is written, the package will determine if the text of an
+\code{hf_line} object starts with a keyword. Regular expresion matching and
+replacement is used for formatting.
+\itemize{
+\item{PAGE_FORMAT: - Can take up to two replacements to format current
+  page(first), and total number of pages(second)}
+\item{DATE_FORMAT: - Describes the date/time the document was generated}
+\item{FILE_PATH: - Describes the file path the R session was executed from}
+}
+}
+
 \examples{
 # Adding lines during rtf_doc construction
 ht <- huxtable::huxtable(
@@ -50,7 +62,9 @@ ht <- huxtable::huxtable(
 )
 rtf <- rtf_doc(ht)
 titles_l <- list(
-hf_line("The Title")
+hf_line("The Title"),
+# the below will display 'Current Page 1 Total Pages 1
+hf_line("PAGE_FORMAT: Current Page \%s Total Pages \%s")
 )
 rtf <- rtf_doc(ht, titles = titles_l)
 

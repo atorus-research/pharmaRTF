@@ -3,16 +3,26 @@ supported_table_types <- c('huxtable', 'gt_tbl')
 
 #' Create an \code{rtf_doc} object
 #'
+#' @description
 #' This constructs the main object that will be used to write the RTF document.
 #' The object is composed of a table, titles(s), and footnote(s).
+#'
+#' A table should be a supported class. The huxtable package is the most supported,
+#' however there are methods for the GT package. The \code{rtf_doc} will inherit
+#' the properties from the table passed.
+#'
+#' The titles and footnotes are composed of \code{hf_line} objects.
 #'
 #' @param table A table of a supported class
 #' @param titles A list of \code{hf_line} objects.
 #' @param footnotes An object/list of \code{hf_line}
 #' @param header.rows An integer determining how many rows of the table are headers.
+#'
 #' @return A list with a table, titles, and footnotes component. Class of "rtf_doc"
 #'
 #' @section \code{rtf_doc} Properties:
+#' Document level properties will be used where they are not overriden by
+#' \code{hf_line} or table properties.
 #' \itemize{
 #' \item{font}
 #' \item{font Size}
@@ -31,9 +41,10 @@ supported_table_types <- c('huxtable', 'gt_tbl')
 #'  column1 = 1:5,
 #'  column2 = letters[1:5]
 #' )
-#' rtf <- rtf_doc(ht)
+#' rtf <- rtf_doc(ht, titles = list(hf_line("My Header")))
 #'
-#' @return \code{rtf_doc} object
+#' @seealso [hf_line()]
+#'
 #' @export
 rtf_doc <- function(table, titles = list(), footnotes = list(), header.rows = 1) {
   # Return a null object of class rtf_doc if no table is passed.

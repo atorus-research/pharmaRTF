@@ -17,15 +17,21 @@ rtf_doc(table, titles = list(), footnotes = list(), header.rows = 1)
 }
 \value{
 A list with a table, titles, and footnotes component. Class of "rtf_doc"
-
-\code{rtf_doc} object
 }
 \description{
 This constructs the main object that will be used to write the RTF document.
 The object is composed of a table, titles(s), and footnote(s).
+
+A table should be a supported class. The huxtable package is the most supported,
+however there are methods for the GT package. The \code{rtf_doc} will inherit
+the properties from the table passed.
+
+The titles and footnotes are composed of \code{hf_line} objects.
 }
 \section{\code{rtf_doc} Properties}{
 
+Document level properties will be used where they are not overriden by
+\code{hf_line} or table properties.
 \itemize{
 \item{font}
 \item{font Size}
@@ -45,6 +51,9 @@ ht <- huxtable::huxtable(
  column1 = 1:5,
  column2 = letters[1:5]
 )
-rtf <- rtf_doc(ht)
+rtf <- rtf_doc(ht, titles = list(hf_line("My Header")))
 
+}
+\seealso{
+[hf_line()]
 }
