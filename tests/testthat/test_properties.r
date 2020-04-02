@@ -5,7 +5,7 @@ library(huxtable)
 # library(gt)
 
 
-test_that("font returns the correct vector for an rtf object", {
+test_that("font returns the correct vector for an rtf/hf_line object", {
   ht <- huxtable(
     column1 = 1:5,
     column2 = letters[1:5]
@@ -19,6 +19,13 @@ test_that("font returns the correct vector for an rtf object", {
   rtf <- rtf_doc(ht, list(aTitle), list(aFooter))
 
   expect_setequal(font(rtf), allFonts)
+
+
+  expect_equal({font(aTitle) <- "DiffFont"; font(aTitle)}, "DiffFont")
+
+  gtObj <- list()
+  class(gtObj) <- "gt_tbl"
+  expect_equal(font(gtObj), character(1))
 })
 
 test_that("text returns the correct vector for a hf_line", {
@@ -27,6 +34,30 @@ test_that("text returns the correct vector for a hf_line", {
 
   expect_equal(text(x1), c("text", ""))
   expect_equal(text(x2), c("text1", "text2"))
+
+  x3 <- x2
+  text(x3) <- "text3"
+  expect_equal(text(x3), c("text3", ""))
+
+  x4 <- x1
+  x4 <- pharmaRTF::set_text(x4, c("text4", "text5"))
+  expect_equal(text(x4), c("text4", "text5"))
+})
+
+test_that("margins returns the correct values", {
+  ht <- huxtable(
+    column1 = 1:5,
+    column2 = letters[1:5]
+  )
+  rtf <- rtf_doc(ht)
+
+  expect_equal(margins(rtf), c(top = 1, bottom = 1, left = 1, right = 1))
+
+  rtf <- pharmaRTF::set_margins(rtf, c(top = 4, bottom = 3, left = 2, right = 1))
+  expect_equal(margins(rtf), c(top = 4, bottom = 3, left = 2, right = 1))
+
+  margins(rtf) <- c(left = 5, right = 5, top = 5, bottom = 5)
+  expect_equal(margins(rtf), c(top = 5, bottom = 5, left = 5, right = 5))
 })
 
 
@@ -37,8 +68,11 @@ test_that("font throws error when given a non-character", {
     column2 = letters[1:5]
   )
   rtf <- rtf_doc(ht)
+  aLine <- hf_line("text")
 
   expect_error(font(rtf) <- 1, "value is not a character vector")
+  expect_error(font(aLine) <- 1, "value is not a character")
+  expect_error(pharmaRTF::set_font(rtf, 1), "value is not a character vector")
 })
 
 test_that("font_size throws error when given a non-numeric", {
@@ -48,13 +82,19 @@ test_that("font_size throws error when given a non-numeric", {
   )
   rtf <- rtf_doc(ht)
 
-  expect_error(font_size(ht) <- "abc")
+  aLine <- hf_line("text")
+
+  expect_error(font_size(rtf) <- "abc", "value is not a numeric or integer vector")
+  expect_error(pharmaRTF::set_font_size(aLine, "abc"), "value is not a numeric or integer vector")
+  expect_silent(font_size(aLine) <- 1)
 })
 
 test_that("align throws error when given a bad value" , {
   x <- hf_line()
 
   expect_error(align(x) <- "Flipped", "'arg' should be one of")
+  expect_silent(align(x) <- "left")
+  expect_silent(pharmaRTF::set_align(x, "right"))
 
 })
 
@@ -69,12 +109,16 @@ test_that("bold throws error when given a non-logical", {
   x <- hf_line()
 
   expect_error(bold(x) <- "abc", "is.logical")
+  expect_silent(bold(x) <- TRUE)
+  expect_silent(pharmaRTF::set_bold(x, FALSE))
 })
 
 test_that("italic throws error when given a non-logical", {
   x <- hf_line()
 
   expect_error(italic(x) <- "abc", "is.logical")
+  expect_silent(italic(x) <- TRUE)
+  expect_silent(pharmaRTF::set_italic(x, FALSE))
 })
 
 test_that("text throws error when given a non-character, bad number of text lengths", {
@@ -91,6 +135,7 @@ test_that("index throws error when given a bad parameter and will accept null va
   expect_error(index(x) <- "asdf", "is not TRUE")
   expect_silent(index(x) <- NULL)
   expect_silent(index(x) <- 1)
+  expect_silent(pharmaRTF::set_index(x, 1))
 })
 
 test_that("margins throws error when given a bad parameter", {
@@ -129,6 +174,7 @@ test_that("margins throws error when given a bad parameter", {
   expect_error(margins(rtf) <- rtf_mar3, "Duplicate parameters entered")
   expect_error(margins(rtf) <- rtf_mar4, "Margins must be positive numbers")
   expect_error(margins(rtf) <- rtf_mar5, "A named vector must be provided")
+  expect_silent(pharmaRTF::set_margins(rtf, list(top = 1, bottom = 2)))
 })
 
 test_that("orientation throws error when bad parameter is passed", {
@@ -139,6 +185,8 @@ test_that("orientation throws error when bad parameter is passed", {
   rtf <- rtf_doc(ht)
 
   expect_error(orientation(rtf) <- "flipped", "'arg' should be one of")
+  expect_silent(set_orientation(rtf, "landscape"))
+  expect_silent(set_orientation(rtf, "portrait"))
 })
 
 test_that("header_height throws error when bad parameter is passed", {
@@ -149,6 +197,7 @@ test_that("header_height throws error when bad parameter is passed", {
   rtf <- rtf_doc(ht)
 
   expect_error(header_height(rtf) <- "1234", "value is not a numeric or integer vector")
+  expect_silent(set_header_height(rtf, 1))
 })
 
 test_that("footer_height throws error when bad parameter is passed", {
@@ -159,6 +208,7 @@ test_that("footer_height throws error when bad parameter is passed", {
   rtf <- rtf_doc(ht)
 
   expect_error(footer_height(rtf) <- "1234", "value is not a numeric or integer vector")
+  expect_silent(set_footer_height(rtf, 1))
 })
 
 test_that("pagesize throws error when bad parameter is passed", {
@@ -197,6 +247,7 @@ test_that("pagesize throws error when bad parameter is passed", {
   expect_error(pagesize(rtf) <- rtf_ps4, "Duplicate parameters entered")
   expect_error(pagesize(rtf) <- rtf_ps5, "Height and Width must be positive numbers")
   expect_error(pagesize(rtf) <- rtf_ps6, "A named vector must be provided")
+  expect_silent(set_pagesize(rtf, list(height = 1, width = 1)))
 })
 
 test_that("header_rows throws error when passed a gt table", {
@@ -212,10 +263,12 @@ test_that("header rows throws error when passed a bad parameter", {
     column1 = 1:5,
     column2 = letters[1:5]
   )
+  rtf <- rtf_doc(ht)
 
   expect_error(header_rows(ht) <- 1.5, "Header rows must be a positive whole number")
   expect_error(header_rows(ht) <- "asdf", "Header rows must be a positive whole number")
   expect_error(header_rows(ht) <- -1, "pos")
+  expect_equal({set_header_rows(rtf, 1); header_rows(rtf)}, 1)
 })
 
 test_that("ignore_cell_padding throws error when passed a bad parameter", {
@@ -226,6 +279,7 @@ test_that("ignore_cell_padding throws error when passed a bad parameter", {
   rtf <- rtf_doc(ht)
 
   expect_error(ignore_cell_padding(rtf) <- "abc", "is not TRUE")
+  expect_silent(set_ignore_cell_padding(rtf, TRUE))
 })
 
 test_that("column_header_buffer<-/set_column_header buffer throw errors as expected", {
@@ -264,6 +318,11 @@ test_that("column_header_buffer<-/set_column_header buffer throw errors as expec
   expect_error(column_header_buffer(rtf) <- val3, "whole numbers")
   expect_error(column_header_buffer(rtf) <- val4, "Top and bottom values must be positive whole numbers")
   expect_error(column_header_buffer(rtf) <- val5, "A named vector must be provided")
+  expect_equal({
+    rtf <- set_column_header_buffer(rtf, top = 1, bottom = 1);
+    column_header_buffer(rtf)
+    },
+               c(top = 1, bottom = 1))
 })
 
 

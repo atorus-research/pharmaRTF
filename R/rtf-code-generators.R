@@ -1,9 +1,10 @@
 ## Auto formatting page numbers ----
-#' Title
+#' Return RTF encoding for current page number
 #'
-#' @param properties properties
+#' @param properties Properties for displaying page number information
 #'
-#' @return num
+#' @return String of RTF encoding that will display the current page
+#' @noRd
 page_num <- function(properties='') {
 
   # TODO: Add style and font support
@@ -13,21 +14,26 @@ page_num <- function(properties='') {
 
 #' Title
 #'
-#' @param properties properties
+#' @param properties Properties for displaying page number information
 #'
 #' @return total
+#' @noRd
 page_total <- function(properties='') {
 
   tot_str <- sprintf("{%s\\field{\\*\\fldinst{ NUMPAGES}}}", properties)
   tot_str
 }
 
-#' Title
+#' Add page number information
 #'
-#' @param format format
-#' @param properties properties
+#' Adds current and total page number. First %s is current page, second %s is
+#' total pages.
 #'
-#' @return num
+#' @param format Format for string replacement
+#' @param properties Properties for displaying page number information
+#'
+#' @return String of RTF encoding that displays the current and total pages.
+#' @noRd
 add_page_num <- function(format="Page %s of %s", properties='') {
 
   # Make sure there's only a replacement for current and total pages
@@ -49,12 +55,12 @@ add_page_num <- function(format="Page %s of %s", properties='') {
   page_str
 }
 
-## Font table ----
-#' Title
+#' Font table
 #'
-#' @param doc doc
+#' @param doc RTF document
 #'
-#' @return string
+#' @return String of RTF encoding with font information
+#' @noRd
 font_table_string <- function(doc){
   fonts <- unique(c("Times", font(doc)))
   font_tbl_body <- paste0("  {\\f", seq(0, along = fonts), " ", fonts, ";}", collapse = "\n")
@@ -63,21 +69,24 @@ font_table_string <- function(doc){
 
 ## Color Table ----
 # Not investing in this as the moment so write out a default blank table
-#' Title
+#' Create document color table
 #'
-#' @param doc doc
+#' Not currently implemented
 #'
-#' @return string
+#' @param doc RTF document
+#'
+#' @return String of RTF encoding with color table information
+#' @noRd
 color_table_string <- function(doc){
   paste('{\\colortbl;;}\n')
 }
 
-## Generate document properties string ----
-#' Title
+#' Generate document properties string
 #'
-#' @param doc doc
+#' @param doc RTF document
 #'
-#' @return string
+#' @return String encoding with document property information
+#' @noRd
 doc_properties_string <- function(doc){
 
   # Get margins and convert to twips
@@ -103,17 +112,18 @@ doc_properties_string <- function(doc){
   # Other information
   other <- '\\widowctrl\\ftnbj\\fet0\\sectd\\linex0\n'
 
-  paste(ht_wd, other, mrg_str, hf_ht, fs, sep='')
+  paste(ht_wd, other, ortn, mrg_str, hf_ht, fs, sep='')
 
 }
 
 ## Header and footer string generation ----
-#' Title
+#' Create a single line of RTF header/footnote information
 #'
-#' @param line line
-#' @param doc doc
+#' @param line A single title/footnote to write
+#' @param doc RTF document
 #'
-#' @return string
+#' @return String of RTF encoding for title/footnotes
+#' @noRd
 hf_line_string <- function(line, doc=NULL) {
 
   # Placeholders
@@ -122,7 +132,7 @@ hf_line_string <- function(line, doc=NULL) {
                                               # so use the documents set size
   bd <- '' # Bold (On or off - default off)
   it <- '' # Italic (One or off - default off)
-  al <- '\n' # Alignment (Defaults to left \ql - left aligned)
+  al <- '\\ql\n' # Alignment (Defaults to left \ql - left aligned)
   tabs <- '\\b' # Overwritten if split alignment
 
   # Read the font information
@@ -167,13 +177,13 @@ hf_line_string <- function(line, doc=NULL) {
 
 }
 
-# General function to write the header or the footer
-#' Title
+#' General function to write the header or the footer
 #'
-#' @param doc doc
-#' @param type type
+#' @param doc doc RTF document
+#' @param type 'header' of 'footer'
 #'
-#' @return string
+#' @return String RTF encoding with the header/footnote information
+#' @noRd
 hf_string <- function(doc, type=NULL) {
   # Get a character vector of the formatted RTF string
   lines <- sapply(doc[[type]], hf_line_string, doc=doc)
@@ -194,35 +204,46 @@ hf_string <- function(doc, type=NULL) {
   }
 }
 
-# Simplified for header
-#' Title
+#' Create the header string
 #'
-#' @param doc doc
+#' @param doc RTF document
 #'
-#' @return string
+#' @return String RTF encoding with the header information
+#' @noRd
 header_string <- function(doc) {
   hf_string(doc, type='titles')
 }
 
-# Simplified for footer
-#' Title
+#' Create the footer string
 #'
-#' @param doc doc
+#' @param doc RTF document
 #'
-#' @return string
+#' @return String RTF encoding with the footer information
+#' @noRd
 footer_string <- function(doc) {
   hf_string(doc, type='footnotes')
 }
 
-# write the RTF document out
-#' Title
+#' Write RTF document
 #'
-#' @param doc doc
-#' @param file file
+#' Writes the RTF document to a specified file.
+#'
+#' @param doc The RTF document to be written.
+#' @param file A character string naming a file open for writing.
+#'
+#' @examples
+#' \dontrun{
+#' ## Create and write RTF document
+#' #' ht <- huxtable::huxtable(
+#'  column1 = 1:5,
+#'  column2 = letters[1:5]
+#' )
+#' rtf <- rtf_doc(ht)
+#'
+#' write_rtf(rtf) #writes a table with no header/footnotes to 'test.rtf'
+#' }
 #'
 #' @export
-#'
-#'
 write_rtf <- function(doc, file='test.rtf') {
 
   # Write to the specified file
@@ -251,10 +272,3 @@ write_rtf <- function(doc, file='test.rtf') {
     finally = {sink()}
   )
 }
-
-
-
-
-
-
-

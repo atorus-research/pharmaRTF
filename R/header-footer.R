@@ -1,17 +1,39 @@
-library(assertthat)
-
-## Title line container ----
 #' Create a title line container
 #'
-#' @param ... A character list/vector
-#' @param align Alignment in the document
-#' @param bold Is bold?
-#' @param italic Is italic?
-#' @param font Font used in document, character
-#' @param font_size pt of font in document, numeric
-#' @param index order in document
+#' @description
+#' \code{hf_line} objects are passed to \code{rtf_doc} for display in the RTF
+#' document. A list of 0, 1, or 2 strings with attributes for display.
 #'
-#' @return An object of class hf_line
+#' Add info about formatting with PAGE_FORMAT etc
+#'
+#' @param ... A character list/vector. If \code{length(...)} is 2 and
+#'     \code{align} is not 'split', values are pasted together.
+#' @param align Text alignment as left, right, center, or split. Defaults to center.
+#' @param bold \code{TRUE} or  \code{FALSE}. Defaults to FALSE.
+#' @param italic \code{TRUE} or  \code{FALSE}. Defaults to FALSE.
+#' @param font A string to specify the font display. Ensure the intended RTF
+#'   reader can display the selected font.
+#' @param font_size Font size in half points. For example font_size = 20
+#'   will display a 10 point font. Defaults to a 12 point font.
+#' @param index Position to display header or footnote lines in the RTF
+#'   document. Orderes in ascending order with NULLs last.
+#'
+#' @return An object of class \code{hf_line}
+#'
+#' @examples
+#' # Adding lines during rtf_doc construction
+#' ht <- huxtable::huxtable(
+#'  column1 = 1:5,
+#'  column2 = letters[1:5]
+#' )
+#' rtf <- rtf_doc(ht)
+#' titles_l <- list(
+#' hf_line("The Title")
+#' )
+#' rtf <- rtf_doc(ht, titles = titles_l)
+#'
+#' # Adding lines after rtf_doc construction
+#' rtf <- add_footnotes(rtf, hf_line("The Footnote"))
 #'
 #' @export
 hf_line <- function(..., align=c('center', 'left', 'right', 'split'), bold=FALSE,
@@ -29,17 +51,7 @@ hf_line <- function(..., align=c('center', 'left', 'right', 'split'), bold=FALSE
   new_hf_line(line, align, bold, italic, font, font_size, index)
 }
 
-#' Create a title line container
-#'
-#' @param line A character list/vector
-#' @param align Alignment in the document
-#' @param bold Is bold?
-#' @param italic Is italic?
-#' @param font Font used in document, character
-#' @param font_size pt of font in document, numeric
-#' @param index order in document
-#'
-#' @return An object of class hf_line
+#' @noRd
 new_hf_line <- function(line, align, bold, italic, font, font_size, index) {
 
   validate_hf_line(line, align, bold, italic, font, font_size, index)
@@ -57,18 +69,9 @@ new_hf_line <- function(line, align, bold, italic, font, font_size, index) {
   line
 }
 
-#' Validate a new title line container
-#'
-#' @param line A character list/vector
-#' @param align Alignment in the document
-#' @param bold Is bold?
-#' @param italic Is italic?
-#' @param font Font used in document, character
-#' @param font_size pt of font in document, numeric
-#' @param index order in document
-#'
-#' @import assertthat
 #' @importFrom assertthat assert_that
+#'
+#' @noRd
 validate_hf_line <- function(line, align, bold,italic, font, font_size, index) {
 
   # Check that no more than two entries were provided
@@ -93,13 +96,14 @@ validate_hf_line <- function(line, align, bold,italic, font, font_size, index) {
   assert_that(is.numeric(font_size))
 }
 
-#' Title
+#' Order header/footer lines in an rtf_document
 #'
-#' @param lines thelines
+#' @param lines A list/vector of \code{hf_line} objects that will be
+#'   ordered.
 #'
-#' @return order
+#' @return Reordered lines based on the \code{index} attribute of each line.
 #'
-#'
+#' @noRd
 order_lines <- function(lines) {
 
   # Take out the indices
@@ -123,17 +127,15 @@ order_lines <- function(lines) {
   new_lines
 }
 
-#' Title
+#' Add \code{hf_line} object(s) to a \code{rtf_doc} object
 #'
-#' @param doc doc
-#' @param ... ...
-#' @param to to
-#' @param replace replace
+#' @param doc \code{rtf_doc} object to add header/footer lines to
+#' @param ... A vector of \code{hf_line} objects to add.
+#' @param to Either 'titles' or 'footnotes'
+#' @param replace If FALSE, lines will be appened/ordered with current
+#'     header/footer lines. If TRUE, lines will replace whatever is there.
 #'
-#' @return hf
-#' @export
-#'
-#'
+#' @return \code{rtf_doc} object with \code{hf_line} objects attached.
 add_hf <- function(doc, ..., to=NULL, replace=FALSE) {
 
   # Get lines from doc (if specified to replace)
@@ -146,7 +148,8 @@ add_hf <- function(doc, ..., to=NULL, replace=FALSE) {
 
   # Make sure each provided object is an hf_line
   assert_that(all(sapply(lines, inherits, what='hf_line')),
-              msg = 'Provided titles must be hf_line objects- see pharmaRTF::hf_line')
+              msg = paste('Provided titles must be hf_line objects, not',class(lines[[1]]),
+                          '- see pharmaRTF::hf_line'))
 
   # Sort
   lines <- order_lines(lines)
@@ -158,41 +161,77 @@ add_hf <- function(doc, ..., to=NULL, replace=FALSE) {
 
 }
 
-# Simplified for titles
-#' Title
+#' Add \code{hf_line} object(s) to a \code{rtf_doc} object
 #'
-#' @param doc doc
-#' @param ... ...
+#' @param doc \code{rtf_doc} object to add header lines to
+#' @param ... A vector of \code{hf_line} objects to add passed to
+#'   \code{add_hf()}
 #'
-#' @return titles
+#' @return \code{rtf_doc} object with \code{hf_line} objects attached to titles.
+#'
+#' @examples
+#' # Adding lines after rtf_doc construction
+#' ht <- huxtable::huxtable(
+#'  column1 = 1:5,
+#'  column2 = letters[1:5]
+#' )
+#' rtf <- rtf_doc(ht)
+#'
+#' rtf <- add_titles(rtf, hf_line("The Footnote"))
+#'
 #' @export
-#'
-#'
 add_titles <- function(doc, ...) {
   add_hf(doc, ..., to='titles')
 }
 
 # Simplified for footnoes
-#' Title
+#' Add \code{hf_line} object(s) to a \code{rtf_doc} object
 #'
-#' @param doc doc
-#' @param ... ...
+#' @param doc \code{rtf_doc} object to add header/footer lines to
+#' @param ... A vector of \code{hf_line} objects to add.
 #'
-#' @return footnotes
+#' @return \code{rtf_doc} object with \code{hf_line} objects attached.
+#'
+#' @examples
+#' # Adding lines after rtf_doc construction
+#' ht <- huxtable::huxtable(
+#'  column1 = 1:5,
+#'  column2 = letters[1:5]
+#' )
+#' rtf <- rtf_doc(ht)
+#'
+#' rtf <- add_footnotes(rtf, hf_line("The Footnote"))
 #' @export
-#'
-#'
 add_footnotes <- function(doc, ...) {
   add_hf(doc, ..., to='footnotes')
 }
 
 #' Read titles and footnotes from a dataframe
 #'
-#' @param doc RTF document
-#' @param ... header and footer inormation
+#' Reads a data frame with header/footnote information and attaches it to an
+#'   \code{rtf_doc} object.The most effective way to use this function is to pass information to a
+#'   custom reader for your process. See <Vignette Link here>
 #'
+#' @section Required Columns:
+#' \itemize{
+#' \item{type}
+#' \item{text1}
+#' \item{text2}
+#' \item{align}
+#' \item{bold}
+#' \item{italic}
+#' \item{font}
+#' \item{index}
+#' }
 #'
-#' @import purrr
+#' @param doc \code{rtf_doc} object to append header and footnote information.
+#' @param ... Parameters passed to \code{read_hf} where they are processed and
+#'   constructed into \code{hf_line} objects.
+#'
+#' @return RTF document with header/footnote information attached.
+#' @importFrom purrr transpose
+#' @seealso [read_hf()] reads in each line.
+#' @export
 titles_and_footnotes_from_df <- function(doc, ...) {
 
   df <- read_hf(...) # Refer to read_hf in read_hf.R
@@ -219,5 +258,4 @@ titles_and_footnotes_from_df <- function(doc, ...) {
   doc <- do.call(add_titles, append(titles, list(doc), 0))
   doc <- do.call(add_footnotes, append(footnotes, list(doc), 0))
   doc
-
 }

@@ -2,16 +2,17 @@
 % Please edit documentation in R/table_component_extractors.R
 \name{get_table_body}
 \alias{get_table_body}
-\title{Title}
+\title{Return the RTF string for the body of a table}
 \usage{
 get_table_body(doc)
 }
 \arguments{
-\item{doc}{doc}
+\item{doc}{\code{rtf_doc} object to return header string from.}
 }
 \value{
-body
+A RTF encoding string containing the header information
 }
 \description{
-Title
+This function relys on the package that the table originated from to create
+a RTF string.
 }

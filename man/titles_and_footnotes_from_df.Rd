@@ -7,10 +7,33 @@
 titles_and_footnotes_from_df(doc, ...)
 }
 \arguments{
-\item{doc}{RTF document}
+\item{doc}{\code{rtf_doc} object to append header and footnote information.}
 
-\item{...}{header and footer inormation}
+\item{...}{Parameters passed to \code{read_hf} where they are processed and
+constructed into \code{hf_line} objects.}
+}
+\value{
+RTF document with header/footnote information attached.
 }
 \description{
-Read titles and footnotes from a dataframe
+Reads a data frame with header/footnote information and attaches it to an
+  \code{rtf_doc} object.The most effective way to use this function is to pass information to a
+  custom reader for your process. See <Vignette Link here>
+}
+\section{Required Columns}{
+
+\itemize{
+\item{type}
+\item{text1}
+\item{text2}
+\item{align}
+\item{bold}
+\item{italic}
+\item{font}
+\item{index}
+}
+}
+
+\seealso{
+[read_hf()] reads in each line.
 }

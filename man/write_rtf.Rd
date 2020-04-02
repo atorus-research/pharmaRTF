@@ -2,15 +2,28 @@
 % Please edit documentation in R/rtf-code-generators.R
 \name{write_rtf}
 \alias{write_rtf}
-\title{Title}
+\title{Write RTF document}
 \usage{
 write_rtf(doc, file = "test.rtf")
 }
 \arguments{
-\item{doc}{doc}
+\item{doc}{The RTF document to be written.}
 
-\item{file}{file}
+\item{file}{A character string naming a file open for writing.}
 }
 \description{
-Title
+Writes the RTF document to a specified file.
+}
+\examples{
+\dontrun{
+## Create and write RTF document
+#' ht <- huxtable::huxtable(
+ column1 = 1:5,
+ column2 = letters[1:5]
+)
+rtf <- rtf_doc(ht)
+
+write_rtf(rtf) #writes a table with no header/footnotes to 'test.rtf'
+}
+
 }

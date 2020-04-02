@@ -1,14 +1,39 @@
 
 supported_table_types <- c('huxtable', 'gt_tbl')
 
-#' Create an Rich Text Format table document
+#' Create an \code{rtf_doc} object
+#'
+#' This constructs the main object that will be used to write the RTF document.
+#' The object is composed of a table, titles(s), and footnote(s).
 #'
 #' @param table A table of a supported class
-#' @param titles An object/list of \code{hf_line}
+#' @param titles A list of \code{hf_line} objects.
 #' @param footnotes An object/list of \code{hf_line}
 #' @param header.rows An integer determining how many rows of the table are headers.
 #' @return A list with a table, titles, and footnotes component. Class of "rtf_doc"
 #'
+#' @section \code{rtf_doc} Properties:
+#' \itemize{
+#' \item{font}
+#' \item{font Size}
+#' \item{margins}
+#' \item{orientation}
+#' \item{header_height}
+#' \item{footer_height}
+#' \item{pagesize}
+#' \item{header.rows}
+#' \item{ignore_cell_padding}
+#' }
+#'
+#' @examples
+#' # Adding lines during rtf_doc construction
+#' ht <- huxtable::huxtable(
+#'  column1 = 1:5,
+#'  column2 = letters[1:5]
+#' )
+#' rtf <- rtf_doc(ht)
+#'
+#' @return \code{rtf_doc} object
 #' @export
 rtf_doc <- function(table, titles = list(), footnotes = list(), header.rows = 1) {
   # Return a null object of class rtf_doc if no table is passed.
@@ -19,13 +44,8 @@ rtf_doc <- function(table, titles = list(), footnotes = list(), header.rows = 1)
 ## Method dispatch
 #' Create an Rich Text Format table document
 #'
-#' @param table A table of a supported class
-#' @param titles An object/list of /code{hf_line}
-#' @param footnotes An object/list of /code{hf_line}
-#' @param header.rows An integer determining how many rows of the table are headers.
-#' @return A list with a table, titels, and footnotes component. Class of "rtf_doc"
-#'
-#' @family rtf_doc
+#' @inheritParams rtf_doc
+#' @noRd
 as_rtf_doc <- function(table, titles, footnotes, header.rows) {
   UseMethod("as_rtf_doc")
 }
@@ -79,12 +99,12 @@ as_rtf_doc.default <- function(table, ...) {
 #' Create an Rich Text Format table document
 #'
 #' @param table A table of a supported class
-#' @param titles An object/list of /code{hf_line}
-#' @param footnotes An object/list of /code{hf_line}
+#' @param titles A list of \code{hf_line} objects.
+#' @param footnotes An object/list of \code{hf_line}
 #'
 #' @return A list with a table, titels, and footnotes component. Class of "rtf_doc"
 #'
-#' @family rtf_doc
+#' @noRd
 new_rtf_doc <- function(table, titles, footnotes) {
 
   validate_rtf_doc(table, titles, footnotes)
@@ -92,8 +112,8 @@ new_rtf_doc <- function(table, titles, footnotes) {
   # Put the object together
   doc <- list(
     table = table,
-    titles = titles,
-    footnotes = footnotes
+    titles = order_lines(titles),
+    footnotes = order_lines(footnotes)
   )
 
   # Create the object
@@ -117,8 +137,7 @@ new_rtf_doc <- function(table, titles, footnotes) {
 #' @param footnotes An object/list of /code{hf_line}
 #'
 #' @return nothing for now
-#'
-#' @family rtf_doc
+#' @noRd
 validate_rtf_doc <- function(table, titles, footnotes) {
   # Check that titles and footnotes are lists
   assert_that(all(c(class(titles), class(footnotes)) == "list"), msg = "Titles and footnotes must be lists of hf_line objects")
