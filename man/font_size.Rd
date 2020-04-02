@@ -2,18 +2,29 @@
 % Please edit documentation in R/properties.R
 \name{font_size}
 \alias{font_size}
-\title{Title}
+\alias{font_size<-}
+\alias{set_font_size}
+\title{Return or set font size}
 \usage{
 font_size(x, ...)
+
+font_size(x) <- value
+
+set_font_size(x, value)
 }
 \arguments{
-\item{x}{x}
+\item{x}{\code{rtf_doc} object or a \code{hf_line} object}
 
-\item{...}{...}
+\item{...}{Additonal arguments passed to method dispatch}
+
+\item{value}{A numeric value for font size in half points. A font_size of 24
+will result in a 12 point font.}
 }
 \value{
-font
+The font_size attribute of the supplied \code{rtf_doc} or \code{hf_line}
 }
 \description{
-Title
+These functions modify and return the font sizes of a \code{rtf_doc} object
+or a \code{hf_line} object. This attribute measures the font size in half
+points. A font_size of 24 will result in a 12 point font.
 }

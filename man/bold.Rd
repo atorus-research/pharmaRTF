@@ -2,18 +2,26 @@
 % Please edit documentation in R/properties.R
 \name{bold}
 \alias{bold}
-\title{Title}
+\alias{bold<-}
+\alias{set_bold}
+\title{Return or set bold}
 \usage{
 bold(x, ...)
+
+bold(x) <- value
+
+set_bold(x, value)
 }
 \arguments{
-\item{x}{x}
+\item{x}{\code{hf_line} object}
 
-\item{...}{...}
+\item{...}{Additonal arguments passed to method dispatch}
+
+\item{value}{A logical vector to set the value of the bold attribute}
 }
 \value{
-return
+The bold attribute of the supplied \code{hf_line} object
 }
 \description{
-Title
+These functions modify and return the bold attribute of a \code{hf_line} object.
 }

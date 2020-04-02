@@ -2,18 +2,27 @@
 % Please edit documentation in R/properties.R
 \name{italic}
 \alias{italic}
-\title{Title}
+\alias{italic<-}
+\alias{set_italic}
+\title{Return or set italics}
 \usage{
 italic(x, ...)
+
+italic(x) <- value
+
+set_italic(x, value)
 }
 \arguments{
-\item{x}{x}
+\item{x}{\code{hf_line} object}
 
-\item{...}{...}
+\item{...}{Additonal arguments passed to method dispatch}
+
+\item{value}{A logical vector to set the value of the bold attribute}
 }
 \value{
-return
+The italic attribute of the supplied \code{hf_line}
 }
 \description{
-Title
+These functions modify and return the italics attribute of a \code{hf_line}
+object
 }

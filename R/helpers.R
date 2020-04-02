@@ -3,54 +3,52 @@
 # Overwrite the base filter to be able to pass additional arguments
 # Internal
 # Internal
-#' Title
+#' Internal filter function
 #'
-#' @param f f
-#' @param x x
-#' @param ... ...
+#' Change to \code{base::Filter()} to allow for additional arguments
 #'
-#' @return filtered
-#' @export
+#' @param f a function of the appropriate arity (binary for Reduce,
+#'   unary for Filter, Find and Position, k-ary for Map if this is
+#'   called with k arguments). An arbitrary predicate function for Negate.
+#' @param x a vector.
+#' @param ... Additonal argument passed to Filter
 #'
-#'
+#' @return The x vector filtered by f and ...
+#' @noRd
 Filter <- function (f, x, ...){
   ind <- as.logical(unlist(lapply(x, f, ...)))
   x[which(ind)]
 }
 
-# Identify if string is a page format
-#' Title
+#' Identify if string is a page format
 #'
-#' @param txt txt
+#' @param txt A text string
 #'
-#' @return format
-#' @export
-#'
+#' @return \code{TRUE} or \code{FALSE} if the string starts with 'PAGE_FORMAT:'
+#' @noRd
 is_page_format <- function(txt) {
   substr(txt, 1, 12) == "PAGE_FORMAT:"
 }
 
-# Extract the format from a page format string
-#' Title
+#' Extract the format from a page format string
 #'
-#' @param txt txt
+#' @param txt A text string
 #'
-#' @return format
-#' @export
-#'
+#' @return Returns everything after the first semi-colon to string out the
+#'   formatting keywords.
+#' @noRd
 get_page_format <- function(txt) {
   # Should revisit this - but separate at the semicolon, remove the first section, and
   # patch it back together
   trimws(paste(unlist(strsplit(txt, ":"))[-1], collapse=':'))
 }
 
-# Identify if string is a page format
-#' Title
+#' Identify if string is a page format
 #'
-#' @param txt txt
+#' @param txt A text string
 #'
-#' @return format
-#' @export
+#' @return \code{TRUE} or \code{FALSE} if the string starts with 'DATE_FORMAT:'
+#' @noRd
 #'
 is_date_format <- function(txt) {
   substr(txt, 1, 12) == "DATE_FORMAT:"
@@ -59,14 +57,12 @@ is_date_format <- function(txt) {
 # Extract the format from a date format string
 get_date_format <- get_page_format # it's the same thing - just attach another name to it
 
-# Identify if string is requesting the executing file path
-#' Title
+#' Identify if string is requesting the executing file path
 #'
-#' @param txt txt
+#' @param txt A text string
 #'
-#' @return path
-#' @export
-#'
+#' @return \code{TRUE} or \code{FALSE} if the string starts with 'FILE_PATH:'
+#' @noRd
 is_file_path <- function(txt) {
   substr(txt, 1, 10) == "FILE_PATH:"
 }
@@ -74,14 +70,13 @@ is_file_path <- function(txt) {
 # Get
 get_filepath_format <- get_page_format # Again same idea
 
-# Extract the executing file path from the R Session
-#' Title
+#' Extract the executing file path from the R Session
 #'
-#' @param text text
+#' @param text A text string given the format to display the filepath
 #'
-#' @return path
-#' @export
-#'
+#' @return A text string with the filepath R session was run in or
+#'   <run interactively> if ran from the console.
+#' @noRd
 add_filepath <- function(text){
 
   # This will populate if the file is sourced
@@ -104,16 +99,16 @@ add_filepath <- function(text){
   sprintf(text, string_)
 }
 
-# Take a string of text and format it to write in a block of RTF with properties
-# If determined to be a page number format, return that string
-#' Title
+#' Format text string to write in a block of RTF
 #'
-#' @param text text
-#' @param properties properties
+#' Take a string of text and format it to write in a block of RTF with properties.
+#' If determined to be a page number format, return that string
 #'
-#' @return string
-#' @export
+#' @param text A text string to determine formatting
+#' @param properties properties for displaying the text string
 #'
+#' @return A formatted text string based on keywords and properties
+#' @noRd
 format_text_string <- function(text, properties='') {
   if (is_page_format(text)) {
     # Page formats
@@ -131,15 +126,13 @@ format_text_string <- function(text, properties='') {
   string
 }
 
-# Extract index from an hf_line object
-#' Title
+#' Extract index from an hf_line object
 #'
-#' @param x x
-#' @param i i
+#' @param x \code{hf_line} object
+#' @param i index to check for
 #'
-#' @return index
-#' @export
-#'
+#' @return \code{TRUE} if ind == i or \code{FALSE}.
+#' @noRd
 extract_ind <- function(x, i) {
   ind = attr(x, 'index')
   if (is.null(ind)) return(FALSE)
@@ -147,15 +140,12 @@ extract_ind <- function(x, i) {
   else return(FALSE)
 }
 
-# Return the expected type given an hf_line parameter
-#' Title
+#' Return the expected type given an hf_line parameter
 #'
-#' @param x x
+#' @param x \code{hf_line} parameter
 #'
-#' @return types
-#' @export
-#'
-#'
+#' @return The data type for the supplied parameter
+#' @noRd
 correct_types <- function(x) {
   switch(x,
          type=,
@@ -169,14 +159,13 @@ correct_types <- function(x) {
   )
 }
 
-# Check if the column type is valid for hf_line data.frame validation
-#' Title
+#' Check if the column type is valid for hf_line data.frame validation
 #'
-#' @param x x
+#' @param x hf_line parameter
 #' @param df df
 #'
 #' @return type
-#' @export
+#' @noRd
 eval_type <- function(x, df) {
   # Get the command as a string
   # Using `is.` commands instead of just evaluating class because of integer vs.
@@ -189,14 +178,14 @@ eval_type <- function(x, df) {
 
 }
 
-# Replace out RTF strings to ignore cell padding
-#' Create an Rich Text Format table document
+#' Replace out RTF strings to ignore cell padding
 #'
 #' @param txt text of the rtf document
 #'
 #' @return replaced text without padding flags
 #'
-#' @import stringr
+#' @importFrom stringr str_replace_all
+#' @noRd
 replace_cell_padding <- function(txt) {
 
   replacements <- c('\\\\clpadfl3' = '\\\\clpadfl0',
@@ -204,32 +193,28 @@ replace_cell_padding <- function(txt) {
                     '\\\\clpadfb3' = '\\\\clpadfb0',
                     '\\\\clpadfr3' = '\\\\clpadfr0')
 
-  str_replace_all(txt, replacements)
+  stringr::str_replace_all(txt, replacements)
 }
 
-
-# Helper to check if any buffer is required
-#' Title
+#' Helper to check if any buffer is required
 #'
-#' @param doc doc
+#' @param doc \code{rtf_doc} object
 #'
-#' @return buffer
-#' @export
-#'
+#' @return \code{TRUE} if \code{rtf_doc} object has a buffer, \code{FALSE}
+#'   otherwise
+#' @noRd
 needs_buffer <- function(doc){
   # Are either top or bottom greater than 0?
   sum(column_header_buffer(doc)) > 0
 }
 
-# Create necessary buffer rows
-#' Title
+#' Create necessary buffer rows
 #'
-#' @param doc doc
-#' @param col_headers col_headers
+#' @param doc \code{rtf_doc} object
+#' @param col_headers Column headers of the \code{rtf_doc}
 #'
-#' @return buffer
-#' @export
-#'
+#' @return Column headers with buffers added
+#' @noRd
 insert_buffer <- function(doc, col_headers){
 
   rows <- column_header_buffer(doc)

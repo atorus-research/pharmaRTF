@@ -2,18 +2,31 @@
 % Please edit documentation in R/properties.R
 \name{font}
 \alias{font}
+\alias{font<-}
+\alias{set_font}
 \title{Return or set font}
 \usage{
 font(x, ...)
+
+font(x) <- value
+
+set_font(x, value)
 }
 \arguments{
-\item{x}{table}
+\item{x}{\code{rtf_doc} object, the table of a \code{rtf_doc} object, or a
+\code{hf_line} object}
 
-\item{...}{...}
+\item{...}{Additional arguments passed to method dispatch}
+
+\item{value}{A string representing a font}
 }
 \value{
-font
+The font attribute of the object In the case of \code{rtf_doc},
+  this returns each unique font in the table, titles, footnotes, and the
+  overall document.
 }
 \description{
-Return or set font
+These functions modify and return the fonts of a \code{rtf_doc} object and
+associated items. To set the font attribute of a table you should use the
+functions assosiated with that package.
 }

@@ -2,18 +2,27 @@
 % Please edit documentation in R/properties.R
 \name{pagesize}
 \alias{pagesize}
-\title{Title}
+\alias{pagesize<-}
+\alias{set_pagesize}
+\title{Return and set pagesize}
 \usage{
 pagesize(x, ...)
+
+pagesize(x) <- value
+
+set_pagesize(x, value)
 }
 \arguments{
-\item{x}{x}
+\item{x}{\code{rtf_doc} object}
 
-\item{...}{...}
+\item{...}{Additonal arguments passed to method dispatch}
+
+\item{value}{A named numeric vector with the names height and width.}
 }
 \value{
 return
 }
 \description{
-Title
+These functions modify and return the pagesize attribute of a \code{rtf_doc}
+object. Stored as a named vector with height and width names.
 }

@@ -2,18 +2,27 @@
 % Please edit documentation in R/properties.R
 \name{align}
 \alias{align}
-\title{Title}
+\alias{align<-}
+\alias{set_align}
+\title{Return and set text alignment}
 \usage{
 align(x, ...)
+
+align(x) <- value
+
+set_align(x, value)
 }
 \arguments{
-\item{x}{x}
+\item{x}{\code{hf_line} object}
 
-\item{...}{...}
+\item{...}{Additional arguments passed to method dispatch.}
+
+\item{value}{A string representing the alignment.}
 }
 \value{
-return
+Alignment of the supplied \code{hf_line} object.
 }
 \description{
-Title
+These functions modify and return the text alignment in a \code{hf_line}
+object. Supported options are: 'left', 'right', 'center', and 'split'.
 }

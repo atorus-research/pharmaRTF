@@ -2,18 +2,27 @@
 % Please edit documentation in R/properties.R
 \name{footer_height}
 \alias{footer_height}
-\title{Title}
+\alias{footer_height<-}
+\alias{set_footer_height}
+\title{Return and set footer height}
 \usage{
 footer_height(x, ...)
+
+footer_height(x) <- value
+
+set_footer_height(x, value)
 }
 \arguments{
-\item{x}{x}
+\item{x}{\code{rtf_doc} object}
 
-\item{...}{...}
+\item{...}{Additonal arguments passed to method dispatch}
+
+\item{value}{A numeric value to set the footer_height}
 }
 \value{
-return
+header_height attribute of the supplied \code{rtf_doc} object
 }
 \description{
-Title
+These functions modify and return the footer_height attribute of a \code{rtf_doc}
+object.
 }

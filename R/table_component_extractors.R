@@ -6,6 +6,7 @@
 #' @param doc \code{rtf_doc} object to return header string from.
 #'
 #' @return A RTF encoding string containing the header information
+#' @noRd
 get_column_headers <- function(doc) UseMethod('get_column_headers', object=doc$table)
 
 #' @noRd
@@ -47,6 +48,7 @@ get_column_headers.gt_tbl <- function(doc) {
 #' @param doc \code{rtf_doc} object to return header string from.
 #'
 #' @return A RTF encoding string containing the header information
+#' @noRd
 get_table_body <- function(doc) UseMethod('get_table_body', object=doc$table)
 
 #' @noRd
