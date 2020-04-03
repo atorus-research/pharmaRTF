@@ -28,6 +28,10 @@ test_that("font returns the correct vector for an rtf/hf_line object", {
   expect_equal(font(gtObj), character(1))
 })
 
+test_that("font_size returns the correct font size", {
+  expect_TRUE(FALSE)
+})
+
 test_that("text returns the correct vector for a hf_line", {
   x1 <- hf_line("text")
   x2 <- hf_line(c("text1", "text2"))
@@ -86,6 +90,8 @@ test_that("font_size throws error when given a non-numeric", {
 
   expect_error(font_size(rtf) <- "abc", "value is not a numeric or integer vector")
   expect_error(pharmaRTF::set_font_size(aLine, "abc"), "value is not a numeric or integer vector")
+  expect_error(font_size(rtf) <- 12.2, "someerror")
+  expect_error(font_size(aLine) <- 12.2, "someerror")
   expect_silent(font_size(aLine) <- 1)
 })
 
