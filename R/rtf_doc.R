@@ -54,10 +54,11 @@ supported_table_types <- c('huxtable', 'gt_tbl')
 #'  column2 = letters[1:5]
 #' )
 #' # Set table properties
-#' hf <- ht %>%
-#'   huxtable::bold(1, 1:ncol(ht), TRUE) %>%
-#'   huxtable::escape_contents(TRUE) %>%
-#'   huxtable::set_column_width(c(0.25, 0.75))
+#' library(stringr) #load in a pipe
+#' ht %>%
+#'   huxtable::set_bold(1, 1:ncol(ht), TRUE) %>%
+#'   huxtable::set_escape_contents(TRUE) %>%
+#'   huxtable::set_col_width(c(0.25, 0.75))
 #'
 #' rtf <- rtf_doc(ht, titles = list(hf_line("My Header")))
 #' # Set document properties
