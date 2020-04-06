@@ -14,26 +14,6 @@ document that are required/expected in a report for a regulatory submission
 This package intends to provide a flexible and reliable framework to connect
 R to a pharmaceutical reporting workflow.
 }
-\section{Installation}{
-
-\code{
-# Get the latest version on CRAN
-
-install.packages(pharmaRTF)
-}
-}
-
-\section{Usage}{
-
-\code{
-library(pharmaRTF)
-
-rtf <- rtf_doc(ASupportedTable, titles = titles_l, footnotes = footnote_l)
-
-write_rtf(rtf)
-}
-}
-
 \section{Future Plans}{
 
 \itemize{
