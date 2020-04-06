@@ -37,5 +37,5 @@ hfdf <- read_hf(from.file = "my_hf_file.csv", reader = read.csv)
 
 }
 \seealso{
-[titles_and_footnotes_from_df()]
+\code{\link{titles_and_footnotes_from_df}}
 }

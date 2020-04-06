@@ -251,7 +251,7 @@ add_footnotes <- function(doc, ...) {
 #'
 #' @return A \code{rtf_doc} object with header/footnote information attached.
 #' @importFrom purrr transpose
-#' @seealso [read_hf()] reads in each line.
+#' @seealso \code{\link{read_hf}} reads in each line.
 #' @export
 titles_and_footnotes_from_df <- function(doc, ...) {
 

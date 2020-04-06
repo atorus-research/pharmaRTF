@@ -25,7 +25,7 @@
 #'
 #' ## End(Not run)
 #'
-#' @seealso [titles_and_footnotes_from_df()]
+#' @seealso \code{\link{titles_and_footnotes_from_df}}
 read_hf <- function(from=NULL, from.file=NULL, reader=NULL, ...) {
   # Parameter checks
   assert_that(xor(is.null(from), is.null(from.file)),

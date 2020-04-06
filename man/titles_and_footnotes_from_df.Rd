@@ -35,5 +35,5 @@ Reads a data frame with header/footnote information and attaches it to an
 }
 
 \seealso{
-[read_hf()] reads in each line.
+\code{\link{read_hf}} reads in each line.
 }
