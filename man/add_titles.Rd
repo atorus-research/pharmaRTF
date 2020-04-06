@@ -13,7 +13,8 @@ add_titles(doc, ...)
 \code{add_hf()}}
 }
 \value{
-\code{rtf_doc} object with \code{hf_line} objects attached to titles.
+\code{rtf_doc} object with \code{hf_line} objects attached to
+  titles.
 }
 \description{
 Add \code{hf_line} title(s) to a \code{rtf_doc} object

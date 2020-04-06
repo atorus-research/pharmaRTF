@@ -187,7 +187,8 @@ add_hf <- function(doc, ..., to=NULL, replace=FALSE) {
 #' @param ... A vector of \code{hf_line} objects to add passed to
 #'   \code{add_hf()}
 #'
-#' @return \code{rtf_doc} object with \code{hf_line} objects attached to titles.
+#' @return \code{rtf_doc} object with \code{hf_line} objects attached to
+#'   titles.
 #'
 #' @examples
 #' # Adding lines after rtf_doc construction
@@ -230,8 +231,9 @@ add_footnotes <- function(doc, ...) {
 #' Read titles and footnotes from a dataframe
 #'
 #' Reads a data frame with header/footnote information and attaches it to an
-#'   \code{rtf_doc} object.The most effective way to use this function is to pass information to a
-#'   custom reader for your process. See <Vignette Link here>
+#'   \code{rtf_doc} object.The most effective way to use this function is to
+#'   pass information to a custom reader for your process. See <Vignette Link
+#'   here>
 #'
 #' @section Required Columns:
 #' \itemize{
@@ -245,7 +247,8 @@ add_footnotes <- function(doc, ...) {
 #' \item{index}
 #' }
 #'
-#' @param doc A \code{rtf_doc} object to append header and footnote information.
+#' @param doc A \code{rtf_doc} object to append header and footnote
+#'   information.
 #' @param ... Parameters passed to \code{read_hf} where they are processed and
 #'   constructed into \code{hf_line} objects.
 #'
