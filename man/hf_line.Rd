@@ -10,7 +10,7 @@ hf_line(
   bold = FALSE,
   italic = FALSE,
   font = NA,
-  font_size = NaN,
+  font_size = 12,
   index = NULL
 )
 }
