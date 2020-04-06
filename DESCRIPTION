@@ -3,7 +3,8 @@ Type: Package
 Title: Enhanced RTF wrapper written in R for use with existing R tables packages such as huxtable or GT
 Version: 0.1.0
 Authors@R: c(
-    person(family = "Miller", given = "Eli", email = "eli.miller@atorusresearch.com", role = "aut"), 
+    person(family = "Miller", given = "Eli", email = "eli.miller@atorusresearch.com", role = "aut",
+    comment = c(ORCID = "0000-0002-2127-9456")), 
     person(family = "Tarasiewicz", given = "Ashley", email = "Ashley.Tarasiewicz@atorusresearch.com", role = "aut"),
     person(family = "Stackhouse", given = "Michael", email = "mike.stackhouse@atorusresearch.com", role = c("aut", "cre")))
 Description: More about what it does (maybe more than one line)

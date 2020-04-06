@@ -8,15 +8,17 @@
 #'
 #' These functions modify and return the fonts of a \code{rtf_doc} object and
 #' associated items. To set the font attribute of a table you should use the
-#' functions assosiated with that package.
+#' functions assosiated with that package and modify the table directly.
 #'
 #' @param x \code{rtf_doc} object, the table of a \code{rtf_doc} object, or a
 #'   \code{hf_line} object
 #' @param ... Additional arguments passed to method dispatch
 #'
-#' @return The font attribute of the object In the case of \code{rtf_doc},
-#'   this returns each unique font in the table, titles, footnotes, and the
-#'   overall document.
+#' @return For \code{font()}, the font attribute of the object in the case of
+#'   \code{rtf_doc}, or each unique font in the table, titles, footnotes, and the
+#'   overall document in the case of \code{rtf_doc}. For \code{set_font()} and
+#'   \code{`font<-`()}, the modified object.
+#'
 #' @export
 #' @rdname font
 font <- function(x, ...) UseMethod('font')
@@ -149,7 +151,8 @@ set_font_size <- function(x, value) UseMethod('font_size<-')
 #' @param x \code{hf_line} object
 #' @param ... Additional arguments passed to method dispatch.
 #'
-#' @return Alignment of the supplied \code{hf_line} object.
+#' @return For \code{align()}, the alignment of the supplied \code{hf_line} object.
+#'   For \code{set_align()} and \code{`align<-`()}, the modified object.
 #' @export
 #' @rdname align
 align <- function(x, ...) UseMethod('align')
@@ -195,7 +198,8 @@ set_align <- function(x, value) UseMethod('align<-')
 #' @param x \code{hf_line} object
 #' @param ... Additonal arguments passed to method dispatch
 #'
-#' @return The bold attribute of the supplied \code{hf_line} object
+#' @return For \code{bold()}, the bold attribute of the supplied \code{hf_line}
+#'   object. For \code{`bold<-`()} and \code{set_bold()}, the modified object.
 #' @export
 #' @rdname bold
 bold <- function(x, ...) UseMethod('bold')

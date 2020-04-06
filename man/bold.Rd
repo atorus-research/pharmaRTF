@@ -20,7 +20,8 @@ set_bold(x, value)
 \item{value}{A logical vector to set the value of the bold attribute}
 }
 \value{
-The bold attribute of the supplied \code{hf_line} object
+For \code{bold()}, the bold attribute of the supplied \code{hf_line}
+  object. For \code{`bold<-`()} and \code{set_bold()}, the modified object.
 }
 \description{
 These functions modify and return the bold attribute of a \code{hf_line} object.

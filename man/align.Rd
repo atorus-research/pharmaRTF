@@ -20,7 +20,8 @@ set_align(x, value)
 \item{value}{A string representing the alignment.}
 }
 \value{
-Alignment of the supplied \code{hf_line} object.
+For \code{align()}, the alignment of the supplied \code{hf_line} object.
+  For \code{set_align()} and \code{`align<-`()}, the modified object.
 }
 \description{
 These functions modify and return the text alignment in a \code{hf_line}

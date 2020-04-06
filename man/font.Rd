@@ -21,12 +21,13 @@ set_font(x, value)
 \item{value}{A string representing a font}
 }
 \value{
-The font attribute of the object In the case of \code{rtf_doc},
-  this returns each unique font in the table, titles, footnotes, and the
-  overall document.
+For \code{font()}, the font attribute of the object in the case of
+  \code{rtf_doc}, or each unique font in the table, titles, footnotes, and the
+  overall document in the case of \code{rtf_doc}. For \code{set_font()} and
+  \code{`font<-`()}, the modified object.
 }
 \description{
 These functions modify and return the fonts of a \code{rtf_doc} object and
 associated items. To set the font attribute of a table you should use the
-functions assosiated with that package.
+functions assosiated with that package and modify the table directly.
 }

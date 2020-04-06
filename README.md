@@ -1,8 +1,16 @@
 # pharmaRTF 
-<Add Shields Here>
+<!--https://img.shields.io/azure-devops/build/atorus/32a592e8-d9a9-4ccd-bd26-65bc1c2a634d/1-->
+
+
 
 ## Overview
-Enhanced RTF wrapper written in R for use with existing R tables packages such as huxtable or GT
+Enhanced RTF wrapper written in R for use with existing R tables packages
+such as huxtable or GT. This package fills a gap where certain packages could
+be written out as RTF, but couldn't add certain metadata or features to the
+document that are required/expected in a report for a regulatory submission
+
+This package intends to provide a flexible and reliable framework to connect
+R to a pharmaceutical reporting workflow.
 
 ## Installation
 pharma RTF is currently not on CRAN but when it is
