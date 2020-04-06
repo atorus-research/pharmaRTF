@@ -88,10 +88,10 @@ test_that("font_size throws error when given a non-numeric", {
 
   aLine <- hf_line("text")
 
-  expect_error(font_size(rtf) <- "abc", "value is not a numeric or integer vector")
-  expect_error(pharmaRTF::set_font_size(aLine, "abc"), "value is not a numeric or integer vector")
-  expect_error(font_size(rtf) <- 12.2, "someerror")
-  expect_error(font_size(aLine) <- 12.2, "someerror")
+  expect_error(font_size(rtf) <- "abc", "Font size must be numeric and divisible by .5")
+  expect_error(pharmaRTF::set_font_size(aLine, "abc"), "Font size must be numeric and divisible by .5")
+  expect_error(font_size(rtf) <- 12.2, "Font size must be numeric and divisible by .5")
+  expect_error(font_size(aLine) <- 12.2, "Font size must be numeric and divisible by .5")
   expect_silent(font_size(aLine) <- 1)
 })
 
