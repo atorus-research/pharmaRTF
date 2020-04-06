@@ -37,7 +37,7 @@
 #'
 #' @export
 hf_line <- function(..., align=c('center', 'left', 'right', 'split'), bold=FALSE,
-                    italic=FALSE, font=NA, font_size=NaN, index=NULL) {
+                    italic=FALSE, font=NA, font_size=12, index=NULL) {
 
   line = list()
 
@@ -93,7 +93,7 @@ validate_hf_line <- function(line, align, bold,italic, font, font_size, index) {
   assert_that(is.character(font) | is.na(font))
 
   # Make sure font size is numeric
-  assert_that(is.numeric(font_size) & font_size %% 0.5 == 0,
+  assert_that(is.numeric(font_size) && font_size %% 0.5 == 0,
               msg = "Font size must be numeric and divisible by .5")
 }
 
