@@ -2,40 +2,58 @@
 % Please edit documentation in R/rtf_doc.R
 \name{rtf_doc}
 \alias{rtf_doc}
-\title{Create an \code{rtf_doc} object}
+\title{Create a \code{rtf_doc} object}
 \usage{
 rtf_doc(table, titles = list(), footnotes = list(), header.rows = 1)
 }
 \arguments{
-\item{table}{A table of a supported class}
+\item{table}{A table of a supported class.}
 
 \item{titles}{A list of \code{hf_line} objects.}
 
-\item{footnotes}{An object/list of \code{hf_line}}
+\item{footnotes}{An object/list of \code{hf_line}.}
 
-\item{header.rows}{An integer determining how many rows of the table are headers.}
+\item{header.rows}{An integer determining how many rows of the table are
+headers. Only used for huxtable tables.}
 }
 \value{
 A list with a table, titles, and footnotes component. Class of "rtf_doc"
-
-\code{rtf_doc} object
+  with the properties describled below.
 }
 \description{
 This constructs the main object that will be used to write the RTF document.
 The object is composed of a table, titles(s), and footnote(s).
+
+A table should be a supported class. The huxtable package is the most supported,
+however there are methods for the GT package. The \code{rtf_doc} will inherit
+the properties from the table passed.
+
+The titles and footnotes are composed of \code{hf_line} objects.
 }
 \section{\code{rtf_doc} Properties}{
 
+Document level properties will be used where they are not overriden by
+\code{hf_line} or table properties.
 \itemize{
-\item{font}
-\item{font Size}
-\item{margins}
-\item{orientation}
-\item{header_height}
-\item{footer_height}
-\item{pagesize}
-\item{header.rows}
-\item{ignore_cell_padding}
+\item{font - A string representing the font to display when it is not
+  specified by the table or \code{hf_line}. Defaults to NA.}
+\item{font_size - A numeric value representing the size of the font in points.
+  Supports half points. Defaults to 12.}
+\item{margins - Inches of margins in the document. Defaults to 1 for all
+  margins(top, bottom, left, right).}
+\item{orientation - Orientation of the document. The actual height and width
+  of the document is determined by the pagesize attribute, this is just a
+  flag for an RTF reader. Defaults to 'landscape'.}
+\item{header_height - Height of the header where the titles and header rows
+  are displayed. Defaults to .5.}
+\item{footer_height - Height of the footer where the footnotes are displayed.
+  Defaults to .5.}
+\item{pagesize - Size of the page in inches. Defaults to 8.5(height) by
+  11(width).}
+\item{header.rows - Huxtable table only. Number of rows that are defined as
+  the header that will be repeated across pages. Defaults to 1}
+\item{ignore_cell_padding - Huxtable table only. Flag to ignore padding that
+  is added during RTF encoding.}
 }
 }
 
@@ -45,6 +63,25 @@ ht <- huxtable::huxtable(
  column1 = 1:5,
  column2 = letters[1:5]
 )
-rtf <- rtf_doc(ht)
+# Set table properties
+library(stringr) #load in a pipe
+ht \%>\%
+  huxtable::set_bold(1, 1:ncol(ht), TRUE) \%>\%
+  huxtable::set_escape_contents(TRUE) \%>\%
+  huxtable::set_col_width(c(0.25, 0.75))
 
+rtf <- rtf_doc(ht, titles = list(hf_line("My Header")))
+# Set document properties
+rtf <- rtf \%>\%
+  set_font_size(15) \%>\%
+  set_ignore_cell_padding(TRUE)
+
+names(rtf)
+# >[1] "table" "titles" "footnotes"
+
+# write_rtf(rtf, file = "filePath/rtf.rtf")
+
+}
+\seealso{
+\code{\link{hf_line}}
 }

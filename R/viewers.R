@@ -4,7 +4,7 @@
 #' @param type type
 #'
 #' @import utils
-#' @export
+#' @noRd
 view_hf <- function(doc, type=NULL) {
 
   # Take out the lines
@@ -44,20 +44,22 @@ view_hf <- function(doc, type=NULL) {
   df
 }
 
-# Simplified for titles
-#' Title
+#' View title information
 #'
-#' @param doc doc
+#' @param doc \code{rtf_doc} object
 #'
-#' @return titles
+#' @return \code{data.frame} of the title information
 #' @export
-#'
-#'
 view_titles <- function(doc) {
   view_hf(doc, type='titles')
 }
 
-# Simplified for footnotes
+#' View footnote information
+#'
+#' @param doc \code{rtf_doc} object
+#'
+#' @return \code{data.frame} of the footnote information
+#' @export
 view_footnotes <- function(doc) {
   view_hf(doc, type='footnotes')
 }

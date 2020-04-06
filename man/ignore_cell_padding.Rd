@@ -2,18 +2,29 @@
 % Please edit documentation in R/properties.R
 \name{ignore_cell_padding}
 \alias{ignore_cell_padding}
-\title{Title}
+\alias{ignore_cell_padding<-}
+\alias{set_ignore_cell_padding}
+\title{Return and set ignore_cell_padding}
 \usage{
 ignore_cell_padding(x, ...)
+
+ignore_cell_padding(x) <- value
+
+set_ignore_cell_padding(x, value)
 }
 \arguments{
-\item{x}{x}
+\item{x}{\code{rtf_doc} object}
 
-\item{...}{...}
+\item{...}{Additonal arguments passed to method dispatch}
+
+\item{value}{A logical value to set the attribute}
 }
 \value{
-return
+The ignore_cell_padding attribute of the supplied \code{rtf_doc}
+  object
 }
 \description{
-Title
+These functions modify and return the ignore_cell_padding attribute of a
+\code{rtf_doc} object. By default, the huxtable package will pad rows of a
+table. This attribute will remove the padding.
 }

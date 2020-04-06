@@ -2,18 +2,27 @@
 % Please edit documentation in R/properties.R
 \name{orientation}
 \alias{orientation}
-\title{Title}
+\alias{orientation<-}
+\alias{set_orientation}
+\title{Return and set orientation}
 \usage{
 orientation(x, ...)
+
+orientation(x) <- value
+
+set_orientation(x, value)
 }
 \arguments{
-\item{x}{x}
+\item{x}{\code{rtf_doc} object}
 
-\item{...}{...}
+\item{...}{Additonal arguments passed to method dispatch}
+
+\item{value}{A character vector of either 'landscape' or 'portrait'}
 }
 \value{
-return
+Orientation attribute of the supplied \code{rtf_doc} object
 }
 \description{
-Title
+These functions modify and return the orientation attribute. Options are
+landscape or portrait.
 }

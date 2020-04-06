@@ -2,18 +2,29 @@
 % Please edit documentation in R/properties.R
 \name{column_header_buffer}
 \alias{column_header_buffer}
-\title{Title}
+\alias{column_header_buffer<-}
+\alias{set_column_header_buffer}
+\title{Return and set column_header_buffer attributes}
 \usage{
 column_header_buffer(x, ...)
+
+column_header_buffer(x) <- value
+
+set_column_header_buffer(x, ...)
 }
 \arguments{
-\item{x}{x}
+\item{x}{\code{rtf_doc} object}
 
-\item{...}{...}
+\item{...}{Additonal arguments passed to method dispatch. Should include
+argument top and bottom with numeric elements.}
+
+\item{value}{A named vector detailing the top and bottom buffer.}
 }
 \value{
-return
+The column_header_buffer attribute of the supplied \code{rtf_doc}
 }
 \description{
-Title
+These functions modify and return the column header buffers of a
+\code{rtf_doc}. This attribute adds rows to the top or bottom of a header
+to pad it from the titles above or the table below.
 }

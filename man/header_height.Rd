@@ -2,18 +2,27 @@
 % Please edit documentation in R/properties.R
 \name{header_height}
 \alias{header_height}
-\title{Title}
+\alias{header_height<-}
+\alias{set_header_height}
+\title{Return and set header height}
 \usage{
 header_height(x, ...)
+
+header_height(x) <- value
+
+set_header_height(x, value)
 }
 \arguments{
-\item{x}{x}
+\item{x}{\code{rtf_doc} object}
 
-\item{...}{...}
+\item{...}{Additonal arguments passed to method dispatch}
+
+\item{value}{A numeric value to set the header_height}
 }
 \value{
-return
+header_height attribute of the supplied \code{rtf_doc} object
 }
 \description{
-Title
+These functions modify and return the header_height attribute of a \code{rtf_doc}
+object
 }
