@@ -1,6 +1,7 @@
 context("helpers")
 library(huxtable)
 library(readr)
+library(stringr)
 
 test_that("insert_buffer adds a blank column correctly", {
   ht <- huxtable(

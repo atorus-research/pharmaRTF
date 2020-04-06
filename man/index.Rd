@@ -2,18 +2,26 @@
 % Please edit documentation in R/properties.R
 \name{index}
 \alias{index}
-\title{Title}
+\alias{index<-}
+\alias{set_index}
+\title{Return or set index}
 \usage{
 index(x, ...)
+
+index(x) <- value
+
+set_index(x, value)
 }
 \arguments{
-\item{x}{x}
+\item{x}{\code{hf_line} object}
 
-\item{...}{...}
+\item{...}{Additonal arguments passed to method dispatch}
+
+\item{value}{Numeric value to order index}
 }
 \value{
 return
 }
 \description{
-Title
+These functions modify and return the index of a \code{hf_line} object.
 }

@@ -1,14 +1,31 @@
 #' Create a title line container
 #'
-#' @description
 #' \code{hf_line} objects are passed to \code{rtf_doc} for display in the RTF
-#' document. A list of 0, 1, or 2 strings with attributes for display.
+#' document. A character vector of length <= 2 describes the text to display.
+#' A vector of length two can be passed to either split them with one item left
+#' aligned and the other right aligned, or the two will be pasted together if
+#' the alignment is anything other than split. Lines can either be passed in
+#' the call to \code{rtf_doc} added later with \code{add_titles} or
+#' \code{add_footnotes}. Supported properties are detailed in the Arguments
+#' section
 #'
-#' Add info about formatting with PAGE_FORMAT etc
+#' @section Supported Formatting:
+#' Several page formats are supported to display document data. When the
+#' \code{rtf_doc} is written, the package will determine if the text of an
+#' \code{hf_line} object starts with a keyword. Regular expresion matching and
+#' replacement is used for formatting.
+#' \itemize{
+#' \item{PAGE_FORMAT: - Can take up to two replacements to format current
+#'   page(first), and total number of pages(second)}
+#' \item{DATE_FORMAT: - Describes the date/time the document was generated}
+#' \item{FILE_PATH: - Describes the file path the R session was executed from}
+#' }
 #'
 #' @param ... A character list/vector. If \code{length(...)} is 2 and
 #'     \code{align} is not 'split', values are pasted together.
-#' @param align Text alignment as left, right, center, or split. Defaults to center.
+#' @param align ext alignment in document. Options are 'center', 'left',
+#'   'right', and 'split'. A 'split' alignment will left align the string in
+#'    the first text item and right align the second. Defaults to center.
 #' @param bold \code{TRUE} or  \code{FALSE}. Defaults to FALSE.
 #' @param italic \code{TRUE} or  \code{FALSE}. Defaults to FALSE.
 #' @param font A string to specify the font display. Ensure the intended RTF
@@ -18,7 +35,8 @@
 #' @param index Position to display header or footnote lines in the RTF
 #'   document. Orderes in ascending order with NULLs last.
 #'
-#' @return An object of class \code{hf_line}
+#' @return An object of class \code{hf_line} with the properties described in
+#'   the Arguments section.
 #'
 #' @examples
 #' # Adding lines during rtf_doc construction
@@ -26,18 +44,19 @@
 #'  column1 = 1:5,
 #'  column2 = letters[1:5]
 #' )
-#' rtf <- rtf_doc(ht)
 #' titles_l <- list(
-#' hf_line("The Title")
+#'   hf_line("The Title"),
+#'   # the below will display 'Current Page 1 Total Pages 1
+#'   hf_line("PAGE_FORMAT: Current Page %s Total Pages %s")
 #' )
 #' rtf <- rtf_doc(ht, titles = titles_l)
 #'
 #' # Adding lines after rtf_doc construction
-#' rtf <- add_footnotes(rtf, hf_line("The Footnote"))
+#' rtf <- add_footnotes(rtf, hf_line("The Footnote"), hf_line("Footnote 2"))
 #'
 #' @export
 hf_line <- function(..., align=c('center', 'left', 'right', 'split'), bold=FALSE,
-                    italic=FALSE, font=NA, font_size=NaN, index=NULL) {
+                    italic=FALSE, font=NA, font_size=12, index=NULL) {
 
   line = list()
 
@@ -93,7 +112,8 @@ validate_hf_line <- function(line, align, bold,italic, font, font_size, index) {
   assert_that(is.character(font) | is.na(font))
 
   # Make sure font size is numeric
-  assert_that(is.numeric(font_size))
+  assert_that(is.numeric(font_size) && font_size %% 0.5 == 0,
+              msg = "Font size must be numeric and divisible by .5")
 }
 
 #' Order header/footer lines in an rtf_document
@@ -161,7 +181,7 @@ add_hf <- function(doc, ..., to=NULL, replace=FALSE) {
 
 }
 
-#' Add \code{hf_line} object(s) to a \code{rtf_doc} object
+#' Add \code{hf_line} title(s) to a \code{rtf_doc} object
 #'
 #' @param doc \code{rtf_doc} object to add header lines to
 #' @param ... A vector of \code{hf_line} objects to add passed to
@@ -180,12 +200,12 @@ add_hf <- function(doc, ..., to=NULL, replace=FALSE) {
 #' rtf <- add_titles(rtf, hf_line("The Footnote"))
 #'
 #' @export
+#' @seealso \code{\link{add_hf}}
 add_titles <- function(doc, ...) {
   add_hf(doc, ..., to='titles')
 }
 
-# Simplified for footnoes
-#' Add \code{hf_line} object(s) to a \code{rtf_doc} object
+#' Add \code{hf_line} footnote(s) to a \code{rtf_doc} object
 #'
 #' @param doc \code{rtf_doc} object to add header/footer lines to
 #' @param ... A vector of \code{hf_line} objects to add.
@@ -202,6 +222,7 @@ add_titles <- function(doc, ...) {
 #'
 #' rtf <- add_footnotes(rtf, hf_line("The Footnote"))
 #' @export
+#' @seealso \code{\link{add_hf}}
 add_footnotes <- function(doc, ...) {
   add_hf(doc, ..., to='footnotes')
 }
@@ -224,11 +245,11 @@ add_footnotes <- function(doc, ...) {
 #' \item{index}
 #' }
 #'
-#' @param doc \code{rtf_doc} object to append header and footnote information.
+#' @param doc A \code{rtf_doc} object to append header and footnote information.
 #' @param ... Parameters passed to \code{read_hf} where they are processed and
 #'   constructed into \code{hf_line} objects.
 #'
-#' @return RTF document with header/footnote information attached.
+#' @return A \code{rtf_doc} object with header/footnote information attached.
 #' @importFrom purrr transpose
 #' @seealso [read_hf()] reads in each line.
 #' @export

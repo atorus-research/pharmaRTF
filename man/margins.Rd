@@ -2,18 +2,28 @@
 % Please edit documentation in R/properties.R
 \name{margins}
 \alias{margins}
-\title{Title}
+\alias{margins<-}
+\alias{set_margins}
+\title{Return and set margins}
 \usage{
 margins(x, ...)
+
+margins(x) <- value
+
+set_margins(x, value)
 }
 \arguments{
-\item{x}{x}
+\item{x}{\code{rtf_doc} object}
 
-\item{...}{...}
+\item{...}{Additonal arguments passed to method dispatch}
+
+\item{value}{A named list or vector detailing the}
 }
 \value{
-return
+A named vector of the margin attribute of the supplied \code{rtf_doc}
 }
 \description{
-Title
+These functions return and set the margin attribute of a \code{rtf_doc}
+object. Names should be top, bottom, left, and right. Margins are measured
+in inches.
 }

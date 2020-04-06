@@ -2,18 +2,29 @@
 % Please edit documentation in R/properties.R
 \name{text}
 \alias{text}
-\title{Title}
+\alias{text<-}
+\alias{set_text}
+\title{Return or set text}
 \usage{
 text(x, ...)
+
+text(x) <- value
+
+set_text(x, value)
 }
 \arguments{
-\item{x}{x}
+\item{x}{\code{hf_line} object}
 
-\item{...}{...}
+\item{...}{Additonal arguments passed to method dispatch}
+
+\item{value}{A character vector of length 0, 1, or 2 to set the text value
+of a \code{hf_line} object.}
 }
 \value{
-return
+The text vector of the supplied \code{hf_line} object.
 }
 \description{
-Title
+These functions modify and return the fonts of a \code{rtf_doc} object.
+\code{font()} will always return a vector of length 2. If the text is only
+of length one an empty string will be appended.
 }

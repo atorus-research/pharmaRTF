@@ -181,7 +181,7 @@ test_that("validate_hf_line throws errors appropriately", {
   expect_error(validate_hf_line(x, align(x), bold(x), italic(x), font = 1, font_size(x), index(x)),
                "is not TRUE")
   expect_error(validate_hf_line(x, align(x), bold(x), italic(x), font(x), font_size = "10", index(x)),
-               "font_size is not a numeric or integer vector")
+               "Font size must be numeric and divisible by .5")
   ## Not nesscarily an error but my want to have more checks for index, positive integer
   expect_error(validate_hf_line(x, align(x), bold(x), italic(x), font(x), font_size(x), index = "1"),
                "is not TRUE")

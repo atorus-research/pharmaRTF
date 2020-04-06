@@ -27,3 +27,7 @@ write_rtf(rtf) #writes a table with no header/footnotes to 'test.rtf'
 }
 
 }
+\seealso{
+\url{http://www.biblioscape.com/rtf15_spec.htm},
+  \url{http://latex2rtf.sourceforge.net/rtfspec_7.html#rtfspec_tabledef}
+}

@@ -6,11 +6,21 @@
 # S3 Generic
 #' Return or set font
 #'
-#' @param x table
-#' @param ... ...
+#' These functions modify and return the fonts of a \code{rtf_doc} object and
+#' associated items. To set the font attribute of a table you should use the
+#' functions assosiated with that package and modify the table directly.
 #'
-#' @return font
+#' @param x \code{rtf_doc} object, the table of a \code{rtf_doc} object, or a
+#'   \code{hf_line} object
+#' @param ... Additional arguments passed to method dispatch
+#'
+#' @return For \code{font()}, the font attribute of the object in the case of
+#'   \code{rtf_doc}, or each unique font in the table, titles, footnotes, and the
+#'   overall document in the case of \code{rtf_doc}. For \code{set_font()} and
+#'   \code{`font<-`()}, the modified object.
+#'
 #' @export
+#' @rdname font
 font <- function(x, ...) UseMethod('font')
 
 #' @export
@@ -44,20 +54,20 @@ font.rtf_doc <- function(x, ...) {
 }
 
 ## Fonts (setters) ----
-#' Title
-#'
-#' @param x x
-#' @param value value
+#' @param x \code{rtf_doc} object, the table of a \code{rtf_doc} object, or a
+#'   \code{hf_line} object
+#' @param value A string representing a font
 #'
 #' @export
+#' @rdname font
 'font<-' <- function(x, value) UseMethod('font<-')
 
-#' Title
-#'
-#' @param x x
-#' @param value value
+#' @param x \code{rtf_doc} object, the table of a \code{rtf_doc} object, or a
+#'   \code{hf_line} object
+#' @param value A string representing a font
 #'
 #' @export
+#' @rdname font
 set_font <- function(x, value) UseMethod('font<-')
 
 #' @export
@@ -75,13 +85,18 @@ set_font <- function(x, value) UseMethod('font<-')
 }
 
 ## Font size (getters) ----
-#' Title
+#' Return or set font size
 #'
-#' @param x x
-#' @param ... ...
+#' These functions modify and return the font sizes of a \code{rtf_doc} object
+#' or a \code{hf_line} object. This attribute measures the font size in half
+#' points. A font_size of 24 will result in a 12 point font.
 #'
-#' @return font
+#' @param x \code{rtf_doc} object or \code{hf_line} object
+#' @param ... Additonal arguments passed to method dispatch
+#'
+#' @return The font_size attribute of the supplied \code{rtf_doc} or \code{hf_line}
 #' @export
+#' @rdname font_size
 font_size <- function(x, ...) UseMethod('font_size')
 
 #' @export
@@ -95,33 +110,34 @@ font_size.hf_line <- function(x, ...) {
 }
 
 ## Font size (setters) ----
-
-#' Title
-#'
-#' @param x x
-#' @param value value
+#' @param x \code{rtf_doc} object or a \code{hf_line} object
+#' @param value A numeric value for font size in half points. A font_size of 24
+#'   will result in a 12 point font.
 #'
 #' @export
+#' @rdname font_size
 'font_size<-' <- function(x, value) UseMethod('font_size<-')
 
-#' Title
-#'
-#' @param x x
-#' @param value value
+#' @param x \code{rtf_doc} object or a \code{hf_line} object
+#' @param value A numeric value for font size in half points. A font_size of 24
+#'   will result in a 12 point font.
 #'
 #' @export
+#' @rdname font_size
 set_font_size <- function(x, value) UseMethod('font_size<-')
 
 #' @export
 'font_size<-.hf_line' <- function(x, value) {
-  assert_that(is.numeric(value))
+  assert_that(is.numeric(value) && value %% 0.5 == 0,
+              msg = "Font size must be numeric and divisible by .5")
   attr(x, 'font_size') <- value
   x
 }
 
 #' @export
 'font_size<-.rtf_doc' <- function(x, value) {
-  assert_that(is.numeric(value))
+  assert_that(is.numeric(value) && value %% 0.5 == 0,
+              msg = "Font size must be numeric and divisible by .5")
   attr(x, 'font_size') <- value
   x
 }
@@ -129,13 +145,18 @@ set_font_size <- function(x, value) UseMethod('font_size<-')
 ## HF_LINE PROPERTIES (and attributes that spread to rtf_doc level) ####
 
 ## Alignment (getters) ----
-#' Title
+#' Return and set text alignment
 #'
-#' @param x x
-#' @param ... ...
+#' These functions modify and return the text alignment in a \code{hf_line}
+#' object. Supported options are: 'left', 'right', 'center', and 'split'.
 #'
-#' @return return
+#' @param x \code{hf_line} object
+#' @param ... Additional arguments passed to method dispatch.
+#'
+#' @return For \code{align()}, the alignment of the supplied \code{hf_line} object.
+#'   For \code{set_align()} and \code{`align<-`()}, the modified object.
 #' @export
+#' @rdname align
 align <- function(x, ...) UseMethod('align')
 
 #' @export
@@ -144,20 +165,18 @@ align.hf_line <- function(x, ...) {
 }
 
 ## Alignment (setters) ----
-#' Title
-#'
-#' @param x x
-#' @param value value
+#' @param x \code{hf_line} object
+#' @param value A string representing the alignment.
 #'
 #' @export
+#' @rdname align
 'align<-' <- function(x, value) UseMethod('align<-')
 
-#' Title
-#'
-#' @param x x
-#' @param value value
+#' @param x \code{hf_line} object
+#' @param value A string representing the alignment.
 #'
 #' @export
+#' @rdname align
 set_align <- function(x, value) UseMethod('align<-')
 
 #' @export
@@ -174,13 +193,17 @@ set_align <- function(x, value) UseMethod('align<-')
 }
 
 ## Bold (getters) ----
-#' Title
+#' Return or set bold
 #'
-#' @param x x
-#' @param ... ...
+#' These functions modify and return the bold attribute of a \code{hf_line} object.
 #'
-#' @return return
+#' @param x \code{hf_line} object
+#' @param ... Additonal arguments passed to method dispatch
+#'
+#' @return For \code{bold()}, the bold attribute of the supplied \code{hf_line}
+#'   object. For \code{`bold<-`()} and \code{set_bold()}, the modified object.
 #' @export
+#' @rdname bold
 bold <- function(x, ...) UseMethod('bold')
 
 #' @export
@@ -189,20 +212,18 @@ bold.hf_line <- function(x, ...) {
 }
 
 ## Bold (setters) ----
-#' Title
-#'
-#' @param x x
-#' @param value value
+#' @param x \code{hf_line} object
+#' @param value A logical vector to set the value of the bold attribute
 #'
 #' @export
+#' @rdname bold
 'bold<-' <- function(x, value) UseMethod('bold<-')
 
-#' Title
-#'
-#' @param x x
-#' @param value value
+#' @param x \code{hf_line} object
+#' @param value A logical vector to set the value of the bold attribute
 #'
 #' @export
+#' @rdname bold
 set_bold <- function(x, value) UseMethod('bold<-')
 
 #' @export
@@ -215,13 +236,17 @@ set_bold <- function(x, value) UseMethod('bold<-')
 }
 
 ## Italic (getters) ----
-#' Title
+#' Return or set italics
 #'
-#' @param x x
-#' @param ... ...
+#' These functions modify and return the italics attribute of a \code{hf_line}
+#' object
 #'
-#' @return return
+#' @param x \code{hf_line} object
+#' @param ... Additonal arguments passed to method dispatch
+#'
+#' @return The italic attribute of the supplied \code{hf_line}
 #' @export
+#' @rdname italic
 italic <- function(x, ...) UseMethod('italic')
 
 #' @export
@@ -231,20 +256,18 @@ italic.hf_line <- function(x, ...) {
 
 
 ## Italic (setters) ----
-#' Title
-#'
-#' @param x x
-#' @param value value
+#' @param x \code{hf_line} object
+#' @param value A logical vector to set the value of the bold attribute
 #'
 #' @export
+#' @rdname italic
 'italic<-' <- function(x, value) UseMethod('italic<-')
 
-#' Title
-#'
-#' @param x x
-#' @param value value
+#' @param x \code{hf_line} object
+#' @param value A logical vector to set the value of the bold attribute
 #'
 #' @export
+#' @rdname italic
 set_italic <- function(x, value) UseMethod('italic<-')
 
 #' @export
@@ -257,13 +280,18 @@ set_italic <- function(x, value) UseMethod('italic<-')
 }
 
 ## Text (getter) ----
-#' Title
+#' Return or set text
 #'
-#' @param x x
-#' @param ... ...
+#' These functions modify and return the fonts of a \code{rtf_doc} object.
+#' \code{font()} will always return a vector of length 2. If the text is only
+#' of length one an empty string will be appended.
 #'
-#' @return return
+#' @param x \code{hf_line} object
+#' @param ... Additonal arguments passed to method dispatch
+#'
+#' @return The text vector of the supplied \code{hf_line} object.
 #' @export
+#' @rdname text
 text <- function(x, ...) UseMethod('text')
 
 #' @export
@@ -278,20 +306,21 @@ text.hf_line <- function(x, ...) {
 }
 
 ## Text (setters) ----
-#' Title
-#'
-#' @param x x
-#' @param value value
+
+#' @param x \code{hf_line} object
+#' @param value A character vector of length 0, 1, or 2 to set the text value
+#'   of a \code{hf_line} object.
 #'
 #' @export
+#' @rdname text
 'text<-' <- function(x, value) UseMethod('text<-')
 
-#' Title
-#'
-#' @param x x
-#' @param value value
+#' @param x \code{hf_line} object
+#' @param value A character vector of length 0, 1, or 2 to set the text value
+#'   of a \code{hf_line} object.
 #'
 #' @export
+#' @rdname text
 set_text <- function(x, value) UseMethod('text<-')
 
 #' @export
@@ -310,13 +339,16 @@ set_text <- function(x, value) UseMethod('text<-')
 }
 
 ## Index (getters) ----
-#' Title
+#' Return or set index
 #'
-#' @param x x
-#' @param ... ...
+#' These functions modify and return the index of a \code{hf_line} object.
+#'
+#' @param x \code{hf_line} object
+#' @param ... Additonal arguments passed to method dispatch
 #'
 #' @return return
 #' @export
+#' @rdname index
 index <- function(x, ...) UseMethod('index')
 
 #' @export
@@ -325,20 +357,18 @@ index.hf_line <- function(x, ...) {
 }
 
 ## Index (setters) ----
-#' Title
-#'
-#' @param x x
-#' @param value value
+#' @param x \code{hf_line} object
+#' @param value Numeric value to order index
 #'
 #' @export
+#' @rdname index
 'index<-' <- function(x, value) UseMethod('index<-')
 
-#' Title
-#'
-#' @param x x
-#' @param value value
+#' @param x \code{hf_line} object
+#' @param value Numeric value to order index
 #'
 #' @export
+#' @rdname index
 set_index <- function(x, value) UseMethod('index<-')
 
 #' @export
@@ -353,13 +383,18 @@ set_index <- function(x, value) UseMethod('index<-')
 ## DOCUMENT PROPERTIES ####
 
 ## Margins (getters) ----
-#' Title
+#' Return and set margins
 #'
-#' @param x x
-#' @param ... ...
+#' These functions return and set the margin attribute of a \code{rtf_doc}
+#' object. Names should be top, bottom, left, and right. Margins are measured
+#' in inches.
 #'
-#' @return return
+#' @param x \code{rtf_doc} object
+#' @param ... Additonal arguments passed to method dispatch
+#'
+#' @return A named vector of the margin attribute of the supplied \code{rtf_doc}
 #' @export
+#' @rdname margins
 margins <- function(x, ...) UseMethod('margins')
 
 #' @export
@@ -368,20 +403,18 @@ margins.rtf_doc <- function(x, ...) {
 }
 
 ## Margins (setters) ----
-#' Title
-#'
-#' @param x x
-#' @param value value
+#' @param x \code{rtf_doc} object
+#' @param value A named list or vector detailing the
 #'
 #' @export
+#' @rdname margins
 'margins<-' <- function(x, value) UseMethod('margins<-')
 
-#' Title
-#'
-#' @param x x
-#' @param value value
+#' @param x \code{rtf_doc} object
+#' @param value A named list or vector detailing the
 #'
 #' @export
+#' @rdname margins
 set_margins <- function(x, value) UseMethod('margins<-')
 
 #' @export
@@ -417,14 +450,18 @@ set_margins <- function(x, value) UseMethod('margins<-')
 
 
 ## Orientation (getters) ----
-#' Title
+#' Return and set orientation
 #'
-#' @param x x
-#' @param ... ...
+#' These functions modify and return the orientation attribute. Options are
+#' landscape or portrait.
 #'
-#' @return return
+#' @param x \code{rtf_doc} object
+#' @param ... Additonal arguments passed to method dispatch
+#'
+#' @return Orientation attribute of the supplied \code{rtf_doc} object
 #'
 #' @export
+#' @rdname orientation
 orientation <- function(x, ...) UseMethod('orientation')
 
 #' @export
@@ -433,20 +470,19 @@ orientation.rtf_doc <- function(x, ...) {
 }
 
 ## Orientation (setters) ----
-#' Title
-#'
-#' @param x x
-#' @param value value
+
+#' @param x \code{rtf_doc} object
+#' @param value A character vector of either 'landscape' or 'portrait'
 #'
 #' @export
+#' @rdname orientation
 'orientation<-' <- function(x, value) UseMethod('orientation<-')
 
-#' Title
-#'
-#' @param x x
-#' @param value value
+#' @param x \code{rtf_doc} object
+#' @param value A character vector of either 'landscape' or 'portrait'
 #'
 #' @export
+#' @rdname orientation
 set_orientation <- function(x, value) UseMethod('orientation<-')
 
 #' @export
@@ -462,14 +498,17 @@ set_orientation <- function(x, value) UseMethod('orientation<-')
 }
 
 ## Header height (getters)----
-#' Title
+#' Return and set header height
 #'
-#' @param x x
-#' @param ... ...
+#' These functions modify and return the header_height attribute of a \code{rtf_doc}
+#' object
 #'
-#' @return return
+#' @param x \code{rtf_doc} object
+#' @param ... Additonal arguments passed to method dispatch
 #'
+#' @return header_height attribute of the supplied \code{rtf_doc} object
 #' @export
+#' @rdname header_height
 header_height <- function(x, ...) UseMethod('header_height')
 
 #' @export
@@ -477,21 +516,19 @@ header_height.rtf_doc <- function(x, ...) {
   attr(x, 'header_height')
 }
 
-## Header height (setters) ----
-#' Title
-#'
-#' @param x x
-#' @param value value
+#' @param x \code{rtf_doc} object
+#' @param value A numeric value to set the header_height
 #'
 #' @export
+#' @rdname header_height
 'header_height<-' <- function(x, value) UseMethod('header_height<-')
 
-#' Title
-#'
-#' @param x x
-#' @param value value
+
+#' @param x \code{rtf_doc} object
+#' @param value A numeric value to set the header_height
 #'
 #' @export
+#' @rdname header_height
 set_header_height <- function(x, value) UseMethod('header_height<-')
 
 #' @export
@@ -504,14 +541,17 @@ set_header_height <- function(x, value) UseMethod('header_height<-')
 }
 
 ## Footer Height ----
-#' Title
+#' Return and set footer height
 #'
-#' @param x x
-#' @param ... ...
+#' These functions modify and return the footer_height attribute of a \code{rtf_doc}
+#' object.
 #'
-#' @return return
+#' @param x \code{rtf_doc} object
+#' @param ... Additonal arguments passed to method dispatch
 #'
+#' @return header_height attribute of the supplied \code{rtf_doc} object
 #' @export
+#' @rdname footer_height
 footer_height <- function(x, ...) UseMethod('footer_height')
 
 #' @export
@@ -520,20 +560,18 @@ footer_height.rtf_doc <- function(x, ...) {
 }
 
 ## Footer height (setters) ----
-#' Title
-#'
-#' @param x x
-#' @param value value
+#' @param x \code{rtf_doc} object
+#' @param value A numeric value to set the footer_height
 #'
 #' @export
+#' @rdname footer_height
 'footer_height<-' <- function(x, value) UseMethod('footer_height<-')
 
-#' Title
-#'
-#' @param x x
-#' @param value value
+#' @param x \code{rtf_doc} object
+#' @param value A numeric value to set the footer_height
 #'
 #' @export
+#' @rdname footer_height
 set_footer_height <- function(x, value) UseMethod('footer_height<-')
 
 #' @export
@@ -546,14 +584,18 @@ set_footer_height <- function(x, value) UseMethod('footer_height<-')
 }
 
 ## Page Size (getters) ----
-#' Title
+#' Return and set pagesize
 #'
-#' @param x x
-#' @param ... ...
+#' These functions modify and return the pagesize attribute of a \code{rtf_doc}
+#' object. Stored as a named vector with height and width names.
+#'
+#' @param x \code{rtf_doc} object
+#' @param ... Additonal arguments passed to method dispatch
 #'
 #' @return return
 #'
 #' @export
+#' @rdname pagesize
 pagesize <- function(x, ...) UseMethod('pagesize')
 
 #' @export
@@ -562,20 +604,18 @@ pagesize.rtf_doc <- function(x, ...) {
 }
 
 ## Page size(setters) ----
-#' Title
-#'
-#' @param x x
-#' @param value value
+#' @param x \code{rtf_doc} object
+#' @param value A named numeric vector with the names height and width.
 #'
 #' @export
+#' @rdname pagesize
 'pagesize<-' <- function(x, value) UseMethod('pagesize<-')
 
-#' Title
-#'
-#' @param x x
-#' @param value value
+#' @param x \code{rtf_doc} object
+#' @param value A named numeric vector with the names height and width.
 #'
 #' @export
+#' @rdname pagesize
 set_pagesize <- function(x, value) UseMethod('pagesize<-')
 
 #' @export
@@ -610,14 +650,17 @@ set_pagesize <- function(x, value) UseMethod('pagesize<-')
 ## Additional Table Properties Necessary ####
 
 ## Header rows (getters) ----
-#' Title
+#' Return and set the header.rows
 #'
-#' @param x x
-#' @param ... ...
+#' These functions modify and return the header.rows attribute of a \code{rtf_doc}
+#' object.
+#'
+#' @param x \code{rtf_doc} object
+#' @param ... Additonal arguments passed to method dispatch
 #'
 #' @return return
-#'
 #' @export
+#' @rdname header.rows
 header_rows <- function(x, ...) UseMethod('header_rows')
 
 #' @export
@@ -636,20 +679,18 @@ header_rows.gt_tbl <- function(x, ...) {
 }
 
 ## Header rows (setters) ----
-#' Title
-#'
-#' @param x x
-#' @param value value
+#' @param x \code{rtf_doc} object
+#' @param value A numeric value to change the header.rows attribute.
 #'
 #' @export
+#' @rdname header.rows
 'header_rows<-' <- function(x, value) UseMethod('header_rows<-')
 
-#' Title
-#'
-#' @param x x
-#' @param value value
+#' @param x \code{rtf_doc} object
+#' @param value A numeric value to change the header.rows attribute.
 #'
 #' @export
+#' @rdname header.rows
 set_header_rows <- function(x, value) UseMethod('header_rows<-')
 
 #' @export
@@ -675,14 +716,20 @@ set_header_rows <- function(x, value) UseMethod('header_rows<-')
 }
 
 ## Ignore Cell Padding (getters) ----
-#' Title
+#' Return and set ignore_cell_padding
 #'
-#' @param x x
-#' @param ... ...
+#' These functions modify and return the ignore_cell_padding attribute of a
+#' \code{rtf_doc} object. By default, the huxtable package will pad rows of a
+#' table. This attribute will remove the padding.
 #'
-#' @return return
+#' @param x \code{rtf_doc} object
+#' @param ... Additonal arguments passed to method dispatch
+#'
+#' @return The ignore_cell_padding attribute of the supplied \code{rtf_doc}
+#'   object
 #'
 #' @export
+#' @rdname ignore_cell_padding
 ignore_cell_padding <- function(x, ...) UseMethod('ignore_cell_padding')
 
 #' @export
@@ -691,20 +738,18 @@ ignore_cell_padding.rtf_doc <- function(x, ...) {
 }
 
 ## Ignore Cell Padding (setters) ----
-#' Title
-#'
-#' @param x x
-#' @param value value
+#' @param x \code{rtf_doc} object
+#' @param value A logical value to set the attribute
 #'
 #' @export
+#' @rdname ignore_cell_padding
 'ignore_cell_padding<-' <- function(x, value) UseMethod('ignore_cell_padding<-')
 
-#' Title
-#'
-#' @param x x
-#' @param value value
+#' @param x \code{rtf_doc} object
+#' @param value A logical value to set the attribute
 #'
 #' @export
+#' @rdname ignore_cell_padding
 set_ignore_cell_padding <- function(x, value) UseMethod('ignore_cell_padding<-')
 
 #' @export
@@ -717,14 +762,18 @@ set_ignore_cell_padding <- function(x, value) UseMethod('ignore_cell_padding<-')
 }
 
 ## Column header buffer (getter)
-#' Title
+#' Return and set column_header_buffer attributes
 #'
-#' @param x x
-#' @param ... ...
+#' These functions modify and return the column header buffers of a
+#' \code{rtf_doc}. This attribute adds rows to the top or bottom of a header
+#' to pad it from the titles above or the table below.
 #'
-#' @return return
+#' @param x \code{rtf_doc} object
+#' @param ... Additonal arguments passed to method dispatch
 #'
+#' @return The column_header_buffer attribute of the supplied \code{rtf_doc}
 #' @export
+#' @rdname column_header_buffer
 column_header_buffer <- function(x, ...) UseMethod('column_header_buffer')
 
 #' @export
@@ -732,21 +781,19 @@ column_header_buffer.rtf_doc <- function(x, ...) {
   attr(x, 'column_header_buffer')
 }
 
-## Ignore Cell Padding (setters) ----
-#' Title
-#'
-#' @param x x
-#' @param value value
+#' @param x \code{rtf_doc} object
+#' @param value A named vector detailing the top and bottom buffer.
 #'
 #' @export
+#' @rdname column_header_buffer
 'column_header_buffer<-' <- function(x, value) UseMethod('column_header_buffer<-')
 
-#' Title
-#'
-#' @param x x
-#' @param ... ...
+#' @param x \code{rtf_doc} object
+#' @param ... Additonal arguments passed to method dispatch. Should include
+#'   argument top and bottom with numeric elements.
 #'
 #' @export
+#' @rdname column_header_buffer
 set_column_header_buffer <- function(x, ...) UseMethod('set_column_header_buffer')
 
 #' @export

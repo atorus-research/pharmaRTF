@@ -12,11 +12,11 @@ page_num <- function(properties='') {
   page_str
 }
 
-#' Title
+#' Return RTF encoding for total page number.
 #'
 #' @param properties Properties for displaying page number information
 #'
-#' @return total
+#' @return String of the RTF encoding representing total page numbers
 #' @noRd
 page_total <- function(properties='') {
 
@@ -146,7 +146,7 @@ hf_line_string <- function(line, doc=NULL) {
 
   # If font size is overridden generate the string
   if (!is.na(font_size(line))) {
-    fs <- sprintf("\\fs%s", font_size(line))
+    fs <- sprintf("\\fs%s", font_size(line)*2)
   }
 
   # Styling
@@ -243,6 +243,8 @@ footer_string <- function(doc) {
 #' write_rtf(rtf) #writes a table with no header/footnotes to 'test.rtf'
 #' }
 #'
+#' @seealso \url{http://www.biblioscape.com/rtf15_spec.htm},
+#'   \url{http://latex2rtf.sourceforge.net/rtfspec_7.html#rtfspec_tabledef}
 #' @export
 write_rtf <- function(doc, file='test.rtf') {
 

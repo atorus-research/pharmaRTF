@@ -2,7 +2,7 @@
 % Please edit documentation in R/header-footer.R
 \name{add_footnotes}
 \alias{add_footnotes}
-\title{Add \code{hf_line} object(s) to a \code{rtf_doc} object}
+\title{Add \code{hf_line} footnote(s) to a \code{rtf_doc} object}
 \usage{
 add_footnotes(doc, ...)
 }
@@ -15,7 +15,7 @@ add_footnotes(doc, ...)
 \code{rtf_doc} object with \code{hf_line} objects attached.
 }
 \description{
-Add \code{hf_line} object(s) to a \code{rtf_doc} object
+Add \code{hf_line} footnote(s) to a \code{rtf_doc} object
 }
 \examples{
 # Adding lines after rtf_doc construction
@@ -26,4 +26,7 @@ ht <- huxtable::huxtable(
 rtf <- rtf_doc(ht)
 
 rtf <- add_footnotes(rtf, hf_line("The Footnote"))
+}
+\seealso{
+\code{\link{add_hf}}
 }
