@@ -201,8 +201,8 @@ add_hf <- function(doc, ..., to=NULL, replace=FALSE) {
 #'
 #' @export
 #' @seealso \code{\link{add_hf}}
-add_titles <- function(doc, ...) {
-  add_hf(doc, ..., to='titles')
+add_titles <- function(doc, ..., replace=FALSE) {
+  add_hf(doc, ..., to='titles', replace=replace)
 }
 
 #' Add \code{hf_line} footnote(s) to a \code{rtf_doc} object
@@ -223,8 +223,8 @@ add_titles <- function(doc, ...) {
 #' rtf <- add_footnotes(rtf, hf_line("The Footnote"))
 #' @export
 #' @seealso \code{\link{add_hf}}
-add_footnotes <- function(doc, ...) {
-  add_hf(doc, ..., to='footnotes')
+add_footnotes <- function(doc, ..., replace=FALSE) {
+  add_hf(doc, ..., to='footnotes', replace=replace)
 }
 
 #' Read titles and footnotes from a dataframe
