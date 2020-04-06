@@ -120,6 +120,8 @@ new_rtf_doc <- function(table, titles, footnotes) {
 #'
 #' @family rtf_doc
 validate_rtf_doc <- function(table, titles, footnotes) {
+  force(titles)
+  force(footnotes)
   # Check that titles and footnotes are lists
   assert_that(all(c(class(titles), class(footnotes)) == "list"), msg = "Titles and footnotes must be lists of hf_line objects")
   # Check that titles and footnotes are lists of hf_line objects
