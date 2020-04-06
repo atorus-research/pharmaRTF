@@ -13,16 +13,18 @@ header_height(x) <- value
 set_header_height(x, value)
 }
 \arguments{
-\item{x}{\code{rtf_doc} object}
+\item{x}{A \code{rtf_doc} object}
 
 \item{...}{Additonal arguments passed to method dispatch}
 
 \item{value}{A numeric value to set the header_height}
 }
 \value{
-header_height attribute of the supplied \code{rtf_doc} object
+For \code{header_height()}, the header_height attribute of the
+  supplied \code{rtf_doc} object. For \code{`header_height<-()`} and
+  \code{set_header_height()}, the modified object.
 }
 \description{
-These functions modify and return the header_height attribute of a \code{rtf_doc}
-object
+These functions modify and return the header_height attribute of a
+\code{rtf_doc} object
 }

@@ -13,7 +13,7 @@ bold(x) <- value
 set_bold(x, value)
 }
 \arguments{
-\item{x}{\code{hf_line} object}
+\item{x}{A \code{hf_line} object}
 
 \item{...}{Additonal arguments passed to method dispatch}
 

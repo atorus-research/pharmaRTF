@@ -13,17 +13,19 @@ margins(x) <- value
 set_margins(x, value)
 }
 \arguments{
-\item{x}{\code{rtf_doc} object}
+\item{x}{A \code{rtf_doc} object}
 
 \item{...}{Additonal arguments passed to method dispatch}
 
 \item{value}{A named list or vector detailing the}
 }
 \value{
-A named vector of the margin attribute of the supplied \code{rtf_doc}
+For \code{margin()}, a named vector of the margin attribute of the
+  supplied \code{rtf_doc}. For \code{`margin<-()`} and \code{set_margin()}
+  the modified object.
 }
 \description{
 These functions return and set the margin attribute of a \code{rtf_doc}
-object. Names should be top, bottom, left, and right. Margins are measured
-in inches.
+object. These are stored as a named vector. Names should be top, bottom,
+left, and right. Margins are measured in inches.
 }

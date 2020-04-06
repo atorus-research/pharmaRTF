@@ -13,18 +13,18 @@ font_size(x) <- value
 set_font_size(x, value)
 }
 \arguments{
-\item{x}{\code{rtf_doc} object or a \code{hf_line} object}
+\item{x}{\code{rtf_doc} object or a \code{hf_line} object.}
 
-\item{...}{Additonal arguments passed to method dispatch}
+\item{...}{Additonal arguments passed to method dispatch.}
 
-\item{value}{A numeric value for font size in half points. A font_size of 24
-will result in a 12 point font.}
+\item{value}{A numeric value for font size in points.}
 }
 \value{
-The font_size attribute of the supplied \code{rtf_doc} or \code{hf_line}
+For \code{font_size()}, the font_size attribute of the supplied
+  \code{rtf_doc} or \code{hf_line}. For \code{`font_size<-`()} and
+  \code{set_font_size}, the modified object.
 }
 \description{
 These functions modify and return the font sizes of a \code{rtf_doc} object
-or a \code{hf_line} object. This attribute measures the font size in half
-points. A font_size of 24 will result in a 12 point font.
+or a \code{hf_line} object. This attribute measures the font size in points.
 }

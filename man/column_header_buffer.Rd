@@ -13,7 +13,7 @@ column_header_buffer(x) <- value
 set_column_header_buffer(x, ...)
 }
 \arguments{
-\item{x}{\code{rtf_doc} object}
+\item{x}{A \code{rtf_doc} object}
 
 \item{...}{Additonal arguments passed to method dispatch. Should include
 argument top and bottom with numeric elements.}
@@ -21,7 +21,9 @@ argument top and bottom with numeric elements.}
 \item{value}{A named vector detailing the top and bottom buffer.}
 }
 \value{
-The column_header_buffer attribute of the supplied \code{rtf_doc}
+For \code{column_header_buffer}, the column_header_buffer attribute
+  of the supplied \code{rtf_doc}. For \code{`column_header_buffer<-`()} and
+  \code{set_column_header_buffer()}, the modified object.
 }
 \description{
 These functions modify and return the column header buffers of a

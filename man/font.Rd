@@ -22,9 +22,9 @@ set_font(x, value)
 }
 \value{
 For \code{font()}, the font attribute of the object in the case of
-  \code{rtf_doc}, or each unique font in the table, titles, footnotes, and the
-  overall document in the case of \code{rtf_doc}. For \code{set_font()} and
-  \code{`font<-`()}, the modified object.
+  \code{hf_line} and the table, or each unique font in the table, titles,
+  footnotes, and the overall document in the case of \code{rtf_doc}. For
+  \code{set_font()} and \code{`font<-`()}, the modified object.
 }
 \description{
 These functions modify and return the fonts of a \code{rtf_doc} object and

@@ -13,7 +13,7 @@ text(x) <- value
 set_text(x, value)
 }
 \arguments{
-\item{x}{\code{hf_line} object}
+\item{x}{A \code{hf_line} object}
 
 \item{...}{Additonal arguments passed to method dispatch}
 
@@ -21,10 +21,11 @@ set_text(x, value)
 of a \code{hf_line} object.}
 }
 \value{
-The text vector of the supplied \code{hf_line} object.
+For \code{text()}, the text vector of the supplied \code{hf_line}
+  object. For \code{`text<-()`} and \code{set_text()}, the modfied object.
 }
 \description{
 These functions modify and return the fonts of a \code{rtf_doc} object.
-\code{font()} will always return a vector of length 2. If the text is only
+\code{text()} will always return a vector of length 2. If the text is only
 of length one an empty string will be appended.
 }

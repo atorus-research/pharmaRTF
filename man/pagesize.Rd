@@ -13,14 +13,16 @@ pagesize(x) <- value
 set_pagesize(x, value)
 }
 \arguments{
-\item{x}{\code{rtf_doc} object}
+\item{x}{A \code{rtf_doc} object}
 
 \item{...}{Additonal arguments passed to method dispatch}
 
 \item{value}{A named numeric vector with the names height and width.}
 }
 \value{
-return
+For \code{pagesize()}, the pagesize attribute of the \code{rtf_doc}
+  object. For \code{`pagesize<-`()} and \code{set_pagesize()}, the modified
+  object.
 }
 \description{
 These functions modify and return the pagesize attribute of a \code{rtf_doc}

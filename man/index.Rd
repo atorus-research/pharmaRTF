@@ -13,15 +13,18 @@ index(x) <- value
 set_index(x, value)
 }
 \arguments{
-\item{x}{\code{hf_line} object}
+\item{x}{A \code{hf_line} object}
 
 \item{...}{Additonal arguments passed to method dispatch}
 
 \item{value}{Numeric value to order index}
 }
 \value{
-return
+For \code{index()}, the index attribute of the supplied
+  \code{hf_line} object. For \code{`index<-()`} and \code{set_index()}, the
+  modfied object.
 }
 \description{
 These functions modify and return the index of a \code{hf_line} object.
+Indices can be any numeric value as long as they are not duplicated.
 }

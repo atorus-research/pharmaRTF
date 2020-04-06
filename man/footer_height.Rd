@@ -13,14 +13,16 @@ footer_height(x) <- value
 set_footer_height(x, value)
 }
 \arguments{
-\item{x}{\code{rtf_doc} object}
+\item{x}{A \code{rtf_doc} object}
 
 \item{...}{Additonal arguments passed to method dispatch}
 
 \item{value}{A numeric value to set the footer_height}
 }
 \value{
-header_height attribute of the supplied \code{rtf_doc} object
+For \code{footer_height}, the footer_height attribute of the
+  supplied \code{rtf_doc} object. For \code{`footer_height<-`()} and
+  \code{set_footer_height()}, the modified object.
 }
 \description{
 These functions modify and return the footer_height attribute of a \code{rtf_doc}

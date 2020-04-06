@@ -13,15 +13,17 @@ ignore_cell_padding(x) <- value
 set_ignore_cell_padding(x, value)
 }
 \arguments{
-\item{x}{\code{rtf_doc} object}
+\item{x}{A \code{rtf_doc} object}
 
 \item{...}{Additonal arguments passed to method dispatch}
 
 \item{value}{A logical value to set the attribute}
 }
 \value{
-The ignore_cell_padding attribute of the supplied \code{rtf_doc}
-  object
+For \code{ignore_cell_padding()}, the ignore_cell_padding attribute
+  of the supplied \code{rtf_doc} object. For
+  \code{`ignore_cell_padding<-`()} and \code{set_ignore_cell_padding()}, the
+  modified object.
 }
 \description{
 These functions modify and return the ignore_cell_padding attribute of a

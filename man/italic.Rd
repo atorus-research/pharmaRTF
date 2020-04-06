@@ -13,14 +13,16 @@ italic(x) <- value
 set_italic(x, value)
 }
 \arguments{
-\item{x}{\code{hf_line} object}
+\item{x}{A \code{hf_line} object}
 
 \item{...}{Additonal arguments passed to method dispatch}
 
 \item{value}{A logical vector to set the value of the bold attribute}
 }
 \value{
-The italic attribute of the supplied \code{hf_line}
+For \code{italic()}, the italic attribute of the supplied
+  \code{hf_line}. Fot \code{`italic<-()`} and \code{set_italic()} the
+  modified object.
 }
 \description{
 These functions modify and return the italics attribute of a \code{hf_line}

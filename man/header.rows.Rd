@@ -13,16 +13,18 @@ header_rows(x) <- value
 set_header_rows(x, value)
 }
 \arguments{
-\item{x}{\code{rtf_doc} object}
+\item{x}{A \code{rtf_doc} object}
 
 \item{...}{Additonal arguments passed to method dispatch}
 
 \item{value}{A numeric value to change the header.rows attribute.}
 }
 \value{
-return
+For \code{header_rows()}, the header_rows attribute of the
+  \code{rtf_doc} object. For \code{`header_rows<-`()} and
+  \code{set_header_rows()}, the modified object.
 }
 \description{
-These functions modify and return the header.rows attribute of a \code{rtf_doc}
-object.
+These functions modify and return the header.rows attribute of a
+\code{rtf_doc} object.
 }
