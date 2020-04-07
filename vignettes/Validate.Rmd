@@ -1,20 +1,11 @@
 ---
-title: "Example Validation Report"
-author: "Ellis Hughes"
-date: "2020-01-29"
-output: VISCtemplates::visc_pdf_document
-toc: true
-dropcc: true
-dropVISClogo: true
-vignette: >
-  %\VignetteIndexEntry{Sample Validation Report}
-  %\VignetteEngine{knitr::rmarkdown_notangle}
-header-includes:
-  - \usepackage[dvipsnames, table]{xcolor}
-  - \usepackage{float}
+title: "pharmaRTF Validation Report"
+author: "Eli Miller"
+date: '2020-01-29'
+output:
+  html_document:
+    df_print: paged
 ---
-
-\emergencystretch 3em <!--   -->
 
 ```{r setup, include=FALSE}
 # set this option first to prevent clash between kableExtra & LaTeX xcolor
@@ -51,22 +42,21 @@ devtools::load_all()
 list.files(spec_dir,
     full.names = TRUE) %>%
   lapply(., scrape_function_specification_block) %>%
-  do.call(rbind, .) %>% 
-  kable(., col.names = c("Specification Name", "Last updated by", "Last updated date"),
-        format = "latex", booktabs = TRUE, linesep = "") %>% 
+  do.call(rbind, .) %>%
+  kable(., col.names = c("Specification Name", "Last updated by", "Last updated date")) %>%
   kable_styling(position = "center")
 ```   
 
-## Functions
+## Functions (Do we still want this?)
 
 ```{r func_author_table}
-list.files(here("R"), full.names = TRUE) %>%
-  lapply(., scrape_function_author_block) %>% 
-  do.call(rbind, .) %>% 
-  arrange(title) %>% 
-  kable(., col.names = c("Function Name", "Last updated by", "Last updated date"),
-        format = "latex", booktabs = TRUE, linesep = "") %>% 
-  kable_styling(position = "center") 
+# list.files(here("R"), full.names = TRUE) %>%
+#   lapply(., scrape_function_author_block) %>% 
+#   do.call(rbind, .) %>% 
+#   arrange(title) %>% 
+#   kable(., col.names = c("Function Name", "Last updated by", "Last updated date"),
+#         format = "latex", booktabs = TRUE, linesep = "") %>% 
+#   kable_styling(position = "center") 
 ```
 
 ## Test case
@@ -76,10 +66,9 @@ list.files(here("R"), full.names = TRUE) %>%
 list.files(test_case_dir,
     full.names = TRUE) %>%
   lapply(., scrape_function_specification_block) %>%
-  do.call(rbind, .) %>% 
-  kable(., col.names = c("Test Case Name", "Last updated by", "Last updated date"),
-        format = "latex", booktabs = TRUE, linesep = "") %>% 
-  kable_styling(position = "center") 
+  do.call(rbind, .) %>%
+  kable(., col.names = c("Test Case Name", "Last updated by", "Last updated date")) %>%
+  kable_styling(position = "center")
 ```
 
 
@@ -88,28 +77,27 @@ list.files(test_case_dir,
 
 ```{r test_code_author_table}
 test_code_author <- list.files(test_code_dir, pattern = ".R",
-                               ignore.case = TRUE, full.names = TRUE) %>% 
-  lapply(., scrape_test_code_block) %>% 
-  do.call(rbind, .) 
+                               ignore.case = TRUE, full.names = TRUE) %>%
+  lapply(., scrape_test_code_block) %>%
+  do.call(rbind, .)
 
-cases <- stringr::str_split(test_code_author$title, pattern = "\\.", n = 2, 
-                simplify = TRUE)[,1] %>% 
+cases <- stringr::str_split(test_code_author$title, pattern = "\\.", n = 2,
+                simplify = TRUE)[,1] %>%
   gsub(pattern = "T", replacement = "")
 
 pack_rows_count <- sapply(unique(cases), FUN = function(x){
   which(cases == x) %>% min
   })
 
-pack_rows_index <- c(pack_rows_count[-1] - pack_rows_count[-length(pack_rows_count)], 
-                     length(cases) - pack_rows_count[length(pack_rows_count)] + 1) %>% 
+pack_rows_index <- c(pack_rows_count[-1] - pack_rows_count[-length(pack_rows_count)],
+                     length(cases) - pack_rows_count[length(pack_rows_count)] + 1) %>%
   magrittr::set_names(paste0("T", stringr::str_pad(unique(cases), width = 3,
                                                    side = "left", pad = 0)))
-  
-test_code_author %>% 
-  kable(., format = "latex", booktabs = TRUE,
-        col.names = c("Test Code Name", "Last updated by", "Last updated date"),
-        escape = FALSE) %>% 
-  kable_styling(position = "center") %>% 
+
+test_code_author %>%
+  kable(., col.names = c("Test Code Name", "Last updated by", "Last updated date"),
+        escape = FALSE) %>%
+  kable_styling(position = "center") %>%
   pack_rows(index = pack_rows_index)
 ```
 

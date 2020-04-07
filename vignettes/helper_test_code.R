@@ -52,8 +52,8 @@ eval_test_code <- function(one_file) {
           do.call(rbind, lapply(test_case$results, function(x) {
             pass_fail <- ifelse(
               inherits(x, "expectation_success"),
-              "\\shortstack{\\textcolor{OliveGreen}{Pass}}",
-              "\\shortstack{\\textcolor{red}{Fail}}"
+              "Pass",
+              "Fail"
             )
             data.frame(
               Test = test_description,
@@ -77,7 +77,6 @@ eval_test_code <- function(one_file) {
   rownames(out) <- NULL
   kable(
     out,
-    format = "latex",
     escape = FALSE,
     col.names = c("Test", "Results", "Pass/Fail")) %>%
     column_spec(2:3, width = "10em") %>%
