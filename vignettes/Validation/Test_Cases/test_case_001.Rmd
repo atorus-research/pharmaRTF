@@ -1,0 +1,16 @@
+#' @title RStudio Conf 2020 Success Test Cases 001
+#' @section Last Updated By: 
+#' Ellis Hughes
+#' @section Last Update Date:
+#' 2020/01/29
+
++ _Test Cases_
+
+  + Setup: Create RStudio::Conf 2020 Presentation 
+   
+  + T 1.1 Test that specifications 1.1, 1.2, and 1.3 are met by practicing presentation on unsuspecting co-workers
+    - Present to a captive audience of coworkers and later your significant other
+    + T 1.1.1 Test that the presentation was informative by asking what your audience learned.
+    + T 1.1.2 Time the presentation and make sure it was between 15 and 20 minutes.
+    + T 1.1.3 Test that you were entertaining by counting the amount of chuckles (>3)
+      + T 1.1.3.1 Alternatively, eye-rolls from your significant other (>4)

@@ -1,0 +1,135 @@
+---
+title: "Example Validation Report"
+author: "Ellis Hughes"
+date: "2020-01-29"
+output: VISCtemplates::visc_pdf_document
+toc: true
+dropcc: true
+dropVISClogo: true
+vignette: >
+  %\VignetteIndexEntry{Sample Validation Report}
+  %\VignetteEngine{knitr::rmarkdown_notangle}
+header-includes:
+  - \usepackage[dvipsnames, table]{xcolor}
+  - \usepackage{float}
+---
+
+\emergencystretch 3em <!--   -->
+
+```{r setup, include=FALSE}
+# set this option first to prevent clash between kableExtra & LaTeX xcolor
+options(kableExtra.latex.load_packages = FALSE, width = 40)
+library(dplyr)
+library(testthat)
+library(here)
+library(knitr)
+library(kableExtra)
+
+opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  eval = TRUE,
+  echo = FALSE,
+  results = "asis",
+  message = FALSE,
+  tidy = FALSE
+)
+
+test_code_dir <- here("vignettes", "Validation", "Test_Case_Code")
+spec_dir <- here("vignettes","Validation", "Specifications")
+test_case_dir <- here("vignettes","Validation", "Test_Cases")
+
+source(here("vignettes", "helper_test_code.R")) # handles environment and access to test_that contents
+source(here("vignettes", "roxy_block_details.R")) # scrapes roxygen block for authorship details
+
+devtools::load_all()
+```
+
+## Specifications
+
+```{r spec_author_table}
+list.files(spec_dir,
+    full.names = TRUE) %>%
+  lapply(., scrape_function_specification_block) %>%
+  do.call(rbind, .) %>% 
+  kable(., col.names = c("Specification Name", "Last updated by", "Last updated date"),
+        format = "latex", booktabs = TRUE, linesep = "") %>% 
+  kable_styling(position = "center")
+```   
+
+## Functions
+
+```{r func_author_table}
+list.files(here("R"), full.names = TRUE) %>%
+  lapply(., scrape_function_author_block) %>% 
+  do.call(rbind, .) %>% 
+  arrange(title) %>% 
+  kable(., col.names = c("Function Name", "Last updated by", "Last updated date"),
+        format = "latex", booktabs = TRUE, linesep = "") %>% 
+  kable_styling(position = "center") 
+```
+
+## Test case
+
+
+```{r tc_author_table}
+list.files(test_case_dir,
+    full.names = TRUE) %>%
+  lapply(., scrape_function_specification_block) %>%
+  do.call(rbind, .) %>% 
+  kable(., col.names = c("Test Case Name", "Last updated by", "Last updated date"),
+        format = "latex", booktabs = TRUE, linesep = "") %>% 
+  kable_styling(position = "center") 
+```
+
+
+
+## Test code
+
+```{r test_code_author_table}
+test_code_author <- list.files(test_code_dir, pattern = ".R",
+                               ignore.case = TRUE, full.names = TRUE) %>% 
+  lapply(., scrape_test_code_block) %>% 
+  do.call(rbind, .) 
+
+cases <- stringr::str_split(test_code_author$title, pattern = "\\.", n = 2, 
+                simplify = TRUE)[,1] %>% 
+  gsub(pattern = "T", replacement = "")
+
+pack_rows_count <- sapply(unique(cases), FUN = function(x){
+  which(cases == x) %>% min
+  })
+
+pack_rows_index <- c(pack_rows_count[-1] - pack_rows_count[-length(pack_rows_count)], 
+                     length(cases) - pack_rows_count[length(pack_rows_count)] + 1) %>% 
+  magrittr::set_names(paste0("T", stringr::str_pad(unique(cases), width = 3,
+                                                   side = "left", pad = 0)))
+  
+test_code_author %>% 
+  kable(., format = "latex", booktabs = TRUE,
+        col.names = c("Test Code Name", "Last updated by", "Last updated date"),
+        escape = FALSE) %>% 
+  kable_styling(position = "center") %>% 
+  pack_rows(index = pack_rows_index)
+```
+
+\clearpage
+
+
+# Example Specification and Testing
+
+1. Specification 1: Tell a Joke
+
+```{r spec_1}
+scrape_spec_rmd(file.path(spec_dir, "specification_001.Rmd"))
+```
+
+```{r test_case_1, out.width='0.5\\textwidth'}
+scrape_spec_rmd(file.path(test_case_dir, "test_case_001.Rmd"))
+```
+
++ _Test Results_
+    
+```{r spec_function_1}
+eval_test_code(file.path(test_code_dir, "test_case_001.R")) 
+```

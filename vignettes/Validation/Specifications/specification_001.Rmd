@@ -1,0 +1,11 @@
+#' @title Specifications For RStudio Conf 2020 Success
+#' @section Last updated By:
+#' Ellis Hughes
+#' @section Last Update Date:
+#' 2020/01/28
+
++ _Specifications_
+  + 1.1 Presentation must explain validation procedure.
+  + 1.2 Presentation will be between 15-20 minutes long
+  + 1.3 Be entertaining, sucess measures by causing at least 3 people to laugh.
+  + 1.4 (Optional) Fame and Glamour and start branded accessories chain.
