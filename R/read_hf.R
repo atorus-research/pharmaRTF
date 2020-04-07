@@ -29,13 +29,13 @@
 read_hf <- function(from.df=NULL, from.file=NULL, reader=NULL, ...) {
   # Parameter checks
   assert_that(xor(is.null(from.df), is.null(from.file)),
-              msg = "One of, and only one of, `from` or `from.file` must be populated")
+              msg = "One of, and only one of, `from.df` or `from.file` must be populated")
 
   # Provided a data frame in `from`
   if (!is.null(from.df)) {
     assert_that(inherits(from.df, 'data.frame')) # from should be a data.frame/tbl
     df <- from.df
-    from
+    from.df
   }
 
   # Read data frame from file
@@ -146,7 +146,7 @@ validate_hf_dataframe <- function(df, required_columns) {
 #' @export
 titles_and_footnotes_from_df <- function(doc, from.df=NULL, from.file=NULL, reader=NULL, ...) {
 
-  df <- read_hf(...) # Refer to read_hf in read_hf.R
+  df <- read_hf(from.df=from.df, from.file=from.file, reader=reader, ...) # Refer to read_hf in read_hf.R
 
   # Note: there's a lot of do call in here, but I'm just translating the data.frame
   # to a list, and then submitting the list as arguments to the function. See the do.call
