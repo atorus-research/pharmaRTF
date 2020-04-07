@@ -156,6 +156,7 @@ order_lines <- function(lines) {
 #'     header/footer lines. If TRUE, lines will replace whatever is there.
 #'
 #' @return \code{rtf_doc} object with \code{hf_line} objects attached.
+#' @noRd
 add_hf <- function(doc, ..., to=NULL, replace=FALSE) {
 
   # Get lines from doc (if specified to replace)
@@ -181,17 +182,19 @@ add_hf <- function(doc, ..., to=NULL, replace=FALSE) {
 
 }
 
-#' Add \code{hf_line} title(s) to a \code{rtf_doc} object
+#' Add \code{hf_line} title(s) and footnote(s) to a \code{rtf_doc} object
 #'
-#' @param doc \code{rtf_doc} object to add header lines to
+#' Add \code{hf_line} titles/footnote objects to a \code{rtf_doc} object
+#'
+#' @param doc \code{rtf_doc} on which hf_line object(s) (i.e. titles/footnotes)
+#'   will be attached
 #' @param ... A vector of \code{hf_line} objects to add passed to
 #'   \code{add_hf()}
 #'
-#' @return \code{rtf_doc} object with \code{hf_line} objects attached to
-#'   titles.
+#' @return \code{hf_line} object(s) (i.e. titles/footnotes) to be added
 #'
 #' @examples
-#' # Adding lines after rtf_doc construction
+#' # Adding titles after rtf_doc construction
 #' ht <- huxtable::huxtable(
 #'  column1 = 1:5,
 #'  column2 = letters[1:5]
@@ -200,21 +203,7 @@ add_hf <- function(doc, ..., to=NULL, replace=FALSE) {
 #'
 #' rtf <- add_titles(rtf, hf_line("The Footnote"))
 #'
-#' @export
-#' @seealso \code{\link{add_hf}}
-add_titles <- function(doc, ...) {
-  add_hf(doc, ..., to='titles')
-}
-
-#' Add \code{hf_line} footnote(s) to a \code{rtf_doc} object
-#'
-#' @param doc \code{rtf_doc} object to add header/footer lines to
-#' @param ... A vector of \code{hf_line} objects to add.
-#'
-#' @return \code{rtf_doc} object with \code{hf_line} objects attached.
-#'
-#' @examples
-#' # Adding lines after rtf_doc construction
+#' # Adding footnotes after rtf_doc construction
 #' ht <- huxtable::huxtable(
 #'  column1 = 1:5,
 #'  column2 = letters[1:5]
@@ -222,8 +211,20 @@ add_titles <- function(doc, ...) {
 #' rtf <- rtf_doc(ht)
 #'
 #' rtf <- add_footnotes(rtf, hf_line("The Footnote"))
+#'
 #' @export
-#' @seealso \code{\link{add_hf}}
+#' @rdname add_titles_footnotes
+add_titles <- function(doc, ...) {
+  add_hf(doc, ..., to='titles')
+}
+
+#' @param doc \code{rtf_doc} on which hf_line object(s) (i.e. titles/footnotes)
+#'   will be attached
+#' @param ... A vector of \code{hf_line} objects to add passed to
+#'   \code{add_hf()}
+#'
+#' @export
+#' @rdname add_titles_footnotes
 add_footnotes <- function(doc, ...) {
   add_hf(doc, ..., to='footnotes')
 }

@@ -1,16 +1,19 @@
 Package: pharmaRTF
 Type: Package
-Title: Enhanced RTF wrapper written in R for use with existing R tables packages such as huxtable or GT
+Title: Enhanced RTF wrapper written in R for use with existing R tables
+    packages such as huxtable or GT
 Version: 0.1.0
 Authors@R: c(
-    person(family = "Miller", given = "Eli", email = "eli.miller@atorusresearch.com", role = "aut",
-    comment = c(ORCID = "0000-0002-2127-9456")), 
+    person(family = "Miller", given = "Eli", email = "eli.miller@atorusresearch.com", role = "aut", comment = c(ORCID = "0000-0002-2127-9456")), 
     person(family = "Tarasiewicz", given = "Ashley", email = "Ashley.Tarasiewicz@atorusresearch.com", role = "aut"),
-    person(family = "Stackhouse", given = "Michael", email = "mike.stackhouse@atorusresearch.com", role = c("aut", "cre")))
-Description: Enhanced RTF wrapper written in R for use with existing R tables packages
-    such as huxtable or GT. This package fills a gap where certain packages could
-    be written out as RTF, but couldn't add certain metadata or features to the
-    document that are required/expected in a report for a regulatory submission.
+    person(family = "Stackhouse", given = "Michael", email = "mike.stackhouse@atorusresearch.com", role = c("aut", "cre"))
+    )
+Description: Enhanced RTF wrapper written in R for use with existing R tables
+    packages such as huxtable or GT. This package fills a gap where tables in
+    certain packages can be written out to RTF, but cannot add certain metadata
+    or features to the document that are required/expected in a report for a
+    regulatory submission, such as multiple levels of titles and footnotes,
+    making the document landscape, and controlling properties such as margins.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
