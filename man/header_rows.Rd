@@ -4,7 +4,7 @@
 \alias{header_rows}
 \alias{header_rows<-}
 \alias{set_header_rows}
-\title{Return and set the header.rows}
+\title{Return and set the header_rows}
 \usage{
 header_rows(x, ...)
 

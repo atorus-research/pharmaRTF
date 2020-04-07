@@ -4,7 +4,7 @@
 \alias{rtf_doc}
 \title{Create a \code{rtf_doc} object}
 \usage{
-rtf_doc(table, titles = list(), footnotes = list(), header.rows = 1)
+rtf_doc(table, titles = list(), footnotes = list(), header_rows = 1)
 }
 \arguments{
 \item{table}{A table of a supported class.}
@@ -15,7 +15,7 @@ associated formatting.}
 \item{footnotes}{A list of \code{hf_line} objects containing table titles
 and associated formatting.}
 
-\item{header.rows}{An integer determining how many rows of the table are
+\item{header_rows}{An integer determining how many rows of the table are
 headers. Only used for huxtable tables.}
 }
 \value{
@@ -55,11 +55,10 @@ are top, bottom, left, and right. Defaults to 1 for all.}
   Defaults to .5.}
 \item{pagesize - Size of the page in inches. Defaults to 8.5(height) by
   11(width).}
-\item{header.rows - Huxtable table only. Specifies the number of rows that
-  are defined for the column headers. Defaults to 1}
-\item{ignore_cell_padding - Huxtable table only. Flag to ignore cell padding
-  that is added during RTF encoding. Minimizes the amount of space between
-  rows.}
+\item{header_rows - Huxtable table only. Number of rows that are defined as
+  the header that will be repeated across pages. Defaults to 1}
+\item{ignore_cell_padding - Huxtable table only. Flag to ignore padding that
+  is added during RTF encoding.}
 }
 }
 

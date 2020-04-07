@@ -4,10 +4,10 @@
 \alias{read_hf}
 \title{Read a \code{hf_line} object from a file or \code{data.frame}}
 \usage{
-read_hf(from = NULL, from.file = NULL, reader = NULL, ...)
+read_hf(from.df = NULL, from.file = NULL, reader = NULL, ...)
 }
 \arguments{
-\item{from}{\code{data.frame} containing information to convert to
+\item{from.df}{\code{data.frame} containing information to convert to
 \code{hf_line} object(s).}
 
 \item{from.file}{A file that contains information to convert to

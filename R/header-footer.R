@@ -153,7 +153,7 @@ order_lines <- function(lines) {
 #' @param ... A vector of \code{hf_line} objects to add.
 #' @param to Either 'titles' or 'footnotes'
 #' @param replace If FALSE, lines will be appened/ordered with current
-#'     header/footer lines. If TRUE, lines will replace whatever is there.
+#'     header/footer lines. If TRUE, lines will replace the existing content.
 #'
 #' @return \code{rtf_doc} object with \code{hf_line} objects attached.
 #' @noRd

@@ -21,7 +21,7 @@ supported_table_types <- c('huxtable', 'gt_tbl')
 #'   associated formatting.
 #' @param footnotes A list of \code{hf_line} objects containing table titles
 #'   and associated formatting.
-#' @param header.rows An integer determining how many rows of the table are
+#' @param header_rows An integer determining how many rows of the table are
 #'   headers. Only used for huxtable tables.
 #'
 #' @return A list with a table, titles, and footnotes component. Class of
@@ -46,9 +46,9 @@ supported_table_types <- c('huxtable', 'gt_tbl')
 #'   Defaults to .5.}
 #' \item{pagesize - Size of the page in inches. Defaults to 8.5(height) by
 #'   11(width).}
-#' \item{header.rows - Huxtable table only. Specifies the number of rows that
-#'   are defined for the column headers. Defaults to 1}
-#' \item{ignore_cell_padding - Huxtable table only. Flag to ignore cell padding
+#' \item{header_rows - Huxtable table only. Number of rows that are defined as
+#'   the header that will be repeated across pages. Defaults to 1}
+#' \item{ignore_cell_padding - Huxtable table only. Flag to ignore cell padding padding
 #'   that is added during RTF encoding. Minimizes the amount of space between
 #'   rows.}
 #' }
@@ -80,10 +80,10 @@ supported_table_types <- c('huxtable', 'gt_tbl')
 #' @seealso \code{\link{hf_line}}
 #'
 #' @export
-rtf_doc <- function(table, titles = list(), footnotes = list(), header.rows = 1) {
+rtf_doc <- function(table, titles = list(), footnotes = list(), header_rows = 1) {
   # Return a null object of class rtf_doc if no table is passed.
   if(missing(table)) return(structure(logical(0), class = "rtf_doc"))
-  as_rtf_doc(table, titles, footnotes, header.rows)
+  as_rtf_doc(table, titles, footnotes, header_rows)
 }
 
 ## Method dispatch
@@ -91,30 +91,30 @@ rtf_doc <- function(table, titles = list(), footnotes = list(), header.rows = 1)
 #'
 #' @inheritParams rtf_doc
 #' @noRd
-as_rtf_doc <- function(table, titles, footnotes, header.rows) {
+as_rtf_doc <- function(table, titles, footnotes, header_rows) {
   UseMethod("as_rtf_doc")
 }
 
 ## For rtf_doc, return the table
-as_rtf_doc.rtf_doc <- function(table, titles, footnotes, header.rows) {
+as_rtf_doc.rtf_doc <- function(table, titles, footnotes, header_rows) {
   stop(paste('An `rtf_doc` object was provided - not a table. Supported table types are:',
         paste(supported_table_types, collapse = ", ")))
 }
 
 ## For huxtable
-as_rtf_doc.huxtable <- function(table, titles, footnotes, header.rows) {
+as_rtf_doc.huxtable <- function(table, titles, footnotes, header_rows) {
 
   if (!is.na(huxtable::caption(table))) message('Huxtable contains caption - this will be stripped off ',
                                                 'in RTF document generation.')
 
   # Huxtable table's column headers are rows of the data.frame, so store how many to grab
-  attr(table, 'header.rows') <- header.rows
+  attr(table, 'header_rows') <- header_rows
 
   new_rtf_doc(table, titles, footnotes)
 }
 
 ## For GT Table
-as_rtf_doc.gt_tbl <- function(table, titles, footnotes, header.rows) {
+as_rtf_doc.gt_tbl <- function(table, titles, footnotes, header_rows) {
 
 
   warning('GT does not fully support RTF at this time. Results will not be as expected')
@@ -123,8 +123,8 @@ as_rtf_doc.gt_tbl <- function(table, titles, footnotes, header.rows) {
     message('GT contains title/subtitle - this will be stripped off in RTF document generation')
   }
 
-  if (header.rows != 1) {
-    warning('The header.rows parameter has no effect on GT tables')
+  if (header_rows != 1) {
+    warning('The header_rows parameter has no effect on GT tables')
   }
 
   new_rtf_doc(table, titles, footnotes)
@@ -192,12 +192,12 @@ validate_rtf_doc <- function(table, titles, footnotes) {
   assert_that(all(sapply(c(titles, footnotes), inherits, what="hf_line")),
               msg="Titles and footnotes must be lists of hf_line objects")
 
-  # Check that header.rows is positive whole number if the table is a huxtable table
+  # Check that header_rows is positive whole number if the table is a huxtable table
   if(inherits(table, "huxtable")){
     assert_that(
-      attr(table, "header.rows") %% 1 == 0,
-      attr(table, "header.rows") >= 0,
-      msg = "header.rows must be a positive whole number greater than or equal to 0"
+      attr(table, "header_rows") %% 1 == 0,
+      attr(table, "header_rows") >= 0,
+      msg = "header_rows must be a positive whole number greater than or equal to 0"
     )
   }
 }

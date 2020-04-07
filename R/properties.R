@@ -665,7 +665,7 @@ set_pagesize <- function(x, value) UseMethod('pagesize<-')
 ## Additional Table Properties Necessary ####
 
 ## Header rows (getters) ----
-#' Return and set the header.rows
+#' Return and set the header_rows
 #'
 #' These functions modify and return the header.rows attribute of a
 #' \code{rtf_doc} object.
@@ -677,7 +677,7 @@ set_pagesize <- function(x, value) UseMethod('pagesize<-')
 #'   \code{rtf_doc} object. For \code{`header_rows<-`()} and
 #'   \code{set_header_rows()}, the modified object.
 #' @export
-#' @rdname header.rows
+#' @rdname header_rows
 header_rows <- function(x, ...) UseMethod('header_rows')
 
 #' @export
@@ -687,7 +687,7 @@ header_rows.rtf_doc <- function(x, ...) {
 
 #' @export
 header_rows.huxtable <- function(x, ...) {
-  attr(x, 'header.rows')
+  attr(x, 'header_rows')
 }
 
 #' @export
@@ -700,14 +700,14 @@ header_rows.gt_tbl <- function(x, ...) {
 #' @param value A numeric value to change the header.rows attribute.
 #'
 #' @export
-#' @rdname header.rows
+#' @rdname header_rows
 'header_rows<-' <- function(x, value) UseMethod('header_rows<-')
 
 #' @param x A \code{rtf_doc} object
 #' @param value A numeric value to change the header.rows attribute.
 #'
 #' @export
-#' @rdname header.rows
+#' @rdname header_rows
 set_header_rows <- function(x, value) UseMethod('header_rows<-')
 
 #' @export
@@ -723,7 +723,7 @@ set_header_rows <- function(x, value) UseMethod('header_rows<-')
   assert_that(is.numeric(value) && (value %% 1 == 0) && (value >= 0), msg='Header rows must be a positive whole number')
 
   # Set the attribute
-  attr(x, 'header.rows') <- value
+  attr(x, 'header_rows') <- value
   x
 }
 
