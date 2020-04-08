@@ -16,6 +16,12 @@ titles_and_footnotes_from_df(
 \item{doc}{A \code{rtf_doc} object to append header and footnote
 information.}
 
+\item{from.df}{A \code{data.frame} object with title and footnote information.}
+
+\item{from.file}{A file path to a file with title and footnote information.}
+
+\item{reader}{A function to read the data from the from.file argument.}
+
 \item{...}{Parameters passed to \code{read_hf} where they are processed and
 constructed into \code{hf_line} objects.}
 }

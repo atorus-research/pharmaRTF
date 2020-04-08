@@ -158,6 +158,9 @@ validate_hf_dataframe <- function(df, required_columns) {
 #'
 #' @param doc A \code{rtf_doc} object to append header and footnote
 #'   information.
+#' @param from.df A \code{data.frame} object with title and footnote information.
+#' @param from.file A file path to a file with title and footnote information.
+#' @param reader A function to read the data from the from.file argument.
 #' @param ... Parameters passed to \code{read_hf} where they are processed and
 #'   constructed into \code{hf_line} objects.
 #'
