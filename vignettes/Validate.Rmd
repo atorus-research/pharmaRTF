@@ -33,7 +33,6 @@ test_case_dir <- here("vignettes","Validation", "Test_Cases")
 source(here("vignettes", "helper_test_code.R")) # handles environment and access to test_that contents
 source(here("vignettes", "roxy_block_details.R")) # scrapes roxygen block for authorship details
 
-devtools::load_all()
 ```
 
 ## Specifications
@@ -45,18 +44,6 @@ list.files(spec_dir,
   do.call(rbind, .) %>%
   kable(., col.names = c("Specification Name", "Last updated by", "Last updated date")) %>%
   kable_styling(position = "center")
-```   
-
-## Functions (Do we still want this?)
-
-```{r func_author_table}
-# list.files(here("R"), full.names = TRUE) %>%
-#   lapply(., scrape_function_author_block) %>% 
-#   do.call(rbind, .) %>% 
-#   arrange(title) %>% 
-#   kable(., col.names = c("Function Name", "Last updated by", "Last updated date"),
-#         format = "latex", booktabs = TRUE, linesep = "") %>% 
-#   kable_styling(position = "center") 
 ```
 
 ## Test case
@@ -103,21 +90,51 @@ test_code_author %>%
 
 \clearpage
 
-
-# Example Specification and Testing
-
-1. Specification 1: Tell a Joke
-
+## General
+### 1 General Specification
 ```{r spec_1}
 scrape_spec_rmd(file.path(spec_dir, "specification_001.Rmd"))
 ```
-
+### General Specification Test Cases
 ```{r test_case_1, out.width='0.5\\textwidth'}
 scrape_spec_rmd(file.path(test_case_dir, "test_case_001.Rmd"))
 ```
 
-+ _Test Results_
+### General Specification Test Code Results
     
 ```{r spec_function_1}
 eval_test_code(file.path(test_code_dir, "test_case_001.R")) 
 ```
+
+## RTF Document Characteristics
+### 2 RTF Document Properties
+```{r spec_2}
+scrape_spec_rmd(file.path(spec_dir, "specification_002.Rmd"))
+```
+
+### RTF Document Characteristics Test Cases
+
+### RTF Document Characteristics Test Code Results
+
+## Titles and Footnotes
+### 3 Titles and Footnotes Specification
+```{r spec_3}
+scrape_spec_rmd(file.path(spec_dir, "specification_003.Rmd"))
+```
+
+### Titles and Footnotes Test Cases
+
+### Titles and Footnotes Test Code Results
+
+## Table Level Properties
+### 4 Table Level Properties Specifications
+```{r spec_4}
+scrape_spec_rmd(file.path(spec_dir, "specification_004.Rmd"))
+```
+
+### Table Level Properties Test Cases
+
+### Table Level Properties Test Code Results
+
+
+
