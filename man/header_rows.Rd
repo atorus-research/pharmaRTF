@@ -4,7 +4,7 @@
 \alias{header_rows}
 \alias{header_rows<-}
 \alias{set_header_rows}
-\title{Return and set the header_rows}
+\title{Return or set the header_rows}
 \usage{
 header_rows(x, ...)
 
@@ -17,7 +17,7 @@ set_header_rows(x, value)
 
 \item{...}{Additonal arguments passed to method dispatch}
 
-\item{value}{A numeric value to change the header.rows attribute.}
+\item{value}{A numeric value to change the header_rows attribute.}
 }
 \value{
 For \code{header_rows()}, the header_rows attribute of the
@@ -25,6 +25,28 @@ For \code{header_rows()}, the header_rows attribute of the
   \code{set_header_rows()}, the modified object.
 }
 \description{
-These functions modify and return the header.rows attribute of a
-\code{rtf_doc} object.
+These functions modify or return the header_rows attribute of a rtf_doc
+object. Only required and valid when the rtf_doc table object is a
+huxtable.
+
+The header rows control the number of rows taken from a huxtable table into
+the header of the document as the column header. When pulled into the
+headers, these rows are repeated on each page.
+}
+\examples{
+library(huxtable)
+ht <- huxtable(
+  column1 = 1:5,
+  column2 = letters[1:5]
+)
+rtf <- rtf_doc(ht, list(hf_line("aTitle")))
+
+header_rows(rtf)
+# This is a wrapper for header_rows(x$table)
+header_rows(rtf$table)
+# Both of these return 1, the default
+
+header_rows(rtf$table) <- 0
+# Sets reader_rows to 0
+
 }

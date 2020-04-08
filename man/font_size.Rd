@@ -25,6 +25,33 @@ For \code{font_size()}, the font_size attribute of the supplied
   \code{set_font_size}, the modified object.
 }
 \description{
-These functions modify and return the font sizes of a \code{rtf_doc} object
-or a \code{hf_line} object. This attribute measures the font size in points.
+These property function modify or return the font sizes of an rtf_doc object
+or individual titles/footnotes objects of the hf_line class.
+
+When used on an rtf_doc object to retrieve font sizes, the document level
+default font size within the rtf_doc is returned. When used on an rtf_doc to
+set fonts, the default font size for the RTF document is set.
+
+When used on titles/footnotes (hf_line objects), the font size is either
+returned of set for that individual line.
+}
+\examples{
+library(huxtable)
+ht <- huxtable(
+  column1 = 1:5,
+  column2 = letters[1:5]
+)
+rtf <- rtf_doc(ht, list(hf_line("aTitle", font_size = 15)))
+
+pharmaRTF::font_size(rtf)
+# Returns 12
+
+pharmaRTF::font_size(rtf) <- 14
+
+pharmaRTF::font_size(rtf$titles[[1]])
+# Returns 15
+pharmaRTF::font_size(rtf)
+# Returns 14
+
+
 }

@@ -4,13 +4,14 @@ supported_table_types <- c('huxtable', 'gt_tbl')
 #' Create a \code{rtf_doc} object
 #'
 #' @description
-#' This constructs the main object that will be used to write the RTF document.
-#' The object is composed of a table, titles(s), and footnote(s).
+#' This constructs the main object that will be used for an RTF document. The
+#' object is composed of a table, titles(s), and footnote(s).
 #'
-#' A table should be a supported class. The huxtable package is the most
-#' supported, however our intention is to support other packages capable of
-#' writing RTF tables as well. Currently, it is planned to support `gt`, but
-#' `gt`'s RTF methods are not functional.'
+#' A table contained in the \code{rtf_doc} object should be a supported class.
+#' The huxtable package is the most supported, however our intention is to
+#' support other packages capable of writing RTF tables as well. Currently, it
+#' is planned to support the \code{gt} package, but the \code{gt} package's RTF
+#' methods are not functional.
 #'
 #' The titles and footnotes are composed of \code{hf_line} objects.
 #'
@@ -19,24 +20,25 @@ supported_table_types <- c('huxtable', 'gt_tbl')
 #' @param table A table of a supported class.
 #' @param titles A list of \code{hf_line} objects containing table titles and
 #'   associated formatting.
-#' @param footnotes A list of \code{hf_line} objects containing table titles
+#' @param footnotes A list of \code{hf_line} objects containing table footnotes
 #'   and associated formatting.
 #' @param header_rows An integer determining how many rows of the table are
-#'   headers. Only used for huxtable tables.
+#'   column headers. Only used for huxtable tables.
 #'
 #' @return A list with a table, titles, and footnotes component. Class of
 #'   "rtf_doc" with the properties describled below.
 #'
 #' @section \code{rtf_doc} Properties:
-#' Document level properties will be used where they are not overriden by
-#' \code{hf_line} or table properties.
+#' Document level properties set the defaults and will be used where they are
+#' not overridden by \code{hf_line} or table properties.
 #' \itemize{
 #' \item{font - A string representing the font to display when it is not
 #'   specified by the table or \code{hf_line}. Defaults to Courier New.}
 #' \item{font_size - A numeric value representing the size of the font in
 #'   points. Defaults to 12.}
 #' \item{margins - Inches of margins in the document as a named vector. Names
-#' are top, bottom, left, and right. Defaults to 1 for all.}
+#'   are \code{top}, \code{bottom}, \code{left}, and \code{right}. Defaults to 1
+#'   for all.}
 #' \item{orientation - Orientation of the document. The actual height and width
 #'   of the document is determined by the pagesize attribute, this is just a
 #'   flag for an RTF reader. Defaults to 'landscape'.}

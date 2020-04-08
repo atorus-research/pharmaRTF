@@ -13,17 +13,15 @@
 #'
 #' @return A data.frame where each row represents a header or footnote object
 #'
-#' @export
+#' @noRd
 #'
 #' @examples
 #' #Reading from a file
-#' ## Not run:
 #' \dontrun{
 #' # read in a csv document
 #' hfdf <- read_hf(from.file = "my_hf_file.csv", reader = read.csv)
 #' }
 #'
-#' ## End(Not run)
 #'
 #' @seealso \code{\link{titles_and_footnotes_from_df}}
 read_hf <- function(from.df=NULL, from.file=NULL, reader=NULL, ...) {
@@ -121,34 +119,50 @@ validate_hf_dataframe <- function(df, required_columns) {
 #' Read titles and footnotes from a dataframe
 #'
 #' Reads a data frame with header/footnote information and attaches it to an
-#'   \code{rtf_doc} object.The most effective way to use this function is to pass information to a
-#'   custom reader for your process. See <Vignette Link here>
+#' \code{rtf_doc} object.The most effective way to use this function is to pass
+#' information to a custom reader for your process. See Details section for more
+#' information.
 #'
 #' @section Required Columns:
+#' The following columns are required fields in a data.frame passed to
+#' titles_and_footnotes_from_df:
 #' \itemize{
-#' \item{type}
-#' \item{text1}
-#' \item{text2}
-#' \item{align}
-#' \item{bold}
-#' \item{italic}
-#' \item{font}
-#' \item{index}
+#' \item{type(character - 'title' or 'footnote')}
+#' \item{text1(character)}
+#' \item{text2(character)}
+#' \item{align(character - left, right, center, or split)}
+#' \item{bold(logical)}
+#' \item{italic(logical)}
+#' \item{font(character)}
+#' \item{index(numeric)}
 #' }
 #'
-#' @param doc A \code{rtf_doc} object to append header and footnote information.
-#' @param from.df \code{data.frame} containing information to convert to
-#'   \code{hf_line} object(s).
-#' @param from.file A file that contains information to convert to
-#'   \code{hf_line} object(s). Information is extracted from the file with the
-#'   supplied reader.
-#' @param reader A function to import the information from a file supplied.
+#' @details
+#' Titles_and_footnotes_from_df allows you to attach titles and footnotes
+#' (as hf_line objects) from a data.frame. This data.frame could be a
+#' data.frame in your local environment, or read in from an external file. The
+#' best way to utilize this method is to create a custom reader function. This
+#' custom reader function is a function that you develop to:
+#'
+#' \itemize{
+#' \item{Read a source file into a data.frame}
+#' \item{Preprocess as necessary to keep only necessary records and variables}
+#' \item{Ensure that variables are the correct data type}
+#' }
+#'
+#' Titles_and_footnotes_from_df allows you to pass arguments into the reader
+#' function, which gives you the capability to keep titles and footnotes for
+#' all of your outputs in a central file and pass a filtering option, or any
+#' additional parameters as necessary. For an example implementation, see our
+#' vignette here <- link to vignette.
+#'
+#' @param doc A \code{rtf_doc} object to append header and footnote
+#'   information.
 #' @param ... Parameters passed to \code{read_hf} where they are processed and
 #'   constructed into \code{hf_line} objects.
 #'
 #' @return A \code{rtf_doc} object with header/footnote information attached.
 #' @importFrom purrr transpose
-#' @seealso [read_hf()] reads in each line.
 #' @export
 titles_and_footnotes_from_df <- function(doc, from.df=NULL, from.file=NULL, reader=NULL, ...) {
 

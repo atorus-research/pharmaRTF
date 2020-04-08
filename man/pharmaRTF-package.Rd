@@ -29,12 +29,8 @@ R to a pharmaceutical reporting workflow.
 
 Authors:
 \itemize{
+  \item Eli Miller \email{eli.miller@atorusresearch.com} (\href{https://orcid.org/0000-0002-2127-9456}{ORCID})
   \item Ashley Tarasiewicz \email{Ashley.Tarasiewicz@atorusresearch.com}
-}
-
-Other contributors:
-\itemize{
-  \item Eli Miller \email{eli.miller@atorusresearch.com} (\href{https://orcid.org/0000-0002-2127-9456}{ORCID}) [wood engraver]
 }
 
 }

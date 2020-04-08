@@ -5,9 +5,9 @@
 \alias{add_footnotes}
 \title{Add \code{hf_line} title(s) and footnote(s) to a \code{rtf_doc} object}
 \usage{
-add_titles(doc, ...)
+add_titles(doc, ..., replace = FALSE)
 
-add_footnotes(doc, ...)
+add_footnotes(doc, ..., replace = FALSE)
 }
 \arguments{
 \item{doc}{\code{rtf_doc} on which hf_line object(s) (i.e. titles/footnotes)
@@ -15,6 +15,9 @@ will be attached}
 
 \item{...}{A vector of \code{hf_line} objects to add passed to
 \code{add_hf()}}
+
+\item{replace}{If FALSE, lines will be appened/ordered with current
+header/footer lines. If TRUE, lines will replace the existing content.}
 }
 \value{
 \code{hf_line} object(s) (i.e. titles/footnotes) to be added
@@ -30,7 +33,7 @@ ht <- huxtable::huxtable(
 )
 rtf <- rtf_doc(ht)
 
-rtf <- add_titles(rtf, hf_line("The Footnote"))
+rtf <- add_titles(rtf, hf_line("The Title"))
 
 # Adding footnotes after rtf_doc construction
 ht <- huxtable::huxtable(

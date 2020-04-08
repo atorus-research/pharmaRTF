@@ -4,7 +4,7 @@
 \alias{ignore_cell_padding}
 \alias{ignore_cell_padding<-}
 \alias{set_ignore_cell_padding}
-\title{Return and set ignore_cell_padding}
+\title{Return or set ignore_cell_padding}
 \usage{
 ignore_cell_padding(x, ...)
 
@@ -28,5 +28,44 @@ For \code{ignore_cell_padding()}, the ignore_cell_padding attribute
 \description{
 These functions modify and return the ignore_cell_padding attribute of a
 \code{rtf_doc} object. By default, the huxtable package will pad rows of a
-table. This attribute will remove the padding.
+table. This attribute will remove those default settings – which allow the
+cells to have a smaller amount of padding than setting the cell padding to
+0. See the Details section for a more thorough description of the
+implementation.
+}
+\details{
+Cell padding in RTF code has multiple command words associated with it.
+Huxtable uses the command word \\clpad<t,b,l,r>N to control the cell padding.
+This command word is additionally controlled by the command word
+\\clpadf<t,b,l,r>N. There are two possible values for  N in \\clpadf<t,b,l,r>N:
+
+\itemize{
+  \item{0: Null. This ignores \\clpad<t,b,l,r> in favor of \\trgaph (Word 97
+    style cell padding).}
+  \item{3: Twips}
+}
+
+The ignore_cell_padding function toggles the \\clpadf<t,b,l,r>N command words
+in the RTF document to 0 instead of 3. By using Word 97 style cell padding,
+the minimum amount of space is closer than using the 0 twips setting when the
+RTF is rendered inside Word. This effectively closes the gap between rows,
+which may be a desirable appearance in some outputs.
+
+More information on these RTF settings can be found
+\href{http://www.biblioscape.com/rtf15_spec.htm}{here}.
+}
+\examples{
+library(huxtable)
+ht <- huxtable(
+  column1 = 1:5,
+  column2 = letters[1:5]
+)
+rtf <- rtf_doc(ht, list(hf_line("aTitle")))
+
+ignore_cell_padding(rtf)
+# Returns FALSE, the default
+
+ignore_cell_padding(rtf) <- TRUE
+# Sets ignore_cell_padding to TRUE
+
 }
