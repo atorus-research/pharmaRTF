@@ -13,15 +13,35 @@ index(x) <- value
 set_index(x, value)
 }
 \arguments{
-\item{x}{\code{hf_line} object}
+\item{x}{A \code{hf_line} object}
 
 \item{...}{Additonal arguments passed to method dispatch}
 
 \item{value}{Numeric value to order index}
 }
 \value{
-return
+For \code{index()}, the index attribute of the supplied
+  \code{hf_line} object. For \code{`index<-()`} and \code{set_index()}, the
+  modified object.
 }
 \description{
-These functions modify and return the index of a \code{hf_line} object.
+These functions modify or return the index of a \code{hf_line} object. The
+index sets the order in which a title will appear. The default index value in
+NULL, and NULL values will sort behind any populated index Indices can be any
+numeric value as long as they are not duplicated.
+}
+\examples{
+library(huxtable)
+ht <- huxtable(
+  column1 = 1:5,
+  column2 = letters[1:5]
+)
+rtf <- rtf_doc(ht, list(hf_line("aTitle")))
+
+index(rtf$titles[[1]])
+# Returns NULL
+
+index(rtf$titles[[1]]) <- 2
+# Sets index of first titles to 2
+
 }

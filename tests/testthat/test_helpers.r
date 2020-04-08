@@ -29,10 +29,10 @@ test_that("insert_buffer adds a blank column correctly", {
 
   ## adding this attribute back in because this is stored in the doc os it
   # isn't needed here.
-  attr(ht_head1, "header.rows") <- 1
-  attr(ht_head2, "header.rows") <- 1
-  attr(ht_head3, "header.rows") <- 1
-  attr(ht_head4, "header.rows") <- 1
+  attr(ht_head1, "header_rows") <- 1
+  attr(ht_head2, "header_rows") <- 1
+  attr(ht_head3, "header_rows") <- 1
+  attr(ht_head4, "header_rows") <- 1
 
   expect_true(dplyr::all_equal(insert_buffer(rtf, rtf$table[1:header_rows(rtf$table)]), ht_head1))
   column_header_buffer(rtf) <- list(top = 1)
@@ -42,8 +42,8 @@ test_that("insert_buffer adds a blank column correctly", {
   column_header_buffer(rtf) <- list(top = 0, bottom = 0)
   expect_true(dplyr::all_equal(insert_buffer(rtf, rtf$table[1:header_rows(rtf$table)]), ht_head4))
 
-  ### Testing when header.rows == 2
-  rtf2 <- rtf_doc(ht, header.rows = 2)
+  ### Testing when header_rows == 2
+  rtf2 <- rtf_doc(ht, header_rows = 2)
   ht2_head1 <- huxtable(
     column1 = as.integer(c(1, 2)),
     column2 = c("a", "b")

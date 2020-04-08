@@ -137,7 +137,7 @@ test_that("write_rtf writes an expected rtf_file - 1", {
     hf_line("FILE_PATH: File source: %s", index = 2)
   )
 
-  rtf <- rtf_doc(ht, header.rows = 3, titles = titles)
+  rtf <- rtf_doc(ht, header_rows = 3, titles = titles)
   #This statement is blocked by issue 85
   rtf <- add_footnotes(rtf, hf_line("These are footers"),
                        hf_line(c("They can have page numbers", "PAGE_FORMAT: Page %s of %s"), align = "split"),
@@ -178,7 +178,7 @@ test_that("write_rtf writes an expected rtf_file - 2", {
     hf_line("FILE_PATH: File source: %s", index = 2)
   )
 
-  rtf <- rtf_doc(ht, header.rows = 3, titles = titles)
+  rtf <- rtf_doc(ht, header_rows = 3, titles = titles)
   #This statement is blocked by issue 85
   rtf <- add_footnotes(rtf, hf_line("These are footers"),
                        hf_line(c("They can have page numbers", "PAGE_FORMAT: Page %s of %s"), align = "split"),

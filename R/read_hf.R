@@ -3,7 +3,7 @@
 #' This reads in data from either an existing \code{data.frame} or a file that
 #' can be read in as a
 #'
-#' @param from \code{data.frame} containing information to convert to
+#' @param from.df \code{data.frame} containing information to convert to
 #'   \code{hf_line} object(s).
 #' @param from.file A file that contains information to convert to
 #'   \code{hf_line} object(s). Information is extracted from the file with the
@@ -13,28 +13,27 @@
 #'
 #' @return A data.frame where each row represents a header or footnote object
 #'
-#' @export
+#' @noRd
 #'
 #' @examples
 #' #Reading from a file
-#' ## Not run:
 #' \dontrun{
 #' # read in a csv document
 #' hfdf <- read_hf(from.file = "my_hf_file.csv", reader = read.csv)
 #' }
 #'
-#' ## End(Not run)
 #'
-#' @seealso [titles_and_footnotes_from_df()]
-read_hf <- function(from=NULL, from.file=NULL, reader=NULL, ...) {
+#' @seealso \code{\link{titles_and_footnotes_from_df}}
+read_hf <- function(from.df=NULL, from.file=NULL, reader=NULL, ...) {
   # Parameter checks
-  assert_that(xor(is.null(from), is.null(from.file)),
-              msg = "One of, and only one of, `from` or `from.file` must be populated")
+  assert_that(xor(is.null(from.df), is.null(from.file)),
+              msg = "One of, and only one of, `from.df` or `from.file` must be populated")
 
-  # Provided a data frame in `from``
-  if (!is.null(from)) {
-    assert_that(inherits(from, 'data.frame')) # from should be a data.frame/tbl
-    df <- from
+  # Provided a data frame in `from`
+  if (!is.null(from.df)) {
+    assert_that(inherits(from.df, 'data.frame')) # from should be a data.frame/tbl
+    df <- from.df
+    from.df
   }
 
   # Read data frame from file
@@ -117,10 +116,81 @@ validate_hf_dataframe <- function(df, required_columns) {
 
 }
 
-# Examples code
-# classes <- c('character', 'character', 'character', 'character', 'character', 'logical', 'logical', 'character', 'numeric')
-# .df <- read_hf(from.file='./data/titles.csv',
-#         reader=read.csv,
-#         stringsAsFactors=FALSE,
-#         colClasses=classes
-# )
+#' Read titles and footnotes from a dataframe
+#'
+#' Reads a data frame with header/footnote information and attaches it to an
+#' \code{rtf_doc} object.The most effective way to use this function is to pass
+#' information to a custom reader for your process. See Details section for more
+#' information.
+#'
+#' @section Required Columns:
+#' The following columns are required fields in a data.frame passed to
+#' titles_and_footnotes_from_df:
+#' \itemize{
+#' \item{type(character - 'title' or 'footnote')}
+#' \item{text1(character)}
+#' \item{text2(character)}
+#' \item{align(character - left, right, center, or split)}
+#' \item{bold(logical)}
+#' \item{italic(logical)}
+#' \item{font(character)}
+#' \item{index(numeric)}
+#' }
+#'
+#' @details
+#' Titles_and_footnotes_from_df allows you to attach titles and footnotes
+#' (as hf_line objects) from a data.frame. This data.frame could be a
+#' data.frame in your local environment, or read in from an external file. The
+#' best way to utilize this method is to create a custom reader function. This
+#' custom reader function is a function that you develop to:
+#'
+#' \itemize{
+#' \item{Read a source file into a data.frame}
+#' \item{Preprocess as necessary to keep only necessary records and variables}
+#' \item{Ensure that variables are the correct data type}
+#' }
+#'
+#' Titles_and_footnotes_from_df allows you to pass arguments into the reader
+#' function, which gives you the capability to keep titles and footnotes for
+#' all of your outputs in a central file and pass a filtering option, or any
+#' additional parameters as necessary. For an example implementation, see our
+#' vignette here <- link to vignette.
+#'
+#' @param doc A \code{rtf_doc} object to append header and footnote
+#'   information.
+#' @param from.df A \code{data.frame} object with title and footnote information.
+#' @param from.file A file path to a file with title and footnote information.
+#' @param reader A function to read the data from the from.file argument.
+#' @param ... Parameters passed to \code{read_hf} where they are processed and
+#'   constructed into \code{hf_line} objects.
+#'
+#' @return A \code{rtf_doc} object with header/footnote information attached.
+#' @importFrom purrr transpose
+#' @export
+titles_and_footnotes_from_df <- function(doc, from.df=NULL, from.file=NULL, reader=NULL, ...) {
+
+  df <- read_hf(from.df=from.df, from.file=from.file, reader=reader, ...) # Refer to read_hf in read_hf.R
+
+  # Note: there's a lot of do call in here, but I'm just translating the data.frame
+  # to a list, and then submitting the list as arguments to the function. See the do.call
+  # documentation for more information
+
+
+  # Make sure the columns are in the correct order
+  df <- df[, c("type", "text1", "text2", "align", "bold", "italic", "font", "index")]
+
+  # Subset into pieces and tranpose the rows into separate lists
+  # Split off the column type column because it's just for subset
+  titles_ <- transpose(df[df$type == 'title', -1])
+  footnotes_ <- transpose(df[df$type == 'footnote', -1])
+
+  # Turn all of the separate rows into hf_line objects for the titles and footnotes
+  titles <- lapply(titles_, function(x) do.call(hf_line, x))
+  footnotes <- lapply(footnotes_, function(x) do.call(hf_line, x))
+
+  # Add the titles and the footnotes to the doc object
+  # doc is the first argument so append that to the front of the list of titles
+  doc <- do.call(add_titles, append(titles, list(doc), 0))
+  doc <- do.call(add_footnotes, append(footnotes, list(doc), 0))
+  doc
+}

@@ -4,7 +4,7 @@
 \alias{pagesize}
 \alias{pagesize<-}
 \alias{set_pagesize}
-\title{Return and set pagesize}
+\title{Return or set pagesize}
 \usage{
 pagesize(x, ...)
 
@@ -13,16 +13,35 @@ pagesize(x) <- value
 set_pagesize(x, value)
 }
 \arguments{
-\item{x}{\code{rtf_doc} object}
+\item{x}{A \code{rtf_doc} object}
 
 \item{...}{Additonal arguments passed to method dispatch}
 
-\item{value}{A named numeric vector with the names height and width.}
+\item{value}{A named numeric vector with the names \code{height} and
+\code{width}.}
 }
 \value{
-return
+For \code{pagesize()}, the pagesize attribute of the \code{rtf_doc}
+  object. For \code{`pagesize<-`()} and \code{set_pagesize()}, the modified
+  object.
 }
 \description{
-These functions modify and return the pagesize attribute of a \code{rtf_doc}
-object. Stored as a named vector with height and width names.
+These functions modify or return the \code{pagesize} attribute of a
+\code{rtf_doc} object. Stored as a named vector with \code{height} and
+\code{width} names.
+}
+\examples{
+library(huxtable)
+ht <- huxtable(
+  column1 = 1:5,
+  column2 = letters[1:5]
+)
+rtf <- rtf_doc(ht, list(hf_line("aTitle")))
+
+pagesize(rtf)
+# Returns c(height = 8.5, width = 11.0)
+
+pagesize(rtf) <- c(height = 12)
+# Sets height of page to 12 inches
+
 }

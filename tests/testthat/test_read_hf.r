@@ -17,20 +17,20 @@ test_that("read_hf returns the same data.frame it is passed if it is a valid df"
     stringsAsFactors = FALSE
   )
 
-  expect_silent(read_hf(from=df))
-  expect_equal(read_hf(from=df), df)
+  expect_silent(read_hf(from.df=df))
+  expect_equal(read_hf(from.df=df), df)
 })
 
 
 #### Errors ####
-test_that("read_hf throws error for bad from/from.file parameters", {
-  expect_error(read_hf(from = data.frame(), from.file = "aFile"),
+test_that("read_hf throws error for bad from.df/from.file parameters", {
+  expect_error(read_hf(from.df = data.frame(), from.file = "aFile"),
                "One of, and only one of")
   expect_error(read_hf(), "One of, and only one of")
 })
 
-test_that("read_hf throws error when presented a from thats not a df", {
-  expect_error(read_hf(from = list()), "from does not inherit")
+test_that("read_hf throws error when presented a from.df thats not a df", {
+  expect_error(read_hf(from.df = list()), "from.df does not inherit")
 })
 
 test_that("read_hf throws error for invalid from.file/reader", {

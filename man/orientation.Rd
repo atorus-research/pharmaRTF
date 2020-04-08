@@ -4,7 +4,7 @@
 \alias{orientation}
 \alias{orientation<-}
 \alias{set_orientation}
-\title{Return and set orientation}
+\title{Return or set orientation}
 \usage{
 orientation(x, ...)
 
@@ -13,16 +13,33 @@ orientation(x) <- value
 set_orientation(x, value)
 }
 \arguments{
-\item{x}{\code{rtf_doc} object}
+\item{x}{A \code{rtf_doc} object}
 
 \item{...}{Additonal arguments passed to method dispatch}
 
 \item{value}{A character vector of either 'landscape' or 'portrait'}
 }
 \value{
-Orientation attribute of the supplied \code{rtf_doc} object
+For \code{orientation()}, the orientation attribute of the supplied
+  \code{rtf_doc} object. For \code{`orientation<-()`} and
+  \code{set_orientation()} the modified object.
 }
 \description{
-These functions modify and return the orientation attribute. Options are
+These functions modify or return the orientation attribute. Options are
 landscape or portrait.
+}
+\examples{
+library(huxtable)
+ht <- huxtable(
+  column1 = 1:5,
+  column2 = letters[1:5]
+)
+rtf <- rtf_doc(ht, list(hf_line("aTitle")))
+
+orientation(rtf)
+# Returns landscape
+
+orientation(rtf) <- "portrait"
+# Sets orientation to portrait
+
 }

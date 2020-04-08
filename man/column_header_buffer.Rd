@@ -4,7 +4,7 @@
 \alias{column_header_buffer}
 \alias{column_header_buffer<-}
 \alias{set_column_header_buffer}
-\title{Return and set column_header_buffer attributes}
+\title{Return or set column_header_buffer attributes}
 \usage{
 column_header_buffer(x, ...)
 
@@ -13,7 +13,7 @@ column_header_buffer(x) <- value
 set_column_header_buffer(x, ...)
 }
 \arguments{
-\item{x}{\code{rtf_doc} object}
+\item{x}{A \code{rtf_doc} object}
 
 \item{...}{Additonal arguments passed to method dispatch. Should include
 argument top and bottom with numeric elements.}
@@ -21,10 +21,27 @@ argument top and bottom with numeric elements.}
 \item{value}{A named vector detailing the top and bottom buffer.}
 }
 \value{
-The column_header_buffer attribute of the supplied \code{rtf_doc}
+For \code{column_header_buffer}, the column_header_buffer attribute
+  of the supplied \code{rtf_doc}. For \code{`column_header_buffer<-`()} and
+  \code{set_column_header_buffer()}, the modified object.
 }
 \description{
-These functions modify and return the column header buffers of a
-\code{rtf_doc}. This attribute adds rows to the top or bottom of a header
-to pad it from the titles above or the table below.
+These property functions modify and return the column header buffers of a
+\code{rtf_doc}. This attribute adds rows to the top or bottom of the table
+column headers to pad it from the titles above or the table below.
+}
+\examples{
+library(huxtable)
+ht <- huxtable(
+  column1 = 1:5,
+  column2 = letters[1:5]
+)
+rtf <- rtf_doc(ht, list(hf_line("aTitle")))
+
+column_header_buffer(rtf)
+# Returns c(top = 0, bottom = 0), the default
+
+column_header_buffer(rtf) <- c(bottom = 1)
+# Sets the bottom column_header_buffer to 1
+
 }

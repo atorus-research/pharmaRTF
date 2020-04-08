@@ -13,5 +13,5 @@ view_titles(doc)
 \code{data.frame} of the title information
 }
 \description{
-View title information
+View titles attached to an \code{rtf_doc} as a data.frame.
 }

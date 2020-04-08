@@ -92,7 +92,7 @@ test_that("validate_rtf_doc throws errors appropriately", {
     column1 = 1:5,
     column2 = letters[1:5]
   )
-  attr(ht, "header.rows") <- 1
+  attr(ht, "header_rows") <- 1
 
   titles1 <- list(
     hf_line()

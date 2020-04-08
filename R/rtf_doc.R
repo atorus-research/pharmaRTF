@@ -4,47 +4,55 @@ supported_table_types <- c('huxtable', 'gt_tbl')
 #' Create a \code{rtf_doc} object
 #'
 #' @description
-#' This constructs the main object that will be used to write the RTF document.
-#' The object is composed of a table, titles(s), and footnote(s).
+#' This constructs the main object that will be used for an RTF document. The
+#' object is composed of a table, titles(s), and footnote(s).
 #'
-#' A table should be a supported class. The huxtable package is the most supported,
-#' however there are methods for the GT package. The \code{rtf_doc} will inherit
-#' the properties from the table passed.
+#' A table contained in the \code{rtf_doc} object should be a supported class.
+#' The huxtable package is the most supported, however our intention is to
+#' support other packages capable of writing RTF tables as well. Currently, it
+#' is planned to support the \code{gt} package, but the \code{gt} package's RTF
+#' methods are not functional.
 #'
 #' The titles and footnotes are composed of \code{hf_line} objects.
 #'
-#' @param table A table of a supported class.
-#' @param titles A list of \code{hf_line} objects.
-#' @param footnotes An object/list of \code{hf_line}.
-#' @param header.rows An integer determining how many rows of the table are
-#'   headers. Only used for huxtable tables.
+#' See the <vignettes> for a more complete view of intended usage.
 #'
-#' @return A list with a table, titles, and footnotes component. Class of "rtf_doc"
-#'   with the properties describled below.
+#' @param table A table of a supported class.
+#' @param titles A list of \code{hf_line} objects containing table titles and
+#'   associated formatting.
+#' @param footnotes A list of \code{hf_line} objects containing table footnotes
+#'   and associated formatting.
+#' @param header_rows An integer determining how many rows of the table are
+#'   column headers. Only used for huxtable tables.
+#'
+#' @return A list with a table, titles, and footnotes component. Class of
+#'   "rtf_doc" with the properties describled below.
 #'
 #' @section \code{rtf_doc} Properties:
-#' Document level properties will be used where they are not overriden by
-#' \code{hf_line} or table properties.
+#' Document level properties set the defaults and will be used where they are
+#' not overridden by \code{hf_line} or table properties.
 #' \itemize{
 #' \item{font - A string representing the font to display when it is not
-#'   specified by the table or \code{hf_line}. Defaults to NA.}
-#' \item{font_size - A numeric value representing the size of the font in points.
-#'   Supports half points. Defaults to 12.}
-#' \item{margins - Inches of margins in the document. Defaults to 1 for all
-#'   margins(top, bottom, left, right).}
+#'   specified by the table or \code{hf_line}. Defaults to Courier New.}
+#' \item{font_size - A numeric value representing the size of the font in
+#'   points. Defaults to 12.}
+#' \item{margins - Inches of margins in the document as a named vector. Names
+#'   are \code{top}, \code{bottom}, \code{left}, and \code{right}. Defaults to 1
+#'   for all.}
 #' \item{orientation - Orientation of the document. The actual height and width
 #'   of the document is determined by the pagesize attribute, this is just a
 #'   flag for an RTF reader. Defaults to 'landscape'.}
-#' \item{header_height - Height of the header where the titles and header rows
-#'   are displayed. Defaults to .5.}
+#' \item{header_height - Height of the header where the titles and column
+#'   headersare displayed. Defaults to .5.}
 #' \item{footer_height - Height of the footer where the footnotes are displayed.
 #'   Defaults to .5.}
 #' \item{pagesize - Size of the page in inches. Defaults to 8.5(height) by
 #'   11(width).}
-#' \item{header.rows - Huxtable table only. Number of rows that are defined as
+#' \item{header_rows - Huxtable table only. Number of rows that are defined as
 #'   the header that will be repeated across pages. Defaults to 1}
-#' \item{ignore_cell_padding - Huxtable table only. Flag to ignore padding that
-#'   is added during RTF encoding.}
+#' \item{ignore_cell_padding - Huxtable table only. Flag to ignore cell padding padding
+#'   that is added during RTF encoding. Minimizes the amount of space between
+#'   rows.}
 #' }
 #'
 #' @examples
@@ -54,7 +62,7 @@ supported_table_types <- c('huxtable', 'gt_tbl')
 #'  column2 = letters[1:5]
 #' )
 #' # Set table properties
-#' library(stringr) #load in a pipe
+#' library(magrittr) #load in a pipe
 #' ht %>%
 #'   huxtable::set_bold(1, 1:ncol(ht), TRUE) %>%
 #'   huxtable::set_escape_contents(TRUE) %>%
@@ -74,10 +82,10 @@ supported_table_types <- c('huxtable', 'gt_tbl')
 #' @seealso \code{\link{hf_line}}
 #'
 #' @export
-rtf_doc <- function(table, titles = list(), footnotes = list(), header.rows = 1) {
+rtf_doc <- function(table, titles = list(), footnotes = list(), header_rows = 1) {
   # Return a null object of class rtf_doc if no table is passed.
   if(missing(table)) return(structure(logical(0), class = "rtf_doc"))
-  as_rtf_doc(table, titles, footnotes, header.rows)
+  as_rtf_doc(table, titles, footnotes, header_rows)
 }
 
 ## Method dispatch
@@ -85,30 +93,30 @@ rtf_doc <- function(table, titles = list(), footnotes = list(), header.rows = 1)
 #'
 #' @inheritParams rtf_doc
 #' @noRd
-as_rtf_doc <- function(table, titles, footnotes, header.rows) {
+as_rtf_doc <- function(table, titles, footnotes, header_rows) {
   UseMethod("as_rtf_doc")
 }
 
 ## For rtf_doc, return the table
-as_rtf_doc.rtf_doc <- function(table, titles, footnotes, header.rows) {
+as_rtf_doc.rtf_doc <- function(table, titles, footnotes, header_rows) {
   stop(paste('An `rtf_doc` object was provided - not a table. Supported table types are:',
         paste(supported_table_types, collapse = ", ")))
 }
 
 ## For huxtable
-as_rtf_doc.huxtable <- function(table, titles, footnotes, header.rows) {
+as_rtf_doc.huxtable <- function(table, titles, footnotes, header_rows) {
 
   if (!is.na(huxtable::caption(table))) message('Huxtable contains caption - this will be stripped off ',
                                                 'in RTF document generation.')
 
   # Huxtable table's column headers are rows of the data.frame, so store how many to grab
-  attr(table, 'header.rows') <- header.rows
+  attr(table, 'header_rows') <- header_rows
 
   new_rtf_doc(table, titles, footnotes)
 }
 
 ## For GT Table
-as_rtf_doc.gt_tbl <- function(table, titles, footnotes, header.rows) {
+as_rtf_doc.gt_tbl <- function(table, titles, footnotes, header_rows) {
 
 
   warning('GT does not fully support RTF at this time. Results will not be as expected')
@@ -117,8 +125,8 @@ as_rtf_doc.gt_tbl <- function(table, titles, footnotes, header.rows) {
     message('GT contains title/subtitle - this will be stripped off in RTF document generation')
   }
 
-  if (header.rows != 1) {
-    warning('The header.rows parameter has no effect on GT tables')
+  if (header_rows != 1) {
+    warning('The header_rows parameter has no effect on GT tables')
   }
 
   new_rtf_doc(table, titles, footnotes)
@@ -186,12 +194,12 @@ validate_rtf_doc <- function(table, titles, footnotes) {
   assert_that(all(sapply(c(titles, footnotes), inherits, what="hf_line")),
               msg="Titles and footnotes must be lists of hf_line objects")
 
-  # Check that header.rows is positive whole number if the table is a huxtable table
+  # Check that header_rows is positive whole number if the table is a huxtable table
   if(inherits(table, "huxtable")){
     assert_that(
-      attr(table, "header.rows") %% 1 == 0,
-      attr(table, "header.rows") >= 0,
-      msg = "header.rows must be a positive whole number greater than or equal to 0"
+      attr(table, "header_rows") %% 1 == 0,
+      attr(table, "header_rows") >= 0,
+      msg = "header_rows must be a positive whole number greater than or equal to 0"
     )
   }
 }
