@@ -6,34 +6,16 @@
 \alias{pharmaRTF-package}
 \title{pharmaRTF}
 \description{
-Enhanced RTF wrapper written in R for use with existing R tables packages
-such as huxtable or GT. This package fills a gap where certain packages could
-be written out as RTF, but couldn't add certain metadata or features to the
-document that are required/expected in a report for a regulatory submission
+Enhanced RTF wrapper written in R for use with existing R tables
+packages such as huxtable or GT. This package fills a gap where tables in
+certain packages can be written out to RTF, but cannot add certain metadata
+or features to the document that are required/expected in a report for a
+regulatory submission, such as multiple levels of titles and footnotes,
+making the document landscape, and controlling properties such as margins.
 
 This package intends to provide a flexible and reliable framework to connect
 R to a pharmaceutical reporting workflow.
 }
-\section{Installation}{
-
-\code{
-# Get the latest version on CRAN
-
-install.packages(pharmaRTF)
-}
-}
-
-\section{Usage}{
-
-\code{
-library(pharmaRTF)
-
-rtf <- rtf_doc(ASupportedTable, titles = titles_l, footnotes = footnote_l)
-
-write_rtf(rtf)
-}
-}
-
 \section{Future Plans}{
 
 \itemize{

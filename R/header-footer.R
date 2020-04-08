@@ -1,24 +1,49 @@
 #' Create a title line container
 #'
-#' \code{hf_line} objects are passed to \code{rtf_doc} for display in the RTF
-#' document. A character vector of length <= 2 describes the text to display.
-#' A vector of length two can be passed to either split them with one item left
-#' aligned and the other right aligned, or the two will be pasted together if
-#' the alignment is anything other than split. Lines can either be passed in
-#' the call to \code{rtf_doc} added later with \code{add_titles} or
-#' \code{add_footnotes}. Supported properties are detailed in the Arguments
-#' section
+#' @description
+#' \code{hf_line} objects represent individual title or footnote lines and
+#' their associated metadata. These objects are passed to an \code{rtf_doc} for
+#' display in theheader or footer of an RTF document.
+#'
+#' A character vector of length <= 2 describes the text to display. Using a
+#' single text element, the text can be aligned left, right, or center. Using
+#' two text elements, the alignment can be set to “split”, which will left
+#' align the first element, and right align the second. If alignment is set to
+#' anything else, the text elements will be pasted together.
+#'
+#' Lines can either be passed in the call to \code{rtf_doc} added later with
+#' \code{add_titles} or \code{add_footnotes}. Supported properties are detailed
+#' in the Arguments section.
 #'
 #' @section Supported Formatting:
-#' Several page formats are supported to display document data. When the
-#' \code{rtf_doc} is written, the package will determine if the text of an
-#' \code{hf_line} object starts with a keyword. Regular expresion matching and
+#' Several special display formats are supported to display document data. When
+#' the \code{rtf_doc} is written, the package will determine if the text of an
+#' \code{hf_line} object starts with a keyword. Regular expression matching and
 #' replacement is used for formatting.
 #' \itemize{
 #' \item{PAGE_FORMAT: - Can take up to two replacements to format current
-#'   page(first), and total number of pages(second)}
-#' \item{DATE_FORMAT: - Describes the date/time the document was generated}
-#' \item{FILE_PATH: - Describes the file path the R session was executed from}
+#'   page(first), and total number of pages(second). Page numbers are replaced in
+#'   the string using \%s For example, for a format of Page 1 of 5, use
+#'   PAGE_FORMAT: Page \%s of \%s. For a format of just 5, use
+#'   PAGE_FORMAT: \%s.}
+#' \item{DATE_FORMAT: - Describes the date/time the document was generated.
+#'   Formats are specified using standard R date formatting tokens. Details on
+#'   formatting dates can be found
+#'   \href{https://www.r-bloggers.com/date-formats-in-r/}{here}.}
+#' \item{FILE_PATH: - Describes the file path the R session was executed from.
+#'   The location of the executing file will be populated over the token ‘%s’.
+#'   Formats can be specified like “FILE_PATH: Executed from: %s” or simply
+#'   “FILE_PATH: %s”. Note that the location of the executing file in R may
+#'   not be intuitive. There are multiple ways to determine the containing R
+#'   file based on how it was executed.
+#'   \itemize{
+#'     \item{When the file is executed using \code{Rscript}, this field will
+#'       populated as the executed Rscript file.}
+#'     \item{When the file is sourced, this field will populate with the
+#'       location of the sourced file.}
+#'     \item{When a file is run interactively (i.e. from the R console), this
+#'       field will populate as <run interactively>.}
+#'   }}
 #' }
 #'
 #' @param ... A character list/vector. If \code{length(...)} is 2 and
@@ -33,7 +58,7 @@
 #' @param font_size Font size in half points. For example font_size = 20
 #'   will display a 10 point font. Defaults to a 12 point font.
 #' @param index Position to display header or footnote lines in the RTF
-#'   document. Orderes in ascending order with NULLs last.
+#'   document. Orders in ascending order with NULLs last.
 #'
 #' @return An object of class \code{hf_line} with the properties described in
 #'   the Arguments section.
@@ -45,14 +70,18 @@
 #'  column2 = letters[1:5]
 #' )
 #' titles_l <- list(
-#'   hf_line("The Title"),
-#'   # the below will display 'Current Page 1 Total Pages 1
-#'   hf_line("PAGE_FORMAT: Current Page %s Total Pages %s")
+#'   hf_line(c("The Title Left", "The Titles Right"), align = "split"),
+#'   hf_line("A Bold, italic Title", bold = TRUE, italic = TRUE,
+#'     align = "left", font_size = 20, font = "Times New Roman")
 #' )
 #' rtf <- rtf_doc(ht, titles = titles_l)
 #'
 #' # Adding lines after rtf_doc construction
-#' rtf <- add_footnotes(rtf, hf_line("The Footnote"), hf_line("Footnote 2"))
+#' rtf <- add_footnotes(rtf,
+#'     hf_line("PAGE_FORMAT: Page %s of %s"),
+#'     hf_line("DATE_FORMAT: %H:%M %A, %B %d, %Y"),
+#'     hf_line("FILE_PATH: Source: %s")
+#'   )
 #'
 #' @export
 hf_line <- function(..., align=c('center', 'left', 'right', 'split'), bold=FALSE,
@@ -153,9 +182,10 @@ order_lines <- function(lines) {
 #' @param ... A vector of \code{hf_line} objects to add.
 #' @param to Either 'titles' or 'footnotes'
 #' @param replace If FALSE, lines will be appened/ordered with current
-#'     header/footer lines. If TRUE, lines will replace whatever is there.
+#'     header/footer lines. If TRUE, lines will replace the existing content.
 #'
 #' @return \code{rtf_doc} object with \code{hf_line} objects attached.
+#' @noRd
 add_hf <- function(doc, ..., to=NULL, replace=FALSE) {
 
   # Get lines from doc (if specified to replace)
@@ -181,39 +211,30 @@ add_hf <- function(doc, ..., to=NULL, replace=FALSE) {
 
 }
 
-#' Add \code{hf_line} title(s) to a \code{rtf_doc} object
+#' Add \code{hf_line} title(s) and footnote(s) to a \code{rtf_doc} object
 #'
-#' @param doc \code{rtf_doc} object to add header lines to
+#' Add \code{hf_line} titles/footnote objects to a \code{rtf_doc} object
+#'
+#' @param doc \code{rtf_doc} on which hf_line object(s) (i.e. titles/footnotes)
+#'   will be attached
 #' @param ... A vector of \code{hf_line} objects to add passed to
 #'   \code{add_hf()}
+#' @param replace If FALSE, lines will be appened/ordered with current
+#'  header/footer lines. If TRUE, lines will replace the existing content.
 #'
-#' @return \code{rtf_doc} object with \code{hf_line} objects attached to titles.
+#' @return \code{hf_line} object(s) (i.e. titles/footnotes) to be added
 #'
 #' @examples
-#' # Adding lines after rtf_doc construction
+#' # Adding titles after rtf_doc construction
 #' ht <- huxtable::huxtable(
 #'  column1 = 1:5,
 #'  column2 = letters[1:5]
 #' )
 #' rtf <- rtf_doc(ht)
 #'
-#' rtf <- add_titles(rtf, hf_line("The Footnote"))
+#' rtf <- add_titles(rtf, hf_line("The Title"))
 #'
-#' @export
-#' @seealso \code{\link{add_hf}}
-add_titles <- function(doc, ..., replace=FALSE) {
-  add_hf(doc, ..., to='titles', replace=replace)
-}
-
-#' Add \code{hf_line} footnote(s) to a \code{rtf_doc} object
-#'
-#' @param doc \code{rtf_doc} object to add header/footer lines to
-#' @param ... A vector of \code{hf_line} objects to add.
-#'
-#' @return \code{rtf_doc} object with \code{hf_line} objects attached.
-#'
-#' @examples
-#' # Adding lines after rtf_doc construction
+#' # Adding footnotes after rtf_doc construction
 #' ht <- huxtable::huxtable(
 #'  column1 = 1:5,
 #'  column2 = letters[1:5]
@@ -221,8 +242,22 @@ add_titles <- function(doc, ..., replace=FALSE) {
 #' rtf <- rtf_doc(ht)
 #'
 #' rtf <- add_footnotes(rtf, hf_line("The Footnote"))
+#'
 #' @export
-#' @seealso \code{\link{add_hf}}
+#' @rdname add_titles_footnotes
+add_titles <- function(doc, ..., replace=FALSE) {
+  add_hf(doc, ..., to='titles', replace=replace)
+}
+
+#' @param doc \code{rtf_doc} on which hf_line object(s) (i.e. titles/footnotes)
+#'   will be attached
+#' @param ... A vector of \code{hf_line} objects to add passed to
+#'   \code{add_hf()}
+#' @param replace If FALSE, lines will be appened/ordered with current
+#'   header/footer lines. If TRUE, lines will replace the existing content.
+#'
+#' @export
+#' @rdname add_titles_footnotes
 add_footnotes <- function(doc, ..., replace=FALSE) {
   add_hf(doc, ..., to='footnotes', replace=replace)
 }

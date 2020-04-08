@@ -4,7 +4,7 @@
 \alias{margins}
 \alias{margins<-}
 \alias{set_margins}
-\title{Return and set margins}
+\title{Return or set margins}
 \usage{
 margins(x, ...)
 
@@ -13,17 +13,34 @@ margins(x) <- value
 set_margins(x, value)
 }
 \arguments{
-\item{x}{\code{rtf_doc} object}
+\item{x}{A \code{rtf_doc} object}
 
 \item{...}{Additonal arguments passed to method dispatch}
 
 \item{value}{A named list or vector detailing the}
 }
 \value{
-A named vector of the margin attribute of the supplied \code{rtf_doc}
+For \code{margin()}, a named vector of the margin attribute of the
+  supplied \code{rtf_doc}. For \code{`margin<-()`} and \code{set_margin()}
+  the modified object.
 }
 \description{
-These functions return and set the margin attribute of a \code{rtf_doc}
-object. Names should be top, bottom, left, and right. Margins are measured
-in inches.
+These functions return or set the margin attribute of a \code{rtf_doc}
+object. These are stored as a named vector. Names should be \code{top},
+\code{bottom}, \code{left}, and \code{right}. Margins are measured in inches.
+}
+\examples{
+library(huxtable)
+ht <- huxtable(
+  column1 = 1:5,
+  column2 = letters[1:5]
+)
+rtf <- rtf_doc(ht, list(hf_line("aTitle")))
+
+margins(rtf)
+# Returns c(top = 1, bottom = 1, left = 1, right = 1)
+
+margins(rtf) <- c(top = 2)
+# Sets top margin to 2
+
 }
