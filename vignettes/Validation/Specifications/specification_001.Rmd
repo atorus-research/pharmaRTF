@@ -5,5 +5,5 @@
 #' 2020/04/08
 
 + _1 General Specifications_
-    + 1.1 The RTF writtetn out to a file can be opened in Microsoft Word
-    + 1.2 Paging of the table works appropirately
+    + 1.1 The RTF written out to a file can be opened in Microsoft Word
+    + 1.2 Paging of the table works appropriately

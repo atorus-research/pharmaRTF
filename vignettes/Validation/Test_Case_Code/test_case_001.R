@@ -6,11 +6,14 @@ context('RStudio Conf 2020 Success')
 #' @section Last Update Date:
 #' 2020/01/29
 
-test_that('T1.1',{
+test_that('T 1.1.1 Opened as expected',{
 
-  joke_result <- TRUE
-  expect_true(joke_result)
-  expect_true(joke_result)
-  expect_true(joke_result)
+  expect_true(FALSE)
+
+})
+
+test_that('T 1.1.2 Opened as expected also',{
+
+  expect_true(FALSE)
 
 })
