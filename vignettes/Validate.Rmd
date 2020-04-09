@@ -1,15 +1,21 @@
 ---
 title: "pharmaRTF Validation Report"
 author: "Eli Miller"
-date: '2020-01-29'
+date: "`r Sys.Date()`"
 output:
-  html_document:
-    df_print: paged
+  pdf_document:
+    includes:
+      in_header: header.tex
+header-includes:
+- \usepackage{fancyhdr}
+- \pagestyle{fancy}
+- \fancyhead[CO, CE]{The Header - Atorus}
+- \fancyfoot[CO, CE]{The footer - Atorus \thepage}
 ---
-
+\newpage
+\tableofcontents
+\newpage
 ```{r setup, include=FALSE}
-# set this option first to prevent clash between kableExtra & LaTeX xcolor
-options(kableExtra.latex.load_packages = FALSE, width = 40)
 library(dplyr)
 library(testthat)
 library(here)
@@ -35,33 +41,28 @@ source(here("vignettes", "roxy_block_details.R")) # scrapes roxygen block for au
 
 ```
 
+# Validation Information
 ## Specifications
-
 ```{r spec_author_table}
 list.files(spec_dir,
     full.names = TRUE) %>%
   lapply(., scrape_function_specification_block) %>%
   do.call(rbind, .) %>%
   kable(., col.names = c("Specification Name", "Last updated by", "Last updated date")) %>%
-  kable_styling(position = "center")
+  kable_styling()
 ```
 
 ## Test case
-
-
 ```{r tc_author_table}
 list.files(test_case_dir,
     full.names = TRUE) %>%
   lapply(., scrape_function_specification_block) %>%
   do.call(rbind, .) %>%
   kable(., col.names = c("Test Case Name", "Last updated by", "Last updated date")) %>%
-  kable_styling(position = "center")
+  kable_styling()
 ```
 
-
-
 ## Test code
-
 ```{r test_code_author_table}
 test_code_author <- list.files(test_code_dir, pattern = ".R",
                                ignore.case = TRUE, full.names = TRUE) %>%
@@ -84,28 +85,28 @@ pack_rows_index <- c(pack_rows_count[-1] - pack_rows_count[-length(pack_rows_cou
 test_code_author %>%
   kable(., col.names = c("Test Code Name", "Last updated by", "Last updated date"),
         escape = FALSE) %>%
-  kable_styling(position = "center") %>%
-  pack_rows(index = pack_rows_index)
+  kable_styling()
 ```
 
-\clearpage
-
+***
+# Validation Results
 ## General
 ### 1 General Specification
 ```{r spec_1}
 scrape_spec_rmd(file.path(spec_dir, "specification_001.Rmd"))
 ```
+
 ### General Specification Test Cases
 ```{r test_case_1, out.width='0.5\\textwidth'}
 scrape_spec_rmd(file.path(test_case_dir, "test_case_001.Rmd"))
 ```
 
 ### General Specification Test Code Results
-    
 ```{r spec_function_1}
 eval_test_code(file.path(test_code_dir, "test_case_001.R")) 
 ```
 
+***
 ## RTF Document Characteristics
 ### 2 RTF Document Properties
 ```{r spec_2}
@@ -116,6 +117,7 @@ scrape_spec_rmd(file.path(spec_dir, "specification_002.Rmd"))
 
 ### RTF Document Characteristics Test Code Results
 
+***
 ## Titles and Footnotes
 ### 3 Titles and Footnotes Specification
 ```{r spec_3}
@@ -126,6 +128,7 @@ scrape_spec_rmd(file.path(spec_dir, "specification_003.Rmd"))
 
 ### Titles and Footnotes Test Code Results
 
+***
 ## Table Level Properties
 ### 4 Table Level Properties Specifications
 ```{r spec_4}
@@ -136,5 +139,8 @@ scrape_spec_rmd(file.path(spec_dir, "specification_004.Rmd"))
 
 ### Table Level Properties Test Code Results
 
-
-
+***
+# System information
+```{r sys_info}
+sessionInfo()
+```

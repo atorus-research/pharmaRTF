@@ -78,9 +78,9 @@ eval_test_code <- function(one_file) {
   kable(
     out,
     escape = FALSE,
-    col.names = c("Test", "Results", "Pass/Fail")) %>%
-    column_spec(2:3, width = "10em") %>%
-    kable_styling(position = "center")
+    col.names = c("Test", "Results", "Pass/Fail"),
+    format = "latex") %>%
+    kableExtra::kable_styling()
 }
 
 #' @title Generate at data.frame from the test code roxygen documentation blocks.
