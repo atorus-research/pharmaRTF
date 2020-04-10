@@ -6,13 +6,7 @@ context('RStudio Conf 2020 Success')
 #' @section Last Update Date:
 #' 2020/01/29
 #
-# test_that('T 1.1.1 Test a 1x1 dataframe output as RTF opens in Word',{
-#
-#   df <- 'test'
-#
-# })
-#
-# test_that('T 1.1.2 Test a NxN dataframe output as RTF opens in Word',{
+# test_that('T 1.1.1 Opened as expected',{
 #
 #   library(pharmaRTF)
 #   df <- readRDS('vignettes/t14_2_01.rds')
@@ -27,7 +21,18 @@ context('RStudio Conf 2020 Success')
 #   huxtable::col_width(ht) <- c(.2, .2, .12, .12, .12, .12, .12)
 #   huxtable::bottom_padding(ht) <- 0
 #   huxtable::top_padding(ht) <- 0
+#   ?hf_line
 #
-#   expect_true(TRUE)
+#   doc <- rtf_doc(ht, titles=list(hf_line('My title')))
+#
+#   write_rtf(doc, file='test_1_1_1.rtf')
+#
+#   expect_true(FALSE)
+#
+# })
+#
+# test_that('T 1.1.2 Opened as expected also',{
+#
+#   expect_true(FALSE)
 #
 # })
