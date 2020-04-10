@@ -47,6 +47,6 @@ header_rows(rtf$table)
 # Both of these return 1, the default
 
 header_rows(rtf$table) <- 0
-# Sets reader_rows to 0
+# Sets header_rows to 0
 
 }
