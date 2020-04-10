@@ -5,6 +5,7 @@ context('RStudio Conf 2020 Success')
 #' Not Ellis Hughes
 #' @section Last Update Date:
 #' 2020/01/29
+
 #
 # test_that('T 1.1.1 Test a 1x1 dataframe output as RTF opens in Word',{
 #
@@ -31,3 +32,4 @@ context('RStudio Conf 2020 Success')
 #   expect_true(TRUE)
 #
 # })
+
