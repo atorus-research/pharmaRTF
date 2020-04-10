@@ -43,9 +43,9 @@ supported_table_types <- c('huxtable', 'gt_tbl')
 #'   of the document is determined by the pagesize attribute, this is just a
 #'   flag for an RTF reader. Defaults to 'landscape'.}
 #' \item{header_height - Height of the header where the titles and column
-#'   headersare displayed. Defaults to .5.}
+#'   headersare displayed. Defaults to .5 inches.}
 #' \item{footer_height - Height of the footer where the footnotes are displayed.
-#'   Defaults to .5.}
+#'   Defaults to .5 inches.}
 #' \item{pagesize - Size of the page in inches. Defaults to 8.5(height) by
 #'   11(width).}
 #' \item{header_rows - Huxtable table only. Number of rows that are defined as

@@ -559,14 +559,14 @@ margins.rtf_doc <- function(x, ...) {
 
 ## Margins (setters) ----
 #' @param x A \code{rtf_doc} object
-#' @param value A named list or vector detailing the
+#' @param value A named list or vector detailing the page margins
 #'
 #' @export
 #' @rdname margins
 'margins<-' <- function(x, value) UseMethod('margins<-')
 
 #' @param x A \code{rtf_doc} object
-#' @param value A named list or vector detailing the
+#' @param value A named list or vector detailing the page margins
 #'
 #' @export
 #' @rdname margins
@@ -887,7 +887,7 @@ set_pagesize <- function(x, value) UseMethod('pagesize<-')
 #' # Both of these return 1, the default
 #'
 #' header_rows(rtf$table) <- 0
-#' # Sets reader_rows to 0
+#' # Sets header_rows to 0
 #'
 #' @export
 #' @rdname header_rows
