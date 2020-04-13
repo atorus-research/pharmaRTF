@@ -72,13 +72,17 @@ df[nrow(df) + 1,] <- c(
 )
 
 names(df) <- c(
-  "Pooled\\lineId",
-  "Site\\lineId",
+  "Pooled\\line Id",
+  "Site\\line Id",
   rep(c("ITT", "Eff", "Com"), 4)
 )
 
-ht <- df %>%
-  huxtable::as_hux(add_colnames=TRUE)
+df[2:(nrow(df) + 1),] <- df[1:nrow(df),]
+df[1,] <- names(df)
+df <- df %>%
+  add_row("Pooled\\line Id" = "", .before = 1) %>%
+  add_row("Pooled\\line Id" = "", .before = 1)
+
 
 ### Add Headers
 headers <- adsl %>%
@@ -91,4 +95,35 @@ headers[4,] <- list(
   labels = paste0("Total\\line(N=", nrow(adsl), ")")
 )
 
+df[1, 3] <- headers[1, "labels"]
+df[1, 6] <- headers[2, "labels"]
+df[1, 9] <- headers[3, "labels"]
+df[1, 12] <- headers[4, "labels"]
+
+ht <- df %>%
+  huxtable::as_hux(add_colnames=FALSE) %>%
+  merge_cells(1, 3:5) %>%
+  set_bottom_border(2, 3:5, 1) %>%
+  merge_cells(1, 6:8) %>%
+  set_bottom_border(2, 6:8, 1) %>%
+  merge_cells(1, 9:11) %>%
+  set_bottom_border(2, 9:11, 1) %>%
+  merge_cells(1, 12:14) %>%
+  set_bottom_border(2, 12:14, 1) %>%
+  set_escape_contents(FALSE) %>%
+  set_width(1.5)
+
+
+huxtable::align(ht)[1,] <- "center"
+huxtable::valign(ht)[1,] <- "bottom"
+
+doc <- rtf_doc(ht, header_rows = 2) %>% titles_and_footnotes_from_df(
+  from.file='./scripts/table_examples/titles.xlsx',
+  reader=example_custom_reader,
+  table_number='14-1.03') %>%
+  set_font_size(10) %>%
+  set_ignore_cell_padding(TRUE) %>%
+  set_column_header_buffer(top = 1)
+
+write_rtf(doc, file='./scripts/table_examples/outputs/14-1.03.rtf')
 
