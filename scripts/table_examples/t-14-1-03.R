@@ -111,11 +111,15 @@ ht <- df %>%
   merge_cells(1, 12:14) %>%
   set_bottom_border(2, 12:14, 1) %>%
   set_escape_contents(FALSE) %>%
-  set_width(1.5)
-
-
-huxtable::align(ht)[1,] <- "center"
-huxtable::valign(ht)[1,] <- "bottom"
+  set_width(1.1) %>%
+  set_bottom_border(3, 1:14, 1) %>%
+  huxtable::set_align(3, 1:14, "center") %>%
+  huxtable::set_valign(3, 1:14, "bottom") %>%
+  huxtable::set_align(4:nrow(ht), 3:ncol(ht), "right") %>%
+  huxtable::set_align(1:nrow(ht), 1:2, "center") %>%
+  huxtable::set_align(1, 1:14, "center") %>%
+  huxtable::set_valign(1, 1:14, "bottom") %>%
+  huxtable::set_col_width(1:ncol(ht), value = c(0.1, 0.1, rep(0.07, 12)))
 
 doc <- rtf_doc(ht, header_rows = 2) %>% titles_and_footnotes_from_df(
   from.file='./scripts/table_examples/titles.xlsx',
