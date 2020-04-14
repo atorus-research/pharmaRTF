@@ -1,0 +1,128 @@
+### Table 14-7.01 Summary of Vital Signs at Baseline and End of Treatment
+
+library(huxtable)
+library(plyr)
+library(dplyr)
+library(glue)
+library(tidyverse)
+library(haven)
+library(pharmaRTF)
+library(tibble)
+
+source('./scripts/table_examples/config.R')
+source('./scripts/table_examples/funcs.R')
+
+
+pad_row <- function(df, r) {
+  #df - dataframe to insert pad
+  #r - row number to pad
+  for(i in seq(along = r)) {
+    if(r[i] + i - 1 < nrow(df)){
+      df[seq(r[i] + i, nrow(df) + 1),] <- df[seq(r[i] + (i - 1), nrow(df)),]
+      df[r[i] + (i - 1),] <- NA
+    } else {
+      df[r[i] + (i - 1),] <- NA
+    }
+  }
+  df
+}
+
+dm <- read_xpt(glue("{sdtm_lib}/dm.xpt"))
+advs <- read_xpt(glue("{adam_lib}/advs2.xpt")) %>%
+  filter(SAFFL == "Y")
+
+advs$EOTFL <- ifelse(advs[,"AVISIT"] == "End of Treatment", "Y", "")
+advs$W24FL <- ifelse(advs[, "AVISIT"] == "Week 24", "Y", "")
+
+advs2 <- advs %>%
+  filter(EOTFL == "Y" | W24FL == "Y" | ABLFL == "Y") %>%
+  filter(PARAM %in% c("Diastolic Blood Pressure (mmHg)",
+                      "Pulse Rate (BEATS/MIN)",
+                      "Systolic Blood Pressure (mmHg)"))
+
+advs2$PRTFL <- ifelse(advs2[,"EOTFL"] == "Y", "End of Trt.", ifelse(advs2[, "W24FL"] == "Y", "Week 24", "Baseline"))
+
+
+advs2$TRTP <- ordered(advs2$TRTP, c("Placebo", "Xanomeline Low Dose", "Xanomeline High Dose"))
+## Add ordered VISITS to order visits
+advs2$AVISIT <- ordered(advs2$AVISIT, c("Baseline", "Week 24", "End of Treatment"))
+advs2$PRTFL <- ordered(advs2$PRTFL, c("Baseline", "Week 24", "End of Trt."))
+advs2$PARAM <- ordered(advs2$PARAM, c("Systolic Blood Pressure (mmHg)",
+                                      "Diastolic Blood Pressure (mmHg)",
+                                      "Pulse Rate (BEATS/MIN)"))
+
+advs3 <- advs2 %>%
+  group_by(PARAM, ATPT, TRTP, PRTFL) %>%
+  summarise(n = n(),
+            mean = mean(AVAL),
+            sd = sd(AVAL),
+            median = median(AVAL),
+            min = min(AVAL),
+            max = max(AVAL))
+
+advs4 <- add_column(advs3, "N" = apply(advs3,
+                                       1,
+                                       function(x) {aSum <- sum(dm[,"ARM"] == x["TRTP"], na.rm = TRUE)
+                                       ifelse(aSum == 0, NA, aSum)}),
+                    .after = 3)
+
+advs4[!(advs4$PRTFL %in% "Baseline"), "TRTP"] <- NA
+advs4[!(advs4$TRTP %in% "Placebo"), "ATPT"] <- NA
+advs4[!(advs4$ATPT %in% "AFTER LYING DOWN FOR 5 MINUTES"), "PARAM"] <- NA
+advs4[!(advs4$PRTFL %in% "Baseline"), "N"] <- NA
+
+
+
+advs4$TRTP <- apply(advs4, 1, function(x) {switch(x["TRTP"],
+                     "Placebo" = "Placebo",
+                     "Xanomeline High Dose" = "Xan.High",
+                     "Xanomeline Low Dose" = "Xan.Low",
+                     NA)})
+
+advs4$mean <- num_fmt(advs4$mean, digits = 1, size = 4)
+advs4$sd <- num_fmt(advs4$sd, digits = 2, size = 5, int_len = 2)
+advs4$median <- num_fmt(advs4$median, digits = 1, size = 4, int_len = 3)
+advs4$min <- num_fmt(advs4$min, digits = 1, size = 4, int_len = 3)
+advs4$max <- num_fmt(advs4$max, digits = 1, size = 4, int_len = 3)
+
+
+names(advs4) <- c(
+  "Measure",
+  "Position",
+  "Treatment",
+  "N",
+  "Planned Relative Time",
+  "n",
+  "Mean",
+  "SD",
+  "Median",
+  "Min.",
+  "Max."
+)
+
+advs4 <- pad_row(advs4, which(advs4[, "Planned Relative Time"] == "End of Trt.") + 1)
+
+ht <- advs4 %>%
+  huxtable::as_hux(add_colnames=TRUE) %>%
+  huxtable::set_bold(1, 1:ncol(ht), TRUE) %>%
+  huxtable::set_align(1, 1:ncol(ht), "center") %>%
+  huxtable::set_align(2:nrow(ht), 3, "center") %>%
+  huxtable::set_align(2:nrow(ht), 4:ncol(ht), "left") %>%
+  huxtable::set_valign(1, 1:ncol(ht), "bottom") %>%
+  huxtable::set_bottom_border(1, 1:ncol(ht), 1) %>%
+  huxtable::set_width(1.45) %>%
+  huxtable::set_col_width(1:ncol(ht), c(0.2, 0.15, 0.19, 0.03, 0.1, 0.03, 0.06, 0.06, 0.06, 0.06, 0.06))
+
+doc <- rtf_doc(ht) %>% titles_and_footnotes_from_df(
+  from.file='./scripts/table_examples/titles.xlsx',
+  reader=example_custom_reader,
+  table_number='14-7.01') %>%
+  set_font_size(10) %>%
+  set_ignore_cell_padding(TRUE) %>%
+  set_header_height(1) %>%
+  set_column_header_buffer(1,0) %>%
+  set_footer_height(0.85)
+
+write_rtf(doc, file='./scripts/table_examples/outputs/14-7.01.rtf')
+
+
