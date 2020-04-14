@@ -43,7 +43,7 @@ supported_table_types <- c('huxtable', 'gt_tbl')
 #'   of the document is determined by the pagesize attribute, this is just a
 #'   flag for an RTF reader. Defaults to 'landscape'.}
 #' \item{header_height - Height of the header where the titles and column
-#'   headersare displayed. Defaults to .5 inches.}
+#'   headers are displayed. Defaults to .5 inches.}
 #' \item{footer_height - Height of the footer where the footnotes are displayed.
 #'   Defaults to .5 inches.}
 #' \item{pagesize - Size of the page in inches. Defaults to 8.5(height) by
@@ -52,7 +52,10 @@ supported_table_types <- c('huxtable', 'gt_tbl')
 #'   the header that will be repeated across pages. Defaults to 1}
 #' \item{ignore_cell_padding - Huxtable table only. Flag to ignore cell padding padding
 #'   that is added during RTF encoding. Minimizes the amount of space between
-#'   rows.}
+#'   rows. Defaults to FALSE.}
+#' \item{column_header_buffer} - This attribute adds rows to the top or bottom of the table
+#'   column headers to pad it from the titles above or the table below.
+#'   Defaults to 0 and 0.
 #' }
 #'
 #' @examples
