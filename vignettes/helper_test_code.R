@@ -246,7 +246,7 @@ make_test_case_rmd <- function(file) {
     )
 
     # Write the lines to each output file
-    writeLines(outfile, paste0('test_cases_', str_pad(caseno, width=3, pad="0"), '.Rmd'))
+    writeLines(outfile, paste0('vignettes/Validation/TestCases/test_cases_', str_pad(caseno, width=3, pad="0"), '.Rmd'))
   }
 }
 
