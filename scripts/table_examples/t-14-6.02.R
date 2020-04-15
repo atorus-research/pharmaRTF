@@ -13,6 +13,21 @@ library(tibble)
 source('./scripts/table_examples/config.R')
 source('./scripts/table_examples/funcs.R')
 
+n_pct <- function(n, pct, n_width=3, pct_width=3) {
+  n <- unlist(n)
+  pct <- unique(pct)
+  # n (%) formatted string. e.g. 50 ( 75%)
+  unlist(lapply(n, function(x) {
+    if(x == 0) " 0      "
+    else {
+      as.character(
+        # Form the string using glue and format
+        glue('{format(x, width=n_width)} ({format(round((x/pct) * 100), width=pct_width)}%)')
+      )
+    }
+  }))
+}
+
 ## Chem
 adlbc <- read_xpt(glue("{adam_lib}/adlbc.xpt")) %>%
   filter(SAFETY == "Y", LBTRMXFL == "Y")
@@ -51,12 +66,20 @@ adlbc2 <- adlbc %>%
   mutate(n_w_pct = n_pct(N, tot)) %>%
   pivot_wider(id_cols = LBTEST,names_from = c(TRTP, LBNRIND), values_from = n_w_pct)
 
+
+test <- adlbc2 %>%
+  filter(LBTEST == "ALBUMIN")
+
+fish_p(test, test$N, test$TRTP)
+
+
+
 ### Heme
 adlbh <- read_xpt(glue("{adam_lib}/adlbh.xpt")) %>%
   filter(SAFETY == "Y", LBTRMXFL == "Y")
 
-adlbc$TRTP <- ordered(adlbc$TRTP, c("Placebo", "Xanomeline Low Dose", "Xanomeline High Dose"))
-adlbc$LBTEST <- ordered(adlbc$LBTEST, c(
+adlbh$TRTP <- ordered(adlbh$TRTP, c("Placebo", "Xanomeline Low Dose", "Xanomeline High Dose"))
+adlbh$LBTEST <- ordered(adlbh$LBTEST, c(
   "BASOPHILS",
   "EOSINOPHILS",
   "HEMATOCRIT",
@@ -70,7 +93,7 @@ adlbc$LBTEST <- ordered(adlbc$LBTEST, c(
   "ERYTHROCYTES",
   "LEUKOCYTES"
 ))
-adlbc$LBNRIND <- ordered(adlbc$LBNRIND, c("L", "N", "H"))
+adlbh$LBNRIND <- ordered(adlbh$LBNRIND, c("L", "N", "H"))
 
 
 adlbh2 <- adlbh %>%
@@ -81,4 +104,34 @@ adlbh2 <- adlbh %>%
   group_by(LBTEST, TRTP) %>%
   mutate(tot = sum(N)) %>%
   mutate(n_w_pct = n_pct(N, tot)) %>%
-  pivot_wider(id_cols = LBTEST, names_from = c(TRTP, LBNRIND), values_from = n)
+  pivot_wider(id_cols = LBTEST,names_from = c(TRTP, LBNRIND), values_from = n_w_pct) %>%
+  ungroup()
+
+final <- adlbc2 %>%
+  ungroup() %>%
+  add_row("LBTEST" = "----------", .before = 1) %>%
+  add_row("LBTEST" = "CHEMISTRY", .before = 1) %>%
+  add_row("LBTEST" = "", .before = 1) %>%
+  add_row("LBTEST" = "") %>%
+  add_row("LBTEST" = "HEMATOLOGY") %>%
+  add_row("LBTEST" = "----------") %>%
+  rbind(adlbh2)
+
+names(final) <- c(
+  "",
+  "Low",
+  "Normal",
+  "High",
+  "Low",
+  "Normal",
+  "High",
+  "Low",
+  "Normal",
+  "High"
+)
+
+
+
+
+
+
