@@ -29,9 +29,15 @@ pad_row <- function(df, r) {
 
 dm <- read_xpt(glue("{sdtm_lib}/dm.xpt"))
 advs <- read_xpt(glue("{adam_lib}/advs2.xpt")) %>%
-  filter(SAFFL == "Y")
+  filter(SAFFL == "Y", ANL01FL == "Y")
 
-advs$EOTFL <- ifelse(advs[,"AVISIT"] == "End of Treatment", "Y", "")
+advs <- advs %>%
+  group_by(USUBJID, PARAM) %>%
+  mutate(eotfl1 = ifelse(ADT < TRTEDT, "Y", "N")) %>%
+  group_by(eotfl1) %>%
+  mutate(EOTFL = ifelse(ADT == max(ADT) & eotfl1 == "Y", "Y", ""))
+
+# advs$EOTFL <- ifelse(advs[,"AVISIT"] == "End of Treatment", "Y", "")
 advs$W24FL <- ifelse(advs[, "AVISIT"] == "Week 24", "Y", "")
 
 advs2 <- advs %>%
@@ -40,19 +46,37 @@ advs2 <- advs %>%
                       "Pulse Rate (BEATS/MIN)",
                       "Systolic Blood Pressure (mmHg)"))
 
-advs2$PRTFL <- ifelse(advs2[,"EOTFL"] == "Y", "End of Trt.", ifelse(advs2[, "W24FL"] == "Y", "Week 24", "Baseline"))
-
 
 advs2$TRTP <- ordered(advs2$TRTP, c("Placebo", "Xanomeline Low Dose", "Xanomeline High Dose"))
 ## Add ordered VISITS to order visits
 advs2$AVISIT <- ordered(advs2$AVISIT, c("Baseline", "Week 24", "End of Treatment"))
-advs2$PRTFL <- ordered(advs2$PRTFL, c("Baseline", "Week 24", "End of Trt."))
 advs2$PARAM <- ordered(advs2$PARAM, c("Systolic Blood Pressure (mmHg)",
                                       "Diastolic Blood Pressure (mmHg)",
                                       "Pulse Rate (BEATS/MIN)"))
 
-advs3 <- advs2 %>%
-  group_by(PARAM, ATPT, TRTP, PRTFL) %>%
+advs_bl <- advs2 %>%
+  filter(ABLFL == "Y") %>%
+  group_by(PARAM, ATPT, TRTP) %>%
+  summarise(n = n(),
+            mean = mean(AVAL),
+            sd = sd(AVAL),
+            median = median(AVAL),
+            min = min(AVAL),
+            max = max(AVAL))
+
+advs_w24 <- advs2 %>%
+  filter(W24FL == "Y") %>%
+  group_by(PARAM, ATPT, TRTP) %>%
+  summarise(n = n(),
+            mean = mean(AVAL),
+            sd = sd(AVAL),
+            median = median(AVAL),
+            min = min(AVAL),
+            max = max(AVAL))
+
+advs_eot <- advs %>%
+  filter(EOTFL == "Y") %>%
+  group_by(PARAM, ATPT, TRTP) %>%
   summarise(n = n(),
             mean = mean(AVAL),
             sd = sd(AVAL),
@@ -104,14 +128,14 @@ advs4 <- pad_row(advs4, which(advs4[, "Planned Relative Time"] == "End of Trt.")
 
 ht <- advs4 %>%
   huxtable::as_hux(add_colnames=TRUE) %>%
-  huxtable::set_bold(1, 1:ncol(ht), TRUE) %>%
-  huxtable::set_align(1, 1:ncol(ht), "center") %>%
-  huxtable::set_align(2:nrow(ht), 3, "center") %>%
-  huxtable::set_align(2:nrow(ht), 4:ncol(ht), "left") %>%
-  huxtable::set_valign(1, 1:ncol(ht), "bottom") %>%
-  huxtable::set_bottom_border(1, 1:ncol(ht), 1) %>%
+  huxtable::set_bold(1, 1:ncol(advs4), TRUE) %>%
+  huxtable::set_align(1, 1:ncol(advs4), "center") %>%
+  huxtable::set_align(2:nrow(advs4), 3, "center") %>%
+  huxtable::set_align(2:nrow(advs4), 4:ncol(advs4), "left") %>%
+  huxtable::set_valign(1, 1:ncol(advs4), "bottom") %>%
+  huxtable::set_bottom_border(1, 1:ncol(advs4), 1) %>%
   huxtable::set_width(1.45) %>%
-  huxtable::set_col_width(1:ncol(ht), c(0.2, 0.15, 0.19, 0.03, 0.1, 0.03, 0.06, 0.06, 0.06, 0.06, 0.06))
+  huxtable::set_col_width(1:ncol(advs4), c(0.2, 0.15, 0.19, 0.03, 0.1, 0.03, 0.06, 0.06, 0.06, 0.06, 0.06))
 
 doc <- rtf_doc(ht) %>% titles_and_footnotes_from_df(
   from.file='./scripts/table_examples/titles.xlsx',
