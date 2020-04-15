@@ -13,16 +13,34 @@ italic(x) <- value
 set_italic(x, value)
 }
 \arguments{
-\item{x}{\code{hf_line} object}
+\item{x}{A \code{hf_line} object}
 
 \item{...}{Additonal arguments passed to method dispatch}
 
 \item{value}{A logical vector to set the value of the bold attribute}
 }
 \value{
-The italic attribute of the supplied \code{hf_line}
+For \code{italic()}, the italic attribute of the supplied
+  \code{hf_line}. Fot \code{`italic<-()`} and \code{set_italic()} the
+  modified object.
 }
 \description{
-These functions modify and return the italics attribute of a \code{hf_line}
-object
+These functions modify or return the italics attribute of a \code{hf_line}
+object. The italic attribute takes on a logical value of TRUE or FALSE, where
+TRUE italicizes the text of the line.
+}
+\examples{
+library(huxtable)
+ht <- huxtable(
+  column1 = 1:5,
+  column2 = letters[1:5]
+)
+rtf <- rtf_doc(ht, list(hf_line("aTitle")))
+
+pharmaRTF::italic(rtf$titles[[1]])
+# Returns FALSE
+
+pharmaRTF::italic(rtf$titles[[1]]) <- TRUE
+# Sets italic to TRUE
+
 }

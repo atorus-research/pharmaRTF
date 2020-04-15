@@ -22,12 +22,33 @@ set_font(x, value)
 }
 \value{
 For \code{font()}, the font attribute of the object in the case of
-  \code{rtf_doc}, or each unique font in the table, titles, footnotes, and the
-  overall document in the case of \code{rtf_doc}. For \code{set_font()} and
-  \code{`font<-`()}, the modified object.
+  \code{hf_line} and the table, or each unique font in the table, titles,
+  footnotes, and the overall document in the case of \code{rtf_doc}. For
+  \code{set_font()} and \code{`font<-`()}, the modified object.
 }
 \description{
-These functions modify and return the fonts of a \code{rtf_doc} object and
-associated items. To set the font attribute of a table you should use the
-functions assosiated with that package and modify the table directly.
+These property functions modify or return the fonts of an \code{rtf_doc} object or
+individual titles/footnotes objects of the \code{hf_line} class.
+
+When used on an \code{rtf_doc} object to retrieve fonts, the distinct set of fonts
+of all objects contained within the rtf_doc are returned. When used on an
+\code{rtf_doc} to set fonts, the default font for the RTF document is set.
+
+When used on titles/footnotes (\code{hf_line} objects), the font is either returned
+of set for that individual line.
+}
+\examples{
+library(huxtable)
+ht <- huxtable(
+  column1 = 1:5,
+  column2 = letters[1:5]
+)
+rtf <- rtf_doc(ht, list(hf_line("text", font = "Comic Sans")))
+
+pharmaRTF::font(rtf)
+# Returns "Courier New" "Comic Sans"
+
+pharmaRTF::font(rtf) <- "Times"
+# Returns "Times" "Comic Sans"
+
 }

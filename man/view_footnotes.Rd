@@ -13,5 +13,5 @@ view_footnotes(doc)
 \code{data.frame} of the footnote information
 }
 \description{
-View footnote information
+View footnotes attached to an \code{rtf_doc} as a data.frame.
 }

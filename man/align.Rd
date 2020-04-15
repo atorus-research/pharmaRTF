@@ -4,7 +4,7 @@
 \alias{align}
 \alias{align<-}
 \alias{set_align}
-\title{Return and set text alignment}
+\title{Return or set text alignment}
 \usage{
 align(x, ...)
 
@@ -24,6 +24,25 @@ For \code{align()}, the alignment of the supplied \code{hf_line} object.
   For \code{set_align()} and \code{`align<-`()}, the modified object.
 }
 \description{
-These functions modify and return the text alignment in a \code{hf_line}
+These property functions modify or return the text alignment in a \code{hf_line}
 object. Supported options are: 'left', 'right', 'center', and 'split'.
+
+An alignment option of 'split' requires that two text elements are provided
+in the titles/footnotes \code{hf_line} object. The first text element will
+be aligned on the left and the second on the right.
+}
+\examples{
+library(huxtable)
+ht <- huxtable(
+  column1 = 1:5,
+  column2 = letters[1:5]
+)
+rtf <- rtf_doc(ht, list(hf_line("aTitle")))
+
+pharmaRTF::align(rtf$titles[[1]])
+# Returns "center"
+
+pharmaRTF::align(rtf$titles[[1]]) <- "left"
+# Sets alignment to 'left'
+
 }

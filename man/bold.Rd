@@ -13,7 +13,7 @@ bold(x) <- value
 set_bold(x, value)
 }
 \arguments{
-\item{x}{\code{hf_line} object}
+\item{x}{A \code{hf_line} object}
 
 \item{...}{Additonal arguments passed to method dispatch}
 
@@ -24,5 +24,21 @@ For \code{bold()}, the bold attribute of the supplied \code{hf_line}
   object. For \code{`bold<-`()} and \code{set_bold()}, the modified object.
 }
 \description{
-These functions modify and return the bold attribute of a \code{hf_line} object.
+These property functions modify or return the bold attribute of a
+\code{hf_line} object.
+}
+\examples{
+library(huxtable)
+ht <- huxtable(
+  column1 = 1:5,
+  column2 = letters[1:5]
+)
+rtf <- rtf_doc(ht, list(hf_line("aTitle")))
+
+pharmaRTF::bold(rtf$titles[[1]])
+# Returns FALSE
+
+pharmaRTF::bold(rtf$titles[[1]]) <- TRUE
+# Sets bold to TRUE
+
 }

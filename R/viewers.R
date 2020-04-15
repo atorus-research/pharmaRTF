@@ -46,6 +46,8 @@ view_hf <- function(doc, type=NULL) {
 
 #' View title information
 #'
+#' View titles attached to an \code{rtf_doc} as a data.frame.
+#'
 #' @param doc \code{rtf_doc} object
 #'
 #' @return \code{data.frame} of the title information
@@ -55,6 +57,8 @@ view_titles <- function(doc) {
 }
 
 #' View footnote information
+#'
+#' View footnotes attached to an \code{rtf_doc} as a data.frame.
 #'
 #' @param doc \code{rtf_doc} object
 #'
