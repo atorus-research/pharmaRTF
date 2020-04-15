@@ -31,13 +31,21 @@ dm <- read_xpt(glue("{sdtm_lib}/dm.xpt"))
 advs <- read_xpt(glue("{adam_lib}/advs2.xpt")) %>%
   filter(SAFFL == "Y", ANL01FL == "Y")
 
-advs <- advs %>%
-  group_by(USUBJID, PARAM) %>%
-  mutate(eotfl1 = ifelse(ADT < TRTEDT, "Y", "N")) %>%
-  group_by(eotfl1) %>%
-  mutate(EOTFL = ifelse(ADT == max(ADT) & eotfl1 == "Y", "Y", ""))
+# advs <- advs %>%
+#   group_by(USUBJID, PARAM) %>%
+#   mutate(eotfl1 = ifelse(ADT < TRTEDT, "Y", "N")) %>%
+#   group_by(eotfl1) %>%
+#   mutate(EOTFL = ifelse(ADT == max(ADT) & eotfl1 == "Y", "Y", ""))
 
-# advs$EOTFL <- ifelse(advs[,"AVISIT"] == "End of Treatment", "Y", "")
+advs <- ddply(advs, c("USUBJID", "PARAM"), function(x) {
+  maxdt <- max(
+    x[(x[, "ADT"] < x[, "TRTEDT"] & x[, "ABLFL"] != "Y"), "ADT"],
+      na.rm = TRUE)
+  x$EOTFL <- ifelse(x[, "ADT"] == maxdt, "Y", "N")
+  x
+})
+
+# advs$EOTFL <- ifelse(advs[, "AVISIT"] == "End of Treatment", "Y", "")
 advs$W24FL <- ifelse(advs[, "AVISIT"] == "Week 24", "Y", "")
 
 advs2 <- advs %>%
