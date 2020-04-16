@@ -42,6 +42,7 @@ ui <- fluidPage(
                 actionButton("sendButton", "Submit"),
                 actionButton("backButton", "Prev Question"),
                 actionButton("nextButton", "Next Question"),
+                actionButton("openButton" , "Open RTF"),
                 title = "Current Test"
             ),
             box(
@@ -57,8 +58,11 @@ ui <- fluidPage(
 server <- function(input, output) {
 
     vur <- reactiveValues(df = {
-        df = readRDS("../vur.Rds")
-        df[!df$AutoFlag,]
+        df <- read.csv("../test_cases.csv")
+        df <- df[df$TestType == "visual",]
+        df$Response <- FALSE
+        df$Log <- NA
+        df
         })
 
     observeEvent(input$sendButton, {
@@ -70,7 +74,7 @@ server <- function(input, output) {
 
     output$vurOutput <- renderUI({
         radioButtons("vurButtons",
-                     vur$df[((input$nextButton - input$backButton + input$sendButton) %% nrow(vur$df)) + 1, "Questions"],
+                     vur$df[((input$nextButton - input$backButton + input$sendButton) %% nrow(vur$df)) + 1, "Text"],
                      choices = c(TRUE, FALSE))
     })
 
@@ -80,14 +84,28 @@ server <- function(input, output) {
         rmarkdown::render("../Validate.Rmd", "pdf_document")
     })
 
-    output$UserDf <- renderTable(print(vur$df[!vur$df$AutoFlag,]))
+    output$UserDf <- renderTable(print(vur$df[, c("CaseNo", "Text", "OutputFile", "Response")]))
 
     output$userInfo <- renderText({
         paste0("User: ", Sys.getenv("USER"), "\n",
-        "Tests Passed/Failed/Total: ",
+               "Tests Passed/Failed/Total: ",
                sum(vur$df$Response), "/",
                sum(!vur$df$Response), "/",
                length(vur$df$Response))
+    })
+
+    observeEvent(input$openButton, {
+        filePath <- paste0(getwd(),
+                           "/Test_Case_Code/rtf-test-files/",
+                           vur$df[((input$nextButton - input$backButton + input$sendButton) %% nrow(vur$df)) + 1,
+                                  "OutputFile"]
+        )
+        if(file.exists(filePath)){
+            showModal(modalDialog("This doesn't work yet"))
+            # system(filePath)
+        } else {
+            showModal(modalDialog("RTF File Not found"))
+        }
     })
 }
 
