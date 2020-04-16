@@ -9,7 +9,7 @@ context('RStudio Conf 2020 Success')
 library(pharmaRTF)
 library(huxtable)
 
-test_that('T 1.1.1',{
+test_that('T1.01',{
 
   # dataframe requiring one page of output
   ht <- huxtable::huxtable(
@@ -20,15 +20,13 @@ test_that('T 1.1.1',{
   rtf <- pharmaRTF::rtf_doc(ht, list(hf_line("Title")), list(hf_line("Footnote")))
 
   # write to rtf
-  pharmaRTF::write_rtf(rtf, file='test_1_1_1.rtf')
-
-  #expect_true(FALSE)
+  pharmaRTF::write_rtf(rtf, file='test_1_01.rtf')
 
   rm(ht)
   rm(rtf)
 })
 
-test_that('T 1.1.2',{
+test_that('T1.02',{
 
   # dataframe requiring multiple pages of output
   ht <- huxtable::huxtable(
@@ -39,9 +37,7 @@ test_that('T 1.1.2',{
   rtf <- pharmaRTF::rtf_doc(ht, list(hf_line("Title")), list(hf_line("Footnote")))
 
   # write to rtf
-  pharmaRTF::write_rtf(rtf, file='test_1_1_2.rtf')
-
-  #expect_true(FALSE)
+  pharmaRTF::write_rtf(rtf, file='test_1_02.rtf')
 
   rm(ht)
   rm(rtf)
