@@ -62,17 +62,20 @@ adlbc2 <- adlbc %>%
   complete(nesting(LBTEST, TRTP, LBNRIND)) %>%
   summarise(N = n()) %>%
   group_by(LBTEST, TRTP) %>%
-  mutate(tot = sum(N)) %>%
+  mutate(tot = sum(N))
+
+adlbc_pvals <- list()
+
+for(i in seq(nrow(adlbc2)/9)) {
+  adlbc_pvals[i] <- round(fisher.test(
+    matrix(unlist(adlbc2[((i-1)*9+1):(i*9), "N"]), nrow = 3, ncol = 3, byrow = TRUE)
+  )$p.value, 3)
+}
+
+adlbc3 <- adlbc2 %>%
   mutate(n_w_pct = n_pct(N, tot)) %>%
-  pivot_wider(id_cols = LBTEST,names_from = c(TRTP, LBNRIND), values_from = n_w_pct)
-
-
-test <- adlbc2 %>%
-  filter(LBTEST == "ALBUMIN")
-
-fish_p(test, test$N, test$TRTP)
-
-
+  pivot_wider(id_cols = LBTEST,names_from = c(TRTP, LBNRIND), values_from = n_w_pct) %>%
+  add_column("p-val\\line[1]" = adlbc_pvals)
 
 ### Heme
 adlbh <- read_xpt(glue("{adam_lib}/adlbh.xpt")) %>%
@@ -102,12 +105,23 @@ adlbh2 <- adlbh %>%
   complete(nesting(LBTEST, TRTP, LBNRIND)) %>%
   summarise(N = n()) %>%
   group_by(LBTEST, TRTP) %>%
-  mutate(tot = sum(N)) %>%
+  mutate(tot = sum(N))
+
+adlbh_pvals <- list()
+
+for(i in seq(nrow(adlbh2)/9)) {
+  adlbh_pvals[i] <- round(fisher.test(
+    matrix(unlist(adlbh2[((i-1)*9+1):(i*9), "N"]), nrow = 3, ncol = 3, byrow = TRUE)
+  )$p.value, 3)
+}
+
+
+adlbh3 <- adlbh2 %>%
   mutate(n_w_pct = n_pct(N, tot)) %>%
   pivot_wider(id_cols = LBTEST,names_from = c(TRTP, LBNRIND), values_from = n_w_pct) %>%
-  ungroup()
+  add_column("p-val\\line[1]" = adlbh_pvals)
 
-final <- adlbc2 %>%
+final <- adlbc3 %>%
   ungroup() %>%
   add_row("LBTEST" = "----------", .before = 1) %>%
   add_row("LBTEST" = "CHEMISTRY", .before = 1) %>%
@@ -115,7 +129,8 @@ final <- adlbc2 %>%
   add_row("LBTEST" = "") %>%
   add_row("LBTEST" = "HEMATOLOGY") %>%
   add_row("LBTEST" = "----------") %>%
-  rbind(adlbh2)
+  rbind(ungroup(adlbh3))
+
 
 names(final) <- c(
   "",
@@ -127,11 +142,26 @@ names(final) <- c(
   "High",
   "Low",
   "Normal",
-  "High"
+  "High",
+  "p-val\\line[1]"
 )
 
+dm <- read_xpt(glue("{sdtm_lib}/dm.xpt"))
+headers <- dm %>%
+  filter(ARM != "Screen Failure") %>%
+  group_by(ARM) %>%
+  summarise(N = n()) %>%
+  mutate(label = paste0(ARM, " (N=", N, ")"))
 
 
+# Write into doc object and pull titles/footnotes from excel file
+doc <- rtf_doc(final, header.rows = 2) %>% titles_and_footnotes_from_df(
+  from.file='./scripts/table_examples/titles.xlsx',
+  reader=example_custom_reader,
+  table_number='14-6.02') %>%
+  set_font_size(10)
 
 
+# Write out the RTF
+write_rtf(doc, file='./scripts/table_examples/outputs/14-6.02.rtf')
 
