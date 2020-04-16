@@ -1,5 +1,7 @@
 #Validation Script
 
+make_test_case_rmd("vignettes/test_cases.csv")
+
 # Source all of the files in the rtf_test_files directory
 lapply(list.files("vignettes/Validation/Test_Case_Code", full.names = TRUE,
                   pattern = ".R$"), source)
