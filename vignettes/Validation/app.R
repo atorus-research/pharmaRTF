@@ -1,37 +1,5 @@
 library(shiny)
 library(shinydashboard)
-
-Validation_User_Responses <- data.frame(
-    Case_Index = c(
-        "2.1.1.1",
-        "2.1.1.2",
-        "2.1.1.3",
-        "2.1.2.1",
-        "2.1.2.2",
-        "2.1.2.3"
-        ),
-    Questions = c(
-        "Verify margins are set to expected default:1,1,1,1",
-        "Check attribute to verify margins can be changed to:2,.5,1.5,.25",
-        "Check output to verify margins have been changed to:2,.5,1.5,.25",
-        "header_footer1 default to 0.5, 0.5",
-        "header_footer2 set to 0.25, 1",
-        "Output changed to 0.25, 1"
-        ),
-    Response = FALSE,
-    AutoFlag = c(
-        TRUE,
-        TRUE,
-        FALSE,
-        TRUE,
-        TRUE,
-        FALSE
-    ),
-    Log = NA
-)
-# saveRDS(Validation_User_Responses, file = "vignettes/vur.Rds")
-
-
 ui <- fluidPage(
     dashboardPage(
         dashboardHeader(title = "Validation User Application"),
@@ -42,7 +10,7 @@ ui <- fluidPage(
                 actionButton("sendButton", "Submit"),
                 actionButton("backButton", "Prev Question"),
                 actionButton("nextButton", "Next Question"),
-                actionButton("openButton" , "Open RTF"),
+                actionButton("openButton" , "Open File"),
                 title = "Current Test"
             ),
             box(
@@ -81,7 +49,7 @@ server <- function(input, output) {
     observeEvent(input$saveButton, {
         saveRDS(vur$df, "vur_auto.Rds")
         showModal(modalDialog("Validation User Responses written"))
-        rmarkdown::render("../Validate.Rmd", "pdf_document")
+        rmarkdown::render("../../Validate.Rmd", "pdf_document")
     })
 
     output$UserDf <- renderTable(print(vur$df[, c("CaseNo", "Text", "OutputFile", "Response")]))

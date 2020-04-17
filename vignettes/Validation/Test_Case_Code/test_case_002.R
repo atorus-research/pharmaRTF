@@ -10,6 +10,9 @@ library(pharmaRTF)
 library(huxtable)
 library(testthat)
 
+vur <- NULL
+if(file.exists("~/pharmaRTF/vignettes/Validation/vur_auto.Rds")) vur <- readRDS("~/pharmaRTF/vignettes/Validation/vur_auto.Rds")
+
 ht <- huxtable::huxtable(
   column1 = c("Header1", 1:10),
   column2 = c("Header2", letters[1:10])
@@ -17,128 +20,211 @@ ht <- huxtable::huxtable(
 
 test_that('T2.01',{
 
-  rtf <- pharmaRTF::rtf_doc(ht)
+  if(is.null(vur)) {
+    rtf1 <- pharmaRTF::rtf_doc(ht)
+    save(rtf1, file = "~/pharmaRTF/vignettes/Validation/Test_Case_Code/Obj/rtf_T2.01_a.RData")
 
-  # Verify margins are set to expected default:1,1,1,1
-  testthat::expect_equal(c(top=1, bottom=1, left=1, right=1), pharmaRTF::margins(rtf))
+    rtf2 <- rtf1
+    pharmaRTF::margins(rtf2) <- c(top = 2, bottom = .5, left = 1.5, right = .25)
+    save(rtf2, file = "~/pharmaRTF/vignettes/Validation/Test_Case_Code/Obj/rtf_T2.01_b.RData")
 
-  # Change margins to 2,.5,1.5,.25 and output
-  pharmaRTF::margins(rtf) <- c(top = 2, bottom = .5, left = 1.5, right = .25)
-  pharmaRTF::write_rtf(rtf, file='test_2_01.rtf')
+    pharmaRTF::write_rtf(rtf2, file='~/pharmaRTF/vignettes/Validation/Test_Case_Code/output/test_2_01.rtf')
+  } else {
+    load("~/pharmaRTF/vignettes/Validation/Test_Case_Code/Obj/rtf_T2.01_a.RData")
+    load("~/pharmaRTF/vignettes/Validation/Test_Case_Code/Obj/rtf_T2.01_b.RData")
+  }
+  skip_if(is.null(vur))
+  testthat::expect_equal(c(top=1, bottom=1, left=1, right=1), pharmaRTF::margins(rtf1), label = "T2.01.1")
+  testthat::expect_equal(c(top=2, bottom=.5, left=1.5, right=.25), pharmaRTF::margins(rtf2), label = "T2.01.1")
 
-  rm(rtf)
+  testthat::expect_true(vur[vur$ID == "T2.01.02", "Response"], label = "T2.01.2")
 })
 
 test_that('T2.02',{
 
-  rtf <- pharmaRTF::rtf_doc(ht)
+  if(is.null(vur)) {
+    rtf1 <- pharmaRTF::rtf_doc(ht)
+    save(rtf1, file = "~/pharmaRTF/vignettes/Validation/Test_Case_Code/Obj/rtf_T2.02_a.RData")
 
-  # Verify header and footer heights are set to expected default:.5,.5
-  testthat::expect_equal(.5, pharmaRTF::header_height(rtf)) %>%
-    testthat::expect_equal(.5, pharmaRTF::footer_height(rtf))
+    rtf2 <- rtf1
+    pharmaRTF::header_height(rtf2) <- .25
+    pharmaRTF::footer_height(rtf2) <- 1
+    save(rtf2, file = "~/pharmaRTF/vignettes/Validation/Test_Case_Code/Obj/rtf_T2.02_b.RData")
 
-  # Change header and footer heights to .25,1 and output
-  pharmaRTF::header_height(rtf) <- .25
-  pharmaRTF::footer_height(rtf) <- 1
-  pharmaRTF::write_rtf(rtf, file='test_2_02.rtf')
+    pharmaRTF::write_rtf(rtf2, file='~/pharmaRTF/vignettes/Validation/Test_Case_Code/output/test_2_02.rtf')
+  } else{
+    load("~/pharmaRTF/vignettes/Validation/Test_Case_Code/Obj/rtf_T2.02_a.RData")
+    load("~/pharmaRTF/vignettes/Validation/Test_Case_Code/Obj/rtf_T2.02_b.RData")
+  }
+  skip_if(is.null(vur))
+  testthat::expect_equal(.5, pharmaRTF::header_height(rtf1), label = "T2.01.1")
+  testthat::expect_equal(.5, pharmaRTF::footer_height(rtf1), label = "T2.01.1")
 
-  rm(rtf)
+  testthat::expect_equal(.25, pharmaRTF::header_height(rtf2), label = "T2.01.2")
+  testthat::expect_equal(1, pharmaRTF::footer_height(rtf2), label = "T2.01.2")
+
+  testthat::expect_true(vur[vur$ID == "T2.02.02", "Response"], label = "T2.01.2")
 })
 
 test_that('T2.03',{
 
-  rtf <- pharmaRTF::rtf_doc(ht)
 
-  # Verify page size is set to expected default:8.5,11
-  testthat::expect_equal(c(height = 8.5, width = 11), pharmaRTF::pagesize(rtf))
+  if(is.null(vur)) {
+    rtf1 <- pharmaRTF::rtf_doc(ht)
 
-  # Change page size to 9,12 and output
-  pharmaRTF::pagesize(rtf) <- c(height = 9, width = 12)
-  pharmaRTF::write_rtf(rtf, file='test_2_03.rtf')
+    save(rtf1, file = "~/pharmaRTF/vignettes/Validation/Test_Case_Code/Obj/rtf_T2.03_a.RData")
 
-  rm(rtf)
+    rtf2 <- rtf1
+    pharmaRTF::pagesize(rtf2) <- c(height = 9, width = 12)
+    save(rtf2, file = "~/pharmaRTF/vignettes/Validation/Test_Case_Code/Obj/rtf_T2.03_b.RData")
+
+    pharmaRTF::write_rtf(rtf2, file='~/pharmaRTF/vignettes/Validation/Test_Case_Code/output/test_2_03.rtf')
+  } else {
+    load("~/pharmaRTF/vignettes/Validation/Test_Case_Code/Obj/rtf_T2.03_a.RData")
+    load("~/pharmaRTF/vignettes/Validation/Test_Case_Code/Obj/rtf_T2.03_b.RData")
+  }
+  skip_if(is.null(vur))
+  testthat::expect_equal(c(height = 8.5, width = 11), pharmaRTF::pagesize(rtf1), label = "T2.03.1")
+  testthat::expect_equal(c(height = 9, width = 12), pharmaRTF::pagesize(rtf2), label = "T2.03.2")
+
+  testthat::expect_true(vur[vur$ID == "T2.03.02", "Response"], label = "T2.03.2")
 })
 
 test_that('T2.04',{
 
-  rtf <- pharmaRTF::rtf_doc(ht)
+  if(is.null(vur)) {
+    rtf1 <- pharmaRTF::rtf_doc(ht)
 
-  # Verify orientation is set to expected default:landscape
-  testthat::expect_equal("landscape",pharmaRTF::orientation(rtf))
+    save(rtf1, file = "~/pharmaRTF/vignettes/Validation/Test_Case_Code/Obj/rtf_T2.04_a.RData")
 
-  # Change orientation to portrait and output
-  pharmaRTF::orientation(rtf) <- "portrait"
-  pharmaRTF::write_rtf(rtf, file='test_2_04.rtf')
+    rtf2 <- rtf1
+    pharmaRTF::orientation(rtf2) <- "portrait"
+    save(rtf2, file = "~/pharmaRTF/vignettes/Validation/Test_Case_Code/Obj/rtf_T2.04_b.RData")
 
-  rm(rtf)
+    pharmaRTF::write_rtf(rtf2, file='~/pharmaRTF/vignettes/Validation/Test_Case_Code/output/test_2_04.rtf')
+
+  } else {
+    load("~/pharmaRTF/vignettes/Validation/Test_Case_Code/Obj/rtf_T2.04_a.RData")
+    load("~/pharmaRTF/vignettes/Validation/Test_Case_Code/Obj/rtf_T2.04_b.RData")
+  }
+  skip_if(is.null(vur))
+  testthat::expect_equal("landscape",pharmaRTF::orientation(rtf1), label = "T2.04.1")
+  testthat::expect_equal("portrait",pharmaRTF::orientation(rtf2), label = "T2.04.2")
+
+  testthat::expect_true(vur[vur$ID == "T2.04.02", "Response"], label = "T2.04.2")
 })
 
 test_that('T2.05',{
 
-  rtf <- pharmaRTF::rtf_doc(ht)
+  if(is.null(vur)) {
+    rtf1 <- pharmaRTF::rtf_doc(ht)
+    save(rtf1, file = "~/pharmaRTF/vignettes/Validation/Test_Case_Code/Obj/rtf_T2.05_a.RData")
 
-  # Verify font size is set to expected default:12
-  testthat::expect_equal(12,pharmaRTF::font_size(rtf))
+    rtf2 <- rtf1
+    pharmaRTF::font_size(rtf2) <- 14
+    save(rtf2, file = "~/pharmaRTF/vignettes/Validation/Test_Case_Code/Obj/rtf_T2.05_b.RData")
 
-  # Change font size to 14 and output
-  pharmaRTF::font_size(rtf) <- 14
-  pharmaRTF::write_rtf(rtf, file='test_2_05.rtf')
+    pharmaRTF::write_rtf(rtf2, file='~/pharmaRTF/vignettes/Validation/Test_Case_Code/output/test_2_05.rtf')
 
-  rm(rtf)
+  } else {
+    load("~/pharmaRTF/vignettes/Validation/Test_Case_Code/Obj/rtf_T2.05_a.RData")
+    load("~/pharmaRTF/vignettes/Validation/Test_Case_Code/Obj/rtf_T2.05_b.RData")
+  }
+  skip_if(is.null(vur))
+  testthat::expect_equal(12,pharmaRTF::font_size(rtf1), label = "T2.05.1")
+  testthat::expect_equal(14,pharmaRTF::font_size(rtf2), label = "T2.05.2")
+
+  testthat::expect_true(vur[vur$ID == "T2.05.02", "Response"], label = "T2.05.2")
 })
 
 test_that('T2.06',{
 
-  rtf <- pharmaRTF::rtf_doc(ht)
+  if(is.null(vur)) {
+    rtf1 <- pharmaRTF::rtf_doc(ht)
+    save(rtf1, file = "~/pharmaRTF/vignettes/Validation/Test_Case_Code/Obj/rtf_T2.06_a.RData")
 
-  # Verify font is set to expected default:Courier New
-  testthat::expect_equal("Courier New",pharmaRTF::font(rtf))
+    rtf2 <- rtf1
+    pharmaRTF::font(rtf2) <- "Comic Sans"
+    save(rtf2, file = "~/pharmaRTF/vignettes/Validation/Test_Case_Code/Obj/rtf_T2.06_b.RData")
 
-  # Change font to Comic Sans and output
-  pharmaRTF::font(rtf) <- "Comic Sans"
-  pharmaRTF::write_rtf(rtf, file='test_2_06.rtf')
+    pharmaRTF::write_rtf(rtf2, file='~/pharmaRTF/vignettes/Validation/Test_Case_Code/output/test_2_06.rtf')
 
-  rm(rtf)
+  } else {
+    load("~/pharmaRTF/vignettes/Validation/Test_Case_Code/Obj/rtf_T2.06_a.RData")
+    load("~/pharmaRTF/vignettes/Validation/Test_Case_Code/Obj/rtf_T2.06_b.RData")
+  }
+  skip_if(is.null(vur))
+  testthat::expect_equal("Courier New",pharmaRTF::font(rtf1), label = "T2.06.1")
+  testthat::expect_equal("Comic Sans",pharmaRTF::font(rtf2), label = "T2.06.2")
+
+  testthat::expect_true(vur[vur$ID == "T2.06.02", "Response"], label = "T2.06.2")
 })
 
 test_that('T2.07',{
 
-  rtf <- pharmaRTF::rtf_doc(ht)
+  if(is.null(vur)) {
+    rtf1 <- pharmaRTF::rtf_doc(ht)
+    save(rtf1, file = "~/pharmaRTF/vignettes/Validation/Test_Case_Code/Obj/rtf_T2.07_a.RData")
 
-  # Verify header rows is set to expected default:1
-  testthat::expect_equal(1,pharmaRTF::header_rows(rtf))
+    rtf2 <- rtf1
+    pharmaRTF::header_rows(rtf2) <- 2
+    save(rtf2, file = "~/pharmaRTF/vignettes/Validation/Test_Case_Code/Obj/rtf_T2.07_b.RData")
 
-  # Change header rows to 2 and output
-  pharmaRTF::header_rows(rtf) <- 2
-  pharmaRTF::write_rtf(rtf, file='test_2_07.rtf')
+    pharmaRTF::write_rtf(rtf2, file='~/pharmaRTF/vignettes/Validation/Test_Case_Code/output/test_2_07.rtf')
 
-  rm(rtf)
+  } else {
+    load("~/pharmaRTF/vignettes/Validation/Test_Case_Code/Obj/rtf_T2.07_a.RData")
+    load("~/pharmaRTF/vignettes/Validation/Test_Case_Code/Obj/rtf_T2.07_b.RData")
+  }
+  skip_if(is.null(vur))
+  testthat::expect_equal(1,pharmaRTF::header_rows(rtf1), label = "T2.07.1")
+  testthat::expect_equal(2,pharmaRTF::header_rows(rtf2), label = "T2.07.2")
+
+  testthat::expect_true(vur[vur$ID == "T2.07.02", "Response"], label = "T2.07.2")
 })
 
 test_that('T2.08',{
 
-  rtf <- pharmaRTF::rtf_doc(ht)
+  if(is.null(vur)) {
+    rtf1 <- pharmaRTF::rtf_doc(ht)
+    save(rtf1, file = "~/pharmaRTF/vignettes/Validation/Test_Case_Code/Obj/rtf_T2.08_a.RData")
 
-  # Verify column header buffers are set to expected default:0,0
-  testthat::expect_equal(c(top = 0, bottom = 0),pharmaRTF::column_header_buffer(rtf))
+    rtf2 <- rtf1
+    pharmaRTF::column_header_buffer(rtf2) <- c(top = 2, bottom = 1)
+    save(rtf2, file = "~/pharmaRTF/vignettes/Validation/Test_Case_Code/Obj/rtf_T2.08_b.RData")
 
-  # Change column header buffers to 2,1 and output
-  pharmaRTF::column_header_buffer(rtf) <- c(top = 2, bottom = 1)
-  pharmaRTF::write_rtf(rtf, file='test_2_08.rtf')
+    pharmaRTF::write_rtf(rtf2, file='~/pharmaRTF/vignettes/Validation/Test_Case_Code/output/test_2_08.rtf')
 
-  rm(rtf)
+  } else {
+    load("~/pharmaRTF/vignettes/Validation/Test_Case_Code/Obj/rtf_T2.08_a.RData")
+    load("~/pharmaRTF/vignettes/Validation/Test_Case_Code/Obj/rtf_T2.08_b.RData")
+  }
+  skip_if(is.null(vur))
+  testthat::expect_equal(c(top = 0, bottom = 0),pharmaRTF::column_header_buffer(rtf1), label = "T2.08.1")
+  testthat::expect_equal(c(top = 2, bottom = 1),pharmaRTF::column_header_buffer(rtf2), label = "T2.08.2")
+
+  testthat::expect_true(vur[vur$ID == "T2.08.02", "Response"], label = "T2.08.2")
 })
 
 test_that('T2.09',{
 
-  rtf <- pharmaRTF::rtf_doc(ht)
+  if(is.null(vur)) {
+    rtf1 <- pharmaRTF::rtf_doc(ht)
+    save(rtf1, file = "~/pharmaRTF/vignettes/Validation/Test_Case_Code/Obj/rtf_T2.09_a.RData")
 
-  # Verify ignore cell padding is set to expected default:FALSE
-  testthat::expect_equal(FALSE,pharmaRTF::ignore_cell_padding(rtf))
+    rtf2 <- rtf1
+    pharmaRTF::ignore_cell_padding(rtf2) <- TRUE
+    save(rtf2, file = "~/pharmaRTF/vignettes/Validation/Test_Case_Code/Obj/rtf_T2.09_b.RData")
 
-  # Change ignore cell padding to TRUE and output
-  pharmaRTF::ignore_cell_padding(rtf) <- TRUE
-  pharmaRTF::write_rtf(rtf, file='test_2_09.rtf')
+    pharmaRTF::write_rtf(rtf2, file='~/pharmaRTF/vignettes/Validation/Test_Case_Code/output/test_2_09.rtf')
 
-  rm(rtf)
+  } else {
+    load("~/pharmaRTF/vignettes/Validation/Test_Case_Code/Obj/rtf_T2.09_a.RData")
+    load("~/pharmaRTF/vignettes/Validation/Test_Case_Code/Obj/rtf_T2.09_b.RData")
+  }
+  skip_if(is.null(vur))
+  testthat::expect_equal(FALSE,pharmaRTF::ignore_cell_padding(rtf1), label = "T2.09.1")
+  testthat::expect_equal(TRUE,pharmaRTF::ignore_cell_padding(rtf2), label = "T2.09.2")
+
+  testthat::expect_true(vur[vur$ID == "T2.09.02", "Response"], label = "T2.09.2")
 })

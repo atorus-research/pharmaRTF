@@ -78,8 +78,7 @@ eval_test_code <- function(one_file) {
   kable(
     out,
     escape = FALSE,
-    col.names = c("Test", "Results", "Pass/Fail"),
-    format = "latex") %>%
+    col.names = c("Test", "Results", "Pass/Fail")) %>%
     kableExtra::kable_styling()
 }
 
@@ -246,7 +245,7 @@ make_test_case_rmd <- function(file) {
     )
 
     # Write the lines to each output file
-    writeLines(outfile, paste0('vignettes/Validation/TestCases/test_cases_', str_pad(caseno, width=3, pad="0"), '.Rmd'))
+    writeLines(outfile, paste0('vignettes/Validation/Test_Cases/test_cases_', str_pad(caseno, width=3, pad="0"), '.Rmd'))
   }
 }
 

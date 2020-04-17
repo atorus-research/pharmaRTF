@@ -1,5 +1,11 @@
 #Validation Script
 
+setwd("~/pharmaRTF")
+library(pharmaRTF)
+library(tidyverse)
+library(testthat)
+source("vignettes/helper_test_code.R")
+
 make_test_case_rmd("vignettes/test_cases.csv")
 
 # Source all of the files in the rtf_test_files directory
