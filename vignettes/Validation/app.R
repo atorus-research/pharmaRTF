@@ -50,7 +50,7 @@ server <- function(input, output) {
         saveRDS(vur$df, "~/pharmaRTF/vignettes/Validation/vur_auto.Rds")
         showModal(modalDialog("Validation User Responses written"))
         rmarkdown::render("~/pharmaRTF/vignettes/Validate.Rmd", "pdf_document")
-        file.remove("~/pharmaRTF/vignettes/Validation/vur_auto.Rds")
+        # file.remove("~/pharmaRTF/vignettes/Validation/vur_auto.Rds")
     })
 
     output$UserDf <- renderTable(vur$df[, c("ID", "Text", "OutputFile", "Response")])

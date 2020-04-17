@@ -91,10 +91,12 @@ list.files(test_case_dir,
 
 ***
 # Validation Results
-## General
-### 1 General Specification
+## Specifications
 ```{r spec_1}
 scrape_spec_rmd(file.path(spec_dir, "specification_001.Rmd"))
+scrape_spec_rmd(file.path(spec_dir, "specification_002.Rmd"))
+scrape_spec_rmd(file.path(spec_dir, "specification_003.Rmd"))
+scrape_spec_rmd(file.path(spec_dir, "specification_004.Rmd"))
 ```
 
 ### General Specification Test Cases
@@ -108,11 +110,6 @@ eval_test_code(file.path(test_code_dir, "test_case_001.R"))
 ```
 
 ***
-## RTF Document Characteristics
-### 2 RTF Document Properties
-```{r spec_2}
-scrape_spec_rmd(file.path(spec_dir, "specification_002.Rmd"))
-```
 
 ### RTF Document Characteristics Test Cases
 ```{r test_case_2, out.width='0.5\\textwidth'}
@@ -126,10 +123,6 @@ eval_test_code(file.path(test_code_dir, "test_case_002.R"))
 
 ***
 ## Titles and Footnotes
-### 3 Titles and Footnotes Specification
-```{r spec_3}
-scrape_spec_rmd(file.path(spec_dir, "specification_003.Rmd"))
-```
 
 ### Titles and Footnotes Test Cases
 
@@ -137,10 +130,6 @@ scrape_spec_rmd(file.path(spec_dir, "specification_003.Rmd"))
 
 ***
 ## Table Level Properties
-### 4 Table Level Properties Specifications
-```{r spec_4}
-scrape_spec_rmd(file.path(spec_dir, "specification_004.Rmd"))
-```
 
 ### Table Level Properties Test Cases
 

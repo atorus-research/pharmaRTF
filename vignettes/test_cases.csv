@@ -1,9 +1,9 @@
-﻿CaseNo,LineType,Level,Specs Tested,ID,Text,TestType,OutputFile
+CaseNo,LineType,Level,Specs Tested,ID,Text,TestType,OutputFile
 1,Title,0,,,Test Case 001,,
 1,UpdatedBy,0,,,Ashley Tarasiewicz,,
 1,UpdatedDate,0,,,4/16/2020,,
 1,Setup,1,,,_No prerequisites required_,,
-1,Test,2,"1.1, 1.2",T1.01,Output an RTF using a dataframe requiring one page of output and verify output and paging are appropiate,,
+1,TestCases,2,"1.1, 1.2",T1.01,Output an RTF using a dataframe requiring one page of output and verify output and paging are appropiate,,
 1,TestCases,3,,T1.01.01,Verify document outputs as an RTF and opens in Word,visual,test_1_01.rtf
 1,TestCases,3,,T1.01.02,"Verify output has column headers (""Header1"", ""Header2"") above the table, a title (""Title"") at the top, and a footnote (""Footnote"") at the bottom",visual,test_1_01.rtf
 1,TestCases,2,"1.1, 1.2",T1.02,Output an RTF using a dataframe requiring multiple pages of output and verify output and paging are appropiate,,
