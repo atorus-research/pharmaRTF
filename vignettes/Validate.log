@@ -1,9 +1,9 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2020.2.7)  16 APR 2020 22:06
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2020.2.7)  17 APR 2020 13:48
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
-**/tmp/RtmpmVaUgJ/preview-19fbd74b51676.dir/Validate.tex
-(/tmp/RtmpmVaUgJ/preview-19fbd74b51676.dir/Validate.tex
+**Validate.tex
+(./Validate.tex
 LaTeX2e <2017-04-15>
 Babel <3.18> and hyphenation patterns for 3 language(s) loaded.
 (/usr/share/texlive/texmf-dist/tex/latex/base/article.cls
@@ -807,184 +807,36 @@ less on input line 77.
 Package Fancyhdr Warning: \fancyfoot's `E' option without twoside option is use
 less on input line 78.
 
-(/usr/share/texlive/texmf-dist/tex/latex/booktabs/booktabs.sty
-Package: booktabs 2016/04/27 v1.618033 publication quality tables
-\heavyrulewidth=\dimen127
-\lightrulewidth=\dimen128
-\cmidrulewidth=\dimen129
-\belowrulesep=\dimen130
-\belowbottomsep=\dimen131
-\aboverulesep=\dimen132
-\abovetopsep=\dimen133
-\cmidrulesep=\dimen134
-\cmidrulekern=\dimen135
-\defaultaddspace=\dimen136
-\@cmidla=\count115
-\@cmidlb=\count116
-\@aboverulesep=\dimen137
-\@belowrulesep=\dimen138
-\@thisruleclass=\count117
-\@lastruleclass=\count118
-\@thisrulewidth=\dimen139
-) (/usr/share/texlive/texmf-dist/tex/latex/tools/longtable.sty
-Package: longtable 2014/10/28 v4.11 Multi-page Table package (DPC)
-\LTleft=\skip60
-\LTright=\skip61
-\LTpre=\skip62
-\LTpost=\skip63
-\LTchunksize=\count119
-\LTcapwidth=\dimen140
-\LT@head=\box30
-\LT@firsthead=\box31
-\LT@foot=\box32
-\LT@lastfoot=\box33
-\LT@cols=\count120
-\LT@rows=\count121
-\c@LT@tables=\count122
-\c@LT@chunks=\count123
-\LT@p@ftn=\toks27
-) (/usr/share/texlive/texmf-dist/tex/latex/tools/array.sty
-Package: array 2016/10/06 v2.4d Tabular extension package (FMi)
-\col@sep=\dimen141
-\extrarowheight=\dimen142
-\NC@list=\toks28
-\extratabsurround=\skip64
-\backup@length=\skip65
-) (/usr/share/texlive/texmf-dist/tex/latex/multirow/multirow.sty
-Package: multirow 2016/11/25 v2.2 Span multiple rows of a table
-\multirow@colwidth=\skip66
-\multirow@cntb=\count124
-\multirow@dima=\skip67
-\bigstrutjot=\dimen143
-) (/usr/share/texlive/texmf-dist/tex/latex/wrapfig/wrapfig.sty
-\wrapoverhang=\dimen144
-\WF@size=\dimen145
-\c@WF@wrappedlines=\count125
-\WF@box=\box34
-\WF@everypar=\toks29
-Package: wrapfig 2003/01/31  v 3.6
-) (/usr/share/texlive/texmf-dist/tex/latex/colortbl/colortbl.sty
-Package: colortbl 2012/02/13 v1.0a Color table columns (DPC)
-(/usr/share/texlive/texmf-dist/tex/latex/graphics/color.sty
-Package: color 2016/07/10 v1.1e Standard LaTeX Color (DPC)
-(/usr/share/texlive/texmf-dist/tex/latex/graphics-cfg/color.cfg
-File: color.cfg 2016/01/02 v1.6 sample color configuration
-)
-Package color Info: Driver file: pdftex.def on input line 147.
-)
-\everycr=\toks30
-\minrowclearance=\skip68
-) (/usr/share/texlive/texmf-dist/tex/latex/oberdiek/pdflscape.sty
-Package: pdflscape 2016/05/14 v0.11 Display of landscape pages in PDF (HO)
-(/usr/share/texlive/texmf-dist/tex/latex/graphics/lscape.sty
-Package: lscape 2000/10/22 v3.01 Landscape Pages (DPC)
-)
-Package pdflscape Info: Auto-detected driver: pdftex on input line 81.
-) (/usr/share/texlive/texmf-dist/tex/latex/tabu/tabu.sty
-Package: tabu 2011/02/26 v2.8 - flexible LaTeX tabulars (FC)
-(/usr/share/texlive/texmf-dist/tex/latex/varwidth/varwidth.sty
-Package: varwidth 2009/03/30 ver 0.92;  Variable-width minipages
-\@vwid@box=\box35
-\sift@deathcycles=\count126
-\@vwid@loff=\dimen146
-\@vwid@roff=\dimen147
-)
-\c@taburow=\count127
-\tabu@nbcols=\count128
-\tabu@cnt=\count129
-\tabu@Xcol=\count130
-\tabu@alloc=\count131
-\tabu@nested=\count132
-\tabu@target=\dimen148
-\tabu@spreadtarget=\dimen149
-\tabu@naturalX=\dimen150
-\tabucolX=\dimen151
-\tabu@Xsum=\dimen152
-\extrarowdepth=\dimen153
-\abovetabulinesep=\dimen154
-\belowtabulinesep=\dimen155
-\tabustrutrule=\dimen156
-\tabu@thebody=\toks31
-\tabu@footnotes=\toks32
-\tabu@box=\box36
-\tabu@arstrutbox=\box37
-\tabu@hleads=\box38
-\tabu@vleads=\box39
-\tabu@cellskip=\skip69
-) (/usr/share/texlive/texmf-dist/tex/latex/threeparttable/threeparttable.sty
-Package: threeparttable 2003/06/13  v 3.0
-\@tempboxb=\box40
-) (/usr/share/texlive/texmf-dist/tex/latex/threeparttablex/threeparttablex.sty
-Package: threeparttablex 2013/07/23 v0.3 by daleif
-(/usr/share/texlive/texmf-dist/tex/latex/environ/environ.sty
-Package: environ 2014/05/04 v0.3 A new way to define environments
-(/usr/share/texlive/texmf-dist/tex/latex/trimspaces/trimspaces.sty
-Package: trimspaces 2009/09/17 v1.1 Trim spaces around a token list
-))
-\TPTL@width=\skip70
-) (/usr/share/texlive/texmf-dist/tex/generic/ulem/ulem.sty
-\UL@box=\box41
-\UL@hyphenbox=\box42
-\UL@skip=\skip71
-\UL@hook=\toks33
-\UL@height=\dimen157
-\UL@pe=\count133
-\UL@pixel=\dimen158
-\ULC@box=\box43
-Package: ulem 2012/05/18
-\ULdepth=\dimen159
-) (/usr/share/texlive/texmf-dist/tex/latex/makecell/makecell.sty
-Package: makecell 2009/08/03 V0.1e Managing of Tab Column Heads and Cells
-\rotheadsize=\dimen160
-\c@nlinenum=\count134
-\TeXr@lab=\toks34
-) (/usr/share/texlive/texmf-dist/tex/latex/xcolor/xcolor.sty
-Package: xcolor 2016/05/11 v2.12 LaTeX color extensions (UK)
-(/usr/share/texlive/texmf-dist/tex/latex/graphics-cfg/color.cfg
-File: color.cfg 2016/01/02 v1.6 sample color configuration
-)
-Package xcolor Info: Driver file: pdftex.def on input line 225.
-LaTeX Info: Redefining \color on input line 709.
-Package xcolor Info: Model `cmy' substituted by `cmy0' on input line 1348.
-Package xcolor Info: Model `hsb' substituted by `rgb' on input line 1352.
-Package xcolor Info: Model `RGB' extended on input line 1364.
-Package xcolor Info: Model `HTML' substituted by `rgb' on input line 1366.
-Package xcolor Info: Model `Hsb' substituted by `hsb' on input line 1367.
-Package xcolor Info: Model `tHsb' substituted by `hsb' on input line 1368.
-Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1369.
-Package xcolor Info: Model `Gray' substituted by `gray' on input line 1370.
-Package xcolor Info: Model `wave' substituted by `hsb' on input line 1371.
-)
-No file Validate.aux.
+(./Validate.aux)
 \openout1 = `Validate.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 98.
-LaTeX Font Info:    ... okay on input line 98.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 98.
-LaTeX Font Info:    ... okay on input line 98.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 98.
-LaTeX Font Info:    ... okay on input line 98.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 98.
-LaTeX Font Info:    ... okay on input line 98.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 98.
-LaTeX Font Info:    ... okay on input line 98.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 98.
-LaTeX Font Info:    ... okay on input line 98.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 98.
-LaTeX Font Info:    Try loading font information for TS1+cmr on input line 98.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 84.
+LaTeX Font Info:    ... okay on input line 84.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 84.
+LaTeX Font Info:    ... okay on input line 84.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 84.
+LaTeX Font Info:    ... okay on input line 84.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 84.
+LaTeX Font Info:    ... okay on input line 84.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 84.
+LaTeX Font Info:    ... okay on input line 84.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 84.
+LaTeX Font Info:    ... okay on input line 84.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 84.
+LaTeX Font Info:    Try loading font information for TS1+cmr on input line 84.
 (/usr/share/texlive/texmf-dist/tex/latex/base/ts1cmr.fd
 File: ts1cmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
-LaTeX Font Info:    ... okay on input line 98.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 98.
-LaTeX Font Info:    ... okay on input line 98.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 98.
-LaTeX Font Info:    ... okay on input line 98.
-LaTeX Font Info:    Try loading font information for T1+lmr on input line 98.
+LaTeX Font Info:    ... okay on input line 84.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 84.
+LaTeX Font Info:    ... okay on input line 84.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 84.
+LaTeX Font Info:    ... okay on input line 84.
+LaTeX Font Info:    Try loading font information for T1+lmr on input line 84.
 (/usr/share/texmf/tex/latex/lm/t1lmr.fd
 File: t1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-LaTeX Info: Redefining \microtypecontext on input line 98.
+LaTeX Info: Redefining \microtypecontext on input line 84.
 Package microtype Info: Generating PDF output.
 Package microtype Info: Character protrusion enabled (level 2).
 Package microtype Info: Using protrusion set `basicmath'.
@@ -998,18 +850,19 @@ Package microtype Info: No adjustment of character kerning.
 File: mt-cmr.cfg 2013/05/19 v2.2 microtype config. file: Computer Modern Roman 
 (RS)
 )
-\AtBeginShipoutBox=\box44
-Package hyperref Info: Link coloring OFF on input line 98.
+\AtBeginShipoutBox=\box30
+Package hyperref Info: Link coloring OFF on input line 84.
 (/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2016/05/21 v2.44 Cross-referencing by name of section
 (/usr/share/texlive/texmf-dist/tex/generic/oberdiek/gettitlestring.sty
 Package: gettitlestring 2016/05/16 v1.5 Cleanup title references (HO)
 )
-\c@section@level=\count135
+\c@section@level=\count115
 )
-LaTeX Info: Redefining \ref on input line 98.
-LaTeX Info: Redefining \pageref on input line 98.
-LaTeX Info: Redefining \nameref on input line 98.
+LaTeX Info: Redefining \ref on input line 84.
+LaTeX Info: Redefining \pageref on input line 84.
+LaTeX Info: Redefining \nameref on input line 84.
+(./Validate.out) (./Validate.out)
 \@outlinefile=\write3
 \openout3 = `Validate.out'.
 
@@ -1049,17 +902,17 @@ LaTeX Info: Redefining \nameref on input line 98.
 
 (/usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count136
-\scratchdimen=\dimen161
-\scratchbox=\box45
-\nofMPsegments=\count137
-\nofMParguments=\count138
-\everyMPshowfont=\toks35
-\MPscratchCnt=\count139
-\MPscratchDim=\dimen162
-\MPnumerator=\count140
-\makeMPintoPDFobject=\count141
-\everyMPtoPDFconversion=\toks36
+\scratchcounter=\count116
+\scratchdimen=\dimen127
+\scratchbox=\box31
+\nofMPsegments=\count117
+\nofMParguments=\count118
+\everyMPshowfont=\toks27
+\MPscratchCnt=\count119
+\MPscratchDim=\dimen128
+\MPnumerator=\count120
+\makeMPintoPDFobject=\count121
+\everyMPtoPDFconversion=\toks28
 ) (/usr/share/texlive/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
 Package: epstopdf-base 2016/05/15 v2.6 Base part for package epstopdf
 (/usr/share/texlive/texmf-dist/tex/latex/oberdiek/grfext.sty
@@ -1075,76 +928,99 @@ G,.JBIG2,.JB2,.eps]
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
-<atorus logo.png, id=4, 90.3375pt x 85.82062pt>
+<atorus logo.png, id=92, 90.3375pt x 85.82062pt>
 File: atorus logo.png Graphic file (type png)
 <use atorus logo.png>
-Package pdftex.def Info: atorus logo.png  used on input line 99.
+Package pdftex.def Info: atorus logo.png  used on input line 85.
 (pdftex.def)             Requested size: 113.81204pt x 108.12143pt.
-LaTeX Font Info:    Try loading font information for OT1+lmr on input line 99.
+LaTeX Font Info:    Try loading font information for OT1+lmr on input line 85.
 (/usr/share/texmf/tex/latex/lm/ot1lmr.fd
 File: ot1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-LaTeX Font Info:    Try loading font information for OML+lmm on input line 99.
+LaTeX Font Info:    Try loading font information for OML+lmm on input line 85.
 (/usr/share/texmf/tex/latex/lm/omllmm.fd
 File: omllmm.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-LaTeX Font Info:    Try loading font information for OMS+lmsy on input line 99.
+LaTeX Font Info:    Try loading font information for OMS+lmsy on input line 85.
 
 (/usr/share/texmf/tex/latex/lm/omslmsy.fd
 File: omslmsy.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-LaTeX Font Info:    Try loading font information for OMX+lmex on input line 99.
+LaTeX Font Info:    Try loading font information for OMX+lmex on input line 85.
 
 (/usr/share/texmf/tex/latex/lm/omxlmex.fd
 File: omxlmex.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <12> on input line 99.
+(Font)              <12> on input line 85.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <8> on input line 99.
+(Font)              <8> on input line 85.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <6> on input line 99.
-LaTeX Font Info:    Try loading font information for U+msa on input line 99.
+(Font)              <6> on input line 85.
+LaTeX Font Info:    Try loading font information for U+msa on input line 85.
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 ) (/usr/share/texlive/texmf-dist/tex/latex/microtype/mt-msa.cfg
 File: mt-msa.cfg 2006/02/04 v1.1 microtype config. file: AMS symbols (a) (RS)
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 99.
+LaTeX Font Info:    Try loading font information for U+msb on input line 85.
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 ) (/usr/share/texlive/texmf-dist/tex/latex/microtype/mt-msb.cfg
 File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
 ) [1
 
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map} <./atorus logo.png>]
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map} <./atorus logo.png>] (./Val
+idate.toc
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <10> on input line 2.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <7> on input line 2.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <5> on input line 2.
+)
 \tf@toc=\write4
 \openout4 = `Validate.toc'.
 
 [2]
-LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10> on input line 113.
-LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <7> on input line 113.
-LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <5> on input line 113.
-LaTeX Font Info:    Try loading font information for TS1+lmr on input line 167.
+LaTeX Font Info:    Try loading font information for TS1+lmr on input line 147.
 
 (/usr/share/texmf/tex/latex/lm/ts1lmr.fd
 File: ts1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
-)
-! Missing $ inserted.
-<inserted text> 
-                $
-l.231 ...not open file 'vignettes/Validation/Test_
-                                                  Case_Code/output/test_1_01...
- 
+) [3] [4] [5] [6]
+Overfull \hbox (18.19513pt too wide) in paragraph at lines 611--616
+\T1/lmr/m/n/10 (-20) [6] LC_MESSAGES=C.UTF-8 LC_PAPER=C.UTF-8 LC_NAME=C LC_ADDR
+ESS=C LC_TELEPHONE=C 
+ []
+
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 651.
+[7]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 651.
+(./Validate.aux)
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 651.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 651.
+Package rerunfilecheck Info: File `Validate.out' has not changed.
+(rerunfilecheck)             Checksum: E693B15D4A7FE0135462E56D7F9571B3;4308.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 651.
+ ) 
 Here is how much of TeX's memory you used:
- 14339 strings out of 494923
- 204841 string characters out of 6180743
- 315473 words of memory out of 5000000
- 17381 multiletter control sequences out of 15000+600000
- 59042 words of font info for 74 fonts, out of 8000000 for 9000
+ 12599 strings out of 494923
+ 181928 string characters out of 6180743
+ 281695 words of memory out of 5000000
+ 15637 multiletter control sequences out of 15000+600000
+ 59600 words of font info for 81 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 38i,11n,43p,275b,343s stack positions out of 5000i,500n,10000p,200000b,80000s
-!  ==> Fatal error occurred, no output PDF file produced!
+ 38i,11n,43p,347b,540s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/share/texmf/fonts/enc/dvips/lm/lm-ec.enc}{/usr/share/texmf/fonts/enc/dv
+ips/lm/lm-ts1.enc}</usr/share/texmf/fonts/type1/public/lm/lmbx10.pfb></usr/shar
+e/texmf/fonts/type1/public/lm/lmbx12.pfb></usr/share/texmf/fonts/type1/public/l
+m/lmr10.pfb></usr/share/texmf/fonts/type1/public/lm/lmr12.pfb></usr/share/texmf
+/fonts/type1/public/lm/lmr17.pfb></usr/share/texmf/fonts/type1/public/lm/lmri10
+.pfb></usr/share/texmf/fonts/type1/public/lm/lmro10.pfb>
+Output written on Validate.pdf (7 pages, 202772 bytes).
+PDF statistics:
+ 220 PDF objects out of 1000 (max. 8388607)
+ 200 compressed objects within 2 object streams
+ 53 named destinations out of 1000 (max. 500000)
+ 14518 words of extra memory for PDF output out of 17280 (max. 10000000)
+

@@ -1,39 +1,37 @@
-#' @title RStudio Conf 2020 Success Test Cases 001
-#' @section Last Updated By: 
-#' Ellis Hughes
+#' @title Test Case 002
+#' @section Last Updated By:
+#' Ashley Tarasiewicz
 #' @section Last Update Date:
-#' 2020/01/29
+#' 4/15/2020
 
 + _Test Cases_
 
-  + Setup: Create RStudio::Conf 2020 Presentation ??
-   
-  + T 2.1 Test specification 2.1 is met by checking the default attribute then making attribute changes and verifying the changes are reflected in the output
-    + T 2.1.1 Test setting margins to a length different than document level default
-      + Verify margins are set to expected default:1,1,1,1
-      + Change margins to 2,.5,1.5,.25 and check output to verify they have been changed 
-    + T 2.1.2 Test setting header and footer height to a length different than document level default
-      + Verify header and footer heights are set to expected default:.5,.5
-      + Change header and footer heights to .25,1 and check output to verify they have been changed
-    + T 2.1.3 Test setting page size to a length different than document level default
-      + Verify page size is set to expected default:8.5,11
-      + Change page size to 9,12 and check output to confirm it has been changed
-    + T 2.1.4 Test setting orientation to a different orientation than document level default
-      + Verify orientation is set to expected default:landscape
-      + Change orientation to portrait and check output to confirm it has been changed 
-    + T 2.1.5 Test setting font size to a size different than document level default
-      + Verify font size is set to expected default:12
-      + Change font size to 14 and check output to confirm it has been changed    
-    + T 2.1.6 Test setting font to a font different than document level default
-      + Verify font is set to expected default:Courier New
-      + Change font to Comic Sans and check output to confirm it has been changed 
-    + T 2.1.7 Test setting header rows to a count different than document level default
-      + Verify header rows is set to expected default:1
-      + Change header rows to 2 and check output to confirm it has been changed      
-    + T 2.1.8 Test setting column header buffers to a count different than document level default
-      + Verify column header buffers are set to expected default:0,0
-      + Change column header buffers to 2,1 and check output to verify they have been changed     + T 2.1.9 Test setting ignore cell padding to a different option than document level default
-      + Verify ignore cell padding is set to expected default:FALSE
-      + Change ignore cell padding to TRUE and check output to confirm it has been changed 
+  + Setup: _No prerequisites required_
 
-      
+    + Check margins are set to the default value then change margins and verify changes are reflected in the output
+      + Verify margins are set to expected default: 1,1,1,1
+      + Verify margins on output are 2,.5,1.5,.25 (top, bottom, left, right)
+    + Check header and footer height are set to default then change header and footer height and verify changes are reflected in the output
+      + Verify header and footer heights are set to expected default: .5,.5
+      + Verify header and footer heights on output are .25 (header) and 1 (footer)
+    + Check page size is set to default then change page size and verify changes are reflected in the output
+      + Verify page size is set to expected default: 8.5,11 
+      + Verify page size on output is 9,12 (height, width)
+    + Check orientation is set to default then change orientation and verify changes are reflected in the output
+      + Verify orientation is set to expected default: landscape
+      + Verify orientation on output is portrait
+    + Check font size is set to default then change font size and verify changes are reflected in the output
+      + Verify font size is set to expected default: 12
+      + Verify font size on output is 14
+    + Check font is set to default then change font and verify changes are reflected in the output
+      + Verify font is set to expected default: Courier New
+      + Verify font on output is Comic Sans
+    + Check header rows is set to default then change header rows and verify changes are reflected in the output
+      + Verify header rows is set to expected default: 1
+      + Verify header rows on output are 2
+    + Check column header buffers is set to default then change column header buffers and verify changes are reflected in the output
+      + Verify column header buffers are set to expected default: 0,0
+      + Verify column header buffers on output are 2,1 (top, bottom)
+    + Check ignore cell padding is set to default then change ignore cell padding and verify changes are reflected in the output
+      + Verify ignore cell padding is set to expected default: FALSE
+      + Verify ignore cell padding on output is TRUE

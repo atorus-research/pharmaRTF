@@ -76,24 +76,10 @@
 \usepackage{float}
 \fancyhead[CO, CE]{The Header - Atorus}
 \fancyfoot[CO, CE]{The footer - Atorus \thepage}
-\usepackage{booktabs}
-\usepackage{longtable}
-\usepackage{array}
-\usepackage{multirow}
-\usepackage{wrapfig}
-\usepackage{float}
-\usepackage{colortbl}
-\usepackage{pdflscape}
-\usepackage{tabu}
-\usepackage{threeparttable}
-\usepackage{threeparttablex}
-\usepackage[normalem]{ulem}
-\usepackage{makecell}
-\usepackage{xcolor}
 
 \title{pharmaRTF Validation Report}
 \author{Eli Miller}
-\date{2020-04-16}
+\date{2020-04-17}
 
 \begin{document}
 \maketitle
@@ -134,12 +120,6 @@ Table Level Properties Specifications & Eli Miller & 2020-04-08\\
 \hline
 Test Case Name & Last updated by & Last updated date\\
 \hline
-RStudio Conf 2020 Success Test Cases 001 & Ellis Hughes & 2020-01-29\\
-\hline
-RStudio Conf 2020 Success Test Cases 001 & Ellis Hughes & 2020-01-29\\
-\hline
-RStudio Conf 2020 Success Test Cases 001 & Ellis Hughes & 2020-01-29\\
-\hline
 Test Case 001 & Ashley Tarasiewicz & 2020-04-16\\
 \hline
 Test Case 002 & Ashley Tarasiewicz & 2020-04-15\\
@@ -179,40 +159,39 @@ Test Case 002 & Ashley Tarasiewicz & 2020-04-15\\
 \subsubsection{General Specification Test
 Cases}\label{general-specification-test-cases}}
 
+NA
+
 \begin{itemize}
 \item
   \emph{Test Cases}
 
   \begin{itemize}
   \item
-    Setup: Create RStudio::Conf 2020 Presentation ????
-  \item
-    T 1.1 Test specifications 1.1 and 1.2 are met by outputting RTFs
-    using various sized dataframes and verifying the output type and
-    paging
+    Setup: \emph{No prerequisites required}
 
     \begin{itemize}
     \tightlist
     \item
-      T 1.1.1 Test a dataframe requiring one page of output
-
-      \begin{itemize}
-      \tightlist
-      \item
-        Verify document outputs as an RTF, opens in Word, and has column
-        headers above the table, titles at the top, and footnotes at the
-        bottom
-      \end{itemize}
+      Verify document outputs as an RTF and opens in Word
     \item
-      T 1.1.2 Test a dataframe requiring multiple pages of output
+      Verify output has column headers (``Header1'', ``Header2'') above
+      the table, a title (``Title'') at the top, and a footnote
+      (``Footnote'') at the bottom
+    \item
+      Output an RTF using a dataframe requiring multiple pages of output
+      and verify output and paging are appropiate
 
       \begin{itemize}
       \tightlist
       \item
-        Verify document outputs as an RTF, opens in Word, and has column
-        headers above the table, titles at the top, footnotes at the
-        bottom, and that headers, titles, and footnotes repeat on each
-        page
+        Verify document outputs as an RTF and opens in Word
+      \item
+        Verify output has column headers (``Header1'', ``Header2'')
+        above the table, a title (``Title'') at the top, and a footnote
+        (``Footnote'') at the bottom
+      \item
+        Verify output has the column headers, title, and footnote repeat
+        on each page
       \end{itemize}
     \end{itemize}
   \end{itemize}
@@ -228,21 +207,15 @@ Results}\label{general-specification-test-code-results}}
 \hline
 Test & Results & Pass/Fail\\
 \hline
-T1.01.1 & cannot open file 'vignettes/Validation/Test_Case_Code/output/test_1_01.rtf': No such file or directory & Fail\\
+T1.01.1 & T1.01.1 isn't true. & Fail\\
 \hline
-T1.01.2 & cannot open the connection
-Backtrace:
- 1. pharmaRTF::write_rtf(rtf, file = "vignettes/Validation/Test_Case_Code/output/test_1_01.rtf") homeemillerpharmaRTFvignettesValidationTest_Case_Codetest_case_001.R:26:4
- 2. base::sink(file) homeemillerpharmaRTFRrtf-code-generators.R:252:2
- 3. base::file(file, if (append) "a" else "w") & Fail\\
+T1.01.2 & T1.01.2 isn't true. & Fail\\
 \hline
-T1.02.1 & cannot open file 'vignettes/Validation/Test_Case_Code/output/test_1_02.rtf': No such file or directory & Fail\\
+T1.02.1 & T1.02.1 isn't true. & Fail\\
 \hline
-T1.02.2 & cannot open the connection
-Backtrace:
- 1. pharmaRTF::write_rtf(rtf, file = "vignettes/Validation/Test_Case_Code/output/test_1_02.rtf") homeemillerpharmaRTFvignettesValidationTest_Case_Codetest_case_001.R:48:4
- 2. base::sink(file) homeemillerpharmaRTFRrtf-code-generators.R:252:2
- 3. base::file(file, if (append) "a" else "w") & Fail\\
+T1.02.2 & T1.02.2 isn't true. & Fail\\
+\hline
+T1.02.3 & T1.02.3 isn't true. & Fail\\
 \hline
 \end{tabular}
 \end{table}
@@ -302,116 +275,112 @@ Cases}\label{rtf-document-characteristics-test-cases}}
 
   \begin{itemize}
   \item
-    Setup: Create RStudio::Conf 2020 Presentation ??
-  \item
-    T 2.1 Test specification 2.1 is met by checking the default
-    attribute then making attribute changes and verifying the changes
-    are reflected in the output
+    Setup: \emph{No prerequisites required}
 
     \begin{itemize}
     \tightlist
     \item
-      T 2.1.1 Test setting margins to a length different than document
-      level default
+      Check margins are set to the default value then change margins and
+      verify changes are reflected in the output
 
       \begin{itemize}
       \tightlist
       \item
-        Verify margins are set to expected default:1,1,1,1
+        Verify margins are set to expected default: 1,1,1,1
       \item
-        Change margins to 2,.5,1.5,.25 and check output to verify they
-        have been changed
+        Verify margins on output are 2,.5,1.5,.25 (top, bottom, left,
+        right)
       \end{itemize}
     \item
-      T 2.1.2 Test setting header and footer height to a length
-      different than document level default
+      Check header and footer height are set to default then change
+      header and footer height and verify changes are reflected in the
+      output
 
       \begin{itemize}
       \tightlist
       \item
-        Verify header and footer heights are set to expected
-        default:.5,.5
+        Verify header and footer heights are set to expected default:
+        .5,.5
       \item
-        Change header and footer heights to .25,1 and check output to
-        verify they have been changed
+        Verify header and footer heights on output are .25 (header) and
+        1 (footer)
       \end{itemize}
     \item
-      T 2.1.3 Test setting page size to a length different than document
-      level default
+      Check page size is set to default then change page size and verify
+      changes are reflected in the output
 
       \begin{itemize}
       \tightlist
       \item
-        Verify page size is set to expected default:8.5,11
+        Verify page size is set to expected default: 8.5,11
       \item
-        Change page size to 9,12 and check output to confirm it has been
-        changed
+        Verify page size on output is 9,12 (height, width)
       \end{itemize}
     \item
-      T 2.1.4 Test setting orientation to a different orientation than
-      document level default
+      Check orientation is set to default then change orientation and
+      verify changes are reflected in the output
 
       \begin{itemize}
       \tightlist
       \item
-        Verify orientation is set to expected default:landscape
+        Verify orientation is set to expected default: landscape
       \item
-        Change orientation to portrait and check output to confirm it
-        has been changed
+        Verify orientation on output is portrait
       \end{itemize}
     \item
-      T 2.1.5 Test setting font size to a size different than document
-      level default
+      Check font size is set to default then change font size and verify
+      changes are reflected in the output
 
       \begin{itemize}
       \tightlist
       \item
-        Verify font size is set to expected default:12
+        Verify font size is set to expected default: 12
       \item
-        Change font size to 14 and check output to confirm it has been
-        changed\\
+        Verify font size on output is 14
       \end{itemize}
     \item
-      T 2.1.6 Test setting font to a font different than document level
-      default
+      Check font is set to default then change font and verify changes
+      are reflected in the output
 
       \begin{itemize}
       \tightlist
       \item
-        Verify font is set to expected default:Courier New
+        Verify font is set to expected default: Courier New
       \item
-        Change font to Comic Sans and check output to confirm it has
-        been changed
+        Verify font on output is Comic Sans
       \end{itemize}
     \item
-      T 2.1.7 Test setting header rows to a count different than
-      document level default
+      Check header rows is set to default then change header rows and
+      verify changes are reflected in the output
 
       \begin{itemize}
       \tightlist
       \item
-        Verify header rows is set to expected default:1
+        Verify header rows is set to expected default: 1
       \item
-        Change header rows to 2 and check output to confirm it has been
-        changed\\
+        Verify header rows on output are 2
       \end{itemize}
     \item
-      T 2.1.8 Test setting column header buffers to a count different
-      than document level default
+      Check column header buffers is set to default then change column
+      header buffers and verify changes are reflected in the output
 
       \begin{itemize}
       \tightlist
       \item
-        Verify column header buffers are set to expected default:0,0
+        Verify column header buffers are set to expected default: 0,0
       \item
-        Change column header buffers to 2,1 and check output to verify
-        they have been changed + T 2.1.9 Test setting ignore cell
-        padding to a different option than document level default
+        Verify column header buffers on output are 2,1 (top, bottom)
+      \end{itemize}
+    \item
+      Check ignore cell padding is set to default then change ignore
+      cell padding and verify changes are reflected in the output
+
+      \begin{itemize}
+      \tightlist
       \item
-        Verify ignore cell padding is set to expected default:FALSE
+        Verify ignore cell padding is set to expected default: FALSE
       \item
-        Change ignore cell padding to TRUE and check output to confirm
-        it has been changed
+        Verify ignore cell padding on output is TRUE
       \end{itemize}
     \end{itemize}
   \end{itemize}
@@ -427,68 +396,63 @@ Results}\label{rtf-document-characteristics-test-code-results}}
 \hline
 Test & Results & Pass/Fail\\
 \hline
-T2.01.1 & cannot open file 'vignettes/Validation/Test_Case_Code/Obj/rtf_T2.01_a.RData': No such file or directory & Fail\\
+T2.01.1 & As expected & Pass\\
 \hline
-T2.01.2 & cannot open the connection
-Backtrace:
- 1. base::save(rtf1, file = "vignettes/Validation/Test_Case_Code/Obj/rtf_T2.01_a.RData") homeemillerpharmaRTFvignettesValidationTest_Case_Codetest_case_002.R:25:4
- 2. base::file(file, "wb") & Fail\\
+T2.01.2 & As expected & Pass\\
 \hline
-T2.02.1 & cannot open file 'vignettes/Validation/Test_Case_Code/Obj/rtf_T2.02_a.Rdata': No such file or directory & Fail\\
+T2.01.3 & T2.01.2 isn't true. & Fail\\
 \hline
-T2.02.2 & cannot open the connection
-Backtrace:
- 1. base::save(rtf1, file = "vignettes/Validation/Test_Case_Code/Obj/rtf_T2.02_a.Rdata") homeemillerpharmaRTFvignettesValidationTest_Case_Codetest_case_002.R:47:4
- 2. base::file(file, "wb") & Fail\\
+T2.02.1 & As expected & Pass\\
 \hline
-T2.03.1 & cannot open file 'vignettes/Validation/Test_Case_Code/Obj/rtf_T2.03_a.Rdata': No such file or directory & Fail\\
+T2.02.2 & As expected & Pass\\
 \hline
-T2.03.2 & cannot open the connection
-Backtrace:
- 1. base::save(rtf1, file = "vignettes/Validation/Test_Case_Code/Obj/rtf_T2.03_a.Rdata") homeemillerpharmaRTFvignettesValidationTest_Case_Codetest_case_002.R:75:4
- 2. base::file(file, "wb") & Fail\\
+T2.02.3 & As expected & Pass\\
 \hline
-T2.04.1 & cannot open file 'vignettes/Validation/Test_Case_Code/Obj/rtf_T2.04_a.Rdata': No such file or directory & Fail\\
+T2.02.4 & As expected & Pass\\
 \hline
-T2.04.2 & cannot open the connection
-Backtrace:
- 1. base::save(rtf1, file = "vignettes/Validation/Test_Case_Code/Obj/rtf_T2.04_a.Rdata") homeemillerpharmaRTFvignettesValidationTest_Case_Codetest_case_002.R:98:4
- 2. base::file(file, "wb") & Fail\\
+T2.02.5 & T2.01.2 isn't true. & Fail\\
 \hline
-T2.05.1 & cannot open file 'vignettes/Validation/Test_Case_Code/Obj/rtf_T2.05_a.Rdata': No such file or directory & Fail\\
+T2.03.1 & As expected & Pass\\
 \hline
-T2.05.2 & cannot open the connection
-Backtrace:
- 1. base::save(rtf1, file = "vignettes/Validation/Test_Case_Code/Obj/rtf_T2.05_a.Rdata") homeemillerpharmaRTFvignettesValidationTest_Case_Codetest_case_002.R:121:4
- 2. base::file(file, "wb") & Fail\\
+T2.03.2 & As expected & Pass\\
 \hline
-T2.06.1 & cannot open file 'vignettes/Validation/Test_Case_Code/Obj/rtf_T2.06_a.Rdata': No such file or directory & Fail\\
+T2.03.3 & T2.03.2 isn't true. & Fail\\
 \hline
-T2.06.2 & cannot open the connection
-Backtrace:
- 1. base::save(rtf1, file = "vignettes/Validation/Test_Case_Code/Obj/rtf_T2.06_a.Rdata") homeemillerpharmaRTFvignettesValidationTest_Case_Codetest_case_002.R:144:4
- 2. base::file(file, "wb") & Fail\\
+T2.04.1 & As expected & Pass\\
 \hline
-T2.07.1 & cannot open file 'vignettes/Validation/Test_Case_Code/Obj/rtf_T2.07_a.Rdata': No such file or directory & Fail\\
+T2.04.2 & As expected & Pass\\
 \hline
-T2.07.2 & cannot open the connection
-Backtrace:
- 1. base::save(rtf1, file = "vignettes/Validation/Test_Case_Code/Obj/rtf_T2.07_a.Rdata") homeemillerpharmaRTFvignettesValidationTest_Case_Codetest_case_002.R:167:4
- 2. base::file(file, "wb") & Fail\\
+T2.04.3 & T2.04.2 isn't true. & Fail\\
 \hline
-T2.08.1 & cannot open file 'vignettes/Validation/Test_Case_Code/Obj/rtf_T2.08_a.Rdata': No such file or directory & Fail\\
+T2.05.1 & As expected & Pass\\
 \hline
-T2.08.2 & cannot open the connection
-Backtrace:
- 1. base::save(rtf1, file = "vignettes/Validation/Test_Case_Code/Obj/rtf_T2.08_a.Rdata") homeemillerpharmaRTFvignettesValidationTest_Case_Codetest_case_002.R:190:4
- 2. base::file(file, "wb") & Fail\\
+T2.05.2 & As expected & Pass\\
 \hline
-T2.09.1 & cannot open file 'vignettes/Validation/Test_Case_Code/Obj/rtf_T2.09_a.Rdata': No such file or directory & Fail\\
+T2.05.3 & T2.05.2 isn't true. & Fail\\
 \hline
-T2.09.2 & cannot open the connection
-Backtrace:
- 1. base::save(rtf1, file = "vignettes/Validation/Test_Case_Code/Obj/rtf_T2.09_a.Rdata") homeemillerpharmaRTFvignettesValidationTest_Case_Codetest_case_002.R:213:4
- 2. base::file(file, "wb") & Fail\\
+T2.06.1 & As expected & Pass\\
+\hline
+T2.06.2 & As expected & Pass\\
+\hline
+T2.06.3 & T2.06.2 isn't true. & Fail\\
+\hline
+T2.07.1 & As expected & Pass\\
+\hline
+T2.07.2 & As expected & Pass\\
+\hline
+T2.07.3 & T2.07.2 isn't true. & Fail\\
+\hline
+T2.08.1 & As expected & Pass\\
+\hline
+T2.08.2 & As expected & Pass\\
+\hline
+T2.08.3 & T2.08.2 isn't true. & Fail\\
+\hline
+T2.09.1 & As expected & Pass\\
+\hline
+T2.09.2 & As expected & Pass\\
+\hline
+T2.09.3 & T2.09.2 isn't true. & Fail\\
 \hline
 \end{tabular}
 \end{table}
@@ -645,45 +609,43 @@ Matrix products: default BLAS:
 /usr/lib/x86\_64-linux-gnu/lapack/liblapack.so.3.7.1
 
 locale: {[}1{]} LC\_CTYPE=C.UTF-8 LC\_NUMERIC=C LC\_TIME=C.UTF-8
-LC\_COLLATE=C.UTF-8\\
-{[}5{]} LC\_MONETARY=C.UTF-8 LC\_MESSAGES=C.UTF-8 LC\_PAPER=C.UTF-8
-LC\_NAME=C\\
-{[}9{]} LC\_ADDRESS=C LC\_TELEPHONE=C LC\_MEASUREMENT=C.UTF-8
-LC\_IDENTIFICATION=C
+LC\_COLLATE=C.UTF-8 LC\_MONETARY=C.UTF-8\\
+{[}6{]} LC\_MESSAGES=C.UTF-8 LC\_PAPER=C.UTF-8 LC\_NAME=C LC\_ADDRESS=C
+LC\_TELEPHONE=C\\
+{[}11{]} LC\_MEASUREMENT=C.UTF-8 LC\_IDENTIFICATION=C
 
 attached base packages: {[}1{]} stats graphics grDevices utils datasets
 methods base
 
 other attached packages: {[}1{]} kableExtra\_1.1.0 knitr\_1.28 here\_0.1
-shinydashboard\_0.7.1 {[}5{]} shiny\_1.4.0 huxtable\_4.7.1
-testthat\_2.3.1 forcats\_0.4.0\\
-{[}9{]} dplyr\_0.8.5 purrr\_0.3.3 readr\_1.3.1 tidyr\_1.0.2\\
-{[}13{]} tibble\_3.0.0 ggplot2\_3.3.0 tidyverse\_1.3.0
-pharmaRTF\_0.1.0\\
-{[}17{]} stringr\_1.4.0
+shinydashboard\_0.7.1 huxtable\_4.7.1 testthat\_2.3.1\\
+{[}7{]} forcats\_0.4.0 stringr\_1.4.0 dplyr\_0.8.5 purrr\_0.3.3
+readr\_1.3.1 tidyr\_1.0.2\\
+{[}13{]} tibble\_3.0.0 ggplot2\_3.3.0 tidyverse\_1.3.0 pharmaRTF\_0.1.0
+shiny\_1.4.0
 
-loaded via a namespace (and not attached): {[}1{]} Rcpp\_1.0.3
-lubridate\_1.7.4 lattice\_0.20-38 rprojroot\_1.3-2 assertthat\_0.2.1
-{[}6{]} packrat\_0.5.0 digest\_0.6.23 mime\_0.9 R6\_2.4.1
-cellranger\_1.1.0 {[}11{]} backports\_1.1.5 reprex\_0.3.0 evaluate\_0.14
-httr\_1.4.1 pillar\_1.4.3\\
-{[}16{]} rlang\_0.4.5 readxl\_1.3.1 rstudioapi\_0.10 rmarkdown\_2.1
-webshot\_0.5.2\\
-{[}21{]} munsell\_0.5.0 broom\_0.5.4 compiler\_3.6.2 httpuv\_1.5.2
-modelr\_0.1.5\\
-{[}26{]} xfun\_0.12 pkgconfig\_2.0.3 htmltools\_0.4.0 tidyselect\_1.0.0
-viridisLite\_0.3.0 {[}31{]} fansi\_0.4.1 crayon\_1.3.4 dbplyr\_1.4.2
-withr\_2.1.2 later\_1.0.0\\
-{[}36{]} grid\_3.6.2 nlme\_3.1-142 jsonlite\_1.6.1 xtable\_1.8-4
-gtable\_0.3.0\\
-{[}41{]} lifecycle\_0.2.0 DBI\_1.1.0 magrittr\_1.5 scales\_1.1.0
-cli\_2.0.1\\
-{[}46{]} stringi\_1.4.5 fs\_1.4.1 promises\_1.1.0 xml2\_1.2.2
-ellipsis\_0.3.0\\
-{[}51{]} generics\_0.0.2 vctrs\_0.2.4 tools\_3.6.2 glue\_1.4.0
-hms\_0.5.3\\
-{[}56{]} yaml\_2.2.1 rsconnect\_0.8.16 fastmap\_1.0.1 colorspace\_1.4-1
-rvest\_0.3.5\\
-{[}61{]} haven\_2.2.0
+loaded via a namespace (and not attached): {[}1{]} nlme\_3.1-142
+matrixStats\_0.55.0 fs\_1.4.1 lubridate\_1.7.4 webshot\_0.5.2
+httr\_1.4.1 rprojroot\_1.3-2\\
+{[}8{]} rstan\_2.19.2 tools\_3.6.2 backports\_1.1.5 R6\_2.4.1 DBI\_1.1.0
+colorspace\_1.4-1 withr\_2.1.2\\
+{[}15{]} tidyselect\_1.0.0 gridExtra\_2.3 prettyunits\_1.1.1
+processx\_3.4.1 compiler\_3.6.2 cli\_2.0.1 rvest\_0.3.5\\
+{[}22{]} xml2\_1.2.2 scales\_1.1.0 callr\_3.4.1 digest\_0.6.23
+StanHeaders\_2.19.0 rmarkdown\_2.1 pkgconfig\_2.0.3\\
+{[}29{]} htmltools\_0.4.0 dbplyr\_1.4.2 fastmap\_1.0.1 rlang\_0.4.5
+readxl\_1.3.1 rstudioapi\_0.10 generics\_0.0.2\\
+{[}36{]} jsonlite\_1.6.1 inline\_0.3.15 magrittr\_1.5 loo\_2.2.0
+Rcpp\_1.0.3 munsell\_0.5.0 fansi\_0.4.1\\
+{[}43{]} lifecycle\_0.2.0 stringi\_1.4.5 yaml\_2.2.1 pkgbuild\_1.0.6
+grid\_3.6.2 parallel\_3.6.2 promises\_1.1.0\\
+{[}50{]} crayon\_1.3.4 lattice\_0.20-38 haven\_2.2.0 hms\_0.5.3
+ps\_1.3.0 pillar\_1.4.3 stats4\_3.6.2\\
+{[}57{]} reprex\_0.3.0 glue\_1.4.0 praise\_1.0.0 packrat\_0.5.0
+evaluate\_0.14 modelr\_0.1.5 vctrs\_0.2.4\\
+{[}64{]} httpuv\_1.5.2 cellranger\_1.1.0 gtable\_0.3.0 assertthat\_0.2.1
+xfun\_0.12 mime\_0.9 xtable\_1.8-4\\
+{[}71{]} broom\_0.5.4 later\_1.0.0 rsconnect\_0.8.16 viridisLite\_0.3.0
+tinytex\_0.21 ellipsis\_0.3.0
 
 \end{document}

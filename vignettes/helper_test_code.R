@@ -73,6 +73,19 @@ eval_test_code <- function(one_file) {
       }
     ))})
 
+  # if(file.exists("~/pharmaRTF/vignettes/Validation/vur_auto.Rds")) {
+  #   vur <- readRDS("~/pharmaRTF/vignettes/Validation/vur_auto.Rds")
+  #   out$Log <- NA
+  #   print(out)
+  #   print(vur)
+  #   for(i in seq(nrow(out))){
+  #     test_i <- out[i, "Test"]
+  #     if(any(vur$ID %in% test_i)) {
+  #       out[which(vur$ID %in% test_i), "Log"] <- vur[vur$ID %in% test_i, "Log"]
+  #     }
+  #   }
+  # }
+
   # formatting
   rownames(out) <- NULL
   kable(
@@ -245,7 +258,7 @@ make_test_case_rmd <- function(file) {
     )
 
     # Write the lines to each output file
-    writeLines(outfile, paste0('vignettes/Validation/Test_Cases/test_cases_', str_pad(caseno, width=3, pad="0"), '.Rmd'))
+    writeLines(outfile, paste0('vignettes/Validation/Test_Cases/test_case_', str_pad(caseno, width=3, pad="0"), '.Rmd'))
   }
 }
 
