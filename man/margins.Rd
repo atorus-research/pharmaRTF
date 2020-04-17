@@ -17,7 +17,7 @@ set_margins(x, value)
 
 \item{...}{Additonal arguments passed to method dispatch}
 
-\item{value}{A named list or vector detailing the}
+\item{value}{A named list or vector detailing the page margins}
 }
 \value{
 For \code{margin()}, a named vector of the margin attribute of the

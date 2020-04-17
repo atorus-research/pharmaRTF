@@ -37,7 +37,7 @@ For \code{header_height()}/\code{footer_height()}, the
 }
 \description{
 These functions modify or return the header_height/footer_height attribute
-of a rtf_doc object. The header/footer height is the default amount of
+of a \code{rtf_doc} object. The header/footer height is the default amount of
 space allocated to the header/footer from the margin. If the content of the
 header/footer exceeds this amount of space, it will be expanded.
 }

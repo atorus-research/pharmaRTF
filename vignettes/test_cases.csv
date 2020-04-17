@@ -1,0 +1,43 @@
+﻿CaseNo,LineType,Level,Specs Tested,ID,Text,TestType,OutputFile
+1,Title,0,,,Test Case 001,,
+1,UpdatedBy,0,,,Ashley Tarasiewicz,,
+1,UpdatedDate,0,,,4/16/2020,,
+1,Setup,1,,,_No prerequisites required_,,
+1,Test,2,"1.1, 1.2",T1.01,Output an RTF using a dataframe requiring one page of output and verify output and paging are appropiate,,
+1,TestCases,3,,T1.01.01,Verify document outputs as an RTF and opens in Word,visual,test_1_01.rtf
+1,TestCases,3,,T1.01.02,"Verify output has column headers (""Header1"", ""Header2"") above the table, a title (""Title"") at the top, and a footnote (""Footnote"") at the bottom",visual,test_1_01.rtf
+1,TestCases,2,"1.1, 1.2",T1.02,Output an RTF using a dataframe requiring multiple pages of output and verify output and paging are appropiate,,
+1,TestCases,3,,T1.02.01,Verify document outputs as an RTF and opens in Word,visual,test_1_02.rtf
+1,TestCases,3,,T1.02.02,"Verify output has column headers (""Header1"", ""Header2"") above the table, a title (""Title"") at the top, and a footnote (""Footnote"") at the bottom",visual,test_1_02.rtf
+1,TestCases,3,,T1.02.03,"Verify output has the column headers, title, and footnote repeat on each page",visual,test_1_02.rtf
+2,Title,0,,,Test Case 002,,
+2,UpdatedBy,0,,,Ashley Tarasiewicz,,
+2,UpdatedDate,0,,,4/15/2020,,
+2,Setup,1,,,_No prerequisites required_,,
+2,TestCases,2,2.1.1,T2.01,Check margins are set to the default value then change margins and verify changes are reflected in the output,,
+2,TestCases,3,,T2.01.01,"Verify margins are set to expected default: 1,1,1,1",programmatic,test_2_01.Rdata
+2,TestCases,3,,T2.01.02,"Verify margins on output are 2,.5,1.5,.25 (top, bottom, left, right)",visual,test_2_01.rtf
+2,TestCases,2,2.1.2,T2.02,Check header and footer height are set to default then change header and footer height and verify changes are reflected in the output,,
+2,TestCases,3,,T2.02.01,"Verify header and footer heights are set to expected default: .5,.5",programmatic,test_2_02.Rdata
+2,TestCases,3,,T2.02.02,Verify header and footer heights on output are .25 (header) and 1 (footer),visual,test_2_02.rtf
+2,TestCases,2,2.1.3,T2.03,Check page size is set to default then change page size and verify changes are reflected in the output,,
+2,TestCases,3,,T2.03.01,"Verify page size is set to expected default: 8.5,11 ",programmatic,test_2_03.Rdata
+2,TestCases,3,,T2.03.02,"Verify page size on output is 9,12 (height, width)",visual,test_2_03.rtf
+2,TestCases,2,2.1.4,T2.04,Check orientation is set to default then change orientation and verify changes are reflected in the output,,
+2,TestCases,3,,T2.04.01,Verify orientation is set to expected default: landscape,programmatic,test_2_04.Rdata
+2,TestCases,3,,T2.04.02,Verify orientation on output is portrait,visual,test_2_04.rtf
+2,TestCases,2,2.1.5,T2.05,Check font size is set to default then change font size and verify changes are reflected in the output,,
+2,TestCases,3,,T2.05.01,Verify font size is set to expected default: 12,programmatic,test_2_05.Rdata
+2,TestCases,3,,T2.05.02,Verify font size on output is 14,visual,test_2_05.rtf
+2,TestCases,2,2.1.6,T2.06,Check font is set to default then change font and verify changes are reflected in the output,,
+2,TestCases,3,,T2.06.01,Verify font is set to expected default: Courier New,programmatic,test_2_06.Rdata
+2,TestCases,3,,T2.06.02,Verify font on output is Comic Sans,visual,test_2_06.rtf
+2,TestCases,2,2.1.7,T2.07,Check header rows is set to default then change header rows and verify changes are reflected in the output,,
+2,TestCases,3,,T2.07.01,Verify header rows is set to expected default: 1,programmatic,test_2_07.Rdata
+2,TestCases,3,,T2.07.02,Verify header rows on output are 2,visual,test_2_07.rtf
+2,TestCases,2,2.1.8,T2.08,Check column header buffers is set to default then change column header buffers and verify changes are reflected in the output,,
+2,TestCases,3,,T2.08.01,"Verify column header buffers are set to expected default: 0,0",programmatic,test_2_08.Rdata
+2,TestCases,3,,T2.08.02,"Verify column header buffers on output are 2,1 (top, bottom)",visual,test_2_08.rtf
+2,TestCases,2,2.1.9,T2.09,Check ignore cell padding is set to default then change ignore cell padding and verify changes are reflected in the output,,
+2,TestCases,3,,T2.09.01,Verify ignore cell padding is set to expected default: FALSE,programmatic,test_2_09.Rdata
+2,TestCases,3,,T2.09.02,Verify ignore cell padding on output is TRUE,visual,test_2_09.rtf

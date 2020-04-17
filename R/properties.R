@@ -7,14 +7,14 @@
 #' Return or set font
 #'
 #' @description
-#' These property function modify or return the fonts of an rtf_doc object or
-#' individual titles/footnotes objects of the hf_line class.
+#' These property functions modify or return the fonts of an \code{rtf_doc} object or
+#' individual titles/footnotes objects of the \code{hf_line} class.
 #'
-#' When used on an rtf_doc object to retrieve fonts, the distinct set of fonts
+#' When used on an \code{rtf_doc} object to retrieve fonts, the distinct set of fonts
 #' of all objects contained within the rtf_doc are returned. When used on an
-#' rtf_doc to set fonts, the default font for the RTF document is set.
+#' \code{rtf_doc} to set fonts, the default font for the RTF document is set.
 #'
-#' When used on titles/footnotes (hf_line objects), the font is either returned
+#' When used on titles/footnotes (\code{hf_line} objects), the font is either returned
 #' of set for that individual line.
 #'
 #' @param x \code{rtf_doc} object, the table of a \code{rtf_doc} object, or a
@@ -109,14 +109,14 @@ set_font <- function(x, value) UseMethod('font<-')
 #' Return or set font size
 #'
 #' @description
-#' These property function modify or return the font sizes of an rtf_doc object
-#' or individual titles/footnotes objects of the hf_line class.
+#' These property functions modify or return the font sizes of an \code{rtf_doc} object
+#' or individual titles/footnotes objects of the \code{hf_line} class.
 #'
 #' When used on an rtf_doc object to retrieve font sizes, the document level
-#' default font size within the rtf_doc is returned. When used on an rtf_doc to
+#' default font size within the \code{rtf_doc} is returned. When used on an \code{rtf_doc} to
 #' set fonts, the default font size for the RTF document is set.
 #'
-#' When used on titles/footnotes (hf_line objects), the font size is either
+#' When used on titles/footnotes (\code{hf_line} objects), the font size is either
 #' returned of set for that individual line.
 #'
 #' @param x \code{rtf_doc} object or \code{hf_line} object.
@@ -559,14 +559,14 @@ margins.rtf_doc <- function(x, ...) {
 
 ## Margins (setters) ----
 #' @param x A \code{rtf_doc} object
-#' @param value A named list or vector detailing the
+#' @param value A named list or vector detailing the page margins
 #'
 #' @export
 #' @rdname margins
 'margins<-' <- function(x, value) UseMethod('margins<-')
 
 #' @param x A \code{rtf_doc} object
-#' @param value A named list or vector detailing the
+#' @param value A named list or vector detailing the page margins
 #'
 #' @export
 #' @rdname margins
@@ -672,7 +672,7 @@ set_orientation <- function(x, value) UseMethod('orientation<-')
 #' Return or set header/footer height
 #'
 #' These functions modify or return the header_height/footer_height attribute
-#' of a rtf_doc object. The header/footer height is the default amount of
+#' of a \code{rtf_doc} object. The header/footer height is the default amount of
 #' space allocated to the header/footer from the margin. If the content of the
 #' header/footer exceeds this amount of space, it will be expanded.
 #'
@@ -858,8 +858,8 @@ set_pagesize <- function(x, value) UseMethod('pagesize<-')
 #' Return or set the header_rows
 #'
 #' @description
-#' These functions modify or return the header_rows attribute of a rtf_doc
-#' object. Only required and valid when the rtf_doc table object is a
+#' These functions modify or return the header_rows attribute of a \code{rtf_doc}
+#' object. Only required and valid when the \code{rtf_doc} table object is a
 #' huxtable.
 #'
 #' The header rows control the number of rows taken from a huxtable table into
@@ -887,7 +887,7 @@ set_pagesize <- function(x, value) UseMethod('pagesize<-')
 #' # Both of these return 1, the default
 #'
 #' header_rows(rtf$table) <- 0
-#' # Sets reader_rows to 0
+#' # Sets header_rows to 0
 #'
 #' @export
 #' @rdname header_rows
@@ -1036,7 +1036,8 @@ set_ignore_cell_padding <- function(x, value) UseMethod('ignore_cell_padding<-')
 #' Return or set column_header_buffer attributes
 #'
 #' These property functions modify and return the column header buffers of a
-#' \code{rtf_doc}. This attribute adds rows to the top or bottom of the table
+#' \code{rtf_doc} object. These are stored as a named vector. Names should be \code{top} and
+#' \code{bottom}. This attribute adds rows to the top or bottom of the table
 #' column headers to pad it from the titles above or the table below.
 #'
 #' @param x A \code{rtf_doc} object
