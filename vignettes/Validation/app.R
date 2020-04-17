@@ -53,7 +53,7 @@ server <- function(input, output) {
         file.remove("~/pharmaRTF/vignettes/Validation/vur_auto.Rds")
     })
 
-    output$UserDf <- renderTable(print(vur$df[, c("ID", "Text", "OutputFile", "Response")]))
+    output$UserDf <- renderTable(vur$df[, c("ID", "Text", "OutputFile", "Response")])
 
     output$userInfo <- renderText({
         paste0("User: ", Sys.getenv("USER"), "\n",

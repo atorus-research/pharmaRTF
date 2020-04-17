@@ -151,3 +151,11 @@ scrape_spec_rmd(file.path(spec_dir, "specification_004.Rmd"))
 ```{r sys_info}
 sessionInfo()
 ```
+
+# Audit information
+```{r log_info}
+kable(readRDS("~/pharmaRTF/vignettes/Validation/vur_auto.Rds")[, c("ID", "OutputFile", "Response", "Log")],
+      format = "latex", row.names = FALSE) %>%
+  kable_styling()
+
+```
