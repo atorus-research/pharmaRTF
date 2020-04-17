@@ -22,7 +22,7 @@ n_pct <- function(n, pct, n_width=3, pct_width=3) {
     else {
       as.character(
         # Form the string using glue and format
-        glue('{format(x, width=n_width)} ({format(round((x/pct) * 100), width=pct_width)}%)')
+        glue('{format(x, width=n_width)}({format(round((x/pct) * 100), width=pct_width)}%)')
       )
     }
   }))
@@ -73,9 +73,9 @@ for(i in seq(nrow(adlbc2)/9)) {
 }
 
 adlbc3 <- adlbc2 %>%
-  mutate(n_w_pct = n_pct(N, tot)) %>%
+  mutate(n_w_pct = n_pct(N, tot, n_width = 2)) %>%
   pivot_wider(id_cols = LBTEST,names_from = c(TRTP, LBNRIND), values_from = n_w_pct) %>%
-  add_column("p-val\\line[1]" = adlbc_pvals)
+  add_column("p-val\\line [1]" = unlist(adlbc_pvals))
 
 ### Heme
 adlbh <- read_xpt(glue("{adam_lib}/adlbh.xpt")) %>%
@@ -117,9 +117,9 @@ for(i in seq(nrow(adlbh2)/9)) {
 
 
 adlbh3 <- adlbh2 %>%
-  mutate(n_w_pct = n_pct(N, tot)) %>%
+  mutate(n_w_pct = n_pct(N, tot, n_width = 2)) %>%
   pivot_wider(id_cols = LBTEST,names_from = c(TRTP, LBNRIND), values_from = n_w_pct) %>%
-  add_column("p-val\\line[1]" = adlbh_pvals)
+  add_column("p-val\\line [1]" = unlist(adlbh_pvals))
 
 final <- adlbc3 %>%
   ungroup() %>%
@@ -151,15 +151,60 @@ headers <- dm %>%
   filter(ARM != "Screen Failure") %>%
   group_by(ARM) %>%
   summarise(N = n()) %>%
-  mutate(label = paste0(ARM, " (N=", N, ")"))
+  mutate(label = paste0(recode(ARM,
+                               "Placebo" = "Placebo",
+                               "Xanomeline Low Dose" = "Xan. Low",
+                               "Xanomeline High Dose" = "Xan. High"), " (N=", N, ")"))
+pad_row <- function(df, r) {
+  #df - dataframe to insert pad
+  #r - row number to pad
+  for(i in seq(along = r)) {
+    if(r[i] + i - 1 < nrow(df)){
+      df[seq(r[i] + i, nrow(df) + 1),] <- df[seq(r[i] + (i - 1), nrow(df)),]
+      df[r[i] + (i - 1),] <- NA
+    } else {
+      df[r[i] + (i - 1),] <- NA
+    }
+  }
+  df
+}
+
+ht <- final %>%
+  as_huxtable(add_colnames = TRUE)
+
+ht <- pad_row(ht, c(1,1))
+ht[1, 2] <- headers[1, "label"]
+ht[1, 5] <- headers[2, "label"]
+ht[1, 8] <- headers[3, "label"]
+
+ht2 <- ht %>%
+  huxtable::merge_cells(1, 2:4) %>%
+  huxtable::merge_cells(1, 5:7) %>%
+  huxtable::merge_cells(1, 8:10) %>%
+  huxtable::set_bottom_border(2, 2:4, 1) %>%
+  huxtable::set_bottom_border(2, 5:7, 1) %>%
+  huxtable::set_bottom_border(2, 8:10, 1) %>%
+  huxtable::set_bottom_border(3, 1:11, 1) %>%
+  huxtable::set_col_width(1:11, c(0.18, rep(0.082, 10))) %>%
+  huxtable::set_width(1.4) %>%
+  huxtable::set_escape_contents(FALSE) %>%
+  huxtable::set_bold(1:3, 1:11, TRUE) %>%
+  huxtable::set_valign(1:3, 1:11, "bottom") %>%
+  huxtable::set_align(3, 1:11, "center")
+
+
+
 
 
 # Write into doc object and pull titles/footnotes from excel file
-doc <- rtf_doc(final, header.rows = 2) %>% titles_and_footnotes_from_df(
+doc <- rtf_doc(ht2, header_rows = 3) %>% titles_and_footnotes_from_df(
   from.file='./scripts/table_examples/titles.xlsx',
   reader=example_custom_reader,
   table_number='14-6.02') %>%
-  set_font_size(10)
+  set_font_size(10) %>%
+  set_ignore_cell_padding(TRUE) %>%
+  set_column_header_buffer(top = 1) %>%
+  set_footer_height(1.1)
 
 
 # Write out the RTF
