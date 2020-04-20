@@ -1,38 +1,39 @@
-﻿LineType,Level,SpecID,Text
-Title,0,,Specifications
-UpdatedBy,0,,Ashley Tarasiewicz
-UpdatedDate,0,,4/16/2020
-Setup,1,,_No prerequisites required_
-Specs,2,A,The RTF written out to a file can be opened in Microsoft Word
-Specs,2,B,Paging of the table works appropriately 
-Specs,2,C,Changes to document level margins are reflected in the output document
-Specs,2,D,Changes to document level header and footer height are reflected in the output document
-Specs,2,E,Changes to document level page size are reflected in the output document
-Specs,2,F,Changes to document level orientation are reflected in the output document
-Specs,2,G,Changes to document level default font size are reflected in the output document
-Specs,2,H,Changes to document level default font are reflected in the output document
-Specs,2,I,Changes to document level header rows are reflected in the output document
-Specs,2,J,Changes to document level column header buffer are reflected in the output document
-Specs,2,K,Changes to document level ignore cell padding are reflected in the output document
-Specs,2,L,Titles and footntoes can be manually entered in the RTF document creation
-Specs,2,M,Titles and footntoes can be manually entered using add_titles/add_footnotes
-Specs,2,N,Titles and footntoes can be manually entered importing from a separate file using a reader
-Specs,2,O,PAGE_FORMAT for titles and footnotes works properly
-Specs,2,P,DATE_FORMAT for titles and footnotes works properly
-Specs,2,Q,FILE_PATH for titles and footnotes works properly
-Specs,2,R,Bold titles/footnotes attributes update correctly when specified
-Specs,2,S,Italic titles/footnotes attributes update correctly when specified
-Specs,2,T,"Alignment titles/footnotes attributes update correctly when specified, i.e. split titles/footnotes flush left and right as expected"
-Specs,2,U,Font titles/footnotes attributes update correctly when specified
-Specs,2,V,Font size titles/footnotes attributes update correctly when specified
-Specs,2,W,"Index titles/footnotes attributes update correctly when specified, i.e. specified indices sort appropriately when entered in separte orders, NULL indices sort last"
-Specs,2,X,View functions (i.e. view_titles and view_footnotes) render data frames appropriately
-Specs,2,Y,Updates to huxtable table bold table level property is properly formatted in the resulting RTF
-Specs,2,Z,Updates to huxtable table italic table level property is properly formatted in the resulting RTF
-Specs,2,AA,"Updates to huxtable table alignment (center, left, right) table level property is properly formatted in the resulting RTF"
-Specs,2,AB,"Updates to huxtable table vertical alignment (center, top, bottom) table level property is properly formatted in the resulting RTF"
-Specs,2,AC,Updates to huxtable table table width table level property is properly formatted in the resulting RTF
-Specs,2,AD,Updates to huxtable table column width table level property is properly formatted in the resulting RTF
-Specs,2,AE,Updates to huxtable table row height table level property is properly formatted in the resulting RTF
-Specs,2,AF,Updates to huxtable table cell merging table level property is properly formatted in the resulting RTF
-Specs,2,AG,Date points in table match resulting RTF presentation
+﻿LineType,Level,Specs Tested,TestID,CheckID,Text,CheckType,OutputFile
+Title,0,,,,Test Cases,,
+UpdatedBy,0,,,,Ashley Tarasiewicz,,
+UpdatedDate,0,,,,4/20/2020,,
+Setup,1,,,,_No prerequisites required_,,
+Test,2,A:B,T1,,Output an RTF using a dataframe requiring one page of output and verify output and paging are appropiate,,
+TestCases,3,,T1,C1,Verify document outputs as an RTF and opens in Word,visual,test_1.rtf
+TestCases,3,,T1,C2,"Verify output has column headers (""Header1"", ""Header2"") above the table, a title (""Title"") at the top, and a footnote (""Footnote"") at the bottom",visual,test_1.rtf
+TestCases,2,A:B,T2,,Output an RTF using a dataframe requiring multiple pages of output and verify output and paging are appropiate,,
+TestCases,3,,T2,C1,Verify document outputs as an RTF and opens in Word,visual,test_2.rtf
+TestCases,3,,T2,C2,"Verify output has column headers (""Header1"", ""Header2"") above the table, a title (""Title"") at the top, and a footnote (""Footnote"") at the bottom",visual,test_2.rtf
+TestCases,3,,T2,C3,"Verify output has the column headers, title, and footnote repeat on each page",visual,test_2.rtf
+TestCases,2,C,T3,,Check margins are set to the default value then change margins and verify changes are reflected in the output,,
+TestCases,3,,T3,C1,"Verify margins are set to expected default: 1,1,1,1",programmatic,test_3.Rdata
+TestCases,3,,T3,C2,"Verify margins on output are 2,.5,1.5,.25 (top, bottom, left, right)",visual,test_3.rtf
+TestCases,2,D,T4,,Check header and footer height are set to default then change header and footer height and verify changes are reflected in the output,,
+TestCases,3,,T4,C1,"Verify header and footer heights are set to expected default: .5,.5",programmatic,test_4.Rdata
+TestCases,3,,T4,C2,Verify header and footer heights on output are .25 (header) and 1 (footer),visual,test_4.rtf
+TestCases,2,E,T5,,Check page size is set to default then change page size and verify changes are reflected in the output,,
+TestCases,3,,T5,C1,"Verify page size is set to expected default: 8.5,11 ",programmatic,test_5.Rdata
+TestCases,3,,T5,C2,"Verify page size on output is 9,12 (height, width)",visual,test_5.rtf
+TestCases,2,F,T6,,Check orientation is set to default then change orientation and verify changes are reflected in the output,,
+TestCases,3,,T6,C1,Verify orientation is set to expected default: landscape,programmatic,test_6.Rdata
+TestCases,3,,T6,C2,Verify orientation on output is portrait,visual,test_6.rtf
+TestCases,2,G,T7,,Check font size is set to default then change font size and verify changes are reflected in the output,,
+TestCases,3,,T7,C1,Verify font size is set to expected default: 12,programmatic,test_7.Rdata
+TestCases,3,,T7,C2,Verify font size on output is 14,visual,test_7.rtf
+TestCases,2,H,T8,,Check font is set to default then change font and verify changes are reflected in the output,,
+TestCases,3,,T8,C1,Verify font is set to expected default: Courier New,programmatic,test_8.Rdata
+TestCases,3,,T8,C2,Verify font on output is Comic Sans,visual,test_8.rtf
+TestCases,2,I,T9,,Check header rows is set to default then change header rows and verify changes are reflected in the output,,
+TestCases,3,,T9,C1,Verify header rows is set to expected default: 1,programmatic,test_9.Rdata
+TestCases,3,,T9,C2,Verify header rows on output are 2,visual,test_9.rtf
+TestCases,2,J,T10,,Check column header buffers is set to default then change column header buffers and verify changes are reflected in the output,,
+TestCases,3,,T10,C1,"Verify column header buffers are set to expected default: 0,0",programmatic,test_10.Rdata
+TestCases,3,,T10,C2,"Verify column header buffers on output are 2,1 (top, bottom)",visual,test_10.rtf
+TestCases,2,K,T11,,Check ignore cell padding is set to default then change ignore cell padding and verify changes are reflected in the output,,
+TestCases,3,,T11,C1,Verify ignore cell padding is set to expected default: FALSE,programmatic,test_11.Rdata
+TestCases,3,,T11,C2,Verify ignore cell padding on output is TRUE,visual,test_11.rtf
