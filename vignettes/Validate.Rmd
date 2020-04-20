@@ -10,6 +10,7 @@ header-includes:
 - \usepackage{fancyhdr}
 - \pagestyle{fancy}
 - \usepackage{float}
+- \usepackage{longtable}
 - \fancyhead[CO, CE]{The Header - Atorus}
 - \fancyfoot[CO, CE]{The footer - Atorus \thepage}
 ---
@@ -23,6 +24,8 @@ library(testthat)
 library(here)
 library(knitr)
 library(kableExtra)
+library(stringr)
+library(purrr)
 
 opts_chunk$set(
   collapse = TRUE,
@@ -41,7 +44,6 @@ test_cases <- read.csv("~/pharmaRTF/vignettes/test_cases.csv")
 
 source(here("vignettes", "helper_test_code.R")) # handles environment and access to test_that contents
 source(here("vignettes", "roxy_block_details.R")) # scrapes roxygen block for authorship details
-setwd("~/pharmaRTF")
 ```
 
 # Validation Information
@@ -101,44 +103,73 @@ scrape_spec_rmd(file.path(spec_dir, "specification_003.Rmd"))
 scrape_spec_rmd(file.path(spec_dir, "specification_004.Rmd"))
 ```
 
-## Matrix
-```{r matrix} 
+\newpage
 
-trace_matrix <- function(specs) {
-  ## Change to ; later
-  specs_tested <- unlist(str_split(test_cases$Specs, ","))
-  daply(specs, 1, function(x) {
-    spec_i <- as.character(x)
-    data.frame(
-      spec_i = ifelse(spec_i %in% specs_tested, "X", "")
-    )
-  })
+\blandscape
+
+## Matrix
+```{r matrix, results="asis"} 
+
+# THis looks a little gross
+spec_df <- read.csv("~/pharmaRTF/vignettes/specs.csv")
+spec_df <- spec_df[spec_df$SpecID != "", ]
+
+specs_tested <- test_cases[test_cases$Specs.Tested != "", ]
+specs_tested_l <- str_split(specs_tested$Specs.Tested, ":")
+
+#number of specs(columns)
+nspecs <- nrow(spec_df)
+#number of tests(rows)
+ntests <- nrow(specs_tested)
+
+temp <- lapply(specs_tested_l, function(x) {
+  ifelse(spec_df$SpecID %in% x, "X", "")
+})
+
+final <- data.frame(matrix(unlist(temp), ncol = nspecs, nrow = ntests, byrow = TRUE),
+                    row.names = specs_tested$TestID)
+
+names(final) <- spec_df$SpecID
+
+max_cols_to_display <- 25
+for(i in seq(ceiling(ncol(final)/max_cols_to_display))) {
+  start <- 1 + (i-1) *max_cols_to_display
+  end <- ifelse(i * max_cols_to_display > ncol(final), ncol(final), i*max_cols_to_display)
+  
+  cat(kable(final[,seq(start, end)], "latex", booktabs = TRUE), "\\newline")
 }
 
 
+# kable(final, format = "latex", longtable = TRUE, booktabs = TRUE) %>%
+#   kable_styling(full_width = "F", font_size = 5, latex_options = c("repeat_header")) %>%
+#   landscape()
 
 ```
 
+\elandscape
+
+\newpage
+
 ### General Specification Test Cases
 ```{r test_case_1, out.width='0.5\\textwidth'}
-scrape_spec_rmd(file.path(test_case_dir, "test_case_001.Rmd"))
+#scrape_spec_rmd(file.path(test_case_dir, "test_case_001.Rmd"))
 ```
 
 ### General Specification Test Code Results
 ```{r spec_function_1}
-eval_test_code(file.path(test_code_dir, "test_case_001.R")) 
+#eval_test_code(file.path(test_code_dir, "test_case_001.R")) 
 ```
 
 ***
 
 ### RTF Document Characteristics Test Cases
 ```{r test_case_2, out.width='0.5\\textwidth'}
-scrape_spec_rmd(file.path(test_case_dir, "test_case_002.Rmd"))
+#scrape_spec_rmd(file.path(test_case_dir, "test_case_002.Rmd"))
 ```
 
 ### RTF Document Characteristics Test Code Results
 ```{r spec_function_2}
-eval_test_code(file.path(test_code_dir, "test_case_002.R")) 
+#eval_test_code(file.path(test_code_dir, "test_case_002.R")) 
 ```
 
 ***
@@ -163,8 +194,8 @@ sessionInfo()
 
 # Audit information
 ```{r log_info}
-kable(readRDS("~/pharmaRTF/vignettes/Validation/vur_auto.Rds")[, c("ID", "OutputFile", "Response", "Log")],
-      format = "latex", row.names = FALSE) %>%
-  kable_styling()
+# kable(readRDS("~/pharmaRTF/vignettes/Validation/vur_auto.Rds")[, c("ID", "OutputFile", "Response", "Log")],
+#       format = "latex", row.names = FALSE) %>%
+#   kable_styling()
 
 ```
