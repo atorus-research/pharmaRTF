@@ -56,7 +56,8 @@
 #' @param font A string to specify the font display. Ensure the intended RTF
 #'   reader can display the selected font.
 #' @param font_size Font size in half points. For example font_size = 20
-#'   will display a 10 point font. Defaults to a 12 point font.
+#'   will display a 10 point font. Defaults to NULL, which allows default document
+#'   font size to take precedence.
 #' @param index Position to display header or footnote lines in the RTF
 #'   document. Orders in ascending order with NULLs last.
 #'
@@ -85,7 +86,7 @@
 #'
 #' @export
 hf_line <- function(..., align=c('center', 'left', 'right', 'split'), bold=FALSE,
-                    italic=FALSE, font=NA, font_size=12, index=NULL) {
+                    italic=FALSE, font=NA, font_size=NULL, index=NULL) {
 
   line = list()
 
@@ -141,8 +142,10 @@ validate_hf_line <- function(line, align, bold,italic, font, font_size, index) {
   assert_that(is.character(font) | is.na(font))
 
   # Make sure font size is numeric
-  assert_that(is.numeric(font_size) && font_size %% 0.5 == 0,
-              msg = "Font size must be numeric and divisible by .5")
+  if (!is.null(font_size)) {
+    assert_that(is.numeric(font_size) && font_size %% 0.5 == 0,
+                msg = "Font size must be numeric and divisible by .5")
+  }
 }
 
 #' Order header/footer lines in an rtf_document
