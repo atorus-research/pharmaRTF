@@ -30,18 +30,24 @@ get_meta <- function(df) {
   }
 }
 
-get_header_n <- function(.data) {
+get_header_n <- function(.data, trtp = TRT01P, trtpn = TRT01PN) {
+  # Extract header N's into a dataframe to be used on merges or for display
+
+  trtp = enquo(trtp)
+  trtpn = enquo(trtpn)
+
   # Get the header N's ----
   .data %>%
-    group_by(TRT01P, TRT01PN) %>%
+    group_by(!!trtp, !!trtpn) %>%
     summarize(N = n()) %>%
     mutate(
-      labels = str_replace_all(str_wrap(glue('{TRT01P} (N={N})'), width=10), "\n", function(x) "\\line ")
+      trtp = !!trtp,
+      labels = str_replace_all(str_wrap(glue('{trtp} (N={N})'), width=10), "\n", function(x) "\\line ")
       # labels = str_wrap(glue('{TRTP} (N={N})'), width=10)
     ) %>%
     ungroup() %>%
-    arrange(TRT01PN) %>%
-    select(-TRT01P)
+    arrange(!!trtpn) %>%
+    select(-!!trtp, -trtp)
 }
 
 num_fmt <- function(var, digits=0, size=10, int_len=3) {
@@ -236,9 +242,9 @@ summary_data <- function(data, var, week, stub_header) {
   # Get the summary statistics
   df <- data %>%
     # Filter to analsis week
-    filter(AVISITCD==week) %>%
+    filter(AVISITN==week) %>%
     # Summary statistics
-    group_by(TRTPCD) %>%
+    group_by(TRTPN) %>%
     summarize(n = n(),
               mean = mean({{var}}),
               sd = sd({{var}}),
@@ -260,13 +266,15 @@ summary_data <- function(data, var, week, stub_header) {
     # Make summary stats vertical
     pivot_longer(c(N, mean_sd, med_ran), names_to = "rowlbl1") %>%
     # Split out treatment groups into separate columns
-    pivot_wider(names_from=TRTPCD, values_from=value) %>%
+    pivot_wider(names_from=TRTPN, values_from=value) %>%
     # Fix the row labels
-    mutate(rowlbl1 = case_when(
-      rowlbl1 == 'N' ~ '  n',
-      rowlbl1 == 'mean_sd' ~ '  Mean (SD)',
-      rowlbl1 == 'med_ran' ~ '  Median (Range)',
-    ))
+    mutate(rowlbl1 =
+      case_when(
+        rowlbl1 == 'N' ~ '  n',
+        rowlbl1 == 'mean_sd' ~ '  Mean (SD)',
+        rowlbl1 == 'med_ran' ~ '  Median (Range)'
+      )
+    )
 
   # Add in the stub header
   bind_rows(tibble(rowlbl1=c(stub_header)), df)
@@ -282,25 +290,33 @@ efficacy_models <- function(data, var=NULL, wk=NULL, model_type='ancova') {
 
     # Subset to analyze
     data <- data %>%
-      filter(AVISITCD == as.character(glue('Wk{wk}')))
+      filter(AVISITN == wk)
   }
+
+  data <- data %>%
+    mutate(
+      TRTPCD = case_when(
+        TRTPN == 0 ~ 'Pbo',
+        TRTPN == 54 ~ 'Xan_Lo',
+        TRTPN == 81 ~ 'Xan_Hi'
+      )
+    )
 
   # Create an ordered factor variable for the models
   data['TRTPCD_F'] <- factor(data$TRTPCD, levels=c('Xan_Hi', 'Xan_Lo', 'Pbo'))
-  data['AWEEKC'] = factor(data$AWEEK)
-
+  data['AWEEKC'] = factor(data$AVISIT)
 
   # Set up the models
   if (model_type == 'ancova') {
     if (var == "CHG") {
-      model1 <- lm(CHG ~ TRTDOSE + SITEGRP + BASE, data=data)
-      model2 <- lm(CHG ~ TRTPCD_F + SITEGRP + BASE, data=data)
+      model1 <- lm(CHG ~ TRTPN + SITEGR1 + BASE, data=data)
+      model2 <- lm(CHG ~ TRTPCD_F + SITEGR1 + BASE, data=data)
     } else {
-      model1 <- lm(VAL ~ TRTDOSE + SITEGRP, data=data)
-      model2 <- lm(VAL ~ TRTPCD_F + SITEGRP, data=data)
+      model1 <- lm(VAL ~ TRTPN + SITEGR1, data=data)
+      model2 <- lm(VAL ~ TRTPCD_F + SITEGR1, data=data)
     }
   } else {
-    model2 <- lme4::lmer(CHG ~ TRTPCD_F + SITEGRP + AWEEKC + TRTPCD_F:AWEEKC + BASE + BASE:AWEEKC + (AWEEK | USUBJID),
+    model2 <- lme4::lmer(CHG ~ TRTPCD_F + SITEGR1 + AWEEKC + TRTPCD_F:AWEEKC + BASE + BASE:AWEEKC + (AVISITN | USUBJID),
                          data=data)
   }
 
@@ -314,7 +330,7 @@ efficacy_models <- function(data, var=NULL, wk=NULL, model_type='ancova') {
 
     # Pull it out into a table
     sect1 <- tibble(rowlbl1=c('p-value(Dose Response) [1] [2]'),
-                            Xan_Hi = c(num_fmt(ancova[2, 'Pr(>F)'], int_len=4, digits=3, size=12))
+                            `81` = c(num_fmt(ancova[2, 'Pr(>F)'], int_len=4, digits=3, size=12))
     ) %>%
       pad_row()
   }
@@ -376,28 +392,29 @@ efficacy_models <- function(data, var=NULL, wk=NULL, model_type='ancova') {
   xan_lo <- pw_data %>%
     filter(contrast == 'Xan_Lo - Pbo') %>%
     # Rename to the table display variable
-    select(Xan_Lo=value) %>%
+    select(`54`=value) %>%
     pad_row()
-  # Add in rowlbl
-  xan_lo['rowlbl1'] <- c('p-value(Xan - Placebo) [1] [3]', '  Diff of LS Means (SE)', '  95% CI', '')
+
+  #Add in rowlbl
+  xan_lo['rowlbl1'] <- c('p-value(Xan - Placebo) [1][3]', '  Diff of LS Means (SE)', '  95% CI', '')
 
   # Subset Xan_hi - Pbo into table variables
   xan_hi <- pw_data %>%
     filter(contrast == 'Xan_Hi - Pbo') %>%
     # Rename to the table display variable
-    select(Xan_Hi=value) %>%
+    select(`81`=value) %>%
     pad_row()
   # Add in rowlbl
-  xan_hi['rowlbl1'] <- c('p-value(Xan - Placebo) [1] [3]', '  Diff of LS Means (SE)', '  95% CI', '')
+  xan_hi['rowlbl1'] <- c('p-value(Xan - Placebo) [1][3]', '  Diff of LS Means (SE)', '  95% CI', '')
   xan_hi['ord'] <- c(1,2,3,4) # Order for sorting
 
   # Subset Xan_Hi - Xan_Lo into table variable
   xan_xan <- pw_data %>%
     filter(contrast == 'Xan_Hi - Xan_Lo') %>%
     # Rename to the table display variable
-    select(Xan_Hi=value)
+    select(`81`=value)
   # Add in rowlbl
-  xan_xan['rowlbl1'] <- c('p-value(Xan High - Xan Low) [1] [3]', '  Diff of LS Means (SE)', '  95% CI')
+  xan_xan['rowlbl1'] <- c('p-value(Xan High - Xan Low) [1][3]', '  Diff of LS Means (SE)', '  95% CI')
   xan_xan['ord'] <- c(5,6,7) # Order for sorting
 
   # Pack it all together
