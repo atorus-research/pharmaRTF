@@ -30,6 +30,20 @@ get_meta <- function(df) {
   }
 }
 
+get_header_n <- function(.data) {
+  # Get the header N's ----
+  .data %>%
+    group_by(TRT01P, TRT01PN) %>%
+    summarize(N = n()) %>%
+    mutate(
+      labels = str_replace_all(str_wrap(glue('{TRT01P} (N={N})'), width=10), "\n", function(x) "\\line ")
+      # labels = str_wrap(glue('{TRTP} (N={N})'), width=10)
+    ) %>%
+    ungroup() %>%
+    arrange(TRT01PN) %>%
+    select(-TRT01P)
+}
+
 num_fmt <- function(var, digits=0, size=10, int_len=3) {
   # Formats summary stat strings to align display correctly
 
@@ -58,57 +72,62 @@ num_fmt <- function(var, digits=0, size=10, int_len=3) {
 
 n_pct <- function(n, pct, n_width=3, pct_width=3) {
   # n (%) formatted string. e.g. 50 ( 75%)
+  res <- n / pct
+
+  if (res < .01) {
+    disp <- str_pad('<1', width=pct_width)
+  } else {
+    disp <- format(round(res * 100), width=pct_width)
+  }
   return(
     # Suppress conversion warnings
     as.character(
       # Form the string using glue and format
-      glue('{format(n, width=n_width)} ({format(round((n/pct) * 100), width=pct_width)}%)')
+      glue('{format(n, width=n_width)} ({disp}%)')
     )
   )
 }
 
-sum_subgrp <- function(subgroup_var, include.n=TRUE, pad.row=TRUE) {
-  # Create n (%) subgroups by TRTPCD
-
-  # Convert string subgroup into a symbol that can be
-  # unquoted with !!
+sum_subgrp <- function(.data, subgroup_var, order_var = NULL, include.n=TRUE, pad.row=TRUE, header_n = header_n) {
+  # Create n (%) subgroups by TRT01P
 
   # Pull from adsl with totals
-  df <- adsl_ %>%
+  subgrps <- .data %>%
     # Keep only the gtwo group variables and group byC:\Users\16105\OneDrive - ATorus\Documents\Projects\Explore\test2.rtf
-    select(TRTPCD, {{ subgroup_var }}) %>%
+    select(TRT01PN, {{ subgroup_var }}, {{ order_var }}) %>%
     filter(!is.na({{ subgroup_var }})) %>%
-    group_by(TRTPCD, {{ subgroup_var }}) %>%
+    group_by(TRT01PN, {{ subgroup_var }}, {{ order_var }}) %>%
     # Summarize counts
     summarize(
       n = n()
     ) %>%
+    arrange(TRT01PN, {{ order_var }}) %>%
     # Merge with big Ns
-    left_join(header_n, by = 'TRTPCD') %>%
+    left_join(header_n, by = 'TRT01PN') %>%
     rowwise() %>%
     # Create the n (%) string
     mutate(
       res = n_pct(n, N)
     ) %>%
     # Drop unnecessary vars
-    select(-n, -N, -labels) %>%
+    select(-n, -N, -labels, -{{ order_var }}) %>%
     # Transpose
-    pivot_wider(names_from = TRTPCD, values_from = res) %>%
+    pivot_wider(names_from = TRT01PN, values_from = res) %>%
     # Take care of NA results
     replace(is.na(.), '  0       ') %>%
     # Rename row label column
     rename(rowlbl2 = {{ subgroup_var }})
 
   if (include.n){
-    df <- rbind(desc_stats({{subgroup_var}}, include='n')[1,], df)
+    subgrps <- rbind(desc_stats(.data, {{subgroup_var}}, include='n')[1,], subgrps)
   }
 
-  pad_row(df)
+  pad_row(subgrps)
 
 }
 
-desc_stats <- function(var, na.rm=TRUE, int_len=3, size=10, include=c('n', 'Mean', 'SD', 'Median', 'Min', 'Max')) {
-  # Provides descriptive statistics of provided variable, by TRTPCD
+desc_stats <- function(.data, var, na.rm=TRUE, int_len=3, size=10, include=c('n', 'Mean', 'SD', 'Median', 'Min', 'Max')) {
+  # Provides descriptive statistics of provided variable, by TRT01PN
   # n, Mean, SD, Median, Min, Max
 
   # Ensure that the include argument was valid
@@ -126,19 +145,19 @@ desc_stats <- function(var, na.rm=TRUE, int_len=3, size=10, include=c('n', 'Mean
   )[include] # this is a named list, so subset based on the input arguments
 
   # Pull from ADSL with totals
-  adsl_ %>%
-    # Pick of TRTPCD and the variable of interest
-    select(TRTPCD, {{ var }}) %>%
+  .data %>%
+    # Pick of TRT01PN and the variable of interest
+    select(TRT01PN, {{ var }}) %>%
     # Filter out missing values
     filter(!is.na({{ var }})) %>%
     # Group by treatment
-    group_by(TRTPCD) %>%
+    group_by(TRT01PN) %>%
     # Summarize each statistic and use num_fmt for rounding/formatting
     summarize(!!!summaries) %>% # unpack the expressions into syntax to be evaluated
     # Transpose statistics into one column
-    pivot_longer(-TRTPCD, names_to = 'rowlbl2', values_to = 'temp') %>%
+    pivot_longer(-TRT01PN, names_to = 'rowlbl2', values_to = 'temp') %>%
     # Transpose treatments into separate columns
-    pivot_wider(names_from = TRTPCD, values_from = temp) %>%
+    pivot_wider(names_from = TRT01PN, values_from = temp) %>%
     pad_row()
 }
 
@@ -152,9 +171,9 @@ invert.list <- function (NL) {
 }
 
 # P-value for anova test
-aov_p <- function(data, forumula) {
+aov_p <- function(.data, forumula) {
   # Run the anova test
-  a <- aov(forumula, data, na.action=na.omit)
+  a <- aov(forumula, .data, na.action=na.omit)
 
   # Extract the P value
   p <- summary(a)[[1]][['Pr(>F)']][1]
@@ -192,19 +211,19 @@ fish_p <- function(data, results, categories, width = 10) {
 }
 
 # Attach P-value to the first row of a dataframe
-attach_p <- function(data, p_value, digits = 4) {
+attach_p <- function(.data, p_value, digits = 4) {
   # Empty column
-  data[['p']] = character(nrow(data))
-  data[1, 'p'] = p_value
+  .data[['p']] = character(nrow(.data))
+  .data[1, 'p'] = p_value
 
-  data
+  .data
 
 }
 
 # Add an empty row
-pad_row <- function(df, n=1) {
-  df[(nrow(df)+1):(nrow(df)+n), ] <- ""
-  df
+pad_row <- function(.data, n=1) {
+  .data[(nrow(.data)+1):(nrow(.data)+n), ] <- ""
+  .data
 }
 
 
