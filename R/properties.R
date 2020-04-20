@@ -176,8 +176,10 @@ set_font_size <- function(x, value) UseMethod('font_size<-')
 
 #' @export
 'font_size<-.hf_line' <- function(x, value) {
-  assert_that(is.numeric(value) && value %% 0.5 == 0,
-              msg = "Font size must be numeric and divisible by .5")
+  if (!is.null(value)) {
+    assert_that(is.numeric(value) && value %% 0.5 == 0,
+                msg = "Font size must be numeric and divisible by .5")
+  }
   attr(x, 'font_size') <- value
   x
 }
