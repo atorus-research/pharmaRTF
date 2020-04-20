@@ -17,6 +17,7 @@ header-includes:
 \tableofcontents
 \newpage
 ```{r setup, include=FALSE}
+library(plyr)
 library(dplyr)
 library(testthat)
 library(here)
@@ -36,6 +37,7 @@ opts_chunk$set(
 test_code_dir <- here("vignettes", "Validation", "Test_Case_Code")
 spec_dir <- here("vignettes","Validation", "Specifications")
 test_case_dir <- here("vignettes","Validation", "Test_Cases")
+test_cases <- read.csv("~/pharmaRTF/vignettes/test_cases.csv")
 
 source(here("vignettes", "helper_test_code.R")) # handles environment and access to test_that contents
 source(here("vignettes", "roxy_block_details.R")) # scrapes roxygen block for authorship details
@@ -97,6 +99,24 @@ scrape_spec_rmd(file.path(spec_dir, "specification_001.Rmd"))
 scrape_spec_rmd(file.path(spec_dir, "specification_002.Rmd"))
 scrape_spec_rmd(file.path(spec_dir, "specification_003.Rmd"))
 scrape_spec_rmd(file.path(spec_dir, "specification_004.Rmd"))
+```
+
+## Matrix
+```{r matrix} 
+
+trace_matrix <- function(specs) {
+  ## Change to ; later
+  specs_tested <- unlist(str_split(test_cases$Specs, ","))
+  daply(specs, 1, function(x) {
+    spec_i <- as.character(x)
+    data.frame(
+      spec_i = ifelse(spec_i %in% specs_tested, "X", "")
+    )
+  })
+}
+
+
+
 ```
 
 ### General Specification Test Cases
