@@ -234,7 +234,7 @@ make_test_case_rmd <- function(file) {
         LineType == "Setup" ~ paste0(paste(rep(' ', Level*2), collapse=''), "+ Setup: ", Text, "\n"),
 
         # Test Cases
-        LineType == "TestCases" ~ paste0(paste(rep(' ', Level*2), collapse=''), "+ ", Text)
+        LineType == "TestCases" ~ paste0(paste(rep(' ', Level*2), collapse=''), "+ ", ID, ": ", Text)
       ))
 
     # Create the file text vector - need to write 'Test Cases' inbetween the headers lines and the rest of the text
@@ -245,7 +245,7 @@ make_test_case_rmd <- function(file) {
     )
 
     # Write the lines to each output file
-    writeLines(outfile, paste0('vignettes/Validation/Test_Cases/test_cases_', str_pad(caseno, width=3, pad="0"), '.Rmd'))
+    writeLines(outfile, paste0('vignettes/Validation/Test_Cases/test_case_', str_pad(caseno, width=3, pad="0"), '.Rmd'))
   }
 }
 
