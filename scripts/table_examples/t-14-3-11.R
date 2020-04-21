@@ -47,9 +47,8 @@ ht
 doc <- rtf_doc(ht) %>% pharmaRTF:::titles_and_footnotes_from_df(
   from.file='./scripts/table_examples/titles.xlsx',
   reader=example_custom_reader,
-  table_number='14-3.09') %>%
+  table_number='14-3.11') %>%
   set_font_size(10) %>%
-
   set_ignore_cell_padding(TRUE) %>%
   set_column_header_buffer(top=1)
 
