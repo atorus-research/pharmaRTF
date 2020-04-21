@@ -133,7 +133,7 @@ hf_line_string <- function(line, doc=NULL) {
   bd <- '' # Bold (On or off - default off)
   it <- '' # Italic (One or off - default off)
   al <- '\\ql\n' # Alignment (Defaults to left \ql - left aligned)
-  tabs <- '\\b' # Overwritten if split alignment
+  tabs <- '' # Overwritten if split alignment
 
   # Read the font information
   # If font is overridden generate the string
@@ -145,7 +145,7 @@ hf_line_string <- function(line, doc=NULL) {
   }
 
   # If font size is overridden generate the string
-  if (!is.na(font_size(line))) {
+  if (!is.null(font_size(line))) {
     fs <- sprintf("\\fs%s", font_size(line)*2)
   }
 
@@ -200,7 +200,7 @@ hf_string <- function(doc, type=NULL) {
     # If generating titles then take the headers of the table
     paste('{', command, body, '\n\\par\n', get_column_headers(doc), '\n}', sep='')
   } else {
-    paste('{', command, body, '\n}', sep='')
+    paste('{', command, body, '\\par\n}', sep='')
   }
 }
 
