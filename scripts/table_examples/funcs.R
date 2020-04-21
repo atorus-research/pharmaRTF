@@ -361,6 +361,7 @@ efficacy_models <- function(data, var=NULL, wk=NULL, model_type='ancova') {
       ) %>%
       select(rowlbl1, TRTPCD_F, values) %>%
       pivot_wider(id_cols = rowlbl1, names_from=TRTPCD_F, values_from=values) %>%
+      rename(`0` = Pbo, `54`=Xan_Lo, `81`=Xan_Hi) %>%
       pad_row()
   }
 
