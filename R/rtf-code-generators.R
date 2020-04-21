@@ -200,7 +200,7 @@ hf_string <- function(doc, type=NULL) {
     # If generating titles then take the headers of the table
     paste('{', command, body, '\n\\par\n', get_column_headers(doc), '\n}', sep='')
   } else {
-    paste('{', command, body, '\n}', sep='')
+    paste('{', command, body, '\\par\n}', sep='')
   }
 }
 
