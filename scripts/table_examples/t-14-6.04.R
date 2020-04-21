@@ -66,22 +66,34 @@ comb$VISIT <- ordered(comb$VISIT, c(
   "WEEK 26"
 ))
 
+total_bltrfl1 <- comb%>%
+  filter(!is.na(VISIT), !is.na(TRTP), !is.na(BLTRFL), !is.na(LBTRFL)) %>%
+  group_by(LBTEST, VISIT, TRTP, BLTRFL) %>%
+  complete(nesting(TRTP, BLTRFL)) %>%
+  summarise(N = n())
+total_bltrfl <- total_bltrfl1 %>%
+  mutate(LBTRFL = ordered("T", c("T", "N", "H"))) %>%
+  pivot_wider(id_cols = c(LBTEST, VISIT, LBTRFL), names_from = c(TRTP, BLTRFL), values_from = N)
+
 comb2 <- comb %>%
   filter(!is.na(VISIT), !is.na(TRTP), !is.na(BLTRFL), !is.na(LBTRFL)) %>%
   group_by(LBTEST, VISIT, TRTP, BLTRFL, LBTRFL) %>%
   complete(nesting(BLTRFL, LBTRFL)) %>%
   summarise(N = n()) %>%
-  pivot_wider(id_cols = c(LBTEST, VISIT, LBTRFL), names_from = c(TRTP, BLTRFL), values_from = N)
+  mutate(n2 = n_pct(N, total_bltrfl1[total_bltrfl1$LBTEST == LBTEST &
+                                         total_bltrfl1$VISIT == VISIT   &
+                                         total_bltrfl1$TRTP == TRTP     &
+                                         total_bltrfl1$BLTRFL == BLTRFL, "N"], n_width = 2)) %>%
+  pivot_wider(id_cols = c(LBTEST, VISIT, LBTRFL), names_from = c(TRTP, BLTRFL), values_from = n2)
 
 comb2$LBTRFL <- ordered(comb2$LBTRFL, c("T", "N", "H"))
 
-total_bltrfl <- comb%>%
-  filter(!is.na(VISIT), !is.na(TRTP), !is.na(BLTRFL), !is.na(LBTRFL)) %>%
-  group_by(LBTEST, VISIT, TRTP, BLTRFL) %>%
-  complete(nesting(TRTP, BLTRFL)) %>%
-  summarise(N = n()) %>%
-  mutate(LBTRFL = ordered("T", c("T", "N", "H"))) %>%
-  pivot_wider(id_cols = c(LBTEST, VISIT, LBTRFL), names_from = c(TRTP, BLTRFL), values_from = N)
+total_bltrfl$Placebo_N <- num_fmt(total_bltrfl$Placebo_N, size = 2, int_len = 2)
+total_bltrfl$Placebo_H <- num_fmt(total_bltrfl$Placebo_H, size = 2, int_len = 2)
+total_bltrfl$`Xanomeline Low Dose_N` <- num_fmt(total_bltrfl$`Xanomeline Low Dose_N`, size = 2, int_len = 2)
+total_bltrfl$`Xanomeline Low Dose_H` <- num_fmt(total_bltrfl$`Xanomeline Low Dose_H`, size = 2, int_len = 2)
+total_bltrfl$`Xanomeline High Dose_N` <- num_fmt(total_bltrfl$`Xanomeline High Dose_N`, size = 2, int_len = 2)
+total_bltrfl$`Xanomeline High Dose_H` <- num_fmt(total_bltrfl$`Xanomeline High Dose_H`, size = 2, int_len = 2)
 
 comb3 <- comb2 %>%
   rbind(total_bltrfl) %>%
@@ -105,7 +117,7 @@ names(comb3) <- c(
 )
 
 comb3 <- comb3[!apply(comb3, 1, function(x) {
-  all(as.numeric(x[4:9]) == 0) & all(x[3] == "High")
+  all(x[4:9] ==  " 0      ") & all(x[3] == "High")
 }), ]
 
 comb4 <- pad_row(comb3, which(comb3$`Shift to` == "n")) %>%
@@ -123,8 +135,6 @@ comb4[2,1] <- "CHEMISTRY"
 comb4[3,1] <- "----------"
 comb4[578,1] <- "HEMATOLOGY"
 comb4[579,1] <- "----------"
-
-comb4[!is.na(comb4[,4]), 4]
 
 
 names(comb4) <- c(
@@ -172,6 +182,7 @@ ht2 <- ht %>%
   huxtable::set_bold(1:3, 1:9, TRUE) %>%
   huxtable::set_valign(1:3, 1:9, "bottom") %>%
   huxtable::set_align(3, 1:9, "center") %>%
+  huxtable::set_align(1, 1:9, "center") %>%
   huxtable::set_col_width(1:9, c(0.29, 0.06, 0.07, rep(0.1, 6)))
 
 
@@ -183,7 +194,9 @@ doc <- rtf_doc(ht2, header_rows = 3) %>% titles_and_footnotes_from_df(
   table_number='14-6.04') %>%
   set_font_size(10) %>%
   set_ignore_cell_padding(TRUE) %>%
-  set_column_header_buffer(top = 1)
+  set_column_header_buffer(top = 1) %>%
+  set_header_height(0.75) %>%
+  set_footer_height(1)
 
 
 # Write out the RTF
