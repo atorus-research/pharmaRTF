@@ -132,7 +132,7 @@ sum_subgrp <- function(.data, subgroup_var, order_var = NULL, include.n=TRUE, pa
 
 }
 
-desc_stats <- function(.data, var, na.rm=TRUE, int_len=3, size=10, include=c('n', 'Mean', 'SD', 'Median', 'Min', 'Max')) {
+desc_stats <- function(.data, var, group = TRT01PN, na.rm=TRUE, int_len=3, size=10, include=c('n', 'Mean', 'SD', 'Median', 'Min', 'Max')) {
   # Provides descriptive statistics of provided variable, by TRT01PN
   # n, Mean, SD, Median, Min, Max
 
@@ -153,17 +153,17 @@ desc_stats <- function(.data, var, na.rm=TRUE, int_len=3, size=10, include=c('n'
   # Pull from ADSL with totals
   .data %>%
     # Pick of TRT01PN and the variable of interest
-    select(TRT01PN, {{ var }}) %>%
+    select({{ group }}, {{ var }}) %>%
     # Filter out missing values
     filter(!is.na({{ var }})) %>%
     # Group by treatment
-    group_by(TRT01PN) %>%
+    group_by({{ group }}) %>%
     # Summarize each statistic and use num_fmt for rounding/formatting
     summarize(!!!summaries) %>% # unpack the expressions into syntax to be evaluated
     # Transpose statistics into one column
-    pivot_longer(-TRT01PN, names_to = 'rowlbl2', values_to = 'temp') %>%
+    pivot_longer(-{{ group }}, names_to = 'rowlbl2', values_to = 'temp') %>%
     # Transpose treatments into separate columns
-    pivot_wider(names_from = TRT01PN, values_from = temp) %>%
+    pivot_wider(names_from = {{ group }}, values_from = temp) %>%
     pad_row()
 }
 
