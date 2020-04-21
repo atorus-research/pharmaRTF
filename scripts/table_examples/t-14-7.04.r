@@ -58,9 +58,9 @@ df <- ldply(cm_class, function(class_i){
 
   df_1 <- data.frame(
     "Therapeutic class, n (%)" = class_i,
-    "Placebo" = unname(ifelse(class_by_arm[1, "n"] == 0, "  0  ", n_pct(class_by_arm[1, "n"], cm_1[1, "total"]))),
-    "Xanomeline Low Dose" = unname(ifelse(class_by_arm[2, "n"] == 0, "  0  ", n_pct(class_by_arm[2, "n"], cm_1[2, "total"]))),
-    "Xanomeline High Dose" = unname(ifelse(class_by_arm[3, "n"] == 0, "  0  ", n_pct(class_by_arm[3, "n"], cm_1[3, "total"]))),
+    "Placebo" = unname(ifelse(class_by_arm[1, "n"] == 0, "  0", n_pct(class_by_arm[1, "n"], cm_1[1, "total"]))),
+    "Xanomeline Low Dose" = unname(ifelse(class_by_arm[2, "n"] == 0, "  0", n_pct(class_by_arm[2, "n"], cm_1[2, "total"]))),
+    "Xanomeline High Dose" = unname(ifelse(class_by_arm[3, "n"] == 0, "  0", n_pct(class_by_arm[3, "n"], cm_1[3, "total"]))),
     stringsAsFactors = FALSE, check.names = FALSE, row.names = FALSE
   )
 
@@ -80,9 +80,9 @@ df <- ldply(cm_class, function(class_i){
 
     df_3 <- data.frame(
       "Therapeutic class, n (%)" = paste0("\t", unname(medi_i)),
-      "Placebo" = unname(ifelse(medi_by_arm[1, "n"] == 0, "  0  ", n_pct(medi_by_arm[1, "n"], cm_1[1, "total"]))),
-      "Xanomeline Low Dose" = unname(ifelse(medi_by_arm[2, "n"] == 0, "  0  ", n_pct(medi_by_arm[2, "n"], cm_1[2, "total"]))),
-      "Xanomeline High Dose" = unname(ifelse(medi_by_arm[3, "n"] == 0, "  0  ", n_pct(medi_by_arm[3, "n"], cm_1[3, "total"]))),
+      "Placebo" = unname(ifelse(medi_by_arm[1, "n"] == 0, "  0", n_pct(medi_by_arm[1, "n"], cm_1[1, "total"]))),
+      "Xanomeline Low Dose" = unname(ifelse(medi_by_arm[2, "n"] == 0, "  0", n_pct(medi_by_arm[2, "n"], cm_1[2, "total"]))),
+      "Xanomeline High Dose" = unname(ifelse(medi_by_arm[3, "n"] == 0, "  0", n_pct(medi_by_arm[3, "n"], cm_1[3, "total"]))),
       stringsAsFactors = FALSE, check.names = FALSE, row.names = FALSE
     )
   })
@@ -118,7 +118,7 @@ huxtable::top_padding(ht) <- 0
 huxtable::col_width(ht) <- c(.6, .15, .15, .15)
 huxtable::valign(ht)[1,] <- "bottom"
 huxtable::escape_contents(ht) <- FALSE
-huxtable::align(ht)[-1,2:4] <- "center"
+huxtable::align(ht)[-1,2:4] <- "left"
 
 
 
