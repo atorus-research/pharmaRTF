@@ -49,6 +49,14 @@ pharmaRTF::font(rtf)
 # Returns "Courier New" "Comic Sans"
 
 pharmaRTF::font(rtf) <- "Times"
+
+pharma::font(rtf)
 # Returns "Times" "Comic Sans"
+
+pharma::font(rtf$titles[[1]]) <- "Windings"
+
+pharma::font(rtf)
+# Returns "Times" "Windings"
+
 
 }
