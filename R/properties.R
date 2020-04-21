@@ -397,7 +397,7 @@ set_italic <- function(x, value) UseMethod('italic<-')
 ## Text (getter) ----
 #' Return or set text
 #'
-#' These functions modify or return the fonts of a \code{rtf_doc} object.
+#' These property functions modify or return the fonts of a \code{rtf_doc} object.
 #' \code{text()} will always return a vector of length 2. If the text is only
 #' of length one an empty string will be appended.
 #'
@@ -536,7 +536,7 @@ set_index <- function(x, value) UseMethod('index<-')
 ## Margins (getters) ----
 #' Return or set margins
 #'
-#' These functions return or set the margin attribute of a \code{rtf_doc}
+#' These property functions return or set the margin attribute of a \code{rtf_doc}
 #' object. These are stored as a named vector. Names should be \code{top},
 #' \code{bottom}, \code{left}, and \code{right}. Margins are measured in inches.
 #'
@@ -620,7 +620,7 @@ set_margins <- function(x, value) UseMethod('margins<-')
 ## Orientation (getters) ----
 #' Return or set orientation
 #'
-#' These functions modify or return the orientation attribute. Options are
+#' These property functions modify or return the orientation attribute. Options are
 #' landscape or portrait.
 #'
 #' @param x A \code{rtf_doc} object
@@ -684,7 +684,7 @@ set_orientation <- function(x, value) UseMethod('orientation<-')
 ## Header height (getters)----
 #' Return or set header/footer height
 #'
-#' These functions modify or return the header_height/footer_height attribute
+#' These property functions modify or return the header_height/footer_height attribute
 #' of a \code{rtf_doc} object. The header/footer height is the default amount of
 #' space allocated to the header/footer from the margin. If the content of the
 #' header/footer exceeds this amount of space, it will be expanded.
@@ -785,7 +785,7 @@ set_footer_height <- function(x, value) UseMethod('footer_height<-')
 ## Page Size (getters) ----
 #' Return or set pagesize
 #'
-#' These functions modify or return the \code{pagesize} attribute of a
+#' These property functions modify or return the \code{pagesize} attribute of a
 #' \code{rtf_doc} object. Stored as a named vector with \code{height} and
 #' \code{width} names.
 #'
@@ -871,7 +871,7 @@ set_pagesize <- function(x, value) UseMethod('pagesize<-')
 #' Return or set the header_rows
 #'
 #' @description
-#' These functions modify or return the header_rows attribute of a \code{rtf_doc}
+#' These property functions modify or return the header_rows attribute of a \code{rtf_doc}
 #' object. Only required and valid when the \code{rtf_doc} table object is a
 #' huxtable.
 #'
@@ -961,7 +961,7 @@ set_header_rows <- function(x, value) UseMethod('header_rows<-')
 ## Ignore Cell Padding (getters) ----
 #' Return or set ignore_cell_padding
 #'
-#' These functions modify and return the ignore_cell_padding attribute of a
+#' These property functions modify and return the ignore_cell_padding attribute of a
 #' \code{rtf_doc} object. By default, the huxtable package will pad rows of a
 #' table. This attribute will remove those default settings – which allow the
 #' cells to have a smaller amount of padding than setting the cell padding to
