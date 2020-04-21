@@ -13,7 +13,10 @@ source('./scripts/table_examples/funcs.R')
 
 # Read in the ADLB datasets ----
 adas <- read_xpt(glue("{adam_lib}/adadas.xpt")) %>%
-  filter(COMP24FL == "Y" & EFFFL=='Y' & ITTFL=='Y' & PARAMCD == 'ACTOT' & ANL01FL == 'Y')
+  filter(COMP24FL == "Y" & EFFFL=='Y' & PARAMCD == 'ACTOT' & ANL01FL == 'Y' & DTYPE != 'LOCF')
+# NOTE!: Despite following the analysis results metadata in the CDISC Pilot Define.xml, the baseline counts
+#        on Placebo and Xan Lo are off by 1. We have 60 and 28 respectively. This was confirmed on both this
+#        cut of data and following the ARM on the original cut of data as well.
 
 # Calculate the header Ns ----
 header_n <- adas %>%
