@@ -312,8 +312,8 @@ efficacy_models <- function(data, var=NULL, wk=NULL, model_type='ancova') {
       model1 <- lm(CHG ~ TRTPN + SITEGR1 + BASE, data=data)
       model2 <- lm(CHG ~ TRTPCD_F + SITEGR1 + BASE, data=data)
     } else {
-      model1 <- lm(VAL ~ TRTPN + SITEGR1, data=data)
-      model2 <- lm(VAL ~ TRTPCD_F + SITEGR1, data=data)
+      model1 <- lm(AVAL ~ TRTPN + SITEGR1, data=data)
+      model2 <- lm(AVAL ~ TRTPCD_F + SITEGR1, data=data)
     }
   } else {
     model2 <- lme4::lmer(CHG ~ TRTPCD_F + SITEGR1 + AWEEKC + TRTPCD_F:AWEEKC + BASE + BASE:AWEEKC + (AVISITN | USUBJID),
