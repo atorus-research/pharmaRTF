@@ -186,7 +186,7 @@ hf_line_string <- function(line, doc=NULL) {
 #' @noRd
 hf_string <- function(doc, type=NULL) {
   # Get a character vector of the formatted RTF string
-  lines <- sapply(doc[[type]], hf_line_string, doc=doc)
+  lines <- sapply(order_lines(doc[[type]]), hf_line_string, doc=doc)
 
   # Piece together each of the lines
   body <- paste(lines, collapse="\n\\par")

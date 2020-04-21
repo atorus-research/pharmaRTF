@@ -165,7 +165,7 @@ order_lines <- function(lines) {
   # Make sure no indices are duplicated
   assert_that(
     !any(duplicated(inds)),
-    msg = "Duplicate indices provided - ensure that provided indices are unique or NULL"
+    msg = "Duplicate indices provided on hf_line objects - ensure that provided indices are unique or NULL"
   )
 
   # Grab the nulls
