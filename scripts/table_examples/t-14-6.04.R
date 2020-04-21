@@ -13,6 +13,20 @@ library(tibble)
 source('./scripts/table_examples/config.R')
 source('./scripts/table_examples/funcs.R')
 
+pad_row <- function(df, r) {
+  #df - dataframe to insert pad
+  #r - row number to pad
+  for(i in seq(along = r)) {
+    if(r[i] + i - 1 < nrow(df)){
+      df[seq(r[i] + i, nrow(df) + 1),] <- df[seq(r[i] + (i - 1), nrow(df)),]
+      df[r[i] + (i - 1),] <- NA
+    } else {
+      df[r[i] + (i - 1),] <- NA
+    }
+  }
+  df
+}
+
 ## Chem
 adlbc <- read_xpt(glue("{adam_lib}/adlbc.xpt")) %>%
   filter(SAFETY == "Y", BLTRFL != "")
@@ -43,5 +57,40 @@ comb2 <- comb %>%
   complete(nesting(BLTRFL, LBTRFL)) %>%
   summarise(N = n()) %>%
   pivot_wider(id_cols = c(LBTEST, VISIT, LBTRFL), names_from = c(TRTP, BLTRFL), values_from = N)
+
+comb2$LBTRFL <- ordered(comb2$LBTRFL, c("T", "N", "H"))
+
+total_bltrfl <- comb%>%
+  filter(!is.na(VISIT), !is.na(TRTP), !is.na(BLTRFL), !is.na(LBTRFL)) %>%
+  group_by(LBTEST, VISIT, TRTP, BLTRFL) %>%
+  complete(nesting(TRTP, BLTRFL)) %>%
+  summarise(N = n()) %>%
+  mutate(LBTRFL = ordered("T", c("T", "N", "H"))) %>%
+  pivot_wider(id_cols = c(LBTEST, VISIT, LBTRFL), names_from = c(TRTP, BLTRFL), values_from = N)
+
+comb3 <- comb2 %>%
+  rbind(total_bltrfl) %>%
+  arrange(LBTEST, VISIT, LBTRFL)
+
+comb3$VISIT <- str_extract(comb3$VISIT, "[0-9]")
+comb3$LBTRFL <- recode(comb3$LBTRFL,
+                       "T" = "n",
+                       "N" = "Normal",
+                       "H" = "High")
+names(comb3) <- c(
+  "",
+  "Week",
+  "Shift to",
+  "Normal at Baseline",
+  "High at Baseline",
+  "Normal at Baseline",
+  "High at Baseline",
+  "Normal at Baseline",
+  "High at Baseline"
+)
+
+
+
+
 
 
