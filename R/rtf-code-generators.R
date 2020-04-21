@@ -133,7 +133,7 @@ hf_line_string <- function(line, doc=NULL) {
   bd <- '' # Bold (On or off - default off)
   it <- '' # Italic (One or off - default off)
   al <- '\\ql\n' # Alignment (Defaults to left \ql - left aligned)
-  tabs <- '\\b' # Overwritten if split alignment
+  tabs <- '' # Overwritten if split alignment
 
   # Read the font information
   # If font is overridden generate the string
