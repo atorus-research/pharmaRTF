@@ -11,6 +11,7 @@ header-includes:
 - \pagestyle{fancy}
 - \usepackage{float}
 - \usepackage{longtable}
+- \usepackage{booktabs}
 - \fancyhead[CO, CE]{The Header - Atorus}
 - \fancyfoot[CO, CE]{The footer - Atorus \thepage}
 ---
@@ -152,24 +153,24 @@ for(i in seq(ceiling(ncol(final)/max_cols_to_display))) {
 
 ### General Specification Test Cases
 ```{r test_case_1, out.width='0.5\\textwidth'}
-#scrape_spec_rmd(file.path(test_case_dir, "test_case_001.Rmd"))
+scrape_spec_rmd(file.path(test_case_dir, "test_case_001.Rmd"))
 ```
 
 ### General Specification Test Code Results
 ```{r spec_function_1}
-#eval_test_code(file.path(test_code_dir, "test_case_001.R")) 
+eval_test_code(file.path(test_code_dir, "test_case_001.R"))
 ```
 
 ***
 
 ### RTF Document Characteristics Test Cases
 ```{r test_case_2, out.width='0.5\\textwidth'}
-#scrape_spec_rmd(file.path(test_case_dir, "test_case_002.Rmd"))
+scrape_spec_rmd(file.path(test_case_dir, "test_case_002.Rmd"))
 ```
 
 ### RTF Document Characteristics Test Code Results
 ```{r spec_function_2}
-#eval_test_code(file.path(test_code_dir, "test_case_002.R")) 
+eval_test_code(file.path(test_code_dir, "test_case_002.R"))
 ```
 
 ***
@@ -194,8 +195,8 @@ sessionInfo()
 
 # Audit information
 ```{r log_info}
-# kable(readRDS("~/pharmaRTF/vignettes/Validation/vur_auto.Rds")[, c("ID", "OutputFile", "Response", "Log")],
-#       format = "latex", row.names = FALSE) %>%
-#   kable_styling()
+kable(readRDS("~/pharmaRTF/vignettes/Validation/vur_auto.Rds")[, c("CheckID", "OutputFile", "Response", "Log")],
+      format = "latex", row.names = FALSE) %>%
+  kable_styling()
 
 ```

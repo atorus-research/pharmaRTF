@@ -27,7 +27,7 @@ server <- function(input, output) {
 
     vur <- reactiveValues(df = {
         df <- read.csv("../test_cases.csv")
-        df <- df[df$TestType == "visual",]
+        df <- df[df$CheckType == "visual",]
         df$Response <- FALSE
         df$Log <- NA
         df
@@ -53,7 +53,7 @@ server <- function(input, output) {
         # file.remove("~/pharmaRTF/vignettes/Validation/vur_auto.Rds")
     })
 
-    output$UserDf <- renderTable(vur$df[, c("ID", "Text", "OutputFile", "Response")])
+    output$UserDf <- renderTable(vur$df[, c("CheckID", "Text", "OutputFile", "Response")])
 
     output$userInfo <- renderText({
         paste0("User: ", Sys.getenv("USER"), "\n",
