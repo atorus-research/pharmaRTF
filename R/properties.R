@@ -38,7 +38,15 @@
 #' # Returns "Courier New" "Comic Sans"
 #'
 #' pharmaRTF::font(rtf) <- "Times"
+#'
+#' pharma::font(rtf)
 #' # Returns "Times" "Comic Sans"
+#'
+#' pharma::font(rtf$titles[[1]]) <- "Windings"
+#'
+#' pharma::font(rtf)
+#' # Returns "Times" "Windings"
+#'
 #'
 #' @export
 #' @rdname font
@@ -223,6 +231,11 @@ set_font_size <- function(x, value) UseMethod('font_size<-')
 #' pharmaRTF::align(rtf$titles[[1]]) <- "left"
 #' # Sets alignment to 'left'
 #'
+#' pharma::text(rtf$titles[[1]]) <- c("Left Text", "Right Text")
+#' pharma::align(rtf$titles[[1]]) <- "split"
+#' # When rtf is printed, "Left Text" will be left aligned, and "Right Text"
+#' # will be right aligned. Both will appear on the same line in the document.
+#'
 #' @export
 #' @rdname align
 align <- function(x, ...) UseMethod('align')
@@ -322,7 +335,7 @@ set_bold <- function(x, value) UseMethod('bold<-')
 ## Italic (getters) ----
 #' Return or set italics
 #'
-#' These functions modify or return the italics attribute of a \code{hf_line}
+#' These property functions modify or return the italics attribute of a \code{hf_line}
 #' object. The italic attribute takes on a logical value of TRUE or FALSE, where
 #' TRUE italicizes the text of the line.
 #'
@@ -459,7 +472,7 @@ set_text <- function(x, value) UseMethod('text<-')
 ## Index (getters) ----
 #' Return or set index
 #'
-#' These functions modify or return the index of a \code{hf_line} object. The
+#' These property functions modify or return the index of a \code{hf_line} object. The
 #' index sets the order in which a title will appear. The default index value in
 #' NULL, and NULL values will sort behind any populated index Indices can be any
 #' numeric value as long as they are not duplicated.
