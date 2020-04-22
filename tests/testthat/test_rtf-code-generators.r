@@ -2,6 +2,28 @@ context("rtf-code-generators")
 library(huxtable)
 library(readr)
 
+test_that("hf_string orderes lines properly", {
+  ht <- huxtable::huxtable(
+    column1 = c("Header1", 1:26),
+    column2 = c("Header2", letters[1:26])
+  )
+
+  titles <- list(hf_line("rtf_doc Title 1"), hf_line("rtf_doc Title 2"), hf_line("rtf_doc Title 3"))
+  footnotes <- list(hf_line("rtf_doc Footnote 1"), hf_line("rtf_doc Footnote 2"), hf_line("rtf_doc Footnote 3"))
+
+  rtf <- pharmaRTF::rtf_doc(ht, titles = titles, footnotes = footnotes)
+
+  pharmaRTF::index(rtf$titles[[2]]) <- 2
+  pharmaRTF::index(rtf$titles[[3]]) <- 1
+
+  pharmaRTF::index(rtf$footnotes[[1]]) <- 3
+  pharmaRTF::index(rtf$footnotes[[2]]) <- 1
+  pharmaRTF::index(rtf$footnotes[[3]]) <- 2
+
+  expect_equal(hf_string(rtf, "titles"), "{\\header\n\\qc\n{\\f1\\fs24 rtf_doc Title 3}\n\\par\\qc\n{\\f1\\fs24 rtf_doc Title 2}\n\\par\\qc\n{\\f1\\fs24 rtf_doc Title 1}\n\\par\n\n{\n\\trowd\n\\trqc \\clbrdrt\\clbrdrl\\clbrdrb\\clbrdrr\\clvertalt\\clNoWrap\\clpadfl3\\clpadl80 \\clpadft3\\clpadt80 \\clpadfb3\\clpadb80 \\clpadfr3\\clpadr80 \\cellx2160 \n\\clbrdrt\\clbrdrl\\clbrdrb\\clbrdrr\\clvertalt\\clNoWrap\\clpadfl3\\clpadl80 \\clpadft3\\clpadt80 \\clpadfb3\\clpadb80 \\clpadfr3\\clpadr80 \\cellx4320 \\pard\\intbl\\ql{\\fs24 {Header1}}\\cell\n\\pard\\intbl\\ql{\\fs24 {Header2}}\\cell\n\\row\n}\n\n}")
+  expect_equal(hf_string(rtf, "footnotes"), "{\\footer\n\\qc\n{\\f1\\fs24 rtf_doc Footnote 2}\n\\par\\qc\n{\\f1\\fs24 rtf_doc Footnote 3}\n\\par\\qc\n{\\f1\\fs24 rtf_doc Footnote 1}\\par\n}")
+})
+
 test_that("font_table_string adds fonts correctly", {
   ht <- huxtable(
     column1 = 1:5,

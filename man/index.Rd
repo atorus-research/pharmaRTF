@@ -25,7 +25,7 @@ For \code{index()}, the index attribute of the supplied
   modified object.
 }
 \description{
-These functions modify or return the index of a \code{hf_line} object. The
+These property functions modify or return the index of a \code{hf_line} object. The
 index sets the order in which a title will appear. The default index value in
 NULL, and NULL values will sort behind any populated index Indices can be any
 numeric value as long as they are not duplicated.

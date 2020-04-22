@@ -26,7 +26,7 @@ For \code{pagesize()}, the pagesize attribute of the \code{rtf_doc}
   object.
 }
 \description{
-These functions modify or return the \code{pagesize} attribute of a
+These property functions modify or return the \code{pagesize} attribute of a
 \code{rtf_doc} object. Stored as a named vector with \code{height} and
 \code{width} names.
 }

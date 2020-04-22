@@ -31,7 +31,7 @@ test_that("font returns the correct vector for an rtf/hf_line object", {
 test_that("font_size returns the correct font size", {
   x1 <- hf_line("text")
 
-  expect_equal(font_size(x1), 12)
+  expect_equal(font_size(x1), NULL)
 
   font_size(x1) <- 13
 
