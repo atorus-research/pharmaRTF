@@ -1741,7 +1741,8 @@ test_that('T50',{
       column1 = c("Header1", 1:26),
       column2 = c("Header2", letters[1:26])
     )
-    huxtable::valign(ht)[, 1] <- "top"
+    huxtable::valign(ht)[, 1] <- "bottom"
+    huxtable::row_height(ht) <- c(.1)
     test_50 <- pharmaRTF::rtf_doc(ht)
 
     # output rtf for manual review
@@ -1754,6 +1755,7 @@ test_that('T50',{
   # tests
   skip_if(is.null(vur))
   expect_true(vur[vur$ID == "T50C1", "Response"])
+  expect_true(vur[vur$ID == "T50C2", "Response"])
 })
 
 test_that('T51',{
@@ -1807,7 +1809,7 @@ test_that('T53',{
       column1 = c("Header1", 1:26),
       column2 = c("Header2", letters[1:26])
     )
-    huxtable::row_height(ht) <- c(.1)
+    huxtable::merge_cells(1, 1:2)
     test_53 <- pharmaRTF::rtf_doc(ht)
 
     # output rtf for manual review
@@ -1820,28 +1822,6 @@ test_that('T53',{
   # tests
   skip_if(is.null(vur))
   expect_true(vur[vur$ID == "T53C1", "Response"])
-})
-
-test_that('T54',{
-  # output creation
-  if(is.null(vur)) {
-    ht <- huxtable::huxtable(
-      column1 = c("Header1", 1:26),
-      column2 = c("Header2", letters[1:26])
-    )
-    huxtable::merge_cells(1, 1:2)
-    test_54 <- pharmaRTF::rtf_doc(ht)
-
-    # output rtf for manual review
-    pharmaRTF::write_rtf(test_54, file='~/pharmaRTF/vignettes/Validation/Test_Case_Code/output/test_54.rtf')
-
-    rm(ht)
-    rm(test_54)
-  }
-
-  # tests
-  skip_if(is.null(vur))
-  expect_true(vur[vur$ID == "T54C1", "Response"])
 })
 
 rm(vur)
