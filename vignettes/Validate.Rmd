@@ -158,7 +158,7 @@ scrape_spec_rmd(file.path(test_case_dir, "test_case_001.Rmd"))
 
 ### General Specification Test Code Results
 ```{r spec_function_1}
-eval_test_code(file.path(test_code_dir, "test_case_001.R"))
+eval_test_code(file.path(test_code_dir, "test_cases.R"))
 ```
 
 ***
@@ -168,10 +168,6 @@ eval_test_code(file.path(test_code_dir, "test_case_001.R"))
 scrape_spec_rmd(file.path(test_case_dir, "test_case_002.Rmd"))
 ```
 
-### RTF Document Characteristics Test Code Results
-```{r spec_function_2}
-eval_test_code(file.path(test_code_dir, "test_case_002.R"))
-```
 
 ***
 ## Titles and Footnotes
@@ -195,8 +191,8 @@ sessionInfo()
 
 # Audit information
 ```{r log_info}
-kable(readRDS("~/pharmaRTF/vignettes/Validation/vur_auto.Rds")[, c("CheckID", "OutputFile", "Response", "Log")],
-      format = "latex", row.names = FALSE) %>%
-  kable_styling()
+# kable(readRDS("~/pharmaRTF/vignettes/Validation/vur_auto.Rds")[, c("CheckID", "OutputFile", "Response", "Log")],
+#       format = "latex", row.names = FALSE) %>%
+#   kable_styling()
 
 ```
