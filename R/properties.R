@@ -184,7 +184,7 @@ set_font_size <- function(x, value) UseMethod('font_size<-')
 
 #' @export
 'font_size<-.hf_line' <- function(x, value) {
-  if (!is.null(value)) {
+  if (!is.na(value)) {
     assert_that(is.numeric(value) && value %% 0.5 == 0,
                 msg = "Font size must be numeric and divisible by .5")
   }
@@ -527,7 +527,7 @@ set_index <- function(x, value) UseMethod('index<-')
 #' @export
 'index<-.hf_line' <- function(x, value) {
   # Check that argument is valid
-  assert_that(is.numeric(value) | is.null(value))
+  assert_that(is.numeric(value) | is.na(value))
 
   attr(x, 'index') <- value
   x

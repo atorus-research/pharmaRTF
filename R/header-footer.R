@@ -87,7 +87,7 @@
 #'
 #' @export
 hf_line <- function(..., align=c('center', 'left', 'right', 'split'), bold=FALSE,
-                    italic=FALSE, font=NA, font_size=NULL, index=NULL) {
+                    italic=FALSE, font=NA, font_size=NA, index=NA) {
 
   line = list()
 
@@ -137,13 +137,13 @@ validate_hf_line <- function(line, align, bold,italic, font, font_size, index) {
   sapply(c(bold, italic), function(x) assert_that(is.logical(x)))
 
   # Make sure index is numeric or null
-  assert_that(is.numeric(index) | is.null(index))
+  assert_that(is.numeric(index) | is.na(index))
 
   # Make sure font is character
   assert_that(is.character(font) | is.na(font))
 
   # Make sure font size is numeric
-  if (!is.null(font_size)) {
+  if (!is.na(font_size)) {
     assert_that(is.numeric(font_size) && font_size %% 0.5 == 0,
                 msg = "Font size must be numeric and divisible by .5")
   }
@@ -164,12 +164,12 @@ order_lines <- function(lines) {
 
   # Make sure no indices are duplicated
   assert_that(
-    !any(duplicated(inds)),
+    !any(duplicated(inds[!is.na(inds)])),
     msg = "Duplicate indices provided on hf_line objects - ensure that provided indices are unique or NULL"
   )
 
   # Grab the nulls
-  new_lines <- Filter(function(x) is.null(attr(x, 'index')), lines)
+  new_lines <- Filter(function(x) is.na(attr(x, 'index')), lines)
 
   # Sort the indices and reverse the order
   for (i in rev(sort(inds))) {

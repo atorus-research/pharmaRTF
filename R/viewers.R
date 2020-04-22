@@ -26,6 +26,7 @@ view_hf <- function(doc, type=NULL) {
     bold = logical(rows),
     italic = logical(rows),
     font = character(rows),
+    font_size = numeric(rows),
     index = numeric(rows),
     stringsAsFactors = FALSE
   )
@@ -39,7 +40,8 @@ view_hf <- function(doc, type=NULL) {
     .data$bold[i] <- bold(l)
     .data$italic[i] <- italic(l)
     .data$font[i] <- font(l)
-    .data$index[i] <- ifelse(!is.null(index(l)), index(l), NA)
+    .data$font_size[i] <- font_size(l)
+    .data$index[i] <- index(l)
   }
 
   .data

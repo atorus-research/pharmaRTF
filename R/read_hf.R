@@ -32,7 +32,7 @@ read_hf <- function(from.df=NULL, from.file=NULL, reader=NULL, ...) {
   # Provided a data frame in `from`
   if (!is.null(from.df)) {
     assert_that(inherits(from.df, 'data.frame')) # from should be a data.frame/tbl
-    df <- from.df
+    .data <- from.df
     from.df
   }
 
@@ -43,16 +43,45 @@ read_hf <- function(from.df=NULL, from.file=NULL, reader=NULL, ...) {
 
     # Read `from.file` and pass ... arguments through
     tryCatch(
-      df <- reader(from.file, ...),
+      .data <- reader(from.file, ...),
       error = function(e) stop(sprintf('`reader` failed to load data.frame: %s', e))
     )
   }
 
   # df is loaded - make sure it's compliant
-  required_columns <- c("type", "text1", "text2", "align", "bold", "italic", "font", "index")
-  validate_hf_dataframe(df, required_columns)
-  df[required_columns]
+  required_columns <- c("type", "text1")
+  columns <- c("type", "text1", "text2", "align", "bold", "italic", "font", "font_size", "index")
 
+  validate_hf_dataframe(.data, required_columns, columns)
+  .data <- fill_missing_data(.data, columns)
+  .data[columns]
+
+}
+
+#' Populate missing columns and values in a \code{data.frame} of \code{hf_line} information
+#'
+#' Inserts missing values or missing columns of a \code{data.frame} of \code{hf_line} object
+#' data. This populates all necessary information that is allowable to be left off of a
+#' \code{data.frame} used in \code{titles_and_footnotes_from_df} and populates with the defaults
+#' in \code{hf_line}
+#'
+#' @param df \code{data.frame} to populate
+#' @param columns All columns for parameters of \code{hf_line}
+#'
+#' @noRd
+fill_missing_data <- function(.data, columns) {
+
+  # Iterate the colulmn names
+  for (var in columns){
+    if (var %in% names(.data)) {
+      # Fill in defaults to any missing values in existing columns
+      .data[is.na(.data[var]), var] <- correct_defaults(var)
+    } else {
+      # Insert default values for missing columns
+      .data[var] <- correct_defaults(var)
+    }
+  }
+  .data
 }
 
 #' Validate a \code{data.frame} of \code{hf_line} information
@@ -65,7 +94,7 @@ read_hf <- function(from.df=NULL, from.file=NULL, reader=NULL, ...) {
 #'   objects.
 #'
 #' @noRd
-validate_hf_dataframe <- function(df, required_columns) {
+validate_hf_dataframe <- function(df, required_columns, columns) {
 
   # Flag for whether any errors were encountered
   e <- FALSE
@@ -81,7 +110,7 @@ validate_hf_dataframe <- function(df, required_columns) {
   }
 
   # Check each of the required columns type for correctness
-  correct <- sapply(intersect(names(df), required_columns), eval_type, df=df)
+  correct <- sapply(intersect(names(df), columns), eval_type, df=df)
 
   # Might be obnoxious but automatically write out any incorrect column type
   if (any(!correct)) {
@@ -93,7 +122,6 @@ validate_hf_dataframe <- function(df, required_columns) {
                 sapply(names(incorrect), correct_types),
                 ' vector')
          )
-
   }
 
   # Check that there are no other values in title than title or footnote
@@ -110,6 +138,19 @@ validate_hf_dataframe <- function(df, required_columns) {
 
   }
 
+  # Check that there are no other values in title than title or footnote
+  if ('align' %in% names(df)) {
+
+    invalid_values <- setdiff(unique(df$align), c('center', 'left', 'right', 'split'))
+
+    if (length(invalid_values) > 0) {
+      # Show error and list each invalid value
+      message('Error: Only values of "center", "left", "right", and "split" are allowed in the `align` column')
+      message(paste0('       -> "', invalid_values, '" is not a valid value'))
+      e <- TRUE
+    }
+
+  }
 
   # If errors were
   if (e) stop('Errors were encountered in data.frame validation.')
