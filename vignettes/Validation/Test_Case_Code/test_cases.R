@@ -10,7 +10,7 @@ library(pharmaRTF)
 library(huxtable)
 library(testthat)
 
-example_custom_reader <- function(..., test_number=NULL) {
+example_custom_reader <- function(test_number=NULL, ...) {
 
   # Make sure that readxl is installed before
   if (suppressWarnings(!require('readxl'))) {
@@ -486,7 +486,7 @@ test_that('T16',{
 
     test_16 <- pharmaRTF::rtf_doc(ht, titles = titles, footnotes = footnotes)
 
-    test_16 <- add_titles(test_316,
+    test_16 <- add_titles(test_16,
                             hf_line("add_titles Title 1"),
                             hf_line("add_titles Title 2"),
                             hf_line("add_titles Title 3"),replace = TRUE)
@@ -1597,7 +1597,6 @@ test_that('T41',{
     rm(titles)
     rm(test_41)
     rm(view_test_41)
-  }
 
   # load output for tests
   } else {
@@ -1642,7 +1641,6 @@ test_that('T42',{
     rm(footnotes)
     rm(test_42)
     rm(view_test_42)
-  }
 
   # load output for tests
   } else {
@@ -1686,7 +1684,6 @@ test_that('T43',{
     rm(ht)
     rm(test_43)
     rm(view_test_43)
-  }
 
   # load output for tests
   } else {
@@ -1730,7 +1727,6 @@ test_that('T44',{
     rm(ht)
     rm(test_44)
     rm(view_test_44)
-  }
 
   # load output for tests
   } else {
@@ -1776,7 +1772,6 @@ test_that('T45',{
     rm(ht)
     rm(test_45)
     rm(view_test_45)
-  }
 
   # load output for tests
   } else {
@@ -1823,7 +1818,6 @@ test_that('T46',{
     rm(ht)
     rm(test_46)
     rm(view_test_46)
-  }
 
   # load output for tests
   } else {
