@@ -1573,10 +1573,6 @@ test_that('T40',{
 
 rm(vur)
 
-
-
-
-
 example_custom_reader('~/pharmaRTF/vignettes/Validation/Test_Case_Code/input/titles_footnotes.xlsx', test_number='T40')
 
 data <- view_titles(test_39)
