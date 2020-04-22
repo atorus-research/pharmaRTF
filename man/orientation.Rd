@@ -25,7 +25,7 @@ For \code{orientation()}, the orientation attribute of the supplied
   \code{set_orientation()} the modified object.
 }
 \description{
-These functions modify or return the orientation attribute. Options are
+These property functions modify or return the orientation attribute. Options are
 landscape or portrait.
 }
 \examples{

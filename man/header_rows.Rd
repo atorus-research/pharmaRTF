@@ -25,7 +25,7 @@ For \code{header_rows()}, the header_rows attribute of the
   \code{set_header_rows()}, the modified object.
 }
 \description{
-These functions modify or return the header_rows attribute of a \code{rtf_doc}
+These property functions modify or return the header_rows attribute of a \code{rtf_doc}
 object. Only required and valid when the \code{rtf_doc} table object is a
 huxtable.
 

@@ -26,7 +26,7 @@ For \code{ignore_cell_padding()}, the ignore_cell_padding attribute
   modified object.
 }
 \description{
-These functions modify and return the ignore_cell_padding attribute of a
+These property functions modify and return the ignore_cell_padding attribute of a
 \code{rtf_doc} object. By default, the huxtable package will pad rows of a
 table. This attribute will remove those default settings – which allow the
 cells to have a smaller amount of padding than setting the cell padding to

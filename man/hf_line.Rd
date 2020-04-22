@@ -27,10 +27,11 @@ hf_line(
 \item{italic}{\code{TRUE} or  \code{FALSE}. Defaults to FALSE.}
 
 \item{font}{A string to specify the font display. Ensure the intended RTF
-reader can display the selected font.}
+reader can display the selected font. Fonts for all fields will default to
+the default font of the \code{rtf_doc} object, which unless otherwise
+assigned, is Courier New.}
 
-\item{font_size}{Font size in half points. For example font_size = 20
-will display a 10 point font. Defaults to a 12 point font.}
+\item{font_size}{Font size in points. Defaults to a 12 point font.}
 
 \item{index}{Position to display header or footnote lines in the RTF
 document. Orders in ascending order with NULLs last.}
@@ -42,7 +43,7 @@ An object of class \code{hf_line} with the properties described in
 \description{
 \code{hf_line} objects represent individual title or footnote lines and
 their associated metadata. These objects are passed to an \code{rtf_doc} for
-display in theheader or footer of an RTF document.
+display in the header or footer of an RTF document.
 
 A character vector of length <= 2 describes the text to display. Using a
 single text element, the text can be aligned left, right, or center. Using
@@ -50,9 +51,10 @@ two text elements, the alignment can be set to “split”, which will left
 align the first element, and right align the second. If alignment is set to
 anything else, the text elements will be pasted together.
 
-Lines can either be passed in the call to \code{rtf_doc} added later with
-\code{add_titles} or \code{add_footnotes}. Supported properties are detailed
-in the Arguments section.
+Lines can either be passed to the titles/footnotes arguments in the call to
+\code{rtf_doc} or added later with the \code{add_titles} or
+\code{add_footnotes} functions. Supported properties are detailed in the
+arguments section.
 }
 \section{Supported Formatting}{
 
@@ -71,11 +73,11 @@ replacement is used for formatting.
   formatting dates can be found
   \href{https://www.r-bloggers.com/date-formats-in-r/}{here}.}
 \item{FILE_PATH: - Describes the file path the R session was executed from.
-  The location of the executing file will be populated over the token ‘%s’.
-  Formats can be specified like “FILE_PATH: Executed from: %s” or simply
-  “FILE_PATH: %s”. Note that the location of the executing file in R may
-  not be intuitive. There are multiple ways to determine the containing R
-  file based on how it was executed.
+The location of the executing file will be populated over the token
+replacement string  ‘%s’. Formats can be specified like “FILE_PATH: Executed
+from: %s” or simply “FILE_PATH: %s”. Note that the location of the executing
+file in R may not be intuitive. There are multiple ways to determine the
+containing R file based on how it was executed.
   \itemize{
     \item{When the file is executed using \code{Rscript}, this field will
       populated as the executed Rscript file.}
