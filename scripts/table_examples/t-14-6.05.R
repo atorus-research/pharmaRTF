@@ -69,7 +69,16 @@ comb2 <- comb %>%
   filter( !is.na(TRTP), !is.na(BLTRFL), !is.na(LBTRFL)) %>%
   group_by(LBTEST, TRTP, BLTRFL, LBTRFL) %>%
   complete(nesting(BLTRFL, LBTRFL)) %>%
-  summarise(N = n()) %>%
+  summarise(N = n())
+
+
+arr <- array(
+  c(80,78,78,2,1,2,0,0,0,2,1,0),
+  dim = c(3,2,2),
+  dimnames = list(TRTP = c("Placebo", "Xan.Low", "Xan. High"),Shift = c("N", "H"), Baseline = c("N", "H")))
+)
+
+%>%
   mutate(n2 = n_pct(N, total_bltrfl1[total_bltrfl1$LBTEST == LBTEST &
                                        total_bltrfl1$TRTP == TRTP     &
                                        total_bltrfl1$BLTRFL == BLTRFL, "N"], n_width = 2)) %>%
