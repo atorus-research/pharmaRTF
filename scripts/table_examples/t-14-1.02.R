@@ -13,20 +13,21 @@ source('./scripts/table_examples/config.R')
 source('./scripts/table_examples/funcs.R')
 
 #Read in Source and order factors
-adsl <- read_xpt(glue("{adam_lib}/adsl.xpt"))
-adsl$COMPLT24 <- ordered(adsl$COMPLT24, c("Y", "N", NA))
+adsl <- read_xpt(glue("{adam_lib2}/adsl.xpt"))
+adsl$COMP24FL <- ordered(adsl$COMP24FL, c("Y", "N", NA))
 adsl$ARM <- ordered(adsl$ARM, c("Placebo", "Xanomeline Low Dose", "Xanomeline High Dose"))
-adsl$DSDECOD <- ordered(adsl$DSDECOD, c("ADVERSE EVENT", "DEATH", "LACK OF EFFICACY, PATIENT CAREGIVER PERCEPTION",
+adsl$DCDECOD <- ordered(adsl$DCDECOD, c("ADVERSE EVENT", "DEATH", "LACK OF EFFICACY, PATIENT CAREGIVER PERCEPTION",
                                         "UNABLE TO CONTACT PATIENT (LOST TO FOLLOW-UP)",
                                         "PERSONAL CONFLICT OR OTHER PATIENT/CAREGIVER DECISION",
                                         "PHYSICIAN DECISION", "PROTOCOL ENTRY CRITERIA NOT MET",
                                         "PROTOCOL VIOLATION",
                                         "SPONSOR DECISION (STUDY OR PATIENT DISCONTINUED BY THE SPONSOR)"))
+adsl$DCREASCD <- factor(adsl$DCREASCD, unique(adsl$DCREASCD))
 
 
 #### Completion Status Table
 comp_stat <- adsl %>%
-  group_by(COMPLT24, ARM) %>%
+  group_by(COMP24FL, ARM) %>%
   summarise(n = n())
 
 #Make data.frame for table, unnamed so the cols are named correctly
@@ -46,22 +47,22 @@ comp_df <- data.frame(
 comp_df["\tMissing", ] <- "  0 (  0%)"
 
 # p-value
-comp_p <- fish_p(adsl, adsl$COMPLT24, adsl$ARM)
+comp_p <- fish_p(adsl, adsl$COMP24FL, adsl$ARM)
 comp_df <- attach_p(comp_df, comp_p)
 
 #### Reason for Early Termination Table
 ## By ARM
 term_reas <- adsl %>%
-  filter(COMPLT24 == "N") %>%
-  group_by(DSDECOD, ARM) %>%
-  complete(nesting(DSDECOD, ARM)) %>%
+  filter(COMP24FL == "N") %>%
+  group_by(DCDECOD, ARM) %>%
+  complete(nesting(DCDECOD, ARM)) %>%
   summarise(n = n())
 
 ## Total
 term_reas_tot <- adsl %>%
-  filter(COMPLT24 == "N") %>%
-  group_by(DSDECOD) %>%
-  complete(nesting(DSDECOD, ARM)) %>%
+  filter(COMP24FL == "N", !is.na(DCDECOD)) %>%
+  group_by(DCDECOD) %>%
+  complete(nesting(DCDECOD, ARM)) %>%
   summarise(n = n())
 
 
@@ -88,12 +89,12 @@ term_df["\tMissing", ] <- "  0 (  0%)"
 
 # p-value
 term_p_1 <- adsl %>%
-  fish_p(DSREASAE, ARM)
+  fish_p(DCREASCD, ARM)
 term_df <- attach_p(term_df, term_p_1)
 
 term_p_2 <- adsl %>%
-  select(ARM, DSDECOD) %>%
-  mutate(loefl = ifelse(DSDECOD %in% 'LACK OF EFFICACY, PATIENT CAREGIVER PERCEPTION', 1, 0)) %>%
+  select(ARM, DCDECOD) %>%
+  mutate(loefl = ifelse(DCDECOD %in% 'LACK OF EFFICACY, PATIENT CAREGIVER PERCEPTION', 1, 0)) %>%
   fish_p(ARM ,loefl, width = 6)
 term_df[5,] <- attach_p(term_df[5,], term_p_2)
 
