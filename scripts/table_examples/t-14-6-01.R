@@ -1,9 +1,6 @@
 # t-14-6-01.R
 #   CDISC Pilot Table 14-4.01
 
-
-############################ BASELINE ROWS ARE MISSING #############################################
-
 library(glue)
 library(tidyverse)
 library(haven)
@@ -21,7 +18,7 @@ adlbh <- read_xpt(glue("{adam_lib}/adlbh.xpt")) %>%
 
 # Template for assigning display visit values
 visit_names <- data.frame(
-  AVISITN = c(1, 2, 4, 6, 8, 12, 16, 20, 24, 26, 99),
+  AVISITN = c(0, 2, 4, 6, 8, 12, 16, 20, 24, 26, 99),
   AVISIT = c("  Bsln", "  Wk 2", "  Wk 4", "  Wk 6", "  Wk 8", "  Wk 12",
             "  Wk 16", "  Wk 20", "  Wk 24", "  Wk 26", "  End[1]"),
   stringsAsFactors = FALSE
