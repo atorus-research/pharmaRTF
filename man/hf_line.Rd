@@ -10,8 +10,8 @@ hf_line(
   bold = FALSE,
   italic = FALSE,
   font = NA,
-  font_size = 12,
-  index = NULL
+  font_size = NA,
+  index = NA
 )
 }
 \arguments{
