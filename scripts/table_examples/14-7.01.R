@@ -30,6 +30,7 @@ pad_row <- function(df, r) {
 dm <- read_xpt(glue("{sdtm_lib}/dm.xpt"))
 advs <- read_xpt(glue("{adam_lib}/advs2.xpt")) %>%
   filter(SAFFL == "Y", ANL01FL == "Y")
+vs <- read_xpt(glue("{sdtm_lib}/vs.xpt"))
 
 # advs <- advs %>%
 #   group_by(USUBJID, PARAM) %>%
@@ -82,15 +83,16 @@ advs_w24 <- advs2 %>%
             min = min(AVAL),
             max = max(AVAL))
 
-advs_eot <- advs %>%
-  filter(EOTFL == "Y") %>%
-  group_by(PARAM, ATPT, TRTP) %>%
-  summarise(n = n(),
-            mean = mean(AVAL),
-            sd = sd(AVAL),
-            median = median(AVAL),
-            min = min(AVAL),
-            max = max(AVAL))
+advs_eot <- vs %>%
+  filter(VISITDY <= 168, VSTEST %in% c("Diastolic Blood Pressure", "Systolic Blood Pressure", "Pulse Rate", "Temperature")) %>%
+  group_by(USUBJID, VSTEST) %>%
+  mutate(EOTFL = VSDY == max(VSDY)) %>%
+  left_join(dm[,c("USUBJID", "ARM")], by = "USUBJID") %>%
+  group_by(VSTEST, VSTPT, ARM) %>%
+  filter(EOTFL) %>%
+  summarise(n = n())
+
+advs3 <- rbind(advs_bl, advs_w24, advs_eot)
 
 advs4 <- add_column(advs3, "N" = apply(advs3,
                                        1,
