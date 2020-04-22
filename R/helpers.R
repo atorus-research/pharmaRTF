@@ -135,7 +135,7 @@ format_text_string <- function(text, properties='') {
 #' @noRd
 extract_ind <- function(x, i) {
   ind = attr(x, 'index')
-  if (is.null(ind)) return(FALSE)
+  if (is.na(ind)) return(FALSE)
   else if (ind == i) return(TRUE)
   else return(FALSE)
 }
@@ -148,14 +148,34 @@ extract_ind <- function(x, i) {
 #' @noRd
 correct_types <- function(x) {
   switch(x,
-         type=,
          text1=,
          text2=,
          align=,
+         type=,
          font='character',
          bold=,
          italic='logical',
-         index='numeric'
+         index=,
+         font_size='numeric'
+  )
+}
+
+#' Return the expected default given an hf_line parameter
+#'
+#' @param x \code{hf_line} parameter
+#'
+#' @return The default value of the parameter
+#' @noRd
+correct_defaults <- function(x) {
+  switch(x,
+         text1=,
+         text2='',
+         align='center',
+         font=as.character(NA),
+         bold=,
+         italic=FALSE,
+         index=NA,
+         font_size=as.numeric(NA)
   )
 }
 
