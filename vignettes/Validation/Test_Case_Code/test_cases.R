@@ -9,6 +9,7 @@ context('RStudio Conf 2020 Success')
 library(pharmaRTF)
 library(huxtable)
 library(testthat)
+library(tidyverse)
 
 example_custom_reader <- function(test_number=NULL, ...) {
 

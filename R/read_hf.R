@@ -75,7 +75,7 @@ fill_missing_data <- function(.data, columns) {
   for (var in columns){
     if (var %in% names(.data)) {
       # Fill in defaults to any missing values in existing columns
-      .data[is.na(.data[var]), var] <- correct_defaults(var)
+      .data[is.na(.data[var])[,1], var] <- correct_defaults(var)
     } else {
       # Insert default values for missing columns
       .data[var] <- correct_defaults(var)
