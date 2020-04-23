@@ -1,6 +1,5 @@
 #Validation Script
 
-setwd("~/pharmaRTF")
 library(pharmaRTF)
 library(tidyverse)
 library(testthat)

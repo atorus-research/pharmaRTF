@@ -93,9 +93,8 @@ eval_test_code <- function(one_file) {
     escape = TRUE,
     col.names = c("Test", "Results", "Pass/Fail"),
     format = "latex",
-    booktabs = TRUE,
     longtable = TRUE) %>%
-    kable_styling(latex_options = c("repeat_header", "striped"))
+    kable_styling(latex_options = c("repeat_header"))
 }
 
 #' @title Generate at data.frame from the test code roxygen documentation blocks.
@@ -246,7 +245,7 @@ make_test_case_rmd <- function(file) {
       LineType == "Setup" ~ paste0(paste(rep(' ', Level*2), collapse=''), "+ Setup: ", Text, "\n"),
 
       # Test Cases
-      LineType == "TestCases" ~ paste0(paste(rep(' ', Level*2), collapse=''), "+ ", ID, ": ", Text)
+      LineType == "TestCases" ~ paste0(paste(rep(' ', Level*2), collapse=''), "+ ", TestID, ".", CheckID, ": ", Text)
     ))
 
   # Create the file text vector - need to write 'Test Cases' inbetween the headers lines and the rest of the text

@@ -98,10 +98,7 @@ list.files(test_case_dir,
 # Validation Results
 ## Specifications
 ```{r spec_1}
-scrape_spec_rmd(file.path(spec_dir, "specification_001.Rmd"))
-scrape_spec_rmd(file.path(spec_dir, "specification_002.Rmd"))
-scrape_spec_rmd(file.path(spec_dir, "specification_003.Rmd"))
-scrape_spec_rmd(file.path(spec_dir, "specification_004.Rmd"))
+scrape_spec_rmd(file.path(spec_dir, "specification.Rmd"))
 ```
 
 \newpage
@@ -155,8 +152,7 @@ for(i in seq(ceiling(ncol(final)/max_cols_to_display))) {
 
 ## Test Cases
 ```{r test_case_1, out.width='0.5\\textwidth'}
-scrape_spec_rmd(file.path(test_case_dir, "test_case_001.Rmd"))
-scrape_spec_rmd(file.path(test_case_dir, "test_case_002.Rmd"))
+scrape_spec_rmd(file.path(test_case_dir, "test_cases.Rmd"))
 ```
 
 ## Test Code Results
