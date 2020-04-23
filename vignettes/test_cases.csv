@@ -3,7 +3,11 @@ Title,0,,,,Test Cases,,
 UpdatedBy,0,,,,Ashley Tarasiewicz,,
 UpdatedDate,0,,,,4/22/2020,,
 Setup,1,,,,_No prerequisites required_,,
+<<<<<<< HEAD
 Test,2,A:B,T1,,Output an RTF using a dataframe requiring one page of output and verify output and paging are appropiate,,
+=======
+TestCases,2,A:B,T1,,Output an RTF using a dataframe requiring one page of output and verify output and paging are appropiate,,
+>>>>>>> stage
 TestCases,3,,T1,1,Verify document outputs as an RTF and opens in Word,visual,test_1.rtf
 TestCases,3,,T1,2,"Verify output has column headers ""Header1"", ""Header2"" above the table, a title ""Title"" at the top, and a footnote ""Footnote"" at the bottom",visual,test_1.rtf
 TestCases,2,A:B,T2,,Output an RTF using a dataframe requiring multiple pages of output and verify output and paging are appropiate,,
@@ -114,6 +118,7 @@ TestCases,2,N:W,T40,,Check index attribute of titles/footnotes created by import
 TestCases,3,,T40,1,Verify titles/footnotes index is set to expected default: NA,programmatic,test_40.Rdata
 TestCases,3,,T40,2,"Verify output has titles in the order: ""external Title 3"", ""external Title 2"", ""external Title 1"", and footnotes in the order: ""external Footnote 2"", ""external Footnote 3"",""external Footnote 1""",visual,test_40.rtf
 TestCases,2,L:R:S:T:U:V:W:X,T41,,"Create titles in the RTF document creation, change attributes and verify changes are reflected in the view function dataframe",,
+<<<<<<< HEAD
 TestCases,3,,T41,1,"Verify title is: bold=TRUE, italic=TRUE, align=right, font=Comic Sans, font size=13, index=4",programmatic,view_test_41.Rdata
 TestCases,2,L:R:S:T:U:V:W:X,T42,,"Create footnotes in the RTF document creation, change attributes and verify changes are reflected in the view function dataframe",,
 TestCases,3,,T42,1,"Verify footnote is: bold=TRUE, italic=TRUE, align=right, font=Comic Sans, font size=13, index=4",programmatic,view_test_42.Rdata
@@ -125,6 +130,19 @@ TestCases,2,N:R:S:T:U:V:W:X,T45,,"Create titles by importing from a separate fil
 TestCases,3,,T45,1,"Verify title is: bold=TRUE, italic=TRUE, align=right, font=Comic Sans, font size=13, index=4",programmatic,view_test_45.Rdata
 TestCases,2,N:R:S:T:U:V:W:X,T46,,"Create footnotes by importing from a separate file using a reader, change attributes and verify changes are reflected in the view function dataframe",,
 TestCases,3,,T46,1,"Verify footnote is: bold=TRUE, italic=TRUE, align=right, font=Comic Sans, font size=13, index=4",programmatic,view_test_46.Rdata
+=======
+TestCases,3,,T41,1,"Verify title is: bold=TRUE, italic=TRUE, align=right, font=Comic Sans, font size=13, index=1",programmatic,view_test_41.Rdata
+TestCases,2,L:R:S:T:U:V:W:X,T42,,"Create footnotes in the RTF document creation, change attributes and verify changes are reflected in the view function dataframe",,
+TestCases,3,,T42,1,"Verify footnote is: bold=TRUE, italic=TRUE, align=right, font=Comic Sans, font size=13, index=1",programmatic,view_test_42.Rdata
+TestCases,2,M:R:S:T:U:V:W:X,T43,,"Create titles using add_titles, change attributes and verify changes are reflected in the view function dataframe",,
+TestCases,3,,T43,1,"Verify title is: bold=TRUE, italic=TRUE, align=right, font=Comic Sans, font size=13, index=1",programmatic,view_test_43.Rdata
+TestCases,2,M:R:S:T:U:V:W:X,T44,,"Create footnotes using add_footnotes, change attributes and verify changes are reflected in the view function dataframe",,
+TestCases,3,,T44,1,"Verify footnote is: bold=TRUE, italic=TRUE, align=right, font=Comic Sans, font size=13, index=1",programmatic,view_test_44.Rdata
+TestCases,2,N:R:S:T:U:V:W:X,T45,,"Create titles by importing from a separate file using a reader, change attributes and verify changes are reflected in the view function dataframe",,
+TestCases,3,,T45,1,"Verify title is: bold=TRUE, italic=TRUE, align=right, font=Comic Sans, font size=13, index=1",programmatic,view_test_45.Rdata
+TestCases,2,N:R:S:T:U:V:W:X,T46,,"Create footnotes by importing from a separate file using a reader, change attributes and verify changes are reflected in the view function dataframe",,
+TestCases,3,,T46,1,"Verify footnote is: bold=TRUE, italic=TRUE, align=right, font=Comic Sans, font size=13, index=1",programmatic,view_test_46.Rdata
+>>>>>>> stage
 TestCases,2,Y,T47,,Output an RTF using huxtable table bold table level property and verify output,,
 TestCases,3,,T47,1,"Verify output has bold text in the ""Header1"" column",visual,test_47.rtf
 TestCases,2,Z,T48,,Output an RTF using huxtable table italic table level property and verify output,,
@@ -132,6 +150,7 @@ TestCases,3,,T48,1,"Verify output has italic text in the ""Header1"" column",vis
 TestCases,2,AA,T49,,Output an RTF using huxtable table alignment table level property and verify output,,
 TestCases,3,,T49,1,"Verify output has right aligned text in the ""Header1"" column",visual,test_49.rtf
 TestCases,2,AB:AE,T50,,Output an RTF using huxtable table row height and vertical alignment table level properties and verify output,,
+<<<<<<< HEAD
 TestCases,3,,T50,1,Verify huxtable table row heights are: .08 (rows 1-13) and .16 (row 14),visual,ht_test_50.rtf
 TestCases,3,,T50,2,"Verify output has the row containing the text ""13"" roughly twice the height of the other rows",visual,test_50.rtf
 TestCases,4,,T50,3,"Verify output has bottom aligned text in the ""Header1"" column",visual,test_50.rtf
@@ -141,5 +160,13 @@ TestCases,3,,T51,2,Verify output has a table width roughly expanding the documen
 TestCases,2,AD,T52,,Output an RTF using huxtable table column width table level property and verify output,,
 TestCases,3,,T52,1,Verify huxtable table column widths are .4 (column 1) and .8 (column 2),programmatic,ht_test_52.Rdata
 TestCases,3,,T52,2,"Verify output has ""Header2"" column roughly twice the width of ""Header1"" column",visual,test_52.rtf
+=======
+TestCases,3,,T50,1,"Verify output has bottom aligned text in the ""Header1"" column",visual,test_50.rtf
+TestCases,3,,T50,2,Verify row height…,visual,test_50.rtf
+TestCases,2,AC,T51,,Output an RTF using huxtable table width table level property and verify output,,
+TestCases,3,,T51,1,Verify table width…,visual,test_51.rtf
+TestCases,2,AD,T52,,Output an RTF using huxtable table column width table level property and verify output,,
+TestCases,3,,T52,1,Verify column width…,visual,test_52.rtf
+>>>>>>> stage
 TestCases,2,AF,T53,,Output an RTF using huxtable table cell merging table level property and verify output,,
 TestCases,3,,T53,1,"Verify output has a merged cell for the first row that contains the text ""1"" and spans both the ""Header1"" and ""Header2"" columns",visual,test_53.rtf
