@@ -253,6 +253,7 @@ summary_data <- function(data, var, week, stub_header) {
               median = median({{var}}),
               min = min({{var}}),
               max = max({{var}})) %>%
+    rowwise() %>%
     # Form into display strings
     mutate(
       N = num_fmt(n, size=12, int_len=2),
