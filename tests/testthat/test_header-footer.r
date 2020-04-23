@@ -22,16 +22,16 @@ test_that("hf_line ignores NAs", {
 
 test_that("order_lines properly orders lines with nulls at the back", {
   x_l <- list(
-    hf_line(index = NULL),
+    hf_line(index = NA),
     hf_line(index = 2),
     hf_line(index = 3),
-    hf_line(index = NULL),
+    hf_line(index = NA),
     hf_line(index = 4),
     hf_line(index = 1),
-    hf_line(index = NULL)
+    hf_line(index = NA)
   )
 
-  expect_equal(lapply(order_lines(x_l), attr, which = "index"), list(1, 2, 3, 4, NULL, NULL, NULL))
+  expect_equal(lapply(order_lines(x_l), attr, which = "index"), list(1, 2, 3, 4, NA, NA, NA))
 })
 
 test_that("add_hf replaces lines when appropriate", {
@@ -140,6 +140,17 @@ test_that("titles_and_footnotes_from_df attaches properly", {
 
 })
 
+test_that("hf_line populates with the correct defaults", {
+  hf <- hf_line("abc")
+
+  expect_equal(align(hf), "center")
+  expect_equal(bold(hf), FALSE)
+  expect_equal(italic(hf), FALSE)
+  expect_equal(font(hf), NA)
+  expect_equal(font_size(hf), NA)
+  expect_equal(index(hf), NA)
+})
+
 #### Errors ####
 test_that("hf_line throws error when given bad align", {
   expect_error(hf_line("asdf", align = "middle"))
@@ -165,8 +176,8 @@ test_that("validate_hf_line throws errors appropriately", {
   bold <- FALSE
   italic <- FALSE
   font <- NA
-  font_size <- NaN
-  index <- NULL
+  font_size <- NA
+  index <- NA
 
   expect_silent(validate_hf_line(x, align(x), bold(x), italic(x), font(x), font_size(x), index(x)))
   #Test all validation tests
