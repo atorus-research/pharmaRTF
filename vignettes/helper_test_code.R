@@ -244,4 +244,41 @@ make_test_case_rmd <- function(file) {
   writeLines(outfile, 'vignettes/Validation/Test_Cases/test_cases.Rmd')
 }
 
+#' @name make_specification_rmd
+#' @title Convert a given CSV dataset into a specificcation RMD file
+#' @param file character vector specifying CSV file location
+make_specification_rmd <- function(file) {
+  require(stringr)
 
+  # Read in the test data from the CSV
+  specs_df <- read.csv(file, stringsAsFactors=FALSE)
+
+  # Prepare the output rows
+  dat <- specs_df %>%
+    # Requires rowwise operations
+    rowwise() %>%
+    # Append any necessary text to the front of lines based on type
+    mutate(out = case_when(
+      # Title
+      LineType == "Title" ~ paste("#' @title", Text),
+
+      # Last Updated By
+      LineType == "UpdatedBy" ~ paste("#' @section Last Updated By:\n#'", Text),
+
+      # Last Updated Date
+      LineType == "UpdatedDate" ~ paste("#' @section Last Update Date:\n#'", Text),
+
+      # Test Cases
+      LineType == "Specs" ~ paste0(paste(rep(' ', Level*2), collapse=''), "+ ", SpecID, ": ", Text)
+    ))
+
+  # Create the file text vector - need to write 'Test Cases' inbetween the headers lines and the rest of the text
+  outfile <- c(
+    dat[dat$LineType != 'Specs', ][['out']],
+    c('', '+ _Specification_', ''),
+    dat[dat$LineType == 'Specs', ][['out']]
+  )
+
+  # Write the lines to each output file
+  writeLines(outfile, 'vignettes/Validation/Specifications/specification.Rmd')
+}
