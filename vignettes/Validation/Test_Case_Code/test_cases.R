@@ -1943,7 +1943,6 @@ test_that('T50',{
 
     rm(ht_test_50)
     rm(test_50)
-  }
 
   # load output for tests
   } else {
@@ -1979,7 +1978,6 @@ test_that('T51',{
 
     rm(ht_test_51)
     rm(test_51)
-  }
 
   # load output for tests
   } else {
@@ -2013,7 +2011,6 @@ test_that('T52',{
 
     rm(ht_test_52)
     rm(test_52)
-  }
 
   # load output for tests
   } else {
