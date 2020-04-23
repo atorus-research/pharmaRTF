@@ -69,20 +69,35 @@ comb2 <- comb %>%
   filter( !is.na(TRTP), !is.na(BLTRFL), !is.na(LBTRFL)) %>%
   group_by(LBTEST, TRTP, BLTRFL, LBTRFL) %>%
   complete(nesting(BLTRFL, LBTRFL)) %>%
-  summarise(N = n())
+  summarise(N = n()) %>%
+  arrange(LBTEST, BLTRFL, TRTP, LBTRFL)
+
+pvalues <- list()
+for(i in seq(nrow(comb2)/12)) {
+  arr <- array(
+    unlist(comb2[((i-1)*12 + 1):(i * 12), "N"]),
+    dim = c(2,3,2)
+  )
+
+  if(all(arr[,,2] == 0)) {
+    pvalues[i] <- ""
+  } else {
+    pvalues[i] <- pvalue(cmh_test(as.table(arr)))
+  }
+
+}
 
 
-arr <- array(
-  c(80,78,78,2,1,2,0,0,0,2,1,0),
-  dim = c(3,2,2),
-  dimnames = list(TRTP = c("Placebo", "Xan.Low", "Xan. High"),Shift = c("N", "H"), Baseline = c("N", "H")))
-)
-
-%>%
+comb3 <- comb2 %>%
   mutate(n2 = n_pct(N, total_bltrfl1[total_bltrfl1$LBTEST == LBTEST &
                                        total_bltrfl1$TRTP == TRTP     &
                                        total_bltrfl1$BLTRFL == BLTRFL, "N"], n_width = 2)) %>%
   pivot_wider(id_cols = c(LBTEST, LBTRFL), names_from = c(TRTP, BLTRFL), values_from = n2)
+
+comb4 <- comb3[!apply(comb3, 1, function(x) {
+  all(x[4:8] ==  " 0      ") & all(x[2] == "H")
+}), ]
+
 
 comb2$LBTRFL <- ordered(comb2$LBTRFL, c("T", "N", "H"))
 
