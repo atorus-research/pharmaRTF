@@ -1,7 +1,7 @@
 #Validation Script
 
 library(pharmaRTF)
-library(tidyverse)
+library(tidyverse, lib.loc = .libPaths()[2])
 library(testthat)
 source("~/pharmaRTF/vignettes/helper_test_code.R")
 

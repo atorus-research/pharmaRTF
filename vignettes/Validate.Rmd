@@ -152,7 +152,7 @@ for(i in seq(ceiling(ncol(final)/max_cols_to_display))) {
 
 ## Test Cases
 ```{r test_case_1, out.width='0.5\\textwidth'}
-# scrape_spec_rmd(file.path(test_case_dir, "test_cases.Rmd"))
+scrape_spec_rmd(file.path(test_case_dir, "test_cases.Rmd"))
 ```
 
 ## Test Code Results
