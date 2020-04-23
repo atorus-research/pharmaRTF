@@ -50,12 +50,12 @@ pharmaRTF::font(rtf)
 
 pharmaRTF::font(rtf) <- "Times"
 
-pharma::font(rtf)
+pharmaRTF::font(rtf)
 # Returns "Times" "Comic Sans"
 
-pharma::font(rtf$titles[[1]]) <- "Windings"
+pharmaRTF::font(rtf$titles[[1]]) <- "Windings"
 
-pharma::font(rtf)
+pharmaRTF::font(rtf)
 # Returns "Times" "Windings"
 
 

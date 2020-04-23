@@ -39,12 +39,12 @@
 #'
 #' pharmaRTF::font(rtf) <- "Times"
 #'
-#' pharma::font(rtf)
+#' pharmaRTF::font(rtf)
 #' # Returns "Times" "Comic Sans"
 #'
-#' pharma::font(rtf$titles[[1]]) <- "Windings"
+#' pharmaRTF::font(rtf$titles[[1]]) <- "Windings"
 #'
-#' pharma::font(rtf)
+#' pharmaRTF::font(rtf)
 #' # Returns "Times" "Windings"
 #'
 #'
@@ -233,8 +233,8 @@ set_font_size <- function(x, value) UseMethod('font_size<-')
 #' pharmaRTF::align(rtf$titles[[1]]) <- "left"
 #' # Sets alignment to 'left'
 #'
-#' pharma::text(rtf$titles[[1]]) <- c("Left Text", "Right Text")
-#' pharma::align(rtf$titles[[1]]) <- "split"
+#' pharmaRTF::text(rtf$titles[[1]]) <- c("Left Text", "Right Text")
+#' pharmaRTF::align(rtf$titles[[1]]) <- "split"
 #' # When rtf is printed, "Left Text" will be left aligned, and "Right Text"
 #' # will be right aligned. Both will appear on the same line in the document.
 #'
