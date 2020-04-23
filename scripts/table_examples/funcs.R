@@ -358,6 +358,7 @@ efficacy_models <- function(data, var=NULL, wk=NULL, model_type='ancova') {
     lsm <- emmeans::lsmeans(model2, ~TRTPCD_F, lmer.df='kenward-roger')
     # Build the section 1 data here instead of above because its from the same model
     sect1 <- as_tibble(lsm) %>%
+      rowwise() %>%
       mutate(
         rowlbl1 = 'LS Means (SE)',
         values = as.character(glue('{num_fmt(lsmean, int_len=1, digits=1, size=3)} ({num_fmt(SE, int_len=1, digits=2, size=4)})'))
@@ -377,6 +378,7 @@ efficacy_models <- function(data, var=NULL, wk=NULL, model_type='ancova') {
   # merge and convert into dataframe
   pw_data <- as_tibble(summary(cntrst_p)) %>%
     merge(as_tibble(cntrst_ci)) %>%
+    rowwise() %>%
     # Create the display strings
     mutate(
       p = num_fmt(p.value, int_len=4, digits=3, size=12),
