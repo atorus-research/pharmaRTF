@@ -90,9 +90,12 @@ eval_test_code <- function(one_file) {
   rownames(out) <- NULL
   kable(
     out,
-    escape = FALSE,
+    escape = TRUE,
     col.names = c("Test", "Results", "Pass/Fail"),
-    format = "pandoc")
+    format = "latex",
+    booktabs = TRUE,
+    longtable = TRUE) %>%
+    kable_styling(latex_options = c("repeat_header", "striped"))
 }
 
 #' @title Generate at data.frame from the test code roxygen documentation blocks.
