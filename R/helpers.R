@@ -168,7 +168,6 @@ correct_types <- function(x) {
 #' @noRd
 correct_defaults <- function(x) {
   switch(x,
-         type=,
          text1=,
          text2='',
          align='center',
