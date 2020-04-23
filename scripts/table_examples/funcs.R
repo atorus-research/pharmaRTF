@@ -53,6 +53,8 @@ get_header_n <- function(.data, trtp = TRT01P, trtpn = TRT01PN) {
 num_fmt <- function(var, digits=0, size=10, int_len=3) {
   # Formats summary stat strings to align display correctly
 
+  if (is.na(var)) return('')
+
   # Set nsmall to input digits
   nsmall = digits
 
