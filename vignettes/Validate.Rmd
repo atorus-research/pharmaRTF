@@ -137,7 +137,7 @@ for(i in seq(ceiling(ncol(final)/max_cols_to_display))) {
   start <- 1 + (i-1) *max_cols_to_display
   end <- ifelse(i * max_cols_to_display > ncol(final), ncol(final), i*max_cols_to_display)
   
-  cat(kable(final[,seq(start, end)], "latex", booktabs = TRUE), "\\newline")
+  cat(kable(final[,seq(start, end)], "latex", booktabs = TRUE, longtable = TRUE))
 }
 
 
@@ -151,37 +151,17 @@ for(i in seq(ceiling(ncol(final)/max_cols_to_display))) {
 
 \newpage
 
-### General Specification Test Cases
+## Test Cases
 ```{r test_case_1, out.width='0.5\\textwidth'}
 scrape_spec_rmd(file.path(test_case_dir, "test_case_001.Rmd"))
-```
-
-### General Specification Test Code Results
-```{r spec_function_1}
-eval_test_code(file.path(test_code_dir, "test_cases.R"))
-```
-
-***
-
-### RTF Document Characteristics Test Cases
-```{r test_case_2, out.width='0.5\\textwidth'}
 scrape_spec_rmd(file.path(test_case_dir, "test_case_002.Rmd"))
 ```
 
+## Test Code Results
 
-***
-## Titles and Footnotes
-
-### Titles and Footnotes Test Cases
-
-### Titles and Footnotes Test Code Results
-
-***
-## Table Level Properties
-
-### Table Level Properties Test Cases
-
-### Table Level Properties Test Code Results
+```{r specfunction1}
+eval_test_code(file.path(test_code_dir, "test_cases.R"))
+```
 
 ***
 # System information
@@ -191,8 +171,8 @@ sessionInfo()
 
 # Audit information
 ```{r log_info}
-# kable(readRDS("~/pharmaRTF/vignettes/Validation/vur_auto.Rds")[, c("CheckID", "OutputFile", "Response", "Log")],
-#       format = "latex", row.names = FALSE) %>%
-#   kable_styling()
+kable(readRDS("~/pharmaRTF/vignettes/Validation/vur_auto.Rds")[, c("CheckID", "OutputFile", "Response", "Log")],
+      format = "latex", row.names = FALSE) %>%
+  kable_styling()
 
 ```

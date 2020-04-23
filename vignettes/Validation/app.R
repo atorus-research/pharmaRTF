@@ -30,6 +30,7 @@ server <- function(input, output) {
         df <- df[df$CheckType == "visual",]
         df$Response <- FALSE
         df$Log <- NA
+        df$ID <- paste0(df$TestID, df$CheckID)
         df
         })
 
