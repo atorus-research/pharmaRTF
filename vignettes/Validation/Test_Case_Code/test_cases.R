@@ -1,10 +1,10 @@
 context('RStudio Conf 2020 Success')
 
-#' @title T1.1
-#' @section Last Updated By:
-#' Not Ellis Hughes
-#' @section Last Update Date:
-#' 2020/01/29
+#' @title Test Cases Code
+#' @section Updated By:
+#' Ashley Tarasiewicz
+#' @section Updated Date:
+#' 4/23/2020
 
 library(pharmaRTF)
 library(huxtable)
@@ -51,8 +51,9 @@ test_that('T1',{
 
   # tests
   skip_if(is.null(vur))
-  expect_true(vur[vur$ID == "T1C1", "Response"])
-  expect_true(vur[vur$ID == "T1C2", "Response"])
+
+  expect_true(vur[vur$ID == "T1.1", "Response"])
+  expect_true(vur[vur$ID == "T1.2", "Response"])
 })
 
 test_that('T2',{
@@ -75,9 +76,10 @@ test_that('T2',{
 
   # tests
   skip_if(is.null(vur))
-  expect_true(vur[vur$ID == "T2C1", "Response"])
-  expect_true(vur[vur$ID == "T2C2", "Response"])
-  expect_true(vur[vur$ID == "T2C3", "Response"])
+
+  expect_true(vur[vur$ID == "T2.1", "Response"])
+  expect_true(vur[vur$ID == "T2.2", "Response"])
+  expect_true(vur[vur$ID == "T2.3", "Response"])
 })
 
 test_that('T3',{
@@ -107,8 +109,10 @@ test_that('T3',{
 
   # tests
   skip_if(is.null(vur))
-  testthat::expect_equal(c(top=1, bottom=1, left=1, right=1), pharmaRTF::margins(test_3))
-  testthat::expect_true(vur[vur$ID == "T3C2", "Response"])
+
+  testthat::expect_equal(c(top=1, bottom=1, left=1, right=1), pharmaRTF::margins(test_3), label = "T3.1")
+  testthat::expect_true(vur[vur$ID == "T3.2", "Response"])
+
   rm(test_3)
 })
 
@@ -139,9 +143,12 @@ test_that('T4',{
 
   # tests
   skip_if(is.null(vur))
-  testthat::expect_equal(.5, pharmaRTF::header_height(test_4)) %>%
-    testthat::expect_equal(.5, pharmaRTF::footer_height(test_4))
-  testthat::expect_true(vur[vur$ID == "T4C2", "Response"])
+
+  testthat::expect_true(all.equal(c(.5,.5),
+    c(pharmaRTF::header_height(test_4),pharmaRTF::header_height(test_4))),
+    label = "T4.1")
+  testthat::expect_true(vur[vur$ID == "T4.2", "Response"])
+
   rm(test_4)
 })
 
@@ -171,8 +178,10 @@ test_that('T5',{
 
   # tests
   skip_if(is.null(vur))
-  testthat::expect_equal(c(height = 8.5, width = 11), pharmaRTF::pagesize(test_5))
-  testthat::expect_true(vur[vur$ID == "T5C2", "Response"])
+
+  testthat::expect_equal(c(height = 8.5, width = 11), pharmaRTF::pagesize(test_5),label = "T5.1")
+  testthat::expect_true(vur[vur$ID == "T5.2", "Response"])
+
   rm(test_5)
 })
 
@@ -202,8 +211,10 @@ test_that('T6',{
 
   # tests
   skip_if(is.null(vur))
-  testthat::expect_equal("landscape",pharmaRTF::orientation(test_6))
-  testthat::expect_true(vur[vur$ID == "T6C2", "Response"])
+
+  testthat::expect_equal("landscape",pharmaRTF::orientation(test_6),label = "T6.1")
+  testthat::expect_true(vur[vur$ID == "T6.2", "Response"])
+
   rm(test_6)
 })
 
@@ -233,8 +244,10 @@ test_that('T7',{
 
   # tests
   skip_if(is.null(vur))
-  testthat::expect_equal(12,pharmaRTF::font_size(test_7))
-  testthat::expect_true(vur[vur$ID == "T7C2", "Response"])
+
+  testthat::expect_equal(12,pharmaRTF::font_size(test_7), label = "T7.1")
+  testthat::expect_true(vur[vur$ID == "T7.2", "Response"])
+
   rm(test_7)
 })
 
@@ -264,8 +277,10 @@ test_that('T8',{
 
   # tests
   skip_if(is.null(vur))
-  testthat::expect_equal("Courier New",pharmaRTF::font(test_8))
-  testthat::expect_true(vur[vur$ID == "T8C2", "Response"])
+
+  testthat::expect_equal("Courier New",pharmaRTF::font(test_8), label = "T8.1")
+  testthat::expect_true(vur[vur$ID == "T8.2", "Response"])
+
   rm(test_8)
 })
 
@@ -295,8 +310,10 @@ test_that('T9',{
 
   # tests
   skip_if(is.null(vur))
-  testthat::expect_equal(1,pharmaRTF::header_rows(test_9))
-  testthat::expect_true(vur[vur$ID == "T9C2", "Response"])
+
+  testthat::expect_equal(1,pharmaRTF::header_rows(test_9), label = "T9.1")
+  testthat::expect_true(vur[vur$ID == "T9.2", "Response"])
+
   rm(test_9)
 })
 
@@ -326,8 +343,10 @@ test_that('T10',{
 
   # tests
   skip_if(is.null(vur))
-  testthat::expect_equal(c(top = 0, bottom = 0),pharmaRTF::column_header_buffer(test_10))
-  testthat::expect_true(vur[vur$ID == "T10C2", "Response"])
+
+  testthat::expect_equal(c(top = 0, bottom = 0),pharmaRTF::column_header_buffer(test_10), label = "T10.1")
+  testthat::expect_true(vur[vur$ID == "T10.2", "Response"])
+
   rm(test_10)
 })
 
@@ -357,8 +376,10 @@ test_that('T11',{
 
   # tests
   skip_if(is.null(vur))
-  testthat::expect_equal(FALSE,pharmaRTF::ignore_cell_padding(test_11))
-  testthat::expect_true(vur[vur$ID == "T11C2", "Response"])
+
+  testthat::expect_equal(FALSE,pharmaRTF::ignore_cell_padding(test_11), label = "T11.1")
+  testthat::expect_true(vur[vur$ID == "T11.2", "Response"])
+
   rm(test_11)
 })
 
@@ -386,7 +407,8 @@ test_that('T12',{
 
   # tests
   skip_if(is.null(vur))
-  expect_true(vur[vur$ID == "T12C1", "Response"])
+
+  expect_true(vur[vur$ID == "T12.1", "Response"])
 })
 
 test_that('T13',{
@@ -413,7 +435,8 @@ test_that('T13',{
 
   # tests
   skip_if(is.null(vur))
-  expect_true(vur[vur$ID == "T13C1", "Response"])
+
+  expect_true(vur[vur$ID == "T13.1", "Response"])
 })
 
 test_that('T14',{
@@ -438,7 +461,8 @@ test_that('T14',{
 
   # tests
   skip_if(is.null(vur))
-  expect_true(vur[vur$ID == "T14C1", "Response"])
+
+  expect_true(vur[vur$ID == "T14.1", "Response"])
 })
 
 test_that('T15',{
@@ -469,7 +493,8 @@ test_that('T15',{
 
   # tests
   skip_if(is.null(vur))
-  expect_true(vur[vur$ID == "T15C1", "Response"])
+
+  expect_true(vur[vur$ID == "T15.1", "Response"])
 })
 
 test_that('T16',{
@@ -507,7 +532,8 @@ test_that('T16',{
 
   # tests
   skip_if(is.null(vur))
-  expect_true(vur[vur$ID == "T16C1", "Response"])
+
+  expect_true(vur[vur$ID == "T16.1", "Response"])
 })
 
 test_that('T17',{
@@ -545,7 +571,8 @@ test_that('T17',{
 
   # tests
   skip_if(is.null(vur))
-  expect_true(vur[vur$ID == "T17C1", "Response"])
+
+  expect_true(vur[vur$ID == "T17.1", "Response"])
 })
 
 test_that('T18',{
@@ -571,7 +598,8 @@ test_that('T18',{
 
   # tests
   skip_if(is.null(vur))
-  expect_true(vur[vur$ID == "T18C1", "Response"])
+
+  expect_true(vur[vur$ID == "T18.1", "Response"])
 })
 
 test_that('T19',{
@@ -596,7 +624,8 @@ test_that('T19',{
 
   # tests
   skip_if(is.null(vur))
-  expect_true(vur[vur$ID == "T19C1", "Response"])
+
+  expect_true(vur[vur$ID == "T19.1", "Response"])
 })
 
 test_that('T20',{
@@ -628,7 +657,8 @@ test_that('T20',{
 
   # tests
   skip_if(is.null(vur))
-  expect_true(vur[vur$ID == "T20C1", "Response"])
+
+  expect_true(vur[vur$ID == "T20.1", "Response"])
 })
 
 test_that('T21',{
@@ -659,7 +689,8 @@ test_that('T21',{
 
   # tests
   skip_if(is.null(vur))
-  expect_true(vur[vur$ID == "T21C1", "Response"])
+
+  expect_true(vur[vur$ID == "T21.1", "Response"])
 })
 
 test_that('T22',{
@@ -685,7 +716,8 @@ test_that('T22',{
 
   # tests
   skip_if(is.null(vur))
-  expect_true(vur[vur$ID == "T22C1", "Response"])
+
+  expect_true(vur[vur$ID == "T22.1", "Response"])
 })
 
 test_that('T23',{
@@ -696,7 +728,7 @@ test_that('T23',{
       column2 = c("Header2", letters[1:26])
     )
 
-    # verify bold attribute of titles/footnotes created in the RTF document creation is set to expected default:FALSE
+    # titles/footnotes created in the RTF document creation
     titles <- list(hf_line("rtf_doc Title 1"), hf_line("rtf_doc Title 2"), hf_line("rtf_doc Title 3"))
     footnotes <- list(hf_line("rtf_doc Footnote 1"), hf_line("rtf_doc Footnote 2"), hf_line("rtf_doc Footnote 3"))
 
@@ -727,13 +759,12 @@ test_that('T23',{
   # tests
   skip_if(is.null(vur))
 
-  testthat::expect_equal(FALSE, pharmaRTF::bold(test_23$titles[[1]])) %>%
-    testthat::expect_equal(FALSE, pharmaRTF::bold(test_23$titles[[2]])) %>%
-    testthat::expect_equal(FALSE, pharmaRTF::bold(test_23$titles[[3]])) %>%
-    testthat::expect_equal(FALSE, pharmaRTF::bold(test_23$footnotes[[1]])) %>%
-    testthat::expect_equal(FALSE, pharmaRTF::bold(test_23$footnotes[[2]])) %>%
-    testthat::expect_equal(FALSE, pharmaRTF::bold(test_23$footnotes[[3]]))
-  expect_true(vur[vur$ID == "T23C2", "Response"])
+  testthat::expect_true(all.equal(c(rep(FALSE,6)),
+    c(pharmaRTF::bold(test_23$titles[[1]]),pharmaRTF::bold(test_23$titles[[2]]),pharmaRTF::bold(test_23$titles[[3]]),
+    pharmaRTF::bold(test_23$footnotes[[1]]),pharmaRTF::bold(test_23$footnotes[[2]]),pharmaRTF::bold(test_23$footnotes[[3]]))),
+    label = "T23.1")
+   expect_true(vur[vur$ID == "T23.2", "Response"])
+
   rm(test_23)
 })
 
@@ -745,7 +776,7 @@ test_that('T24',{
       column2 = c("Header2", letters[1:26])
     )
 
-    # verify bold attribute of titles/footnotes created using add_titles and add_footnotes is set to expected default:FALSE
+    # titles/footnotes created using add_titles and add_footnotes
     test_24 <- pharmaRTF::rtf_doc(ht)
     test_24 <- add_titles(test_24,
                           hf_line("add_titles Title 1"),
@@ -779,13 +810,12 @@ test_that('T24',{
   # tests
   skip_if(is.null(vur))
 
-  testthat::expect_equal(FALSE, pharmaRTF::bold(test_24$titles[[1]])) %>%
-    testthat::expect_equal(FALSE, pharmaRTF::bold(test_24$titles[[2]])) %>%
-    testthat::expect_equal(FALSE, pharmaRTF::bold(test_24$titles[[3]])) %>%
-    testthat::expect_equal(FALSE, pharmaRTF::bold(test_24$footnotes[[1]])) %>%
-    testthat::expect_equal(FALSE, pharmaRTF::bold(test_24$footnotes[[2]])) %>%
-    testthat::expect_equal(FALSE, pharmaRTF::bold(test_24$footnotes[[3]]))
-  expect_true(vur[vur$ID == "T24C2", "Response"])
+  testthat::expect_true(all.equal(c(rep(FALSE,6)),
+    c(pharmaRTF::bold(test_24$titles[[1]]),pharmaRTF::bold(test_24$titles[[2]]),pharmaRTF::bold(test_24$titles[[3]]),
+    pharmaRTF::bold(test_24$footnotes[[1]]),pharmaRTF::bold(test_24$footnotes[[2]]),pharmaRTF::bold(test_24$footnotes[[3]]))),
+    label = "T24.1")
+  expect_true(vur[vur$ID == "T24.2", "Response"])
+
   rm(test_24)
 })
 
@@ -797,7 +827,7 @@ test_that('T25',{
       column2 = c("Header2", letters[1:26])
     )
 
-    # verify bold attribute of titles/footnotes imported from a separate file using a reader is set to expected default:FALSE
+    # vtitles/footnotes imported from a separate file using a reader
     test_25 <- pharmaRTF::rtf_doc(ht) %>% pharmaRTF::titles_and_footnotes_from_df(
       from.file='~/pharmaRTF/vignettes/Validation/Test_Case_Code/input/titles_footnotes.xlsx',
       reader=example_custom_reader,
@@ -826,13 +856,12 @@ test_that('T25',{
   # tests
   skip_if(is.null(vur))
 
-  testthat::expect_equal(FALSE, pharmaRTF::bold(test_25$titles[[1]])) %>%
-    testthat::expect_equal(FALSE, pharmaRTF::bold(test_25$titles[[2]])) %>%
-    testthat::expect_equal(FALSE, pharmaRTF::bold(test_25$titles[[3]])) %>%
-    testthat::expect_equal(FALSE, pharmaRTF::bold(test_25$footnotes[[1]])) %>%
-    testthat::expect_equal(FALSE, pharmaRTF::bold(test_25$footnotes[[2]])) %>%
-    testthat::expect_equal(FALSE, pharmaRTF::bold(test_25$footnotes[[3]]))
-  expect_true(vur[vur$ID == "T25C2", "Response"])
+  testthat::expect_true(all.equal(c(rep(FALSE,6)),
+    c(pharmaRTF::bold(test_25$titles[[1]]),pharmaRTF::bold(test_25$titles[[2]]),pharmaRTF::bold(test_25$titles[[3]]),
+    pharmaRTF::bold(test_25$footnotes[[1]]),pharmaRTF::bold(test_25$footnotes[[2]]),pharmaRTF::bold(test_25$footnotes[[3]]))),
+    label = "T25.1")
+  expect_true(vur[vur$ID == "T25.2", "Response"])
+
   rm(test_25)
 })
 
@@ -844,7 +873,7 @@ test_that('T26',{
       column2 = c("Header2", letters[1:26])
     )
 
-    # verify italic attribute of titles/footnotes created in the RTF document creation is set to expected default:FALSE
+    # titles/footnotes created in the RTF document creation
     titles <- list(hf_line("rtf_doc Title 1"), hf_line("rtf_doc Title 2"), hf_line("rtf_doc Title 3"))
     footnotes <- list(hf_line("rtf_doc Footnote 1"), hf_line("rtf_doc Footnote 2"), hf_line("rtf_doc Footnote 3"))
 
@@ -874,13 +903,12 @@ test_that('T26',{
   # tests
   skip_if(is.null(vur))
 
-  testthat::expect_equal(FALSE, pharmaRTF::italic(test_26$titles[[1]])) %>%
-    testthat::expect_equal(FALSE, pharmaRTF::italic(test_26$titles[[2]])) %>%
-    testthat::expect_equal(FALSE, pharmaRTF::italic(test_26$titles[[3]])) %>%
-    testthat::expect_equal(FALSE, pharmaRTF::italic(test_26$footnotes[[1]])) %>%
-    testthat::expect_equal(FALSE, pharmaRTF::italic(test_26$footnotes[[2]])) %>%
-    testthat::expect_equal(FALSE, pharmaRTF::italic(test_26$footnotes[[3]]))
-  expect_true(vur[vur$ID == "T26C2", "Response"])
+  testthat::expect_true(all.equal(c(rep(FALSE,6)),
+    c(pharmaRTF::italic(test_26$titles[[1]]),pharmaRTF::italic(test_26$titles[[2]]),pharmaRTF::italic(test_26$titles[[3]]),
+    pharmaRTF::italic(test_26$footnotes[[1]]),pharmaRTF::italic(test_26$footnotes[[2]]),pharmaRTF::italic(test_26$footnotes[[3]]))),
+    label = "T26.1")
+  expect_true(vur[vur$ID == "T26.2", "Response"])
+
   rm(test_26)
 })
 
@@ -892,7 +920,7 @@ test_that('T27',{
       column2 = c("Header2", letters[1:26])
     )
 
-    # verify italic attribute of titles/footnotes created using add_titles and add_footnotes is set to expected default:FALSE
+    # titles/footnotes created using add_titles and add_footnotes
     test_27 <- pharmaRTF::rtf_doc(ht)
     test_27 <- add_titles(test_27,
                           hf_line("add_titles Title 1"),
@@ -925,13 +953,12 @@ test_that('T27',{
   # tests
   skip_if(is.null(vur))
 
-  testthat::expect_equal(FALSE, pharmaRTF::italic(test_27$titles[[1]])) %>%
-    testthat::expect_equal(FALSE, pharmaRTF::italic(test_27$titles[[2]])) %>%
-    testthat::expect_equal(FALSE, pharmaRTF::italic(test_27$titles[[3]])) %>%
-    testthat::expect_equal(FALSE, pharmaRTF::italic(test_27$footnotes[[1]])) %>%
-    testthat::expect_equal(FALSE, pharmaRTF::italic(test_27$footnotes[[2]])) %>%
-    testthat::expect_equal(FALSE, pharmaRTF::italic(test_27$footnotes[[3]]))
-  expect_true(vur[vur$ID == "T27C2", "Response"])
+  testthat::expect_true(all.equal(c(rep(FALSE,6)),
+    c(pharmaRTF::italic(test_27$titles[[1]]),pharmaRTF::italic(test_27$titles[[2]]),pharmaRTF::italic(test_27$titles[[3]]),
+    pharmaRTF::italic(test_27$footnotes[[1]]),pharmaRTF::italic(test_27$footnotes[[2]]),pharmaRTF::italic(test_27$footnotes[[3]]))),
+    label = "T27.1")
+  expect_true(vur[vur$ID == "T27.2", "Response"])
+
   rm(test_27)
 })
 
@@ -943,13 +970,13 @@ test_that('T28',{
       column2 = c("Header2", letters[1:26])
     )
 
-    # verify italic attribute of titles/footnotes imported from a separate file using a reader is set to expected default:FALSE
+    # titles/footnotes imported from a separate file using a reader
     test_28 <- pharmaRTF::rtf_doc(ht) %>% pharmaRTF::titles_and_footnotes_from_df(
       from.file='~/pharmaRTF/vignettes/Validation/Test_Case_Code/input/titles_footnotes.xlsx',
       reader=example_custom_reader,
       test_number='T28')
 
-    # output dataframe to check default bold
+    # output dataframe to check default italic
     save(test_28, file = "~/pharmaRTF/vignettes/Validation/Test_Case_Code/output/test_28.RData")
 
     # change some titles/footnotes italic to TRUE and output rtf for manual review
@@ -971,13 +998,12 @@ test_that('T28',{
   # tests
   skip_if(is.null(vur))
 
-  testthat::expect_equal(FALSE, pharmaRTF::italic(test_28$titles[[1]])) %>%
-    testthat::expect_equal(FALSE, pharmaRTF::italic(test_28$titles[[2]])) %>%
-    testthat::expect_equal(FALSE, pharmaRTF::italic(test_28$titles[[3]])) %>%
-    testthat::expect_equal(FALSE, pharmaRTF::italic(test_28$footnotes[[1]])) %>%
-    testthat::expect_equal(FALSE, pharmaRTF::italic(test_28$footnotes[[2]])) %>%
-    testthat::expect_equal(FALSE, pharmaRTF::italic(test_28$footnotes[[3]]))
-  expect_true(vur[vur$ID == "T28C2", "Response"])
+  testthat::expect_true(all.equal(c(rep(FALSE,6)),
+    c(pharmaRTF::italic(test_28$titles[[1]]),pharmaRTF::italic(test_28$titles[[2]]),pharmaRTF::italic(test_28$titles[[3]]),
+    pharmaRTF::italic(test_28$footnotes[[1]]),pharmaRTF::italic(test_28$footnotes[[2]]),pharmaRTF::italic(test_28$footnotes[[3]]))),
+    label = "T28.1")
+  expect_true(vur[vur$ID == "T28.2", "Response"])
+
   rm(test_28)
 })
 
@@ -988,7 +1014,8 @@ test_that('T29',{
       column1 = c("Header1", 1:26),
       column2 = c("Header2", letters[1:26])
     )
-    # verify align attribute of titles/footnotes created in the RTF document creation is set to expected default:center
+
+    # titles/footnotes created in the RTF document creation
     titles <- list(hf_line("rtf_doc Title 1"), hf_line("rtf_doc Title 2"), hf_line("rtf_doc Title 3"))
     footnotes <- list(hf_line("rtf_doc Footnote 1"), hf_line("rtf_doc Footnote 2"), hf_line("rtf_doc Footnote 3 Part 1", "rtf_doc Footnote 3 Part 2"))
 
@@ -1020,13 +1047,12 @@ test_that('T29',{
   # tests
   skip_if(is.null(vur))
 
-  testthat::expect_equal("center", pharmaRTF::align(test_29$titles[[1]])) %>%
-    testthat::expect_equal("center", pharmaRTF::align(test_29$titles[[2]])) %>%
-    testthat::expect_equal("center", pharmaRTF::align(test_29$titles[[3]])) %>%
-    testthat::expect_equal("center", pharmaRTF::align(test_29$footnotes[[1]])) %>%
-    testthat::expect_equal("center", pharmaRTF::align(test_29$footnotes[[2]])) %>%
-    testthat::expect_equal("center", pharmaRTF::align(test_29$footnotes[[3]]))
-  expect_true(vur[vur$ID == "T29C2", "Response"])
+  testthat::expect_true(all.equal(c(rep("center",6)),
+    c(pharmaRTF::align(test_29$titles[[1]]),pharmaRTF::align(test_29$titles[[2]]),pharmaRTF::align(test_29$titles[[3]]),
+    pharmaRTF::align(test_29$footnotes[[1]]),pharmaRTF::align(test_29$footnotes[[2]]),pharmaRTF::align(test_29$footnotes[[3]]))),
+    label = "T29.1")
+  expect_true(vur[vur$ID == "T29.2", "Response"])
+
   rm(test_29)
 })
 
@@ -1037,7 +1063,8 @@ test_that('T30',{
       column1 = c("Header1", 1:26),
       column2 = c("Header2", letters[1:26])
     )
-    # verify align attribute of titles/footnotes created using add_titles and add_footnotes is set to expected default:center
+
+    # titles/footnotes created using add_titles and add_footnotes
     test_30 <- pharmaRTF::rtf_doc(ht)
     test_30 <- add_titles(test_30,
                           hf_line("add_titles Title 1"),
@@ -1072,13 +1099,12 @@ test_that('T30',{
   # tests
   skip_if(is.null(vur))
 
-  testthat::expect_equal("center", pharmaRTF::align(test_30$titles[[1]])) %>%
-    testthat::expect_equal("center", pharmaRTF::align(test_30$titles[[2]])) %>%
-    testthat::expect_equal("center", pharmaRTF::align(test_30$titles[[3]])) %>%
-    testthat::expect_equal("center", pharmaRTF::align(test_30$footnotes[[1]])) %>%
-    testthat::expect_equal("center", pharmaRTF::align(test_30$footnotes[[2]])) %>%
-    testthat::expect_equal("center", pharmaRTF::align(test_30$footnotes[[3]]))
-  expect_true(vur[vur$ID == "T30C2", "Response"])
+  testthat::expect_true(all.equal(c(rep("center",6)),
+    c(pharmaRTF::align(test_30$titles[[1]]),pharmaRTF::align(test_30$titles[[2]]),pharmaRTF::align(test_30$titles[[3]]),
+    pharmaRTF::align(test_30$footnotes[[1]]),pharmaRTF::align(test_30$footnotes[[2]]),pharmaRTF::align(test_30$footnotes[[3]]))),
+    label = "T30.1")
+  expect_true(vur[vur$ID == "T30.2", "Response"])
+
   rm(test_30)
 })
 
@@ -1089,13 +1115,14 @@ test_that('T31',{
       column1 = c("Header1", 1:26),
       column2 = c("Header2", letters[1:26])
     )
-    # verify align attribute of titles/footnotes imported from a separate file using a reader is set to expected default:center
+
+    # titles/footnotes imported from a separate file using a reader
     test_31 <- pharmaRTF::rtf_doc(ht) %>% pharmaRTF::titles_and_footnotes_from_df(
       from.file='~/pharmaRTF/vignettes/Validation/Test_Case_Code/input/titles_footnotes.xlsx',
       reader=example_custom_reader,
       test_number='T31')
 
-    # output dataframe to check default bold
+    # output dataframe to check default align
     save(test_31, file = "~/pharmaRTF/vignettes/Validation/Test_Case_Code/output/test_31.RData")
 
     # change some titles/footnotes align and output rtf for manual review
@@ -1119,13 +1146,12 @@ test_that('T31',{
   # tests
   skip_if(is.null(vur))
 
-  testthat::expect_equal("center", pharmaRTF::align(test_31$titles[[1]])) %>%
-    testthat::expect_equal("center", pharmaRTF::align(test_31$titles[[2]])) %>%
-    testthat::expect_equal("center", pharmaRTF::align(test_31$titles[[3]])) %>%
-    testthat::expect_equal("center", pharmaRTF::align(test_31$footnotes[[1]])) %>%
-    testthat::expect_equal("center", pharmaRTF::align(test_31$footnotes[[2]])) %>%
-    testthat::expect_equal("center", pharmaRTF::align(test_31$footnotes[[3]]))
-  expect_true(vur[vur$ID == "T31C2", "Response"])
+  testthat::expect_true(all.equal(c(rep("center",6)),
+    c(pharmaRTF::align(test_31$titles[[1]]),pharmaRTF::align(test_31$titles[[2]]),pharmaRTF::align(test_31$titles[[3]]),
+    pharmaRTF::align(test_31$footnotes[[1]]),pharmaRTF::align(test_31$footnotes[[2]]),pharmaRTF::align(test_31$footnotes[[3]]))),
+    label = "T31.1")
+  expect_true(vur[vur$ID == "T31.2", "Response"])
+
   rm(test_31)
 })
 
@@ -1137,7 +1163,7 @@ test_that('T32',{
       column2 = c("Header2", letters[1:26])
     )
 
-    # verify font attribute of titles/footnotes created in the RTF document creation is set to expected default:NA
+    # titles/footnotes created in the RTF document creation
     titles <- list(hf_line("rtf_doc Title 1"), hf_line("rtf_doc Title 2"), hf_line("rtf_doc Title 3"))
     footnotes <- list(hf_line("rtf_doc Footnote 1"), hf_line("rtf_doc Footnote 2"), hf_line("rtf_doc Footnote 3"))
 
@@ -1168,13 +1194,12 @@ test_that('T32',{
   # tests
   skip_if(is.null(vur))
 
-  testthat::expect_equal(NA, pharmaRTF::font(test_32$titles[[1]])) %>%
-    testthat::expect_equal(NA, pharmaRTF::font(test_32$titles[[2]])) %>%
-    testthat::expect_equal(NA, pharmaRTF::font(test_32$titles[[3]])) %>%
-    testthat::expect_equal(NA, pharmaRTF::font(test_32$footnotes[[1]])) %>%
-    testthat::expect_equal(NA, pharmaRTF::font(test_32$footnotes[[2]])) %>%
-    testthat::expect_equal(NA, pharmaRTF::font(test_32$footnotes[[3]]))
-  expect_true(vur[vur$ID == "T32C2", "Response"])
+  testthat::expect_true(all.equal(c(rep(NA,6)),
+    c(pharmaRTF::font(test_32$titles[[1]]),pharmaRTF::font(test_32$titles[[2]]),pharmaRTF::font(test_32$titles[[3]]),
+    pharmaRTF::font(test_32$footnotes[[1]]),pharmaRTF::font(test_32$footnotes[[2]]),pharmaRTF::font(test_32$footnotes[[3]]))),
+    label = "T32.1")
+  expect_true(vur[vur$ID == "T32.2", "Response"])
+
   rm(test_32)
 })
 
@@ -1186,7 +1211,7 @@ test_that('T33',{
       column2 = c("Header2", letters[1:26])
     )
 
-    # verify font attribute of titles/footnotes created using add_titles and add_footnotes is set to expected default:NA
+    # titles/footnotes created using add_titles and add_footnotes
     test_33 <- pharmaRTF::rtf_doc(ht)
     test_33 <- add_titles(test_33,
                           hf_line("add_titles Title 1"),
@@ -1220,13 +1245,12 @@ test_that('T33',{
   # tests
   skip_if(is.null(vur))
 
-  testthat::expect_equal(NA, pharmaRTF::font(test_33$titles[[1]])) %>%
-    testthat::expect_equal(NA, pharmaRTF::font(test_33$titles[[2]])) %>%
-    testthat::expect_equal(NA, pharmaRTF::font(test_33$titles[[3]])) %>%
-    testthat::expect_equal(NA, pharmaRTF::font(test_33$footnotes[[1]])) %>%
-    testthat::expect_equal(NA, pharmaRTF::font(test_33$footnotes[[2]])) %>%
-    testthat::expect_equal(NA, pharmaRTF::font(test_33$footnotes[[3]]))
-  expect_true(vur[vur$ID == "T33C2", "Response"])
+  testthat::expect_true(all.equal(c(rep(NA,6)),
+    c(pharmaRTF::font(test_33$titles[[1]]),pharmaRTF::font(test_33$titles[[2]]),pharmaRTF::font(test_33$titles[[3]]),
+    pharmaRTF::font(test_33$footnotes[[1]]),pharmaRTF::font(test_33$footnotes[[2]]),pharmaRTF::font(test_33$footnotes[[3]]))),
+    label = "T33.1")
+  expect_true(vur[vur$ID == "T33.2", "Response"])
+
   rm(test_33)
 })
 
@@ -1237,13 +1261,14 @@ test_that('T34',{
       column1 = c("Header1", 1:26),
       column2 = c("Header2", letters[1:26])
     )
-    # verify font attribute of titles/footnotes imported from a separate file using a reader is set to expected default:NA
+
+    # titles/footnotes imported from a separate file using a reader
     test_34 <- pharmaRTF::rtf_doc(ht) %>% pharmaRTF::titles_and_footnotes_from_df(
       from.file='~/pharmaRTF/vignettes/Validation/Test_Case_Code/input/titles_footnotes.xlsx',
       reader=example_custom_reader,
       test_number='T34')
 
-    # output dataframe to check default bold
+    # output dataframe to check default font
     save(test_34, file = "~/pharmaRTF/vignettes/Validation/Test_Case_Code/output/test_34.RData")
 
     # change some titles/footnotes font to Comic Sans and output rtf for manual review
@@ -1266,13 +1291,12 @@ test_that('T34',{
   # tests
   skip_if(is.null(vur))
 
-  testthat::expect_equal(NA, pharmaRTF::font(test_34$titles[[1]])) %>%
-    testthat::expect_equal(NA, pharmaRTF::font(test_34$titles[[2]])) %>%
-    testthat::expect_equal(NA, pharmaRTF::font(test_34$titles[[3]])) %>%
-    testthat::expect_equal(NA, pharmaRTF::font(test_34$footnotes[[1]])) %>%
-    testthat::expect_equal(NA, pharmaRTF::font(test_34$footnotes[[2]])) %>%
-    testthat::expect_equal(NA, pharmaRTF::font(test_34$footnotes[[3]]))
-  expect_true(vur[vur$ID == "T34C2", "Response"])
+  testthat::expect_true(all.equal(c(rep(as.character(NA),6)),
+    c(pharmaRTF::font(test_34$titles[[1]]),pharmaRTF::font(test_34$titles[[2]]),pharmaRTF::font(test_34$titles[[3]]),
+    pharmaRTF::font(test_34$footnotes[[1]]),pharmaRTF::font(test_34$footnotes[[2]]),pharmaRTF::font(test_34$footnotes[[3]]))),
+    label = "T34.1")
+  expect_true(vur[vur$ID == "T34.2", "Response"])
+
   rm(test_34)
 })
 
@@ -1284,7 +1308,7 @@ test_that('T35',{
       column2 = c("Header2", letters[1:26])
     )
 
-    # verify font size attribute of titles/footnotes created in the RTF document creation is set to expected default:NA
+    # titles/footnotes created in the RTF document creation
     titles <- list(hf_line("rtf_doc Title 1"), hf_line("rtf_doc Title 2"), hf_line("rtf_doc Title 3"))
     footnotes <- list(hf_line("rtf_doc Footnote 1"), hf_line("rtf_doc Footnote 2"), hf_line("rtf_doc Footnote 3"))
 
@@ -1314,13 +1338,12 @@ test_that('T35',{
   # tests
   skip_if(is.null(vur))
 
-  testthat::expect_equal(NA, pharmaRTF::font_size(test_35$titles[[1]])) %>%
-    testthat::expect_equal(NA, pharmaRTF::font_size(test_35$titles[[2]])) %>%
-    testthat::expect_equal(NA, pharmaRTF::font_size(test_35$titles[[3]])) %>%
-    testthat::expect_equal(NA, pharmaRTF::font_size(test_35$footnotes[[1]])) %>%
-    testthat::expect_equal(NA, pharmaRTF::font_size(test_35$footnotes[[2]])) %>%
-    testthat::expect_equal(NA, pharmaRTF::font_size(test_35$footnotes[[3]]))
-  expect_true(vur[vur$ID == "T35C2", "Response"])
+  testthat::expect_true(all.equal(c(rep(NA,6)),
+    c(pharmaRTF::font_size(test_35$titles[[1]]),pharmaRTF::font_size(test_35$titles[[2]]),pharmaRTF::font_size(test_35$titles[[3]]),
+    pharmaRTF::font_size(test_35$footnotes[[1]]),pharmaRTF::font_size(test_35$footnotes[[2]]),pharmaRTF::font_size(test_35$footnotes[[3]]))),
+    label = "T35.1")
+  expect_true(vur[vur$ID == "T35.2", "Response"])
+
   rm(test_35)
 })
 
@@ -1332,7 +1355,7 @@ test_that('T36',{
       column2 = c("Header2", letters[1:26])
     )
 
-    # verify font size attribute of titles/footnotes created using add_titles and add_footnotes is set to expected default:NA
+    # titles/footnotes created using add_titles and add_footnotes
     test_36 <- pharmaRTF::rtf_doc(ht)
     test_36 <- add_titles(test_36,
                           hf_line("add_titles Title 1"),
@@ -1365,13 +1388,12 @@ test_that('T36',{
   # tests
   skip_if(is.null(vur))
 
-  testthat::expect_equal(NA, pharmaRTF::font_size(test_36$titles[[1]])) %>%
-    testthat::expect_equal(NA, pharmaRTF::font_size(test_36$titles[[2]])) %>%
-    testthat::expect_equal(NA, pharmaRTF::font_size(test_36$titles[[3]])) %>%
-    testthat::expect_equal(NA, pharmaRTF::font_size(test_36$footnotes[[1]])) %>%
-    testthat::expect_equal(NA, pharmaRTF::font_size(test_36$footnotes[[2]])) %>%
-    testthat::expect_equal(NA, pharmaRTF::font_size(test_36$footnotes[[3]]))
-  expect_true(vur[vur$ID == "T36C2", "Response"])
+  testthat::expect_true(all.equal(c(rep(NA,6)),
+    c(pharmaRTF::font_size(test_36$titles[[1]]),pharmaRTF::font_size(test_36$titles[[2]]),pharmaRTF::font_size(test_36$titles[[3]]),
+    pharmaRTF::font_size(test_36$footnotes[[1]]),pharmaRTF::font_size(test_36$footnotes[[2]]),pharmaRTF::font_size(test_36$footnotes[[3]]))),
+    label = "T36.1")
+  expect_true(vur[vur$ID == "T36.2", "Response"])
+
   rm(test_36)
 })
 
@@ -1382,13 +1404,14 @@ test_that('T37',{
       column1 = c("Header1", 1:26),
       column2 = c("Header2", letters[1:26])
     )
-    # verify font size attribute of titles/footnotes imported from a separate file using a reader is set to expected default:12
+
+    # titles/footnotes imported from a separate file using a reader
     test_37 <- pharmaRTF::rtf_doc(ht) %>% pharmaRTF::titles_and_footnotes_from_df(
       from.file='~/pharmaRTF/vignettes/Validation/Test_Case_Code/input/titles_footnotes.xlsx',
       reader=example_custom_reader,
       test_number='T37')
 
-    # output dataframe to check default bold
+    # output dataframe to check default font size
     save(test_37, file = "~/pharmaRTF/vignettes/Validation/Test_Case_Code/output/test_37.RData")
 
     # change some titles/footnotes font size and output rtf for manual review
@@ -1410,13 +1433,12 @@ test_that('T37',{
   # tests
   skip_if(is.null(vur))
 
-  testthat::expect_equal(NA, pharmaRTF::font_size(test_37$titles[[1]])) %>%
-    testthat::expect_equal(NA, pharmaRTF::font_size(test_37$titles[[2]])) %>%
-    testthat::expect_equal(NA, pharmaRTF::font_size(test_37$titles[[3]])) %>%
-    testthat::expect_equal(NA, pharmaRTF::font_size(test_37$footnotes[[1]])) %>%
-    testthat::expect_equal(NA, pharmaRTF::font_size(test_37$footnotes[[2]])) %>%
-    testthat::expect_equal(NA, pharmaRTF::font_size(test_37$footnotes[[3]]))
-  expect_true(vur[vur$ID == "T37C2", "Response"])
+  testthat::expect_true(all.equal(c(rep(NA,6)),
+    c(pharmaRTF::font_size(test_37$titles[[1]]),pharmaRTF::font_size(test_37$titles[[2]]),pharmaRTF::font_size(test_37$titles[[3]]),
+    pharmaRTF::font_size(test_37$footnotes[[1]]),pharmaRTF::font_size(test_37$footnotes[[2]]),pharmaRTF::font_size(test_37$footnotes[[3]]))),
+    label = "T37.1")
+  expect_true(vur[vur$ID == "T37.2", "Response"])
+
   rm(test_37)
 })
 
@@ -1428,7 +1450,7 @@ test_that('T38',{
       column2 = c("Header2", letters[1:26])
     )
 
-    # verify index attribute of titles/footnotes created in the RTF document creation is set to expected default:NA
+    # titles/footnotes created in the RTF document creation
     titles <- list(hf_line("rtf_doc Title 1"), hf_line("rtf_doc Title 2"), hf_line("rtf_doc Title 3"))
     footnotes <- list(hf_line("rtf_doc Footnote 1"), hf_line("rtf_doc Footnote 2"), hf_line("rtf_doc Footnote 3"))
 
@@ -1460,13 +1482,12 @@ test_that('T38',{
   # tests
   skip_if(is.null(vur))
 
-  testthat::expect_equal(NA, pharmaRTF::index(test_38$titles[[1]])) %>%
-    testthat::expect_equal(NA, pharmaRTF::index(test_38$titles[[2]])) %>%
-    testthat::expect_equal(NA, pharmaRTF::index(test_38$titles[[3]])) %>%
-    testthat::expect_equal(NA, pharmaRTF::index(test_38$footnotes[[1]])) %>%
-    testthat::expect_equal(NA, pharmaRTF::index(test_38$footnotes[[2]])) %>%
-    testthat::expect_equal(NA, pharmaRTF::index(test_38$footnotes[[3]]))
-  expect_true(vur[vur$ID == "T38C2", "Response"])
+  testthat::expect_true(all.equal(c(rep(NA,6)),
+    c(pharmaRTF::index(test_38$titles[[1]]),pharmaRTF::index(test_38$titles[[2]]),pharmaRTF::index(test_38$titles[[3]]),
+    pharmaRTF::index(test_38$footnotes[[1]]),pharmaRTF::index(test_38$footnotes[[2]]),pharmaRTF::index(test_38$footnotes[[3]]))),
+    label = "T38.1")
+  expect_true(vur[vur$ID == "T38.2", "Response"])
+
   rm(test_38)
 })
 
@@ -1478,7 +1499,7 @@ test_that('T39',{
       column2 = c("Header2", letters[1:26])
     )
 
-    # verify index attribute of titles/footnotes created using add_titles and add_footnotesis set to expected default:NA
+    # titles/footnotes created using add_titles and add_footnotes
     test_39 <- pharmaRTF::rtf_doc(ht)
     test_39 <- add_titles(test_39,
                           hf_line("add_titles Title 1"),
@@ -1513,13 +1534,12 @@ test_that('T39',{
   # tests
   skip_if(is.null(vur))
 
-  testthat::expect_equal(NA, pharmaRTF::index(test_39$titles[[1]])) %>%
-    testthat::expect_equal(NA, pharmaRTF::index(test_39$titles[[2]])) %>%
-    testthat::expect_equal(NA, pharmaRTF::index(test_39$titles[[3]])) %>%
-    testthat::expect_equal(NA, pharmaRTF::index(test_39$footnotes[[1]])) %>%
-    testthat::expect_equal(NA, pharmaRTF::index(test_39$footnotes[[2]])) %>%
-    testthat::expect_equal(NA, pharmaRTF::index(test_39$footnotes[[3]]))
-  expect_true(vur[vur$ID == "T39C2", "Response"])
+  testthat::expect_true(all.equal(c(rep(NA,6)),
+    c(pharmaRTF::index(test_39$titles[[1]]),pharmaRTF::index(test_39$titles[[2]]),pharmaRTF::index(test_39$titles[[3]]),
+    pharmaRTF::index(test_39$footnotes[[1]]),pharmaRTF::index(test_39$footnotes[[2]]),pharmaRTF::index(test_39$footnotes[[3]]))),
+    label = "T39.1")
+  expect_true(vur[vur$ID == "T39.2", "Response"])
+
   rm(test_39)
 })
 
@@ -1531,7 +1551,7 @@ test_that('T40',{
       column2 = c("Header2", letters[1:26])
     )
 
-    # verify index attribute of titles/footnotes imported from a separate file using a reader is set to expected default:NA
+    # titles/footnotes imported from a separate file using a reader
     test_40 <- pharmaRTF::rtf_doc(ht) %>% pharmaRTF::titles_and_footnotes_from_df(
       from.file='~/pharmaRTF/vignettes/Validation/Test_Case_Code/input/titles_footnotes.xlsx',
       reader=example_custom_reader,
@@ -1561,13 +1581,12 @@ test_that('T40',{
   # tests
   skip_if(is.null(vur))
 
-  testthat::expect_equal(NA, pharmaRTF::index(test_40$titles[[1]])) %>%
-    testthat::expect_equal(NA, pharmaRTF::index(test_40$titles[[2]])) %>%
-    testthat::expect_equal(NA, pharmaRTF::index(test_40$titles[[3]])) %>%
-    testthat::expect_equal(NA, pharmaRTF::index(test_40$footnotes[[1]])) %>%
-    testthat::expect_equal(NA, pharmaRTF::index(test_40$footnotes[[2]])) %>%
-    testthat::expect_equal(NA, pharmaRTF::index(test_40$footnotes[[3]]))
-  expect_true(vur[vur$ID == "T40C2", "Response"])
+  testthat::expect_true(all.equal(c(rep(NA,6)),
+    c(pharmaRTF::index(test_40$titles[[1]]),pharmaRTF::index(test_40$titles[[2]]),pharmaRTF::index(test_40$titles[[3]]),
+    pharmaRTF::index(test_40$footnotes[[1]]),pharmaRTF::index(test_40$footnotes[[2]]),pharmaRTF::index(test_40$footnotes[[3]]))),
+    label = "T40.1")
+  expect_true(vur[vur$ID == "T40.2", "Response"])
+
   rm(test_40)
 })
 
@@ -1606,12 +1625,12 @@ test_that('T41',{
 
   # tests
   skip_if(is.null(vur))
-  testthat::expect_equal(TRUE, view_test_41$bold[[1]]) %>%
-    testthat::expect_equal(TRUE, view_test_41$italic[[1]]) %>%
-    testthat::expect_equal("right", view_test_41$align[[1]]) %>%
-    testthat::expect_equal("Comic Sans", view_test_41$font[[1]]) %>%
-    testthat::expect_equal(13, view_test_41$font_size[[1]]) %>%
-    testthat::expect_equal(4, view_test_41$index[[1]])
+
+  testthat::expect_true(all.equal(c(TRUE, TRUE,"right","Comic Sans",13,4),
+    c(view_test_41$bold[[1]],view_test_41$italic[[1]],view_test_41$align[[1]],
+    view_test_41$font[[1]],view_test_41$font_size[[1]],view_test_41$index[[1]])),
+    label = "T41.1")
+
   rm(view_test_41)
  })
 
@@ -1650,12 +1669,12 @@ test_that('T42',{
 
   # tests
   skip_if(is.null(vur))
-  testthat::expect_equal(TRUE, view_test_42$bold[[1]]) %>%
-    testthat::expect_equal(TRUE, view_test_42$italic[[1]]) %>%
-    testthat::expect_equal("right", view_test_42$align[[1]]) %>%
-    testthat::expect_equal("Comic Sans", view_test_42$font[[1]]) %>%
-    testthat::expect_equal(13, view_test_42$font_size[[1]]) %>%
-    testthat::expect_equal(4, view_test_42$index[[1]])
+
+  testthat::expect_true(all.equal(c(TRUE, TRUE,"right","Comic Sans",13,4),
+    c(view_test_42$bold[[1]],view_test_42$italic[[1]],view_test_42$align[[1]],
+    view_test_42$font[[1]],view_test_42$font_size[[1]],view_test_42$index[[1]])),
+    label = "T42.1")
+
   rm(view_test_42)
 })
 
@@ -1693,12 +1712,12 @@ test_that('T43',{
 
   # tests
   skip_if(is.null(vur))
-  testthat::expect_equal(TRUE, view_test_43$bold[[1]]) %>%
-    testthat::expect_equal(TRUE, view_test_43$italic[[1]]) %>%
-    testthat::expect_equal("right", view_test_43$align[[1]]) %>%
-    testthat::expect_equal("Comic Sans", view_test_43$font[[1]]) %>%
-    testthat::expect_equal(13, view_test_43$font_size[[1]]) %>%
-    testthat::expect_equal(4, view_test_43$index[[1]])
+
+  testthat::expect_true(all.equal(c(TRUE, TRUE,"right","Comic Sans",13,4),
+    c(view_test_43$bold[[1]],view_test_43$italic[[1]],view_test_43$align[[1]],
+    view_test_43$font[[1]],view_test_43$font_size[[1]],view_test_43$index[[1]])),
+    label = "T43.1")
+
   rm(view_test_43)
 })
 
@@ -1736,12 +1755,12 @@ test_that('T44',{
 
   # tests
   skip_if(is.null(vur))
-  testthat::expect_equal(TRUE, view_test_44$bold[[1]]) %>%
-    testthat::expect_equal(TRUE, view_test_44$italic[[1]]) %>%
-    testthat::expect_equal("right", view_test_44$align[[1]]) %>%
-    testthat::expect_equal("Comic Sans", view_test_44$font[[1]]) %>%
-    testthat::expect_equal(13, view_test_44$font_size[[1]]) %>%
-    testthat::expect_equal(4, view_test_44$index[[1]])
+
+  testthat::expect_true(all.equal(c(TRUE, TRUE,"right","Comic Sans",13,4),
+    c(view_test_44$bold[[1]],view_test_44$italic[[1]],view_test_44$align[[1]],
+    view_test_44$font[[1]],view_test_44$font_size[[1]],view_test_44$index[[1]])),
+    label = "T44.1")
+
   rm(view_test_44)
 })
 
@@ -1781,12 +1800,12 @@ test_that('T45',{
 
   # tests
   skip_if(is.null(vur))
-  testthat::expect_equal(TRUE, view_test_45$bold[[1]]) %>%
-    testthat::expect_equal(TRUE, view_test_45$italic[[1]]) %>%
-    testthat::expect_equal("right", view_test_45$align[[1]]) %>%
-    testthat::expect_equal("Comic Sans", view_test_45$font[[1]]) %>%
-    testthat::expect_equal(13, view_test_45$font_size[[1]]) %>%
-    testthat::expect_equal(4, view_test_45$index[[1]])
+
+  testthat::expect_true(all.equal(c(TRUE, TRUE,"right","Comic Sans",13,4),
+    c(view_test_45$bold[[1]],view_test_45$italic[[1]],view_test_45$align[[1]],
+    view_test_45$font[[1]],view_test_45$font_size[[1]],view_test_45$index[[1]])),
+    label = "T45.1")
+
   rm(view_test_45)
 })
 
@@ -1798,7 +1817,6 @@ test_that('T46',{
       column2 = c("Header2", letters[1:26])
     )
 
-    # create footnote using add_footnotes then change footnote attributes
     # create footnote by importing from a separate file using a reader then change footnote attributes
     test_46 <- pharmaRTF::rtf_doc(ht) %>% pharmaRTF::titles_and_footnotes_from_df(
       from.file='~/pharmaRTF/vignettes/Validation/Test_Case_Code/input/titles_footnotes.xlsx',
@@ -1827,12 +1845,12 @@ test_that('T46',{
 
   # tests
   skip_if(is.null(vur))
-  testthat::expect_equal(TRUE, view_test_46$bold[[1]]) %>%
-    testthat::expect_equal(TRUE, view_test_46$italic[[1]]) %>%
-    testthat::expect_equal("right", view_test_46$align[[1]]) %>%
-    testthat::expect_equal("Comic Sans", view_test_46$font[[1]]) %>%
-    testthat::expect_equal(13, view_test_46$font_size[[1]]) %>%
-    testthat::expect_equal(4, view_test_46$index[[1]])
+
+  testthat::expect_true(all.equal(c(TRUE, TRUE,"right","Comic Sans",13,4),
+    c(view_test_46$bold[[1]],view_test_46$italic[[1]],view_test_46$align[[1]],
+    view_test_46$font[[1]],view_test_46$font_size[[1]],view_test_46$index[[1]])),
+    label = "T46.1")
+
   rm(view_test_46)
 })
 
@@ -1840,8 +1858,8 @@ test_that('T47',{
   # output creation
   if(is.null(vur)) {
     ht <- huxtable::huxtable(
-      column1 = c("Header1", 1:26),
-      column2 = c("Header2", letters[1:26])
+      column1 = c("Header1", 1:13),
+      column2 = c("Header2", letters[1:13])
     )
     huxtable::bold(ht)[, 1] <- TRUE
     test_47 <- pharmaRTF::rtf_doc(ht)
@@ -1855,15 +1873,16 @@ test_that('T47',{
 
   # tests
   skip_if(is.null(vur))
-  expect_true(vur[vur$ID == "T47C1", "Response"])
+
+  expect_true(vur[vur$ID == "T47.1", "Response"])
 })
 
 test_that('T48',{
   # output creation
   if(is.null(vur)) {
     ht <- huxtable::huxtable(
-      column1 = c("Header1", 1:26),
-      column2 = c("Header2", letters[1:26])
+      column1 = c("Header1", 1:13),
+      column2 = c("Header2", letters[1:13])
     )
     huxtable::italic(ht)[, 1] <- TRUE
     test_48 <- pharmaRTF::rtf_doc(ht)
@@ -1877,15 +1896,16 @@ test_that('T48',{
 
   # tests
   skip_if(is.null(vur))
-  expect_true(vur[vur$ID == "T48C1", "Response"])
+
+  expect_true(vur[vur$ID == "T48.1", "Response"])
 })
 
 test_that('T49',{
   # output creation
   if(is.null(vur)) {
     ht <- huxtable::huxtable(
-      column1 = c("Header1", 1:26),
-      column2 = c("Header2", letters[1:26])
+      column1 = c("Header1", 1:13),
+      column2 = c("Header2", letters[1:13])
     )
     huxtable::align(ht)[, 1] <- "right"
     test_49 <- pharmaRTF::rtf_doc(ht)
@@ -1899,82 +1919,122 @@ test_that('T49',{
 
   # tests
   skip_if(is.null(vur))
-  expect_true(vur[vur$ID == "T49C1", "Response"])
+
+  expect_true(vur[vur$ID == "T49.1", "Response"])
 })
 
 test_that('T50',{
   # output creation
   if(is.null(vur)) {
-    ht <- huxtable::huxtable(
-      column1 = c("Header1", 1:26),
-      column2 = c("Header2", letters[1:26])
+    ht_test_50 <- huxtable::huxtable(
+      column1 = c("Header1", 1:13),
+      column2 = c("Header2", letters[1:13])
     )
-    huxtable::valign(ht)[, 1] <- "bottom"
-    test_50 <- pharmaRTF::rtf_doc(ht)
+    huxtable::row_height(ht_test_50) <- c(.08,.08,.08,.08,.08,.08,.08,.08,.08,.08,.08,.08,.08,.16)
+    huxtable::valign(ht_test_50)[, 1] <- "bottom"
 
-        # output rtf for manual review
+    test_50 <- pharmaRTF::rtf_doc(ht_test_50)
+
+    # output huxtable table to check table row height
+    save(ht_test_50, file = "~/pharmaRTF/vignettes/Validation/Test_Case_Code/output/ht_test_50.RData")
+
+    # output rtf for manual review
     pharmaRTF::write_rtf(test_50, file='~/pharmaRTF/vignettes/Validation/Test_Case_Code/output/test_50.rtf')
 
-    rm(ht)
+    rm(ht_test_50)
     rm(test_50)
+  }
+
+  # load output for tests
+  } else {
+    load("~/pharmaRTF/vignettes/Validation/Test_Case_Code/output/ht_test_50.RData")
   }
 
   # tests
   skip_if(is.null(vur))
-  expect_true(vur[vur$ID == "T50C1", "Response"])
-  expect_true(vur[vur$ID == "T50C2", "Response"])
+
+  testthat::expect_true(all.equal(c("1"=.08,"2"=.08,"3"=.08,"4"=.08,"5"=.08,"6"=.08,"7"=.08,"8"=.08,"9"=.08,"10"=.08,
+    "11"=.08,"12"=.08,"13"=.08,"14"=0.16),huxtable::row_height(ht_test_50)),label = "T50.1")
+  expect_true(vur[vur$ID == "T50.2", "Response"])
+  expect_true(vur[vur$ID == "T50.3", "Response"])
+
+  rm(ht_test_50)
 })
 
 test_that('T51',{
   # output creation
   if(is.null(vur)) {
-    ht <- huxtable::huxtable(
-      column1 = c("Header1", 1:26),
-      column2 = c("Header2", letters[1:26])
+    ht_test_51 <- huxtable::huxtable(
+      column1 = c("Header1", 1:13),
+      column2 = c("Header2", letters[1:13])
     )
-    huxtable::width(ht) <- 1.5
-    test_51 <- pharmaRTF::rtf_doc(ht)
+    huxtable::width(ht_test_51) <- 1.5
+    test_51 <- pharmaRTF::rtf_doc(ht_test_51)
+
+    # output huxtable table to check table width
+    save(ht_test_51, file = "~/pharmaRTF/vignettes/Validation/Test_Case_Code/output/ht_test_51.RData")
 
     # output rtf for manual review
     pharmaRTF::write_rtf(test_51, file='~/pharmaRTF/vignettes/Validation/Test_Case_Code/output/test_51.rtf')
 
-    rm(ht)
+    rm(ht_test_51)
     rm(test_51)
+  }
+
+  # load output for tests
+  } else {
+    load("~/pharmaRTF/vignettes/Validation/Test_Case_Code/output/ht_test_51.RData")
   }
 
   # tests
   skip_if(is.null(vur))
-  expect_true(vur[vur$ID == "T51C1", "Response"])
+
+  testthat::expect_equal(1.5,huxtable::width(ht_test_51), label = "T51.1")
+  expect_true(vur[vur$ID == "T51.2", "Response"])
+
+  rm(ht_test_51)
 })
 
 test_that('T52',{
   # output creation
   if(is.null(vur)) {
-    ht <- huxtable::huxtable(
-      column1 = c("Header1", 1:26),
-      column2 = c("Header2", letters[1:26])
+    ht_test_52 <- huxtable::huxtable(
+      column1 = c("Header1", 1:13),
+      column2 = c("Header2", letters[1:13])
     )
-    huxtable::col_width(ht) <- c(.3, .8)
-    test_52 <- pharmaRTF::rtf_doc(ht)
+    huxtable::col_width(ht_test_52) <- c(.4, .8)
+    test_52 <- pharmaRTF::rtf_doc(ht_test_52)
+
+    # output huxtable table to check column width
+    save(ht_test_52, file = "~/pharmaRTF/vignettes/Validation/Test_Case_Code/output/ht_test_52.RData")
 
     # output rtf for manual review
     pharmaRTF::write_rtf(test_52, file='~/pharmaRTF/vignettes/Validation/Test_Case_Code/output/test_52.rtf')
 
-    rm(ht)
+    rm(ht_test_52)
     rm(test_52)
+  }
+
+  # load output for tests
+  } else {
+    load("~/pharmaRTF/vignettes/Validation/Test_Case_Code/output/ht_test_52.RData")
   }
 
   # tests
   skip_if(is.null(vur))
-  expect_true(vur[vur$ID == "T52C1", "Response"])
+
+  testthat::expect_true(all.equal(c(column1 = 0.4, column2 = 0.8),huxtable::col_width(ht_test_52)),label = "T52.1")
+  expect_true(vur[vur$ID == "T52.2", "Response"])
+
+  rm(ht_test_52)
 })
 
 test_that('T53',{
   # output creation
   if(is.null(vur)) {
     ht <- huxtable::huxtable(
-      column1 = c("Header1", 1:26),
-      column2 = c("Header2", letters[1:26])
+      column1 = c("Header1", 1:13),
+      column2 = c("Header2", letters[1:13])
     )
     ht <- huxtable::merge_cells(ht, 2, 1:2)
     test_53 <- pharmaRTF::rtf_doc(ht)
@@ -1988,7 +2048,8 @@ test_that('T53',{
 
   # tests
   skip_if(is.null(vur))
-  expect_true(vur[vur$ID == "T53C1", "Response"])
+
+  expect_true(vur[vur$ID == "T53.1", "Response"])
 })
 
 rm(vur)
