@@ -58,9 +58,11 @@
 #'   reader can display the selected font. Fonts for all fields will default to
 #'   the default font of the \code{rtf_doc} object, which unless otherwise
 #'   assigned, is Courier New.
-#' @param font_size Font size in points. Defaults to a 12 point font.
+#' @param font_size Font size in points. Font sizes for all fields will default to
+#'   the default font size of the \code{rtf_doc} object, which unless otherwise
+#'   assigned, is 12
 #' @param index Position to display header or footnote lines in the RTF
-#'   document. Orders in ascending order with NULLs last.
+#'   document. Orders in ascending order with NAs last.
 #'
 #' @return An object of class \code{hf_line} with the properties described in
 #'   the Arguments section.
