@@ -1,3 +1,5 @@
+context("Atorus Validation")
+
 #' @title Test Cases Code
 #' @section Updated By:
 #' Ashley Tarasiewicz
