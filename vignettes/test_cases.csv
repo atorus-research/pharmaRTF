@@ -1,9 +1,9 @@
-LineType,Level,Specs Tested,TestID,CheckID,Text,CheckType,OutputFile
+﻿LineType,Level,Specs Tested,TestID,CheckID,Text,CheckType,OutputFile
 Title,0,,,,Test Cases,,
 UpdatedBy,0,,,,Ashley Tarasiewicz,,
 UpdatedDate,0,,,,4/22/2020,,
 Setup,1,,,,_No prerequisites required_,,
-TestCases,2,A:B,T1,,Output an RTF using a dataframe requiring one page of output and verify output and paging are appropiate,,
+Test,2,A:B,T1,,Output an RTF using a dataframe requiring one page of output and verify output and paging are appropiate,,
 TestCases,3,,T1,1,Verify document outputs as an RTF and opens in Word,visual,test_1.rtf
 TestCases,3,,T1,2,"Verify output has column headers ""Header1"", ""Header2"" above the table, a title ""Title"" at the top, and a footnote ""Footnote"" at the bottom",visual,test_1.rtf
 TestCases,2,A:B,T2,,Output an RTF using a dataframe requiring multiple pages of output and verify output and paging are appropiate,,
@@ -134,7 +134,7 @@ TestCases,3,,T49,1,"Verify output has right aligned text in the ""Header1"" colu
 TestCases,2,AB:AE,T50,,Output an RTF using huxtable table row height and vertical alignment table level properties and verify output,,
 TestCases,3,,T50,1,Verify huxtable table row heights are: .08 (rows 1-13) and .16 (row 14),visual,ht_test_50.rtf
 TestCases,3,,T50,2,"Verify output has the row containing the text ""13"" roughly twice the height of the other rows",visual,test_50.rtf
-TestCases,3,,T50,3,"Verify output has bottom aligned text in the ""Header1"" column",visual,test_50.rtf
+TestCases,4,,T50,3,"Verify output has bottom aligned text in the ""Header1"" column",visual,test_50.rtf
 TestCases,2,AC,T51,,Output an RTF using huxtable table width table level property and verify output,,
 TestCases,3,,T51,1,Verify huxtable table width is 1.5,programmatic,ht_test_51.Rdata
 TestCases,3,,T51,2,Verify output has a table width roughly expanding the document,visual,test_51.rtf
