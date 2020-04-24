@@ -1,5 +1,3 @@
-context('RStudio Conf 2020 Success')
-
 #' @title Test Cases Code
 #' @section Updated By:
 #' Ashley Tarasiewicz
@@ -1321,7 +1319,7 @@ test_that('T35',{
     pharmaRTF::font_size(test_35$titles[[2]]) <- 14
     pharmaRTF::font_size(test_35$titles[[3]]) <- 10
 
-    pharmaRTF::font_size(test_35$footnotes[[1]]) <- 20
+    pharmaRTF::font_size(test_35$footnotes[[1]]) <- 30
 
     pharmaRTF::write_rtf(test_35, file='~/pharmaRTF/vignettes/Validation/Test_Case_Code/output/test_35.rtf')
 
@@ -1373,7 +1371,7 @@ test_that('T36',{
     pharmaRTF::font_size(test_36$titles[[2]]) <- 14
     pharmaRTF::font_size(test_36$titles[[3]]) <- 10
 
-    pharmaRTF::font_size(test_36$footnotes[[1]]) <- 20
+    pharmaRTF::font_size(test_36$footnotes[[1]]) <- 30
 
     pharmaRTF::write_rtf(test_36, file='~/pharmaRTF/vignettes/Validation/Test_Case_Code/output/test_36.rtf')
 
@@ -1418,7 +1416,7 @@ test_that('T37',{
     pharmaRTF::font_size(test_37$titles[[2]]) <- 14
     pharmaRTF::font_size(test_37$titles[[3]]) <- 10
 
-    pharmaRTF::font_size(test_37$footnotes[[1]]) <- 20
+    pharmaRTF::font_size(test_37$footnotes[[1]]) <- 30
 
     pharmaRTF::write_rtf(test_37, file='~/pharmaRTF/vignettes/Validation/Test_Case_Code/output/test_37.rtf')
 
