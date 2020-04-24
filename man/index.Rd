@@ -25,8 +25,9 @@ For \code{index()}, the index attribute of the supplied
   modified object.
 }
 \description{
-These property functions modify or return the index of a \code{hf_line} object. The
-index sets the order in which a title will appear.
+These property functions modify or return the index of a \code{hf_line}
+object. The index sets the order in which a title will appear. Indicies
+can be any numeric value as long as they are not duplicated.
 }
 \examples{
 library(huxtable)

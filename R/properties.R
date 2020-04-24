@@ -474,8 +474,9 @@ set_text <- function(x, value) UseMethod('text<-')
 ## Index (getters) ----
 #' Return or set index
 #'
-#' These property functions modify or return the index of a \code{hf_line} object. The
-#' index sets the order in which a title will appear.
+#' These property functions modify or return the index of a \code{hf_line}
+#' object. The index sets the order in which a title will appear. Indicies
+#' can be any numeric value as long as they are not duplicated.
 #'
 #' @param x A \code{hf_line} object
 #' @param ... Additonal arguments passed to method dispatch
