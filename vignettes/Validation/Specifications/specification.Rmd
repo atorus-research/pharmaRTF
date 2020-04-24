@@ -2,11 +2,8 @@
 #' Ashley Tarasiewicz
 #' @section Last Update Date:
 #' 4/24/2020
-
-+ _Specification_
-
 + A: The RTF written out to a file can be opened in Microsoft Word
-+ B: Paging of the table works appropriately
++ B: Paging of the table works appropriately 
 + C: Changes to document level margins are reflected in the output document
 + D: Changes to document level header and footer height are reflected in the output document
 + E: Changes to document level page size are reflected in the output document

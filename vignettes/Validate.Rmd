@@ -167,7 +167,7 @@ eval_test_code(file.path(test_code_dir, "test_cases.R"))
 ```
 
 ***
-# System information
+# System Information
 ```{r sys_info}
 sessionInfo()
 ```
