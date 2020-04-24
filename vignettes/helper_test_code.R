@@ -239,7 +239,7 @@ make_test_case_rmd <- function(file) {
   # Create the file text vector - need to write 'Test Cases' inbetween the headers lines and the rest of the text
   outfile <- c(
     dat[!(dat$LineType %in% c("TestCases", "Setup")), ][['out']],
-    c('', '+ _Test Cases_', ''),
+    c('', 'This section contains details of each test executed. Checks verifying each test are included as sub-bullets of their associated test.', ''),
     dat[dat$LineType %in% c("TestCases", "Setup"), ][['out']]
   )
 
@@ -278,7 +278,6 @@ make_specification_rmd <- function(file) {
   # Create the file text vector - need to write 'Test Cases' inbetween the headers lines and the rest of the text
   outfile <- c(
     dat[dat$LineType != 'Specs', ][['out']],
-    c('', '+ _Specification_', ''),
     dat[dat$LineType == 'Specs', ][['out']]
   )
 
