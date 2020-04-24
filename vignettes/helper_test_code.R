@@ -91,7 +91,7 @@ eval_test_code <- function(one_file) {
   kable(
     out,
     escape = TRUE,
-    col.names = c("Test", "Results", "Pass/Fail"),
+    col.names = c("Check", "Results", "Pass/Fail"),
     format = "latex",
     longtable = TRUE) %>%
     kable_styling(latex_options = c("repeat_header"))
@@ -132,7 +132,7 @@ scrape_test_code_block <- function(one_file){
       roxy_block <- gsub(pattern = "#' ", replacement = "",
                          out_cleaned[grep(pattern = "#' ", out_cleaned)])
       if(length(roxy_block) == 0) return(data.frame())
-      return(data.frame(title = "Test Cases",
+      return(data.frame(title = str_replace(basename(one_file), "_", "\\\\_"),
                         last_update_by = get_section_contents("Updated By", roxy_block),
                         last_updated_date = lubridate::parse_date_time(get_section_contents("Updated Date", roxy_block), orders = c("ymd", "mdy")),
                         stringsAsFactors = FALSE))
