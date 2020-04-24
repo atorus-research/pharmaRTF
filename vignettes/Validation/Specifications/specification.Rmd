@@ -38,4 +38,3 @@
   + AD: Updates to huxtable table column width table level property is properly formatted in the resulting RTF
   + AE: Updates to huxtable table row height table level property is properly formatted in the resulting RTF
   + AF: Updates to huxtable table cell merging table level property is properly formatted in the resulting RTF
-  + AG: Date points in table match resulting RTF presentation
