@@ -33,8 +33,8 @@
 #'   \href{https://www.r-bloggers.com/date-formats-in-r/}{here}.}
 #' \item{FILE_PATH: - Describes the file path the R session was executed from.
 #' The location of the executing file will be populated over the token
-#' replacement string  ‘%s’. Formats can be specified like “FILE_PATH: Executed
-#' from: %s” or simply “FILE_PATH: %s”. Note that the location of the executing
+#' replacement string "\%s". Formats can be specified like "FILE_PATH: Executed
+#' from: \%s" or simply "FILE_PATH: \%s". Note that the location of the executing
 #' file in R may not be intuitive. There are multiple ways to determine the
 #' containing R file based on how it was executed.
 #'   \itemize{
@@ -49,7 +49,7 @@
 #'
 #' @param ... A character list/vector. If \code{length(...)} is 2 and
 #'     \code{align} is not 'split', values are pasted together.
-#' @param align ext alignment in document. Options are 'center', 'left',
+#' @param align Text alignment in document. Options are 'center', 'left',
 #'   'right', and 'split'. A 'split' alignment will left align the string in
 #'    the first text item and right align the second. Defaults to center.
 #' @param bold \code{TRUE} or  \code{FALSE}. Defaults to FALSE.
@@ -58,9 +58,11 @@
 #'   reader can display the selected font. Fonts for all fields will default to
 #'   the default font of the \code{rtf_doc} object, which unless otherwise
 #'   assigned, is Courier New.
-#' @param font_size Font size in points. Defaults to a 12 point font.
+#' @param font_size Font size in points. Font sizes for all fields will default to
+#'   the default font size of the \code{rtf_doc} object, which unless otherwise
+#'   assigned, is 12
 #' @param index Position to display header or footnote lines in the RTF
-#'   document. Orders in ascending order with NULLs last.
+#'   document. Orders in ascending order with NAs last. Defaults to NA.
 #'
 #' @return An object of class \code{hf_line} with the properties described in
 #'   the Arguments section.
@@ -257,7 +259,7 @@ add_titles <- function(doc, ..., replace=FALSE) {
 #'   will be attached
 #' @param ... A vector of \code{hf_line} objects to add passed to
 #'   \code{add_hf()}
-#' @param replace If FALSE, lines will be appened/ordered with current
+#' @param replace If FALSE, lines will be appended/ordered with current
 #'   header/footer lines. If TRUE, lines will replace the existing content.
 #'
 #' @export

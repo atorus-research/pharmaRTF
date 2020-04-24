@@ -73,13 +73,28 @@ eval_test_code <- function(one_file) {
       }
     ))})
 
+  # if(file.exists("~/pharmaRTF/vignettes/Validation/vur_auto.Rds")) {
+  #   vur <- readRDS("~/pharmaRTF/vignettes/Validation/vur_auto.Rds")
+  #   out$Log <- NA
+  #   print(out)
+  #   print(vur)
+  #   for(i in seq(nrow(out))){
+  #     test_i <- out[i, "Test"]
+  #     if(any(vur$ID %in% test_i)) {
+  #       out[which(vur$ID %in% test_i), "Log"] <- vur[vur$ID %in% test_i, "Log"]
+  #     }
+  #   }
+  # }
+
   # formatting
   rownames(out) <- NULL
   kable(
     out,
-    escape = FALSE,
-    col.names = c("Test", "Results", "Pass/Fail")) %>%
-    kableExtra::kable_styling()
+    escape = TRUE,
+    col.names = c("Check", "Results", "Pass/Fail"),
+    format = "latex",
+    longtable = TRUE) %>%
+    kable_styling(latex_options = c("repeat_header"))
 }
 
 #' @title Generate at data.frame from the test code roxygen documentation blocks.
@@ -116,11 +131,10 @@ scrape_test_code_block <- function(one_file){
     } else {
       roxy_block <- gsub(pattern = "#' ", replacement = "",
                          out_cleaned[grep(pattern = "#' ", out_cleaned)])
-      title_line <-  strsplit(split = '\\"|\\\'',
-                              out_cleaned[grepl(pattern = "test_that", x = out_cleaned)])[[1]][2]
-      return(data.frame(title = title_line,
-                        last_update_by = get_section_contents("Last updated by", roxy_block),
-                        last_updated_date = lubridate::parse_date_time(get_section_contents("last update date", roxy_block), orders = c("ymd", "mdy")),
+      if(length(roxy_block) == 0) return(data.frame())
+      return(data.frame(title = str_replace(basename(one_file), "_", "\\\\_"),
+                        last_update_by = get_section_contents("Updated By", roxy_block),
+                        last_updated_date = lubridate::parse_date_time(get_section_contents("Updated Date", roxy_block), orders = c("ymd", "mdy")),
                         stringsAsFactors = FALSE))
     }
   }))
