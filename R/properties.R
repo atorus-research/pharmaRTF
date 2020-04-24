@@ -475,9 +475,7 @@ set_text <- function(x, value) UseMethod('text<-')
 #' Return or set index
 #'
 #' These property functions modify or return the index of a \code{hf_line} object. The
-#' index sets the order in which a title will appear. The default index value in
-#' NULL, and NULL values will sort behind any populated index Indices can be any
-#' numeric value as long as they are not duplicated.
+#' index sets the order in which a title will appear.
 #'
 #' @param x A \code{hf_line} object
 #' @param ... Additonal arguments passed to method dispatch
@@ -622,8 +620,8 @@ set_margins <- function(x, value) UseMethod('margins<-')
 ## Orientation (getters) ----
 #' Return or set orientation
 #'
-#' These property functions modify or return the orientation attribute. Options are
-#' landscape or portrait.
+#' These property functions modify or return the orientation attribute of a
+#' \code{rtf_doc} object. Options are landscape or portrait.
 #'
 #' @param x A \code{rtf_doc} object
 #' @param ... Additonal arguments passed to method dispatch

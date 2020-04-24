@@ -25,8 +25,8 @@ For \code{orientation()}, the orientation attribute of the supplied
   \code{set_orientation()} the modified object.
 }
 \description{
-These property functions modify or return the orientation attribute. Options are
-landscape or portrait.
+These property functions modify or return the orientation attribute of a
+\code{rtf_doc} object. Options are landscape or portrait.
 }
 \examples{
 library(huxtable)
