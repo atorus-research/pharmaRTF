@@ -99,6 +99,9 @@ comb2 <- comb %>%
   summarise(N = n()) %>%
   arrange(LBTEST, BLTRFL, LBTRFL, TRTP)
 
+comb2_test <- comb2 %>%
+  filter(LBTEST == "BILIRUBIN")
+
 pvalues <- c()
 for(i in seq(nrow(comb2)/12)) {
   arr <- array(
@@ -109,7 +112,7 @@ for(i in seq(nrow(comb2)/12)) {
   if(all(arr[,,2] == 0)) {
     pvalues[i] <- ""
   } else {
-    pvalues[i] <- num_fmt(pvalue(cmh_test(as.table(arr))), int_len = 1, digits = 3, size = 5)
+    pvalues[i] <- num_fmt(as.numeric(pvalue(cmh_test(as.table(arr)))), int_len = 1, digits = 3, size = 5)
   }
 
 }
@@ -145,7 +148,21 @@ comb5$LBTRFL <- as.character(recode(comb5$LBTRFL,
                                     "H" = "High"))
 
 comb5[unlist(comb5[,2] == "n")[,1], 9] <- pvalues
-comb5 <- pad_row(comb5, which(comb5[,2] == "n"))
+comb5 <- pad_row(comb5, which(comb5[,2] == "n")) %>%
+  ungroup() %>%
+  add_row("LBTEST" = NA, .before = 1) %>%
+  add_row("LBTEST" = NA, .before = 1)
+comb5 <- comb5 %>%
+  add_row("LBTEST" = NA, .before = 65) %>%
+  add_row("LBTEST" = NA, .before = 65)
+
+comb5[,1] <- as.character(comb5$LBTEST)
+comb5[2,1] <- "CHEMISTRY"
+comb5[3,1] <- "----------"
+comb5[66,1] <- "HEMATOLOGY"
+comb5[67,1] <- "----------"
+
+comb5[!(unlist(comb5[,2]) %in% "n") , 1] <- NA
 
 names(comb5) <- c(
   "",
@@ -156,7 +173,7 @@ names(comb5) <- c(
   "High at Baseline",
   "Normal at Baseline",
   "High at Baseline",
-  "p-value\\line[2]"
+  "p-\\line value\\line[2]"
 )
 
 comb5 <- comb5[!apply(comb5, 1, function(x) {
@@ -190,13 +207,14 @@ ht2 <- ht %>%
   huxtable::set_bottom_border(2, 5:6, 1) %>%
   huxtable::set_bottom_border(2, 7:8, 1) %>%
   huxtable::set_bottom_border(3, 1:9, 1) %>%
-  huxtable::set_width(1.4) %>%
+  huxtable::set_width(1.5) %>%
   huxtable::set_escape_contents(FALSE) %>%
   huxtable::set_bold(1:3, 1:9, TRUE) %>%
   huxtable::set_valign(1:3, 1:9, "bottom") %>%
   huxtable::set_align(3, 1:9, "center") %>%
   huxtable::set_align(1, 1:9, "center") %>%
-  huxtable::set_col_width(1:9, c(0.2, rep(0.1, 8)))
+  huxtable::set_align(4:102, 9, "right") %>%
+  huxtable::set_col_width(1:9, c(0.25, rep(0.09, 7), 0.06))
 
 
 # Write into doc object and pull titles/footnotes from excel file
