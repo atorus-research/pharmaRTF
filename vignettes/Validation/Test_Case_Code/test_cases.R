@@ -1,6 +1,10 @@
 context('RStudio Conf 2020 Success')
 
-
+#' @title Test Cases Code
+#' @section Updated By:
+#' Ashley Tarasiewicz
+#' @section Updated Date:
+#' 4/23/2020
 
 library(pharmaRTF)
 library(huxtable)
@@ -26,11 +30,6 @@ example_custom_reader <- function(test_number=NULL, ...) {
 vur <- NULL
 if(file.exists("~/pharmaRTF/vignettes/Validation/vur_auto.Rds")) vur <- readRDS("~/pharmaRTF/vignettes/Validation/vur_auto.Rds")
 
-#' @title Test Cases Code
-#' @section Updated By:
-#' Ashley Tarasiewicz
-#' @section Updated Date:
-#' 4/23/2020
 test_that('T1',{
 
   # output creation
@@ -57,11 +56,6 @@ test_that('T1',{
   expect_true(vur[vur$ID == "T1.2", "Response"])
 })
 
-#' @title Test Cases Code
-#' @section Updated By:
-#' Ashley Tarasiewicz
-#' @section Updated Date:
-#' 4/23/2020
 test_that('T2',{
 
   # output creation
@@ -88,11 +82,6 @@ test_that('T2',{
   expect_true(vur[vur$ID == "T2.3", "Response"])
 })
 
-#' @title Test Cases Code
-#' @section Updated By:
-#' Ashley Tarasiewicz
-#' @section Updated Date:
-#' 4/23/2020
 test_that('T3',{
   # output creation
   if(is.null(vur)) {
@@ -127,11 +116,6 @@ test_that('T3',{
   rm(test_3)
 })
 
-#' @title Test Cases Code
-#' @section Updated By:
-#' Ashley Tarasiewicz
-#' @section Updated Date:
-#' 4/23/2020
 test_that('T4',{
   # output creation
   if(is.null(vur)) {
@@ -168,11 +152,6 @@ test_that('T4',{
   rm(test_4)
 })
 
-#' @title Test Cases Code
-#' @section Updated By:
-#' Ashley Tarasiewicz
-#' @section Updated Date:
-#' 4/23/2020
 test_that('T5',{
   # output creation
   if(is.null(vur)) {
@@ -206,11 +185,6 @@ test_that('T5',{
   rm(test_5)
 })
 
-#' @title Test Cases Code
-#' @section Updated By:
-#' Ashley Tarasiewicz
-#' @section Updated Date:
-#' 4/23/2020
 test_that('T6',{
   # output creation
   if(is.null(vur)) {
@@ -244,11 +218,6 @@ test_that('T6',{
   rm(test_6)
 })
 
-#' @title Test Cases Code
-#' @section Updated By:
-#' Ashley Tarasiewicz
-#' @section Updated Date:
-#' 4/23/2020
 test_that('T7',{
   # output creation
   if(is.null(vur)) {
@@ -282,11 +251,6 @@ test_that('T7',{
   rm(test_7)
 })
 
-#' @title Test Cases Code
-#' @section Updated By:
-#' Ashley Tarasiewicz
-#' @section Updated Date:
-#' 4/23/2020
 test_that('T8',{
   # output creation
   if(is.null(vur)) {
@@ -320,11 +284,6 @@ test_that('T8',{
   rm(test_8)
 })
 
-#' @title Test Cases Code
-#' @section Updated By:
-#' Ashley Tarasiewicz
-#' @section Updated Date:
-#' 4/23/2020
 test_that('T9',{
   # output creation
   if(is.null(vur)) {
@@ -358,11 +317,6 @@ test_that('T9',{
   rm(test_9)
 })
 
-#' @title Test Cases Code
-#' @section Updated By:
-#' Ashley Tarasiewicz
-#' @section Updated Date:
-#' 4/23/2020
 test_that('T10',{
   # output creation
   if(is.null(vur)) {
@@ -396,11 +350,6 @@ test_that('T10',{
   rm(test_10)
 })
 
-#' @title Test Cases Code
-#' @section Updated By:
-#' Ashley Tarasiewicz
-#' @section Updated Date:
-#' 4/23/2020
 test_that('T11',{
   # output creation
   if(is.null(vur)) {
@@ -434,11 +383,6 @@ test_that('T11',{
   rm(test_11)
 })
 
-#' @title Test Cases Code
-#' @section Updated By:
-#' Ashley Tarasiewicz
-#' @section Updated Date:
-#' 4/23/2020
 test_that('T12',{
   # output creation
   if(is.null(vur)) {
@@ -467,11 +411,6 @@ test_that('T12',{
   expect_true(vur[vur$ID == "T12.1", "Response"])
 })
 
-#' @title Test Cases Code
-#' @section Updated By:
-#' Ashley Tarasiewicz
-#' @section Updated Date:
-#' 4/23/2020
 test_that('T13',{
   # output creation
   if(is.null(vur)) {
@@ -500,11 +439,6 @@ test_that('T13',{
   expect_true(vur[vur$ID == "T13.1", "Response"])
 })
 
-#' @title Test Cases Code
-#' @section Updated By:
-#' Ashley Tarasiewicz
-#' @section Updated Date:
-#' 4/23/2020
 test_that('T14',{
   # output creation
   if(is.null(vur)) {
@@ -531,11 +465,6 @@ test_that('T14',{
   expect_true(vur[vur$ID == "T14.1", "Response"])
 })
 
-#' @title Test Cases Code
-#' @section Updated By:
-#' Ashley Tarasiewicz
-#' @section Updated Date:
-#' 4/23/2020
 test_that('T15',{
   # output creation
   if(is.null(vur)) {
@@ -568,11 +497,6 @@ test_that('T15',{
   expect_true(vur[vur$ID == "T15.1", "Response"])
 })
 
-#' @title Test Cases Code
-#' @section Updated By:
-#' Ashley Tarasiewicz
-#' @section Updated Date:
-#' 4/23/2020
 test_that('T16',{
   # output creation
   if(is.null(vur)) {
@@ -612,11 +536,6 @@ test_that('T16',{
   expect_true(vur[vur$ID == "T16.1", "Response"])
 })
 
-#' @title Test Cases Code
-#' @section Updated By:
-#' Ashley Tarasiewicz
-#' @section Updated Date:
-#' 4/23/2020
 test_that('T17',{
   # output creation
   if(is.null(vur)) {
@@ -656,11 +575,6 @@ test_that('T17',{
   expect_true(vur[vur$ID == "T17.1", "Response"])
 })
 
-#' @title Test Cases Code
-#' @section Updated By:
-#' Ashley Tarasiewicz
-#' @section Updated Date:
-#' 4/23/2020
 test_that('T18',{
   # output creation
   if(is.null(vur)) {
@@ -688,11 +602,6 @@ test_that('T18',{
   expect_true(vur[vur$ID == "T18.1", "Response"])
 })
 
-#' @title Test Cases Code
-#' @section Updated By:
-#' Ashley Tarasiewicz
-#' @section Updated Date:
-#' 4/23/2020
 test_that('T19',{
   # output creation
   if(is.null(vur)) {
@@ -719,11 +628,6 @@ test_that('T19',{
   expect_true(vur[vur$ID == "T19.1", "Response"])
 })
 
-#' @title Test Cases Code
-#' @section Updated By:
-#' Ashley Tarasiewicz
-#' @section Updated Date:
-#' 4/23/2020
 test_that('T20',{
   # output creation
   if(is.null(vur)) {
@@ -757,11 +661,6 @@ test_that('T20',{
   expect_true(vur[vur$ID == "T20.1", "Response"])
 })
 
-#' @title Test Cases Code
-#' @section Updated By:
-#' Ashley Tarasiewicz
-#' @section Updated Date:
-#' 4/23/2020
 test_that('T21',{
   # output creation
   if(is.null(vur)) {
@@ -794,11 +693,6 @@ test_that('T21',{
   expect_true(vur[vur$ID == "T21.1", "Response"])
 })
 
-#' @title Test Cases Code
-#' @section Updated By:
-#' Ashley Tarasiewicz
-#' @section Updated Date:
-#' 4/23/2020
 test_that('T22',{
   # output creation
   if(is.null(vur)) {
@@ -826,11 +720,6 @@ test_that('T22',{
   expect_true(vur[vur$ID == "T22.1", "Response"])
 })
 
-#' @title Test Cases Code
-#' @section Updated By:
-#' Ashley Tarasiewicz
-#' @section Updated Date:
-#' 4/23/2020
 test_that('T23',{
   # output creation
   if(is.null(vur)) {
@@ -879,11 +768,6 @@ test_that('T23',{
   rm(test_23)
 })
 
-#' @title Test Cases Code
-#' @section Updated By:
-#' Ashley Tarasiewicz
-#' @section Updated Date:
-#' 4/23/2020
 test_that('T24',{
   # output creation
   if(is.null(vur)) {
@@ -935,11 +819,6 @@ test_that('T24',{
   rm(test_24)
 })
 
-#' @title Test Cases Code
-#' @section Updated By:
-#' Ashley Tarasiewicz
-#' @section Updated Date:
-#' 4/23/2020
 test_that('T25',{
   # output creation
   if(is.null(vur)) {
@@ -986,11 +865,6 @@ test_that('T25',{
   rm(test_25)
 })
 
-#' @title Test Cases Code
-#' @section Updated By:
-#' Ashley Tarasiewicz
-#' @section Updated Date:
-#' 4/23/2020
 test_that('T26',{
   # output creation
   if(is.null(vur)) {
@@ -1038,11 +912,6 @@ test_that('T26',{
   rm(test_26)
 })
 
-#' @title Test Cases Code
-#' @section Updated By:
-#' Ashley Tarasiewicz
-#' @section Updated Date:
-#' 4/23/2020
 test_that('T27',{
   # output creation
   if(is.null(vur)) {
@@ -1093,11 +962,6 @@ test_that('T27',{
   rm(test_27)
 })
 
-#' @title Test Cases Code
-#' @section Updated By:
-#' Ashley Tarasiewicz
-#' @section Updated Date:
-#' 4/23/2020
 test_that('T28',{
   # output creation
   if(is.null(vur)) {
@@ -1143,11 +1007,6 @@ test_that('T28',{
   rm(test_28)
 })
 
-#' @title Test Cases Code
-#' @section Updated By:
-#' Ashley Tarasiewicz
-#' @section Updated Date:
-#' 4/23/2020
 test_that('T29',{
   # output creation
   if(is.null(vur)) {
@@ -1197,11 +1056,6 @@ test_that('T29',{
   rm(test_29)
 })
 
-#' @title Test Cases Code
-#' @section Updated By:
-#' Ashley Tarasiewicz
-#' @section Updated Date:
-#' 4/23/2020
 test_that('T30',{
   # output creation
   if(is.null(vur)) {
@@ -1254,11 +1108,6 @@ test_that('T30',{
   rm(test_30)
 })
 
-#' @title Test Cases Code
-#' @section Updated By:
-#' Ashley Tarasiewicz
-#' @section Updated Date:
-#' 4/23/2020
 test_that('T31',{
   # output creation
   if(is.null(vur)) {
@@ -1306,11 +1155,6 @@ test_that('T31',{
   rm(test_31)
 })
 
-#' @title Test Cases Code
-#' @section Updated By:
-#' Ashley Tarasiewicz
-#' @section Updated Date:
-#' 4/23/2020
 test_that('T32',{
   # output creation
   if(is.null(vur)) {
@@ -1359,11 +1203,6 @@ test_that('T32',{
   rm(test_32)
 })
 
-#' @title Test Cases Code
-#' @section Updated By:
-#' Ashley Tarasiewicz
-#' @section Updated Date:
-#' 4/23/2020
 test_that('T33',{
   # output creation
   if(is.null(vur)) {
@@ -1415,11 +1254,6 @@ test_that('T33',{
   rm(test_33)
 })
 
-#' @title Test Cases Code
-#' @section Updated By:
-#' Ashley Tarasiewicz
-#' @section Updated Date:
-#' 4/23/2020
 test_that('T34',{
   # output creation
   if(is.null(vur)) {
@@ -1466,11 +1300,6 @@ test_that('T34',{
   rm(test_34)
 })
 
-#' @title Test Cases Code
-#' @section Updated By:
-#' Ashley Tarasiewicz
-#' @section Updated Date:
-#' 4/23/2020
 test_that('T35',{
   # output creation
   if(is.null(vur)) {
@@ -1518,11 +1347,6 @@ test_that('T35',{
   rm(test_35)
 })
 
-#' @title Test Cases Code
-#' @section Updated By:
-#' Ashley Tarasiewicz
-#' @section Updated Date:
-#' 4/23/2020
 test_that('T36',{
   # output creation
   if(is.null(vur)) {
@@ -1573,11 +1397,6 @@ test_that('T36',{
   rm(test_36)
 })
 
-#' @title Test Cases Code
-#' @section Updated By:
-#' Ashley Tarasiewicz
-#' @section Updated Date:
-#' 4/23/2020
 test_that('T37',{
   # output creation
   if(is.null(vur)) {
@@ -1623,11 +1442,6 @@ test_that('T37',{
   rm(test_37)
 })
 
-#' @title Test Cases Code
-#' @section Updated By:
-#' Ashley Tarasiewicz
-#' @section Updated Date:
-#' 4/23/2020
 test_that('T38',{
   # output creation
   if(is.null(vur)) {
@@ -1677,11 +1491,6 @@ test_that('T38',{
   rm(test_38)
 })
 
-#' @title Test Cases Code
-#' @section Updated By:
-#' Ashley Tarasiewicz
-#' @section Updated Date:
-#' 4/23/2020
 test_that('T39',{
   # output creation
   if(is.null(vur)) {
@@ -1734,11 +1543,6 @@ test_that('T39',{
   rm(test_39)
 })
 
-#' @title Test Cases Code
-#' @section Updated By:
-#' Ashley Tarasiewicz
-#' @section Updated Date:
-#' 4/23/2020
 test_that('T40',{
   # output creation
   if(is.null(vur)) {
@@ -1786,11 +1590,6 @@ test_that('T40',{
   rm(test_40)
 })
 
-#' @title Test Cases Code
-#' @section Updated By:
-#' Ashley Tarasiewicz
-#' @section Updated Date:
-#' 4/23/2020
 test_that('T41',{
   # output creation
   if(is.null(vur)) {
@@ -1835,11 +1634,6 @@ test_that('T41',{
   rm(view_test_41)
  })
 
-#' @title Test Cases Code
-#' @section Updated By:
-#' Ashley Tarasiewicz
-#' @section Updated Date:
-#' 4/23/2020
 test_that('T42',{
   # output creation
   if(is.null(vur)) {
@@ -1884,11 +1678,6 @@ test_that('T42',{
   rm(view_test_42)
 })
 
-#' @title Test Cases Code
-#' @section Updated By:
-#' Ashley Tarasiewicz
-#' @section Updated Date:
-#' 4/23/2020
 test_that('T43',{
   # output creation
   if(is.null(vur)) {
@@ -1932,11 +1721,6 @@ test_that('T43',{
   rm(view_test_43)
 })
 
-#' @title Test Cases Code
-#' @section Updated By:
-#' Ashley Tarasiewicz
-#' @section Updated Date:
-#' 4/23/2020
 test_that('T44',{
   # output creation
   if(is.null(vur)) {
@@ -1980,11 +1764,6 @@ test_that('T44',{
   rm(view_test_44)
 })
 
-#' @title Test Cases Code
-#' @section Updated By:
-#' Ashley Tarasiewicz
-#' @section Updated Date:
-#' 4/23/2020
 test_that('T45',{
   # output creation
   if(is.null(vur)) {
@@ -2030,11 +1809,6 @@ test_that('T45',{
   rm(view_test_45)
 })
 
-#' @title Test Cases Code
-#' @section Updated By:
-#' Ashley Tarasiewicz
-#' @section Updated Date:
-#' 4/23/2020
 test_that('T46',{
   # output creation
   if(is.null(vur)) {
@@ -2080,11 +1854,6 @@ test_that('T46',{
   rm(view_test_46)
 })
 
-#' @title Test Cases Code
-#' @section Updated By:
-#' Ashley Tarasiewicz
-#' @section Updated Date:
-#' 4/23/2020
 test_that('T47',{
   # output creation
   if(is.null(vur)) {
@@ -2108,11 +1877,6 @@ test_that('T47',{
   expect_true(vur[vur$ID == "T47.1", "Response"])
 })
 
-#' @title Test Cases Code
-#' @section Updated By:
-#' Ashley Tarasiewicz
-#' @section Updated Date:
-#' 4/23/2020
 test_that('T48',{
   # output creation
   if(is.null(vur)) {
@@ -2136,11 +1900,6 @@ test_that('T48',{
   expect_true(vur[vur$ID == "T48.1", "Response"])
 })
 
-#' @title Test Cases Code
-#' @section Updated By:
-#' Ashley Tarasiewicz
-#' @section Updated Date:
-#' 4/23/2020
 test_that('T49',{
   # output creation
   if(is.null(vur)) {
@@ -2164,11 +1923,6 @@ test_that('T49',{
   expect_true(vur[vur$ID == "T49.1", "Response"])
 })
 
-#' @title Test Cases Code
-#' @section Updated By:
-#' Ashley Tarasiewicz
-#' @section Updated Date:
-#' 4/23/2020
 test_that('T50',{
   # output creation
   if(is.null(vur)) {
@@ -2206,11 +1960,6 @@ test_that('T50',{
   rm(ht_test_50)
 })
 
-#' @title Test Cases Code
-#' @section Updated By:
-#' Ashley Tarasiewicz
-#' @section Updated Date:
-#' 4/23/2020
 test_that('T51',{
   # output creation
   if(is.null(vur)) {
@@ -2244,11 +1993,6 @@ test_that('T51',{
   rm(ht_test_51)
 })
 
-#' @title Test Cases Code
-#' @section Updated By:
-#' Ashley Tarasiewicz
-#' @section Updated Date:
-#' 4/23/2020
 test_that('T52',{
   # output creation
   if(is.null(vur)) {
@@ -2282,11 +2026,6 @@ test_that('T52',{
   rm(ht_test_52)
 })
 
-#' @title Test Cases Code
-#' @section Updated By:
-#' Ashley Tarasiewicz
-#' @section Updated Date:
-#' 4/23/2020
 test_that('T53',{
   # output creation
   if(is.null(vur)) {

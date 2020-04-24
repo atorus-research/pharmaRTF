@@ -131,9 +131,8 @@ scrape_test_code_block <- function(one_file){
     } else {
       roxy_block <- gsub(pattern = "#' ", replacement = "",
                          out_cleaned[grep(pattern = "#' ", out_cleaned)])
-      title_line <-  strsplit(split = '\\"|\\\'',
-                              out_cleaned[grepl(pattern = "test_that", x = out_cleaned)])[[1]][2]
-      return(data.frame(title = title_line,
+      if(length(roxy_block) == 0) return(data.frame())
+      return(data.frame(title = "Test Cases",
                         last_update_by = get_section_contents("Updated By", roxy_block),
                         last_updated_date = lubridate::parse_date_time(get_section_contents("Updated Date", roxy_block), orders = c("ymd", "mdy")),
                         stringsAsFactors = FALSE))

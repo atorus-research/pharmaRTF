@@ -87,6 +87,11 @@ pack_rows_index <- c(pack_rows_count[-1] - pack_rows_count[-length(pack_rows_cou
                      length(cases) - pack_rows_count[length(pack_rows_count)] + 1) %>%
   magrittr::set_names(paste0("T", stringr::str_pad(unique(cases), width = 3,
                                                    side = "left", pad = 0)))
+#Only pull one of the last updated dates
+test_code_author <- test_code_author %>%
+  filter(last_updated_date == max(last_updated_date))
+test_code_author <- test_code_author[1,]
+
 
 test_code_author %>%
   kable(., col.names = c("Test Code Name", "Last updated by", "Last updated date"),
