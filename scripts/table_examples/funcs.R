@@ -218,6 +218,18 @@ fish_p <- function(data, results, categories, width = 10) {
   format(round(p, 4), width=width, nsmall=4)
 }
 
+# CMH test p-value with options for alternate hyptheses
+cmh_p <- function(.data, formula, alternate=c('rmeans', 'cmeans', 'general', 'cor')) {
+  # Pull out the hypoth
+  alternate <- match.arg(alternate, several.ok=FALSE)
+
+  # Run the test
+  res <- vcdExtra::CMHtest(formula, data=.data, overall=TRUE)$ALL
+
+  pvalue <- unlist(res$table[alternate, 'Prob'])
+  pvalue
+}
+
 # Attach P-value to the first row of a dataframe
 attach_p <- function(.data, p_value, digits = 4) {
   # Empty column
