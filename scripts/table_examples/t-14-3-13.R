@@ -90,7 +90,8 @@ counts <- cbic %>%
   mutate(
     `0` = ifelse(AVALC=='', '', `0`),
     `54` = ifelse(AVALC=='', '', `54`),
-    `81` = ifelse(AVALC=='', '', `81`)
+    `81` = ifelse(AVALC=='', '', `81`),
+    AVISIT = ifelse(ord==0, AVISIT, '')
   ) %>%
   # Sort
   arrange(AVISITN, ord)
