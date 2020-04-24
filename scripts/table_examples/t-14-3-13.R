@@ -26,9 +26,6 @@ ord <- tibble(
   AVISIT = c(rep('Week 8', 9), rep('Week 16', 9), rep('Week 24', 9))
 )
 
-lvls = factor(c(1:7))
-
-lvls[5]
 # Read in the CBIC dataset ----
 cbic <- read_xpt(glue("{adam_lib}/adcibc.xpt")) %>%
   filter(EFFFL == 'Y' & ITTFL == 'Y', AVISITN %in% c(8, 16, 24) & ANL01FL=='Y') %>%
@@ -46,7 +43,9 @@ header_n <- cbic %>%
 column_headers <- header_n %>%
   select(-N) %>%
   pivot_wider(names_from = TRTPN, values_from=labels) %>%
-  mutate(rowlbl1 = '')
+  mutate(AVISIT = '',
+         AVALC = '',
+         p = 'p-value\\line [1]')
 
 # Get the summary N counts for each group
 ns <- cbic %>%
@@ -97,14 +96,29 @@ counts <- cbic %>%
   arrange(AVISITN, ord)
 
 
-## P-value ----
+## P-values ----
 # !!! NOTE: To obtain the same p-value used in SAS for this display, a modification had to be made to the vcdExtra library.
 #           Please refer to this github issue: https://github.com/friendly/vcdExtra/issues/3
-#           And you can access our fork of the library here:
-wk8_p <- cbic %>%
+#           And you can access our fork of the library here: https://github.com/mstackhouse/vcdExtra
+counts['p'] <- character(nrow(counts))
+
+counts[(counts$AVISITN==8 & counts$ord==0),'p'] <- cbic %>%
   filter(AVISITN == 8) %>%
   cmh_p(AVAL ~ TRTP | SITEGR1) %>%
   num_fmt(digits=4, size=5, int_len=1)
+
+counts[(counts$AVISITN==16 & counts$ord==0),'p']  <- cbic %>%
+  filter(AVISITN == 16) %>%
+  cmh_p(AVAL ~ TRTP | SITEGR1) %>%
+  num_fmt(digits=4, size=5, int_len=1)
+
+counts[(counts$AVISITN==24 & counts$ord==0),'p'] <- cbic %>%
+  filter(AVISITN == 24) %>%
+  cmh_p(AVAL ~ TRTP | SITEGR1) %>%
+  num_fmt(digits=4, size=5, int_len=1)
+
+final <- bind_rows(column_headers, counts) %>%
+  select(AVISIT, AVALC, `0`,`54`,`81`, p)
 
 ## Create the table
 
@@ -116,20 +130,20 @@ ht <- as_hux(final) %>%
   huxtable::set_bottom_border(1, 1:ncol(final), 1) %>%
   huxtable::set_width(1.2) %>%
   huxtable::set_escape_contents(FALSE) %>%
-  huxtable::set_col_width(c(.5, 1/6, 1/6, 1/6))
+  huxtable::set_col_width(c(1/8, 3/8, 1/8, 1/8, 1/8, 1/8))
 ht
 
 # Write into doc object and pull titles/footnotes from excel file
 doc <- rtf_doc(ht) %>% titles_and_footnotes_from_df(
   from.file='./scripts/table_examples/titles.xlsx',
   reader=example_custom_reader,
-  table_number='14-3.12') %>%
+  table_number='14-3.13') %>%
   set_font_size(10) %>%
   set_ignore_cell_padding(TRUE) %>%
   set_column_header_buffer(top=1)
 
 # Write out the RTF
-write_rtf(doc, file='./scripts/table_examples/outputs/14-3.12.rtf')
+write_rtf(doc, file='./scripts/table_examples/outputs/14-3.13.rtf')
 
 
 

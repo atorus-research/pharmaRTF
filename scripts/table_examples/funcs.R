@@ -219,6 +219,9 @@ fish_p <- function(data, results, categories, width = 10) {
 }
 
 # CMH test p-value with options for alternate hyptheses
+# !!! NOTE: To obtain the same p-value used in SAS for this display, a modification had to be made to the vcdExtra library.
+#           Please refer to this github issue: https://github.com/friendly/vcdExtra/issues/3
+#           And you can access our fork of the library here: https://github.com/mstackhouse/vcdExtra
 cmh_p <- function(.data, formula, alternate=c('rmeans', 'cmeans', 'general', 'cor')) {
   # Pull out the hypoth
   alternate <- match.arg(alternate, several.ok=FALSE)
