@@ -26,7 +26,8 @@ For \code{orientation()}, the orientation attribute of the supplied
 }
 \description{
 These property functions modify or return the orientation attribute of a
-\code{rtf_doc} object. Options are landscape or portrait.
+\code{rtf_doc} object. Options are landscape or portrait. See the \code{\link{rtf_doc}}
+help page for important notes about this property.
 }
 \examples{
 library(huxtable)
