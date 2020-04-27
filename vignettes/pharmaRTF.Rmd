@@ -1,0 +1,74 @@
+---
+title: "pharmaRTF"
+author: "Mike Stackhouse"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{pharmaRTF}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## What is pharmaRTF? 
+
+If you've worked in the pharmaceutical industry as a SAS&copy; programmer doing data analysis for clinical trials, there's a fair chance that you've spent a good amount of time creating RTF outputs. While there are more modern document file formats supported by SAScopy; and other data analysis languages, RTF remains prolific. Though antiquated, RTF files still remain useful. They support the rich-text format necessary to create documents containing different fonts, colors, and text attributes. Furthermore, RTF documents make it easy for medical writers to insert outputs into different reports and publications as needed. Regardless, outputting data displays to RTF documents is a process embedded in many companies still to this day. 
+
+There are many different table packages available in R. For example, [stargazer](https://cran.r-project.org/package=stargazer) allows you to easily summarize data and create statstical tables in different output formats, such as \LaTeX\, HTML, ASCII. [kableExtra](https://cran.r-project.org/web/packages/kableExtra/vignettes/awesome_table_in_html.html) lets you build common complex tables and manipulate table styles in HTML outputs. RStudio has been developing [gt](https://github.com/rstudio/gt) which aims make table creation simple by breaking it into a cohesive set of parts. While there are many more options, few of these support RTF output. 
+
+One library, [huxtable](https://hughjonesd.github.io/huxtable/), does support RTF extensively - with a wide array of styling and formatting options. But there are a few important components missing:
+- There are no means to set document properties on an output RTF document, such as page size or orientation
+- Column headers cannot repeat from page to page
+- While captions can be set, there are no means of creating multi-level titles and multiple footnotes, and captions cannot be inserted into the document header or footer
+
+_Note: gt plans to support RTF in the future, but this functionality is not yet mature. Furthermore, looking at HTML support it seems that these gaps will still exist_
+
+It's understandable that these gaps exist. R has strong usage in academia, and often these tables are created to be printed in text within a paper, for instance rendered using RMarkdown. The tables we create for a clinical trial are typically positioned within their own section of a CSR independently. 
+
+pharmRTF was developed to plug this gap without reinventing the wheel. Huxtable offers a powerful table package that can do virtually any styling necessary for the tables we need to create. pharmaRTF consumes a huxtable table and fills in the missing pieces by offering:
+- Document property options
+- Proper multi-page display
+- Titles and footnotes stored within the document headers and footers
+
+_Note: we also plan to support GT tables when the RTF support matures_
+
+## The basics
+
+
+
+
+## Figures
+
+The figure sizes have been customised so that you can easily put two images side-by-side. 
+
+```{r, fig.show='hold'}
+plot(1:10)
+plot(10:1)
+```
+
+You can enable figure captions by `fig_caption: yes` in YAML:
+
+    output:
+      rmarkdown::html_vignette:
+        fig_caption: yes
+
+Then you can use the chunk option `fig.cap = "Your figure caption."` in **knitr**.
+
+## More Examples
+
+You can write math expressions, e.g. $Y = X\beta + \epsilon$, footnotes^[A footnote here.], and tables, e.g. using `knitr::kable()`.
+
+```{r, echo=FALSE, results='asis'}
+knitr::kable(head(mtcars, 10))
+```
+
+Also a quote using `>`:
+
+> "He who gives up [code] safety for [code] speed deserves neither."
+([via](https://twitter.com/hadleywickham/status/504368538874703872))
