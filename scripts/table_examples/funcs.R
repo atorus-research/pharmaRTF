@@ -78,14 +78,14 @@ num_fmt <- function(var, digits=0, size=10, int_len=3) {
   ))
 }
 
-n_pct <- function(n, pct, n_width=3, pct_width=3) {
+n_pct <- function(n, pct, n_width=3, pct_width=3, digits=0) {
   # n (%) formatted string. e.g. 50 ( 75%)
   res <- n / pct
 
   if (res < .01) {
     disp <- str_pad('<1', width=pct_width)
   } else {
-    disp <- format(round(res * 100), width=pct_width)
+    disp <- format(round(res * 100, digits=digits), width=pct_width, nsmall=digits)
   }
   return(
     # Suppress conversion warnings
@@ -178,6 +178,74 @@ invert.list <- function (NL) {
   L
 }
 
+# Count of subjects with an adverse event
+ae_counts <- function(.data, ..., N_counts = header_n, sort=FALSE) {
+
+  # Get the grouping
+  grouped_data <- .data %>%
+    group_by(TRTAN, TRTA, ...) %>%
+    select(TRTA, TRTAN, ..., USUBJID)
+
+  # Counts of each subject
+  subject_counts <- grouped_data %>%
+    distinct() %>%
+    summarize(n = n())
+
+  # Count of adverse events
+  event_counts <- grouped_data %>%
+    summarize(AEs = n())
+
+  # Join the subject and event counts, pivot out by treatment
+  counts <- subject_counts %>%
+    left_join(event_counts) %>%
+    pivot_wider(id_cols=c(...), names_from=TRTAN, values_from=c(n, AEs))
+
+  # If no events for a treatment group, they won't be in the pivoted table, so create
+  for (g in unique(N_counts$TRT01PN)) {
+    cnames <- c(paste0('n_', g), paste0('AEs_', g))
+    if (!all(cnames %in% names(counts))) {
+      # If one is missing, they're both missing
+      counts[cnames[1]] <- 0
+      counts[cnames[2]] <- 0
+    }
+  }
+
+  # Add in subject counts
+  counts['N_0'] <- N_counts[N_counts$TRT01PN == 0, 'N']
+  counts['N_54'] <- N_counts[N_counts$TRT01PN == 54, 'N']
+  counts['N_81'] <- N_counts[N_counts$TRT01PN == 81, 'N']
+
+  # Fill all NAs with 0
+  counts[is.na(counts)] <- 0
+
+  # Find no event counts
+  counts['no_event_0'] <- counts$N_0 - counts$n_0
+  counts['no_event_54'] <- counts$N_54 - counts$n_54
+  counts['no_event_81'] <- counts$N_81 - counts$n_81
+
+  # Calculate p-values
+  counts['p_low']  <- apply(counts[, c('n_0', 'n_54', 'no_event_0', 'no_event_54')], MARGIN=1, FUN=fisher_test_ae)
+  counts['p_high'] <- apply(counts[, c('n_0', 'n_81', 'no_event_0', 'no_event_81')], MARGIN=1, FUN=fisher_test_ae)
+
+  # Formatting
+  counts <- counts %>%
+    rowwise() %>%
+    mutate(
+      npct_0  = ifelse(n_0  > 0, n_pct(n_0,   N_0,   n_width=2, pct_width=4, digits=1), ' 0        '),
+      npct_54 = ifelse(n_54 > 0, n_pct(n_54,  N_54,  n_width=2, pct_width=4, digits=1), ' 0        '),
+      npct_81 = ifelse(n_81 > 0, n_pct(n_81,  N_81,  n_width=2, pct_width=4, digits=1), ' 0        '),
+      cAEs_0  = ifelse(n_0  > 0, paste0('[',AEs_0,  ']'), ''),
+      cAEs_54 = ifelse(n_54 > 0, paste0('[',AEs_54, ']'), ''),
+      cAEs_81 = ifelse(n_81 > 0, paste0('[',AEs_81, ']'), ''),
+      ord2 = AEs_81 # Use for descending event order
+    )
+
+  # Remove numeric columns not used in display
+  counts <- counts %>%
+    select(-starts_with('n_'), -starts_with('no_'), -starts_with('AEs'))
+
+}
+
 # P-value for anova test
 aov_p <- function(.data, forumula) {
   # Run the anova test
@@ -216,6 +284,33 @@ fish_p <- function(data, results, categories, width = 10) {
   p <- fisher.test(res, cats)$p.value
   if(round(p, 4) == 0) return("<.0001")
   format(round(p, 4), width=width, nsmall=4)
+}
+
+# Fisher test built for row-wise derivations suited for our AE tables
+fisher_test_ae <- function(.data) {
+
+  # If there were no events in either treatment arm then don't compute
+  if (sum(.data[1:2]) == 0){
+    return('')
+  }
+
+  # convert to a 2X2 matrix
+  dim(.data) <- c(2, 2)
+
+  # Return the p-value of interest
+  p <- fisher.test(.data)$p.value
+
+  # Format the p-values for display
+  disp <- num_fmt(p, digits=3, size=5, int_len=1)
+
+  # Post process the display for special representation
+  if (p > .99) {
+    disp <- '>.99'
+  } else if (p < .15) {
+    disp <- paste0(disp, '*')
+  } else {
+    disp <- paste0(disp, ' ')
+  }
 }
 
 # CMH test p-value with options for alternate hyptheses

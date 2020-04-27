@@ -1,5 +1,5 @@
-# t-14-5-01.R
-#   CDISC Pilot Table 14-5.01
+# t-14-5-02.R
+#   CDISC Pilot Table 14-5.02
 
 library(glue)
 library(tidyverse)
@@ -12,7 +12,7 @@ source('./scripts/table_examples/funcs.R')
 
 # Read in ADSL
 adae <- read_xpt(glue("{adam_lib}/adae.xpt")) %>%
-  filter(SAFFL == 'Y' & TRTEMFL == 'Y')
+  filter(SAFFL == 'Y' & TRTEMFL == 'Y' & AESER == 'Y')
 
 adsl <- read_xpt(glue("{adam_lib}/adsl.xpt"))
 
@@ -89,8 +89,8 @@ huxtable::top_padding(ht) <- 0
 doc <- rtf_doc(ht, header_rows = 2) %>% titles_and_footnotes_from_df(
   from.file='./scripts/table_examples/titles.xlsx',
   reader=example_custom_reader,
-  table_number='14-5.01') %>%
+  table_number='14-5.02') %>%
   set_font_size(10)
 
 # Write out the RTF
-write_rtf(doc, file='./scripts/table_examples/outputs/14-5.01.rtf')
+write_rtf(doc, file='./scripts/table_examples/outputs/14-5.02.rtf')
