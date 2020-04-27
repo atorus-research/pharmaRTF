@@ -20,14 +20,15 @@ adsl <- read_xpt(glue("{adam_lib}/adsl.xpt"))
 header_n <- adsl %>%
   get_header_n()
 
+# Buld the column headers
 column_headers <- header_n %>%
   select(-N) %>%
   pivot_wider(names_from = TRT01PN, values_from=labels) %>%
-  mutate(rowlbl1 = '',
-         p = "Fisher's Exact\\line p-values")
+  mutate(AETERM = '',
+         p_low = "Fisher's Exact\\line p-values")
 
 # Count of subjects with an adverse event
-ae_counts <- function(.data, ...) {
+ae_counts <- function(.data, ..., N_counts = header_n, sort=FALSE) {
 
   # Get the grouping
   grouped_data <- .data %>%
@@ -43,14 +44,15 @@ ae_counts <- function(.data, ...) {
   event_counts <- grouped_data %>%
     summarize(AEs = n())
 
+  # Join the subject and event counts, pivot out by treatment
   counts <- subject_counts %>%
     left_join(event_counts) %>%
-    pivot_wider(id_cols=..., names_from=TRTAN, values_from=c(n, AEs))
+    pivot_wider(id_cols=c(...), names_from=TRTAN, values_from=c(n, AEs))
 
   # Add in subject counts
-  counts['N_0'] <- header_n[header_n$TRT01PN == 0, 'N']
-  counts['N_54'] <- header_n[header_n$TRT01PN == 54, 'N']
-  counts['N_81'] <- header_n[header_n$TRT01PN == 81, 'N']
+  counts['N_0'] <- N_counts[N_counts$TRT01PN == 0, 'N']
+  counts['N_54'] <- N_counts[N_counts$TRT01PN == 54, 'N']
+  counts['N_81'] <- N_counts[N_counts$TRT01PN == 81, 'N']
 
   # Fill all NAs with 0
   counts[is.na(counts)] <- 0
@@ -60,32 +62,45 @@ ae_counts <- function(.data, ...) {
   counts['no_event_54'] <- counts$N_54 - counts$n_54
   counts['no_event_81'] <- counts$N_81 - counts$n_81
 
-  counts
+  # Calculate p-values
+  counts['p_low']  <- apply(counts[, c('n_0', 'n_54', 'no_event_0', 'no_event_54')], MARGIN=1, FUN=fisher_test_ae)
+  counts['p_high'] <- apply(counts[, c('n_0', 'n_81', 'no_event_0', 'no_event_81')], MARGIN=1, FUN=fisher_test_ae)
+
+  # Formatting
+  counts <- counts %>%
+    rowwise() %>%
+    mutate(
+      npct_0  =  n_pct(n_0,  N_0,  n_width=2, pct_width=4, digits=1),
+      npct_54 = n_pct(n_54, N_54, n_width=2, pct_width=4, digits=1),
+      npct_81 = n_pct(n_81, N_81, n_width=2, pct_width=4, digits=1),
+      cAEs_0  = paste0('[',AEs_0,  ']'),
+      cAEs_54 = paste0('[',AEs_54, ']'),
+      cAEs_81 = paste0('[',AEs_81, ']'),
+      ord2 = AEs_81 # Use for descending event order
+    )
+
+  # Remove numeric columns not used in display
+  counts <- counts %>%
+    select(-starts_with('n_'), -starts_with('no_'), -starts_with('AEs'))
+
 }
 
-test <- ae_counts(adae, AEBODSYS)
-test
-# Order in each group by decreasing Ns in Xan_Hi
+# Overall counts
+overall <- ae_counts(adae) %>%
+  mutate(AEBODSYS = 'ANY BODY SYSTEM', AETERM = 'ANY BODY SYSTEM', ord1=1)
 
-fisher_test_ae <- function(event=NULL, var=NULL, group, .data) {
+# System Organ Class counts
+bodsys <- ae_counts(adae, AEBODSYS) %>%
+  mutate(AETERM = AEBODSYS, ord1=2) %>%
+  arrange(AEBODSYS)
 
-  # Pull out the subset of interest
-  nums <- as.double(.data[.data[var] == event, c('n_0', 'no_event_0', 'n_54', 'no_event_54')])
-  # convert to a 2X2 matrix
-  dim(nums) <- c(2, 2)
-  return(nums)
-  # Return the p-value of interest
-  fisher.test(nums)$p.value
-}
+# Individual term counts
+term <- ae_counts(adae, AEBODSYS, AETERM, sort=TRUE) %>%
+  mutate(AETERM = paste0('  ', AETERM), ord1=2)
 
-check <- fisher_test_ae('HEPATOBILIARY DISORDERS', 'AEBODSYS', 'asd', test)
-
-sapply(test$AEBODSYS, fisher_test_ae, var='AEBODSYS', group=54, .data=test)
-
-fisher_test_ae(event='CARDIAC DISORDERS', var='AEBODSYS', group=81, test)
-
-subset <- test[test['AEBODSYS'] == 'HEPATOBILIARY DISORDERS' & test$TRTAN %in% c(0, 54), c('n', 'no_event')]
-
+# Bring the data together
+final <- bind_rows(overall, bodsys, term) %>%
+  arrange(ord1, AEBODSYS, desc(ord2), AETERM)
 
 # Make the table ----
 
