@@ -12,14 +12,14 @@ source('./scripts/table_examples/funcs.R')
 
 # Read in the ADLB datasets
 adlbc <- read_xpt(glue("{adam_lib}/adlbc.xpt")) %>%
-  filter(SAFETY == 'Y')
+  filter(SAFFL == 'Y')
 adlbh <- read_xpt(glue("{adam_lib}/adlbh.xpt")) %>%
-  filter(SAFETY == 'Y' & !(LBTEST %in% c('ANISOCYTOSIS', 'POIKILOCYTOSIS', 'MICROCYTES', 'MACROCYTES')))
+  filter(SAFFL == 'Y' & !(PARAM %in% c('Anisocytes', 'Poikilocytes', 'Microcytes', 'Macrocytes')))
 
 # Template for assigning display visit values
 visit_names <- data.frame(
-  VISITNUM = c(1, 4, 5, 7, 8, 9, 10, 11, 12, 13, 99),
-  VISIT = c("  Bsln", "  Wk 2", "  Wk 4", "  Wk 6", "  Wk 8", "  Wk 12",
+  AVISITN = c(0, 2, 4, 6, 8, 12, 16, 20, 24, 26, 99),
+  AVISIT = c("  Bsln", "  Wk 2", "  Wk 4", "  Wk 6", "  Wk 8", "  Wk 12",
             "  Wk 16", "  Wk 20", "  Wk 24", "  Wk 26", "  End[1]"),
   stringsAsFactors = FALSE
 )
@@ -28,28 +28,27 @@ test_summary <- function(x, df_=NULL) {
   # Build up the visit table and attach on the end visit (using flag)
   visits <- df_ %>%
     # Filter to the specified test
-    filter(VISIT != 'UNSCHEDULED' & LBTEST == x) %>%
+    filter(AVISIT != 'UNSCHEDULED' & PARAM == x) %>%
     union(df_ %>%
-            filter(ENTMTFL == 'Y' & LBTEST == x) %>%
-            mutate(VISITNUM = 99))
+            filter(AENTMTFL == 'Y' & PARAM == x) %>%
+            mutate(AVISITN = 99))
 
   # Summarize results by visit and treatment
   res <- visits %>%
-    group_by(VISITNUM, TRTPCD) %>%
+    group_by(AVISITN, TRTPN) %>%
     summarize(n = n(),
-              mean_res = mean(LBSTRESN, na.rm=TRUE),
-              sd_res = sd(LBSTRESN, na.rm=TRUE))
-
+              mean_res = mean(AVAL, na.rm=TRUE),
+              sd_res = sd(AVAL, na.rm=TRUE))
 
   # Summarize change from baseline by visit and treatment
   chgbl <- visits %>%
-    filter(VISITNUM != 1) %>%
-    group_by(VISITNUM, TRTPCD) %>%
-    summarize(mean_cbl = mean(CHSTRESN, na.rm=TRUE),
-              sd_cbl = sd(CHSTRESN, na.rm=TRUE))
+    filter(AVISITN != 1) %>%
+    group_by(AVISITN, TRTPN) %>%
+    summarize(mean_cbl = mean(CHG, na.rm=TRUE),
+              sd_cbl = sd(CHG, na.rm=TRUE))
 
   # Build the display string
-  df <- merge(res, chgbl, by = c('VISITNUM', 'TRTPCD'), all=TRUE) %>%
+  df <- merge(res, chgbl, by = c('AVISITN', 'TRTPN'), all=TRUE) %>%
     mutate(
       N =
         ifelse(
@@ -68,16 +67,16 @@ test_summary <- function(x, df_=NULL) {
           '')
     ) %>%
     # Transpose the treatments out
-    select(VISITNUM, TRTPCD, N, msr, msc) %>%
-    pivot_wider(names_from = TRTPCD, values_from = c(N, msr, msc)) %>%
+    select(AVISITN, TRTPN, N, msr, msc) %>%
+    pivot_wider(names_from = TRTPN, values_from = c(N, msr, msc)) %>%
     # Merge in the visits
-    merge(visit_names, by='VISITNUM') %>%
-    arrange(VISITNUM) %>%
-    select(VISIT, N_Pbo, msr_Pbo, msc_Pbo, N_Xan_Lo, msr_Xan_Lo, msc_Xan_Lo, N_Xan_Hi, msr_Xan_Hi, msc_Xan_Hi) %>%
+    merge(visit_names, by='AVISITN') %>%
+    arrange(AVISITN) %>%
+    select(AVISIT, N_0, msr_0, msc_0, N_54, msr_54, msc_54, N_81, msr_81, msc_81) %>%
     pad_row()
 
   # Stub header
-  stub_head = data.frame(VISIT = x, stringsAsFactors = FALSE)
+  stub_head = data.frame(AVISIT = x, stringsAsFactors = FALSE)
 
   final <- bind_rows(stub_head, df)
   ht <- huxtable::as_hux(final) %>%
@@ -100,11 +99,11 @@ add_group_head <- function(ht, group) {
 }
 
 # Summarize all the chemistry data
-chem <- do.call(rbind, lapply(sort(unique(adlbc$LBTEST)), test_summary, df_=adlbc)) %>%
+chem <- do.call(rbind, lapply(sort(unique(adlbc$PARAM)), test_summary, df_=adlbc)) %>%
   add_group_head('CHEMISTRY')
 
 # Summarize all the hematology data
-hema <- do.call(rbind, lapply(sort(unique(adlbh$LBTEST)), test_summary, df_=adlbh)) %>%
+hema <- do.call(rbind, lapply(sort(unique(adlbh$PARAM)), test_summary, df_=adlbh)) %>%
   add_group_head('HEMATOLOGY')
 
 # Bind those two
@@ -141,16 +140,17 @@ col_headers <- col_headers %>%
 final <- rbind(col_headers, ht) %>%
   huxtable::set_width(1.5) %>%
   huxtable::set_escape_contents(FALSE) %>%
-  huxtable::set_col_width(1:10, value=c(.1, .025, .14, .14, .025, .14, .14, .025, .14, .14)) %>%
+  huxtable::set_col_width(1:10, value=c(.1, .03, .14, .14, .03, .14, .14, .03, .14, .14)) %>%
   huxtable::set_bottom_padding(0) %>%
   huxtable::set_top_padding(0)
 
 # Write into doc object and pull titles/footnotes from excel file
-doc <- rtf_doc(final, header.rows = 2) %>% titles_and_footnotes_from_df(
+doc <- rtf_doc(final, header_rows = 2) %>% titles_and_footnotes_from_df(
   from.file='./scripts/table_examples/titles.xlsx',
   reader=example_custom_reader,
   table_number='14-6.01') %>%
-  set_font_size(10)
+  set_font_size(10) %>%
+  set_ignore_cell_padding(TRUE)
 
 # Write out the RTF
 write_rtf(doc, file='./scripts/table_examples/outputs/14-6.01.rtf')
