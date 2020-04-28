@@ -1,5 +1,5 @@
-# t-14-3-12.R
-#   CDISC Pilot Table 14-3.12
+# t-14-3-13.R
+#   CDISC Pilot Table 14-3.13
 
 library(glue)
 library(tidyverse)
@@ -32,7 +32,6 @@ cbic <- read_xpt(glue("{adam_lib}/adcibc.xpt")) %>%
   # Create a character version of AVAL for display
   mutate(
     AVALC = ord[2:8, ]$AVALC[AVAL], # The codelist is already in this dataframe so using that
-    AVAL_F = lvls[AVAL]
   )
 
 # Calculate the header Ns ----
