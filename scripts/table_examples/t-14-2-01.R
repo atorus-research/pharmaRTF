@@ -42,12 +42,14 @@ adsl <- read_xpt(glue("{adam_lib}/adsl.xpt")) %>%
         DURDSGR1 == '<12' ~ 1,
         DURDSGR1 == '>=12' ~ 2
       ),
+    DURDSGR1 = paste(DURDSGR1, 'months'),
     BMIBLGR1N =
       case_when(
         BMIBLGR1 == '<25' ~ 1,
         BMIBLGR1 == '25-<30' ~ 2,
         BMIBLGR1 == '>=30' ~ 3
-      )
+      ),
+    AGEGR1 = paste(AGEGR1, 'yrs')
   )
 
 get_meta(adsl)
@@ -133,8 +135,9 @@ durdis_2 <- attach_p(durdis_2, durdis_2p)
 durdis <- durdis_1 %>%
   union(durdis_2) %>%
   mutate(
-    rowlbl1 = 'Duration of Disease'
-  )
+    rowlbl1 = 'Duration of disease '
+  ) %>%
+  pad_row()
 
 rm(durdis_1, durdis_2, durdis_1p, durdis_2p)
 

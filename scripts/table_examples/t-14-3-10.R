@@ -13,7 +13,7 @@ source('./scripts/table_examples/funcs.R')
 
 # Read in the ADAS datasets and filter ----
 adas <- read_xpt(glue("{adam_lib}/adadas.xpt")) %>%
-  filter(EFFFL == "Y" & PARAMCD == "ACTOT" & ITTFL == "Y" & AVISITN %in% c(0, 8, 16, 24)) %>%
+  filter(EFFFL == "Y" & PARAMCD == "ACTOT" & ITTFL == "Y" & AVISITN %in% c(0, 8, 16, 24) & ANL01FL=="Y") %>%
   mutate(SET = "LOCF") %>%
   select(TRTPN, TRTP, AVISIT, AVISITN, AVAL, BASE, CHG, DTYPE, SET)
 
@@ -59,26 +59,28 @@ aval <- step1 %>%
     md = num_fmt(median(AVAL), digits=1, int_len=2, size=4),
     mn = num_fmt(min(AVAL), int_len=2, size=4),
     mx = num_fmt(max(AVAL), int_len=2, size=4),
-    bmn = num_fmt(mean(BASE), digits=1, int_len=2, size=4),
-    bsd = num_fmt(sd(BASE), digits=2, int_len=2, size=5)
   ) %>%
   full_join(visits, by=c("TRTPN", "AVISIT"))
 
 # Get all summaries for chg
 chg <- step1 %>%
   group_by(TRTPN, TRTP, AVISITN, AVISIT, SET) %>%
+  filter(AVISITN != 0) %>%
   summarize(
     meanc = num_fmt(mean(CHG), digits=1, int_len=1, size=4),
     sdc = num_fmt(sd(CHG), digits=2, int_len=1, size=4),
     mdc = num_fmt(median(CHG), digits=1, int_len=1, size=4),
     mnc = num_fmt(min(CHG), int_len=3, size=4),
     mxc = num_fmt(max(CHG), int_len=2, size=4),
+    bmn = num_fmt(mean(BASE), digits=1, int_len=2, size=4),
+    bsd = num_fmt(sd(BASE), digits=2, int_len=2, size=5)
   )
 
 # Join to AVAL and CHG results together to create final table
 final <- left_join(aval, chg, by=c('TRTPN', 'TRTP', 'AVISITN', 'AVISIT', 'SET')) %>%
   arrange(TRTPN, ORD) %>%
   ungroup() %>%
+  mutate(TRTP = ifelse(ORD==1, TRTP, '')) %>%
   select(TRTP, AVISIT, n, mean, sd, md, mn, mx, bmn, bsd, meanc, sdc, mdc, mnc, mxc)
 
 # Create the column headers
