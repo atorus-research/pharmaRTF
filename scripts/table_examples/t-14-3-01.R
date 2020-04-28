@@ -12,37 +12,30 @@ source('./scripts/table_examples/config.R')
 source('./scripts/table_examples/funcs.R')
 
 # Read in the ADLB datasets ----
-adas <- read_xpt(glue("{adam_lib}/adqsadas.xpt")) %>%
-  filter(EFFICACY == "Y" & ITTV=='Y')
+adas <- read_xpt(glue("{adam_lib}/adadas.xpt")) %>%
+  filter(EFFFL == "Y" & ITTFL=='Y' & PARAMCD == 'ACTOT' & ANL01FL == 'Y')
 
 # Calculate the header Ns ----
 header_n <- adas %>%
-  distinct(USUBJID, TRTP, TRTPCD, TRTPN) %>%
-  group_by(TRTPCD, TRTP, TRTPN) %>%
-  summarize(N = n()) %>%
-  mutate(
-    labels = str_replace_all(str_wrap(glue('{TRTP} (N={N})'), width=10), "\n", function(x) "\\line ")
-  ) %>%
-  ungroup() %>%
-  arrange(TRTPN) %>%
-  select(-TRTP, -TRTPN)
+  distinct(USUBJID, TRTP, TRTPN) %>%
+  get_header_n(TRTP, TRTPN)
 
 column_headers <- header_n %>%
   select(-N) %>%
-  pivot_wider(names_from = TRTPCD, values_from=labels) %>%
+  pivot_wider(names_from = TRTPN, values_from=labels) %>%
   mutate(rowlbl1 = '')
 
 # Run each group
-summary_portion <- bind_rows(summary_data(adas, VAL, 'BL', 'Baseline'),
-                             summary_data(adas, VAL, 'Wk24', 'Week 24'),
-                             summary_data(adas, CHG, 'Wk24', 'Change from Baseline')) %>%
+summary_portion <- bind_rows(summary_data(adas, AVAL, 0 , 'Baseline'),
+                             summary_data(adas, AVAL, 24, 'Week 24'),
+                             summary_data(adas, CHG,  24, 'Change from Baseline')) %>%
   pad_row()
 
 # Gather the model data
 model_portion <- efficacy_models(adas, 'CHG', 24)
 
 final <- bind_rows(column_headers, summary_portion, model_portion) %>%
-  select(rowlbl1, Pbo, Xan_Lo, Xan_Hi)
+  select(rowlbl1, `0`, `54`, `81`)
 
 ## Create the table
 
@@ -58,8 +51,7 @@ ht <- as_hux(final) %>%
 ht
 
 # Write into doc object and pull titles/footnotes from excel file
-## TODO: `titles_and_footnotes_from_df`` should be an exported function so remove internal reference when updated
-doc <- rtf_doc(ht) %>% pharmaRTF:::titles_and_footnotes_from_df(
+doc <- rtf_doc(ht) %>% titles_and_footnotes_from_df(
   from.file='./scripts/table_examples/titles.xlsx',
   reader=example_custom_reader,
   table_number='14-3.01') %>%

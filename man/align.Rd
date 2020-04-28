@@ -45,8 +45,8 @@ pharmaRTF::align(rtf$titles[[1]])
 pharmaRTF::align(rtf$titles[[1]]) <- "left"
 # Sets alignment to 'left'
 
-pharma::text(rtf$titles[[1]]) <- c("Left Text", "Right Text")
-pharma::align(rtf$titles[[1]]) <- "split"
+pharmaRTF::text(rtf$titles[[1]]) <- c("Left Text", "Right Text")
+pharmaRTF::align(rtf$titles[[1]]) <- "split"
 # When rtf is printed, "Left Text" will be left aligned, and "Right Text"
 # will be right aligned. Both will appear on the same line in the document.
 

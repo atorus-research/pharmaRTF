@@ -33,8 +33,8 @@
 #'   \href{https://www.r-bloggers.com/date-formats-in-r/}{here}.}
 #' \item{FILE_PATH: - Describes the file path the R session was executed from.
 #' The location of the executing file will be populated over the token
-#' replacement string  ‘%s’. Formats can be specified like “FILE_PATH: Executed
-#' from: %s” or simply “FILE_PATH: %s”. Note that the location of the executing
+#' replacement string "\%s". Formats can be specified like "FILE_PATH: Executed
+#' from: \%s" or simply "FILE_PATH: \%s". Note that the location of the executing
 #' file in R may not be intuitive. There are multiple ways to determine the
 #' containing R file based on how it was executed.
 #'   \itemize{
@@ -49,7 +49,7 @@
 #'
 #' @param ... A character list/vector. If \code{length(...)} is 2 and
 #'     \code{align} is not 'split', values are pasted together.
-#' @param align ext alignment in document. Options are 'center', 'left',
+#' @param align Text alignment in document. Options are 'center', 'left',
 #'   'right', and 'split'. A 'split' alignment will left align the string in
 #'    the first text item and right align the second. Defaults to center.
 #' @param bold \code{TRUE} or  \code{FALSE}. Defaults to FALSE.
@@ -58,9 +58,11 @@
 #'   reader can display the selected font. Fonts for all fields will default to
 #'   the default font of the \code{rtf_doc} object, which unless otherwise
 #'   assigned, is Courier New.
-#' @param font_size Font size in points. Defaults to a 12 point font.
+#' @param font_size Font size in points. Font sizes for all fields will default to
+#'   the default font size of the \code{rtf_doc} object, which unless otherwise
+#'   assigned, is 12
 #' @param index Position to display header or footnote lines in the RTF
-#'   document. Orders in ascending order with NULLs last.
+#'   document. Orders in ascending order with NAs last. Defaults to NA.
 #'
 #' @return An object of class \code{hf_line} with the properties described in
 #'   the Arguments section.
@@ -87,7 +89,7 @@
 #'
 #' @export
 hf_line <- function(..., align=c('center', 'left', 'right', 'split'), bold=FALSE,
-                    italic=FALSE, font=NA, font_size=NULL, index=NULL) {
+                    italic=FALSE, font=NA, font_size=NA, index=NA) {
 
   line = list()
 
@@ -137,13 +139,13 @@ validate_hf_line <- function(line, align, bold,italic, font, font_size, index) {
   sapply(c(bold, italic), function(x) assert_that(is.logical(x)))
 
   # Make sure index is numeric or null
-  assert_that(is.numeric(index) | is.null(index))
+  assert_that(is.numeric(index) | is.na(index))
 
   # Make sure font is character
   assert_that(is.character(font) | is.na(font))
 
   # Make sure font size is numeric
-  if (!is.null(font_size)) {
+  if (!is.na(font_size)) {
     assert_that(is.numeric(font_size) && font_size %% 0.5 == 0,
                 msg = "Font size must be numeric and divisible by .5")
   }
@@ -164,12 +166,12 @@ order_lines <- function(lines) {
 
   # Make sure no indices are duplicated
   assert_that(
-    !any(duplicated(inds)),
+    !any(duplicated(inds[!is.na(inds)])),
     msg = "Duplicate indices provided on hf_line objects - ensure that provided indices are unique or NULL"
   )
 
   # Grab the nulls
-  new_lines <- Filter(function(x) is.null(attr(x, 'index')), lines)
+  new_lines <- Filter(function(x) is.na(attr(x, 'index')), lines)
 
   # Sort the indices and reverse the order
   for (i in rev(sort(inds))) {
@@ -257,7 +259,7 @@ add_titles <- function(doc, ..., replace=FALSE) {
 #'   will be attached
 #' @param ... A vector of \code{hf_line} objects to add passed to
 #'   \code{add_hf()}
-#' @param replace If FALSE, lines will be appened/ordered with current
+#' @param replace If FALSE, lines will be appended/ordered with current
 #'   header/footer lines. If TRUE, lines will replace the existing content.
 #'
 #' @export
