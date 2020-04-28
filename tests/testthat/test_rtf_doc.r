@@ -58,6 +58,27 @@ test_that("rtf_doc generates and returns the expected items", {
 
   expect_error(rtf_doc(rtf), "An `rtf_doc` object was provided")
 })
+
+test_that("rtf_doc sets the correct defaults", {
+  ht <- huxtable(
+    column1 = 1:5,
+    column2 = letters[1:5]
+  )
+  rtf <- rtf_doc(ht)
+
+  expect_equal(font(rtf) , "Courier New")
+  expect_equal(font_size(rtf), 12)
+  expect_equal(margins(rtf), c(top = 1, bottom = 1, left = 1, right = 1))
+  expect_equal(orientation(rtf), "landscape")
+  expect_equal(header_height(rtf), 0.5)
+  expect_equal(footer_height(rtf), 0.5)
+  expect_equal(pagesize(rtf), c(width = 8.5, height = 11))
+  expect_equal(header_rows(rtf), 1)
+  expect_equal(ignore_cell_padding(rtf), FALSE)
+  expect_equal(column_header_buffer(rtf), c(top = 0, bottom = 0))
+
+})
+
 #### Errors/Warnings/Notes ####
 test_that("rtf_doc throws error when passed unsupported class", {
   ht <- huxtable(

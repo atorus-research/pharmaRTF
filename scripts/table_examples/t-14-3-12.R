@@ -1,5 +1,5 @@
-# t-14-3-05.R
-#   CDISC Pilot Table 14-3.05
+# t-14-3-12.R
+#   CDISC Pilot Table 14-3.12
 
 library(glue)
 library(tidyverse)
@@ -12,11 +12,12 @@ source('./scripts/table_examples/config.R')
 source('./scripts/table_examples/funcs.R')
 
 # Read in the ADLB datasets ----
-adas <- read_xpt(glue("{adam_lib}/adadas.xpt")) %>%
-  filter(EFFFL == "Y" & ITTFL=='Y' & PARAMCD == 'ACTOT' & ANL01FL == 'Y')
+npix <- read_xpt(glue("{adam_lib}/adnpix.xpt")) %>%
+  filter(EFFFL == 'Y' & ITTFL == 'Y' & PARAMCD == 'NPTOTMN') %>%
+  mutate(CHG = AVAL - BASE)
 
 # Calculate the header Ns ----
-header_n <- adas %>%
+header_n <- npix %>%
   distinct(USUBJID, TRTP, TRTPN) %>%
   get_header_n(TRTP, TRTPN)
 
@@ -26,16 +27,22 @@ column_headers <- header_n %>%
   mutate(rowlbl1 = '')
 
 # Run each group
-summary_portion <- bind_rows(summary_data(adas, AVAL,  0, 'Baseline'),
-                             summary_data(adas, AVAL, 16, 'Week 16'),
-                             summary_data(adas, CHG,  16, 'Change from Baseline')) %>%
+# NOTE: The counts of Mean of Weeks 4-24 do not match the original data. This was programmed using
+#       the derived NPTOTMN variable. Following the original analysis results metadata, as best as
+#       I can tell, we're following the same subsetting rules. This means that the counts are a
+#       discrepancy between the original analysis data, which is not available in the current
+#       CDISC pilot package. The subsequent statistical summaries therefore also do not match.
+summary_portion <- bind_rows(summary_data(npix, AVAL, 0 , 'Baseline'),
+                             summary_data(npix, AVAL,  98, 'Mean of Weeks 4-24')) %>%
   pad_row()
 
 # Gather the model data
-model_portion <- efficacy_models(adas, 'CHG', 16)
+model_portion <- efficacy_models(npix, 'CHG', 98)
 
 final <- bind_rows(column_headers, summary_portion, model_portion) %>%
   select(rowlbl1, `0`, `54`, `81`)
+
+## Create the table
 
 # Make the table
 ht <- as_hux(final) %>%
@@ -49,17 +56,16 @@ ht <- as_hux(final) %>%
 ht
 
 # Write into doc object and pull titles/footnotes from excel file
-## TODO: `titles_and_footnotes_from_df`` should be an exported function so remove internal reference when updated
-doc <- rtf_doc(ht) %>% pharmaRTF:::titles_and_footnotes_from_df(
+doc <- rtf_doc(ht) %>% titles_and_footnotes_from_df(
   from.file='./scripts/table_examples/titles.xlsx',
   reader=example_custom_reader,
-  table_number='14-3.05') %>%
+  table_number='14-3.12') %>%
   set_font_size(10) %>%
   set_ignore_cell_padding(TRUE) %>%
   set_column_header_buffer(top=1)
 
 # Write out the RTF
-write_rtf(doc, file='./scripts/table_examples/outputs/14-3.05.rtf')
+write_rtf(doc, file='./scripts/table_examples/outputs/14-3.12.rtf')
 
 
 
