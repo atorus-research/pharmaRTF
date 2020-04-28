@@ -105,11 +105,11 @@ doc_properties_string <- function(doc){
   if (orientation(doc) == 'landscape') {
     ortn <- '\\lndscpsxn\n'
     # If the orientation is landscape, reverse the height and width, effectively flipping 90 degrees
-    ht_wd <- sprintf('\\paperw%s\\paperh%s', ps['height'] * 1440, ps['width'] * 1440)
+    ht_wd <- sprintf('\\paperw%s\\paperh%s', ps['width'] * 1440, ps['height'] * 1440)
   } else{
     ortn <- ''
     # For portrait, use the values as they were entered
-    ht_wd <- sprintf('\\paperw%s\\paperh%s', ps['width'] * 1440, ps['height'] * 1440)
+    ht_wd <- sprintf('\\paperw%s\\paperh%s', ps['height'] * 1440, ps['width'] * 1440)
   }
 
   # Font size
