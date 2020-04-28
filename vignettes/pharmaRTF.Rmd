@@ -14,6 +14,9 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
+
+library(tidyverse)
+library(pharmaRTF)
 ```
 
 ## What is pharmaRTF? 
@@ -40,35 +43,108 @@ _Note: we also plan to support GT tables when the RTF support matures_
 
 ## The basics
 
+Before you start worrying about creating an RTF document, you first need to create and style your table. For that, use huxtable:
 
+```{r huxtable_code, out.width = "800px"}
+dat <- iris %>% 
+  select(Species, everything())
 
-
-## Figures
-
-The figure sizes have been customised so that you can easily put two images side-by-side. 
-
-```{r, fig.show='hold'}
-plot(1:10)
-plot(10:1)
+ht <- huxtable::as_hux(dat, add_colnames=TRUE) %>% 
+  huxtable::set_bold(1, 1:ncol(dat), TRUE) %>% 
+  huxtable::set_bottom_border(1, 1:ncol(dat), 1) %>% 
+  huxtable::set_width(1.5)
+ht[1:10]
 ```
 
-You can enable figure captions by `fig_caption: yes` in YAML:
+Now you can create your RTF document. pharmaRTF consists of two different objects:
 
-    output:
-      rmarkdown::html_vignette:
-        fig_caption: yes
+- `rtf_doc`: the encapsulating object
+- `hf_line`: the object used to create titles and footnotes
 
-Then you can use the chunk option `fig.cap = "Your figure caption."` in **knitr**.
+`rtf_doc` contains document wide attributes, including:
 
-## More Examples
+- The default document font and font size
+- Document margins
+- Orientation
+- Header and footer height
+- Page size
+- Header rows
 
-You can write math expressions, e.g. $Y = X\beta + \epsilon$, footnotes^[A footnote here.], and tables, e.g. using `knitr::kable()`.
+And some additional settings for more customization. `hf_line` is used to create titles and footnotes, and contains attributes for each line, including:
 
-```{r, echo=FALSE, results='asis'}
-knitr::kable(head(mtcars, 10))
+- Alignment
+- Bold and Italic
+- Font (for the individual line)
+- Font size (for the individual line)
+- Index
+
+There a multiple methods for piecing together an `rtf_doc` object. Within this vignette, we will cover the basics. Let's assume that you want to keep the default document attributes, and you'd like to create a single, bold title of "The Iris Dataset". You could use the following:
+
+```{r table1, eval=FALSE}
+doc <- rtf_doc(ht, titles=list(hf_line("The Iris Dataset", bold=TRUE)))
+
+write_rtf(doc, file="table1.rtf")
+
 ```
 
-Also a quote using `>`:
+The resulting file looks like:
+```{r table1_img1, out.width = "800px", echo = FALSE}
+knitr::include_graphics("table1_img1.png")
+```
 
-> "He who gives up [code] safety for [code] speed deserves neither."
-([via](https://twitter.com/hadleywickham/status/504368538874703872))
+The document opens and presents properly within microsoft word. Furthermore, the document paging works properly, with titles and column headers repeating pages to page:
+
+```{r table1_img2, out.width = "800px", echo = FALSE}
+knitr::include_graphics("table1_img2.png")
+```
+
+Note that we didn't edit any document settings. By default, pharmaRTF will output RTF files with:
+
+- A default font of Courier New
+- A default font size of 12
+- A default page size of Letter with 8.5" width and 11" height
+- Landscape orientation
+- 1" margins on all sides
+- .5" header and footer heights
+
+All of this attributes can be changed using property functions. For example:
+
+```{r table2, eval = FALSE}
+doc <- rtf_doc(ht, titles=list(hf_line("The Iris Dataset", bold=TRUE))) %>% 
+  set_pagesize(c(height=5, width=5)) %>% 
+  set_font('Times New Roman') %>% 
+  set_margins(c(top=2, bottom=2, left=2, right=2)) %>% 
+  set_font_size(7)
+
+write_rtf(doc, file="table2.rtf")
+
+```
+
+```{r table2_img1, out.width = "800px", echo = FALSE}
+knitr::include_graphics("table2_img1.png")
+```
+
+
+While this display is impracticle, it's possible! And customizations to all of these attributes may be necessary depending on individual circumstances. pharmaRTF also offers different interface options depending on your preference. For example, if you don't like piping using `%>%`, other versions of property functions are available. Additionally, titles and footnotes can be attached using the `add_titles` and `add_footnotes` functions.
+
+```{r table3, eval = FALSE}
+doc <- rtf_doc(ht)
+font(doc) <- 'Times New Roman'
+font_size(doc) <- 10
+doc <- add_titles(doc, hf_line("The Iris Dataset", bold=TRUE))
+doc <- add_footnotes(doc, hf_line("Note: This is a footnote!", italic=TRUE, align='left'))
+
+write_rtf(doc, file="table3.rtf")
+```
+
+```{r table3_img1, out.width = "800px", echo = FALSE}
+knitr::include_graphics("table3_img1.png")
+```
+
+This completes a basic introduction to using pharmaRTF, but there's still more to learn!
+- To see how to read titles and footnotes from external files, see [this vignette](external_files.html)
+- To learn more advanced usage of pharmaRTF, see [this vignette](advanced_usage.html)
+- To learn tips and tricks for using huxtable with pharmaRTF, see [this vignette](huxtable_tips.html)
+
+
+
