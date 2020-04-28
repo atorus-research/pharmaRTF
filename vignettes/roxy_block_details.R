@@ -33,8 +33,7 @@ scrape_function_specification_block <- function(one_file){
   lines <- readLines(one_file)
   rox_block <- gsub(pattern = "#' ", replacement = "",
                     x = lines[grep(pattern = "#' ", x = lines)])
-  data.frame(title = sub(pattern = "@title ", replacement = "",
-                         x = rox_block[grep(pattern = "@title", rox_block)]),
+  data.frame(title = basename(one_file),
              last_update_by = get_section_contents("Last updated by", rox_block),
              last_updated_date = lubridate::parse_date_time(get_section_contents("last update date", rox_block),
                                                             orders = c("ymd", "mdy")),

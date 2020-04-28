@@ -39,12 +39,12 @@
 #'
 #' pharmaRTF::font(rtf) <- "Times"
 #'
-#' pharma::font(rtf)
+#' pharmaRTF::font(rtf)
 #' # Returns "Times" "Comic Sans"
 #'
-#' pharma::font(rtf$titles[[1]]) <- "Windings"
+#' pharmaRTF::font(rtf$titles[[1]]) <- "Windings"
 #'
-#' pharma::font(rtf)
+#' pharmaRTF::font(rtf)
 #' # Returns "Times" "Windings"
 #'
 #'
@@ -184,7 +184,7 @@ set_font_size <- function(x, value) UseMethod('font_size<-')
 
 #' @export
 'font_size<-.hf_line' <- function(x, value) {
-  if (!is.null(value)) {
+  if (!is.na(value)) {
     assert_that(is.numeric(value) && value %% 0.5 == 0,
                 msg = "Font size must be numeric and divisible by .5")
   }
@@ -233,8 +233,8 @@ set_font_size <- function(x, value) UseMethod('font_size<-')
 #' pharmaRTF::align(rtf$titles[[1]]) <- "left"
 #' # Sets alignment to 'left'
 #'
-#' pharma::text(rtf$titles[[1]]) <- c("Left Text", "Right Text")
-#' pharma::align(rtf$titles[[1]]) <- "split"
+#' pharmaRTF::text(rtf$titles[[1]]) <- c("Left Text", "Right Text")
+#' pharmaRTF::align(rtf$titles[[1]]) <- "split"
 #' # When rtf is printed, "Left Text" will be left aligned, and "Right Text"
 #' # will be right aligned. Both will appear on the same line in the document.
 #'
@@ -474,10 +474,9 @@ set_text <- function(x, value) UseMethod('text<-')
 ## Index (getters) ----
 #' Return or set index
 #'
-#' These property functions modify or return the index of a \code{hf_line} object. The
-#' index sets the order in which a title will appear. The default index value in
-#' NULL, and NULL values will sort behind any populated index Indices can be any
-#' numeric value as long as they are not duplicated.
+#' These property functions modify or return the index of a \code{hf_line}
+#' object. The index sets the order in which a title will appear. Indicies
+#' can be any numeric value as long as they are not duplicated.
 #'
 #' @param x A \code{hf_line} object
 #' @param ... Additonal arguments passed to method dispatch
@@ -527,7 +526,7 @@ set_index <- function(x, value) UseMethod('index<-')
 #' @export
 'index<-.hf_line' <- function(x, value) {
   # Check that argument is valid
-  assert_that(is.numeric(value) | is.null(value))
+  assert_that(is.numeric(value) | is.na(value))
 
   attr(x, 'index') <- value
   x
@@ -622,8 +621,9 @@ set_margins <- function(x, value) UseMethod('margins<-')
 ## Orientation (getters) ----
 #' Return or set orientation
 #'
-#' These property functions modify or return the orientation attribute. Options are
-#' landscape or portrait.
+#' These property functions modify or return the orientation attribute of a
+#' \code{rtf_doc} object. Options are landscape or portrait. See the \code{\link{rtf_doc}}
+#' help page for important notes about this property.
 #'
 #' @param x A \code{rtf_doc} object
 #' @param ... Additonal arguments passed to method dispatch
@@ -791,6 +791,14 @@ set_footer_height <- function(x, value) UseMethod('footer_height<-')
 #' \code{rtf_doc} object. Stored as a named vector with \code{height} and
 #' \code{width} names.
 #'
+#' Note that when the orientation of the document is switched
+#' to 'portrait', the height and width will reverse when the RTF document is being
+#' written - but the attribute values will not change. This is because the default
+#' \code{rtf_doc} orientation is 'landscape', and switching the attributes of the
+#' object allows for a possibility of inadvertently overriding the functionality
+#' of the \code{orientation} attribute.
+#'
+#'
 #' @param x A \code{rtf_doc} object
 #' @param ... Additonal arguments passed to method dispatch
 #'
@@ -811,6 +819,12 @@ set_footer_height <- function(x, value) UseMethod('footer_height<-')
 #'
 #' pagesize(rtf) <- c(height = 12)
 #' # Sets height of page to 12 inches
+#'
+#' orientation(rtf) <- 'portrait'
+#' pagesize(rtf)
+#' #  width height
+#' #    8.5   12.0
+#' # Note: Despite changing orientation, attributes don't change
 #'
 #' @export
 #' @rdname pagesize

@@ -31,7 +31,7 @@ test_that("font returns the correct vector for an rtf/hf_line object", {
 test_that("font_size returns the correct font size", {
   x1 <- hf_line("text")
 
-  expect_equal(font_size(x1), NULL)
+  expect_equal(font_size(x1), NA)
 
   font_size(x1) <- 13
 
@@ -145,7 +145,7 @@ test_that("index throws error when given a bad parameter and will accept null va
   x <- hf_line()
 
   expect_error(index(x) <- "asdf", "is not TRUE")
-  expect_silent(index(x) <- NULL)
+  expect_silent(index(x) <- NA)
   expect_silent(index(x) <- 1)
   expect_silent(pharmaRTF::set_index(x, 1))
 })
