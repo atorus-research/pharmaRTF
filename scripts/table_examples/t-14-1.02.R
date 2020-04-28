@@ -16,7 +16,7 @@ source('./scripts/table_examples/funcs.R')
 adsl <- read_xpt(glue("{adam_lib}/adsl.xpt"))
 adsl$COMP24FL <- ordered(adsl$COMP24FL, c("Y", "N", NA))
 adsl$ARM <- ordered(adsl$ARM, c("Placebo", "Xanomeline Low Dose", "Xanomeline High Dose"))
-adsl$DCREASCD <- ordered(adsl$DCREASCD, c("Adverse Event",
+adsl$DCREASCD <- ordered(adsl$DCSREAS, c("Adverse Event",
                                           "Death",
                                           "Lack of Efficacy",
                                           "Lost to Follow-up",
@@ -91,14 +91,14 @@ term_df["\tMissing", ] <- "  0 (  0%)"
 
 # p-value
 term_p_1 <- adsl %>%
-  fish_p(DCREASCD, ARM)
+  fish_p(DCREASCD, ARM, width = 6)
 term_df <- attach_p(term_df, term_p_1)
 
-# term_p_2 <- adsl %>%
-#   select(ARM, DCREASCD) %>%
-#   mutate(loefl = ifelse(DCREASCD %in% 'LACK OF EFFICACY, PATIENT CAREGIVER PERCEPTION', 1, 0)) %>%
-#   fish_p(ARM ,loefl, width = 6)
-# term_df[5,] <- attach_p(term_df[5,], term_p_2)
+term_p_2 <- adsl %>%
+  select(ARM, DCREASCD) %>%
+  mutate(loefl = ifelse(DCREASCD %in% "Lack of Efficacy", 1, 0)) %>%
+  fish_p(ARM ,loefl, width = 6)
+term_df[5,] <- attach_p(term_df[5,], term_p_2)
 
 
 ## Add Table lables
@@ -131,6 +131,7 @@ ht <- combinedTable %>%
 huxtable::bottom_border(ht)[1, ] <- 1
 huxtable::bold(ht)[1, ] <- TRUE
 huxtable::align(ht)[1, ] <- 'center'
+huxtable::align(ht)[, 6] <- "center"
 huxtable::width(ht) <- 1.5
 huxtable::escape_contents(ht) <- FALSE
 huxtable::col_width(ht) <- c(.4, .12, .12, .12, .12, .12)
