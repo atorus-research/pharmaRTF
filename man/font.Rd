@@ -27,14 +27,14 @@ For \code{font()}, the font attribute of the object in the case of
   \code{set_font()} and \code{`font<-`()}, the modified object.
 }
 \description{
-These property function modify or return the fonts of an rtf_doc object or
-individual titles/footnotes objects of the hf_line class.
+These property functions modify or return the fonts of an \code{rtf_doc} object or
+individual titles/footnotes objects of the \code{hf_line} class.
 
-When used on an rtf_doc object to retrieve fonts, the distinct set of fonts
+When used on an \code{rtf_doc} object to retrieve fonts, the distinct set of fonts
 of all objects contained within the rtf_doc are returned. When used on an
-rtf_doc to set fonts, the default font for the RTF document is set.
+\code{rtf_doc} to set fonts, the default font for the RTF document is set.
 
-When used on titles/footnotes (hf_line objects), the font is either returned
+When used on titles/footnotes (\code{hf_line} objects), the font is either returned
 of set for that individual line.
 }
 \examples{
@@ -49,6 +49,14 @@ pharmaRTF::font(rtf)
 # Returns "Courier New" "Comic Sans"
 
 pharmaRTF::font(rtf) <- "Times"
+
+pharmaRTF::font(rtf)
 # Returns "Times" "Comic Sans"
+
+pharmaRTF::font(rtf$titles[[1]]) <- "Windings"
+
+pharmaRTF::font(rtf)
+# Returns "Times" "Windings"
+
 
 }

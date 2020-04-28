@@ -26,9 +26,17 @@ For \code{pagesize()}, the pagesize attribute of the \code{rtf_doc}
   object.
 }
 \description{
-These functions modify or return the \code{pagesize} attribute of a
+These property functions modify or return the \code{pagesize} attribute of a
 \code{rtf_doc} object. Stored as a named vector with \code{height} and
 \code{width} names.
+}
+\details{
+Note that when the orientation of the document is switched
+to 'portrait', the height and width will reverse when the RTF document is being
+written - but the attribute values will not change. This is because the default
+\code{rtf_doc} orientation is 'landscape', and switching the attributes of the
+object allows for a possibility of inadvertently overriding the functionality
+of the \code{orientation} attribute.
 }
 \examples{
 library(huxtable)
@@ -43,5 +51,11 @@ pagesize(rtf)
 
 pagesize(rtf) <- c(height = 12)
 # Sets height of page to 12 inches
+
+orientation(rtf) <- 'portrait'
+pagesize(rtf)
+#  width height
+#    8.5   12.0
+# Note: Despite changing orientation, attributes don't change
 
 }

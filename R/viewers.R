@@ -8,7 +8,7 @@
 view_hf <- function(doc, type=NULL) {
 
   # Take out the lines
-  lines = doc[[type]]
+  lines = order_lines(doc[[type]])
 
   # Stop if nothing to view
   assert_that(length(lines) > 0,
@@ -19,29 +19,32 @@ view_hf <- function(doc, type=NULL) {
 
   # Create the template data frame
 
-  df <- data.frame(
+  .data <- data.frame(
     text1 = character(rows),
     text2 = character(rows),
     align = character(rows),
     bold = logical(rows),
     italic = logical(rows),
     font = character(rows),
+    font_size = numeric(rows),
+    index = numeric(rows),
     stringsAsFactors = FALSE
   )
 
   # Loop the lines and update rows in data frame
   for (i in 1:length(lines)) {
     l <- lines[[i]]
-    df$text1[i] <- pharmaRTF::text(l)[1]
-    df$text2[i] <- pharmaRTF::text(l)[2]
-    df$align[i] <- pharmaRTF::align(l)
-    df$bold[i] <- pharmaRTF::bold(l)
-    df$italic[i] <- pharmaRTF::italic(l)
-    df$font[i] <- pharmaRTF::font(l)
+    .data$text1[i] <- text(l)[1]
+    .data$text2[i] <- text(l)[2]
+    .data$align[i] <- align(l)
+    .data$bold[i] <- bold(l)
+    .data$italic[i] <- italic(l)
+    .data$font[i] <- font(l)
+    .data$font_size[i] <- font_size(l)
+    .data$index[i] <- index(l)
   }
 
-  View(df)
-  df
+  .data
 }
 
 #' View title information

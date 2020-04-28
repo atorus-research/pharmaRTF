@@ -16,7 +16,7 @@ will be attached}
 \item{...}{A vector of \code{hf_line} objects to add passed to
 \code{add_hf()}}
 
-\item{replace}{If FALSE, lines will be appened/ordered with current
+\item{replace}{If FALSE, lines will be appended/ordered with current
 header/footer lines. If TRUE, lines will replace the existing content.}
 }
 \value{
