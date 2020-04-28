@@ -30,9 +30,29 @@ n_pct <- function(n, pct, n_width=3, pct_width=3) {
 
 ## Chem
 adlbc <- read_xpt(glue("{adam_lib}/adlbc.xpt")) %>%
-  filter(SAFFL == "Y", ANL01FL == "Y")
+  filter(SAFFL == "Y", ANL01FL == "Y", AVISITN != 99)
 
 adlbc$TRTP <- ordered(adlbc$TRTP, c("Placebo", "Xanomeline Low Dose", "Xanomeline High Dose"))
+adlbc$PARAM <- recode(adlbc$PARAM,
+  "Albumin (g/L)" = "ALBUMIN",
+  "Alkaline Phosphatase (U/L)" = "ALKALINE PHOSPHATASE",
+  "Alanine Aminotransferase (U/L)" = "ALANINE AMINOTRANSFERASE",
+  "Aspartate Aminotransferase (U/L)" = "ASPARTATE AMINOTRANSFERASE",
+  "Bilirubin (umol/L)" = "BILIRUBIN",
+  "Blood Urea Nitrogen (mmol/L)" = "UREA NITROGEN",
+  "Calcium (mmol/L)" = "CALCIUM",
+  "Cholesterol (mmol/L)" = "CHOLESTEROL",
+  "Creatine Kinase (U/L)" = "CREATINE KINASE",
+  "Chloride (mmol/L)" = "CHLORIDE",
+  "Creatinine (umol/L)" = "CREATININE",
+  "Gamma Glutamyl Transferase (U/L)" = "GAMMA GLUTAMYL TRANSFERASE",
+  "Glucose (mmol/L)" = "GLUCOSE",
+  "Potassium (mmol/L)" = "POTASSIUM",
+  "Sodium (mmol/L)" = "SODIUM",
+  "Phosphate (mmol/L)" = "PHOSPHATE",
+  "Protein (g/L)" = "PROTEIN",
+  "Urate (umol/L)" = "URATE"
+)
 adlbc$PARAM <- ordered(adlbc$PARAM, c(
   "ALBUMIN",
   "ALKALINE PHOSPHATASE",
@@ -53,19 +73,19 @@ adlbc$PARAM <- ordered(adlbc$PARAM, c(
   "PROTEIN",
   "URATE"
 ))
-adlbc$ANL01FL <- ordered(adlbc$ANL01FL, c("L", "N", "H"))
+adlbc$ANRIND <- ordered(adlbc$ANRIND, c("L", "N", "H"))
 
 adlbc2 <- adlbc %>%
-  filter(ANL01FL %in% c("L", "N", "H")) %>%
-  group_by(PARAM, TRTP, ANL01FL) %>%
-  complete(nesting(PARAM, TRTP, ANL01FL)) %>%
+  filter(!is.na(TRTP)) %>%
+  group_by(PARAM, TRTP, ANRIND) %>%
+  complete(nesting(PARAM, TRTP, ANRIND)) %>%
   summarise(N = n()) %>%
   group_by(PARAM, TRTP) %>%
   mutate(tot = sum(N))
 
-pvals <- adlbc2 %>%
-  filter(PARAM == "ALBUMIN") %>%
-  fish_p(tot, TRTP)
+# pvals <- adlbc %>%
+#   filter(PARAM == "ALBUMIN") %>%
+#   fish_p(ANRIND, TRTP)
 
 adlbc_pvals <- list()
 
@@ -77,14 +97,28 @@ for(i in seq(nrow(adlbc2)/9)) {
 
 adlbc3 <- adlbc2 %>%
   mutate(n_w_pct = n_pct(N, tot, n_width = 2)) %>%
-  pivot_wider(id_cols = PARAM,names_from = c(TRTP, ANL01FL), values_from = n_w_pct) %>%
+  pivot_wider(id_cols = PARAM,names_from = c(TRTP, ANRIND), values_from = n_w_pct) %>%
   add_column("p-val\\line [1]" = num_fmt(unlist(adlbc_pvals), digits = 3, int_len = 1, size = 5))
 
 ### Heme
 adlbh <- read_xpt(glue("{adam_lib}/adlbh.xpt")) %>%
-  filter(SAFETY == "Y", LBPRMXFL == "Y")
+  filter(SAFFL == "Y", ANL01FL == "Y", AVISITN != 99)
 
 adlbh$TRTP <- ordered(adlbh$TRTP, c("Placebo", "Xanomeline Low Dose", "Xanomeline High Dose"))
+adlbh$PARAM <- recode(adlbh$PARAM,
+  "Basophils (GI/L)" = "BASOPHILS",
+  "Eosinophils (GI/L)" = "EOSINOPHILS",
+  "Hematocrit" = "HEMATOCRIT",
+  "Hemoglobin (mmol/L)" = "HEMOGLOBIN",
+  "Lymphocytes (GI/L)" = "LYMPHOCYTES",
+  "Ery. Mean Corpuscular Hemoglobin (fmol(Fe))" = "ERY. MEAN CORPUSCULAR HEMOGLOBIN",
+  "Ery. Mean Corpuscular HGB Concentration (mmol/L)" = "ERY. MEAN CORPUSCULAR HB CONCENTRATION",
+  "Ery. Mean Corpuscular Volume (fL)" = "ERY. MEAN CORPUSCULAR VOLUME",
+  "Monocytes (GI/L)" = "MONOCYTES",
+  "Platelet (GI/L)" = "PLATELET",
+  "Erythrocytes (TI/L)" = "ERYTHROCYTES",
+  "Leukocytes (GI/L)" = "LEUKOCYTES"
+)
 adlbh$PARAM <- ordered(adlbh$PARAM, c(
   "BASOPHILS",
   "EOSINOPHILS",
@@ -99,13 +133,13 @@ adlbh$PARAM <- ordered(adlbh$PARAM, c(
   "ERYTHROCYTES",
   "LEUKOCYTES"
 ))
-adlbh$ANL01FL <- ordered(adlbh$ANL01FL, c("L", "N", "H"))
+adlbh$ANRIND <- ordered(adlbh$ANRIND, c("L", "N", "H"))
 
 
 adlbh2 <- adlbh %>%
-  filter(ANL01FL %in% c("L", "N", "H")) %>%
-  group_by(PARAM, TRTP, ANL01FL) %>%
-  complete(nesting(PARAM, TRTP, ANL01FL)) %>%
+  filter(!is.na(PARAM), !is.na(TRTP)) %>%
+  group_by(PARAM, TRTP, ANRIND) %>%
+  complete(nesting(PARAM, TRTP, ANRIND)) %>%
   summarise(N = n()) %>%
   group_by(PARAM, TRTP) %>%
   mutate(tot = sum(N))
@@ -121,7 +155,7 @@ for(i in seq(nrow(adlbh2)/9)) {
 
 adlbh3 <- adlbh2 %>%
   mutate(n_w_pct = n_pct(N, tot, n_width = 2)) %>%
-  pivot_wider(id_cols = PARAM,names_from = c(TRTP, ANL01FL), values_from = n_w_pct) %>%
+  pivot_wider(id_cols = PARAM,names_from = c(TRTP, ANRIND), values_from = n_w_pct) %>%
   add_column("p-val\\line [1]" = num_fmt(unlist(adlbh_pvals), digits = 3, int_len = 1, size = 5))
 
 final <- adlbc3 %>%
