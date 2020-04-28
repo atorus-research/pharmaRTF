@@ -54,24 +54,24 @@ adlbc$PARAM<- recode(adlbc$PARAM,
                     "Blood Urea Nitrogen (mmol/L)" = "UREA NITROGEN")
 #sort tests
 adlbc$PARAM <-ordered(adlbc$PARAM, c(
-  "ALANINE AMINOTRANSFERASE",
   "ALBUMIN",
   "ALKALINE PHOSPHATASE",
+  "ALANINE AMINOTRANSFERASE",
   "ASPARTATE AMINOTRANSFERASE",
   "BILIRUBIN",
+  "UREA NITROGEN",
   "CALCIUM",
-  "CHLORIDE",
   "CHOLESTEROL",
   "CREATINE KINASE",
+  "CHLORIDE",
   "CREATININE",
   "GAMMA GLUTAMYL TRANSFERASE",
   "GLUCOSE",
-  "PHOSPHATE",
   "POTASSIUM",
-  "PROTEIN",
   "SODIUM",
-  "URATE",
-  "UREA NITROGEN"
+  "PHOSPHATE",
+  "PROTEIN",
+  "URATE"
   ))
 adlbc$LBNRIND <- recode(adlbc$LBNRIND,
                         "LOW" = "L",
@@ -248,7 +248,8 @@ doc <- rtf_doc(ht2, header_rows = 3) %>% titles_and_footnotes_from_df(
   set_font_size(10) %>%
   set_ignore_cell_padding(TRUE) %>%
   set_column_header_buffer(top = 1) %>%
-  set_footer_height(1.1)
+  set_footer_height(1) %>%
+  set_header_height(1)
 
 
 # Write out the RTF
