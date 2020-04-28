@@ -28,7 +28,7 @@ pad_row <- function(df, r) {
 }
 
 dm <- read_xpt(glue("{sdtm_lib}/dm.xpt"))
-advs <- read_xpt(glue("{adam_lib}/advs2.xpt")) %>%
+advs <- read_xpt(glue("{adam_lib}/advs.xpt")) %>%
   filter(SAFFL == "Y", ANL01FL == "Y")
 vs <- read_xpt(glue("{sdtm_lib}/vs.xpt"))
 
@@ -38,15 +38,15 @@ vs <- read_xpt(glue("{sdtm_lib}/vs.xpt"))
 #   group_by(eotfl1) %>%
 #   mutate(EOTFL = ifelse(ADT == max(ADT) & eotfl1 == "Y", "Y", ""))
 
-advs <- ddply(advs, c("USUBJID", "PARAM"), function(x) {
-  maxdt <- max(
-    x[(x[, "ADT"] < x[, "TRTEDT"] & x[, "ABLFL"] != "Y"), "ADT"],
-      na.rm = TRUE)
-  x$EOTFL <- ifelse(x[, "ADT"] == maxdt, "Y", "N")
-  x
-})
+# advs <- ddply(advs, c("USUBJID", "PARAM"), function(x) {
+#   maxdt <- max(
+#     x[(x[, "ADT"] < x[, "TRTEDT"] & x[, "ABLFL"] != "Y"), "ADT"],
+#       na.rm = TRUE)
+#   x$EOTFL <- ifelse(x[, "ADT"] == maxdt, "Y", "N")
+#   x
+# })
 
-# advs$EOTFL <- ifelse(advs[, "AVISIT"] == "End of Treatment", "Y", "")
+advs$EOTFL <- ifelse(advs[, "AVISIT"] == "End of Treatment", "Y", "")
 advs$W24FL <- ifelse(advs[, "AVISIT"] == "Week 24", "Y", "")
 
 advs2 <- advs %>%
@@ -83,16 +83,20 @@ advs_w24 <- advs2 %>%
             min = min(AVAL),
             max = max(AVAL))
 
-advs_eot <- vs %>%
-  filter(VISITDY <= 168, VSTEST %in% c("Diastolic Blood Pressure", "Systolic Blood Pressure", "Pulse Rate", "Temperature")) %>%
-  group_by(USUBJID, VSTEST) %>%
-  mutate(EOTFL = VSDY == max(VSDY)) %>%
-  left_join(dm[,c("USUBJID", "ARM")], by = "USUBJID") %>%
-  group_by(VSTEST, VSTPT, ARM) %>%
-  filter(EOTFL) %>%
-  summarise(n = n())
+advs_eot <- advs2 %>%
+  filter(EOTFL == "Y", !is.na(AVAL)) %>%
+  group_by(PARAM, ATPT, TRTP) %>%
+  summarise(n = n(),
+            mean = mean(AVAL),
+            sd = sd(AVAL),
+            median = median(AVAL),
+            min = min(AVAL),
+            max = max(AVAL))
 
-advs3 <- rbind(advs_bl, advs_w24, advs_eot)
+advs3 <- rbind(advs_bl, advs_w24, advs_eot) %>%
+  arrange(PARAM, ATPT, TRTP) %>%
+  add_column("PRTFL" = rep(c("Baseline", "Week 24", "End of Trt."), 27), .before = 4)
+
 
 advs4 <- add_column(advs3, "N" = apply(advs3,
                                        1,
