@@ -1,5 +1,5 @@
-# t-14-3-12.R
-#   CDISC Pilot Table 14-3.12
+# t-14-3-13.R
+#   CDISC Pilot Table 14-3.13
 
 library(glue)
 library(tidyverse)
