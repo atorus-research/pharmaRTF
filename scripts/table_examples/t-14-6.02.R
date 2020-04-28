@@ -87,15 +87,16 @@ adlbc2 <- adlbc %>%
   complete(nesting(PARAM, TRTP, LBNRIND)) %>%
   summarise(N = n()) %>%
   group_by(PARAM, TRTP) %>%
-  mutate(tot = sum(N))
+  mutate(tot = sum(N)) %>%
+  arrange(PARAM, TRTP)
 
-adlbc_pvals <- 0
+adlbc_pvals <- c()
 
-# for(i in seq(nrow(adlbc2)/9)) {
-#   adlbc_pvals[i] <- round(fisher.test(
-#     matrix(unlist(adlbc2[((i-1)*9+1):(i*9), "N"]), nrow = 3, ncol = 3, byrow = TRUE)
-#   )$p.value, 3)
-# }
+for(i in seq(nrow(adlbc2)/9)) {
+  adlbc_pvals[i] <- round(fisher.test(
+    matrix(unlist(adlbc2[((i-1)*9+1):(i*9), "N"]), nrow = 3, ncol = 3, byrow = FALSE)
+  )$p.value, 3)
+}
 
 adlbc3 <- adlbc2 %>%
   mutate(n_w_pct = n_pct(N, tot, n_width = 2)) %>%
@@ -149,13 +150,13 @@ adlbh2 <- adlbh %>%
   group_by(PARAM, TRTP) %>%
   mutate(tot = sum(N))
 
-adlbh_pvals <- 0
+adlbh_pvals <- c()
 
-# for(i in seq(nrow(adlbh2)/9)) {
-#   adlbh_pvals[i] <- round(fisher.test(
-#     matrix(unlist(adlbh2[((i-1)*9+1):(i*9), "N"]), nrow = 3, ncol = 3, byrow = TRUE)
-#   )$p.value, 3)
-# }
+for(i in seq(nrow(adlbh2)/9)) {
+  adlbh_pvals[i] <- round(fisher.test(
+    matrix(unlist(adlbh2[((i-1)*9+1):(i*9), "N"]), nrow = 3, ncol = 3, byrow = TRUE)
+  )$p.value, 3)
+}
 
 
 adlbh3 <- adlbh2 %>%

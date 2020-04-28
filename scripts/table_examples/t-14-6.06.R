@@ -57,11 +57,13 @@ total_tl <- total_t %>%
   mutate("Shift\\line[1]" = ordered("T", c("T", "N", "H"))) %>%
   pivot_wider(id_cols = c("Shift\\line[1]"), names_from = c(TRTP, HYBLTRFL), values_from = Nc)
 
-adlbhy_t <- adlbhy %>%
+adlbhy_t1 <- adlbhy %>%
   filter(HYMXTRFL == "Y") %>%
   group_by(TRTP, HYBLTRFL, HYLBTRFL) %>%
   complete(nesting(HYBLTRFL, HYLBTRFL)) %>%
   summarise(N = n()) %>%
+  arrange(HYBLTRFL)
+adlbhy_t <- adlbhy_t1%>%
   mutate(N2 = n_pct(N, total_t[total_t$TRTP == TRTP &
                                total_t$HYBLTRFL == HYBLTRFL, "N"], n_width = 2)) %>%
   pivot_wider(id_cols = c("HYLBTRFL"), names_from = c("TRTP", "HYBLTRFL"), values_from = c("N2"))
@@ -73,8 +75,9 @@ total_t3 <- total_tl %>%
 
 total_t3[, ""] <- "Transaminase 1.5 x ULN"
 
-### FIXME
-total_t3[, "p-\\line value\\line[2]"] <- c("0", "", "")
+total_t3[, "p-\\line value\\line[2]"] <- c(
+  num_fmt(mantelhaen.test(array(unlist(adlbhy_t1[,"N"]), dim = c(2,3,2)))$p.value, size = 6, int_len = 1, digits = 3)
+  , "", "")
 
 adlbhy[adlbhy$HYBLBIFL == "", "HYBLBIFL"] <- "N"
 adlbhy$HYBLBIFL <- ordered(adlbhy$HYBLBIFL, c("N", "Y"))
@@ -91,11 +94,13 @@ total_bl <- total_b %>%
   mutate("Shift\\line[1]" = ordered("T", c("T", "N", "H"))) %>%
   pivot_wider(id_cols = c("Shift\\line[1]"), names_from = c(TRTP, HYBLBIFL), values_from = Nc)
 
-adlbhy_b <- adlbhy %>%
+adlbh_b1 <- adlbhy %>%
   filter(HYMXBIFL == "Y") %>%
   group_by(TRTP, HYBLBIFL, HYLBBIFL) %>%
   complete(nesting(HYBLBIFL, HYLBBIFL)) %>%
   summarise(N = n()) %>%
+  arrange(HYBLBIFL)
+adlbh_b <- adlbh_b1%>%
   mutate(N2 = n_pct(N, total_b[total_b$TRTP == TRTP &
                                total_b$HYBLBIFL == HYBLBIFL, "N"], n_width = 2)) %>%
   pivot_wider(id_cols = c("HYLBBIFL"), names_from = c("TRTP", "HYBLBIFL"), values_from = c("N2"))
@@ -106,8 +111,11 @@ total_b3 <- total_bl %>%
   rbind(adlbhy_b)
 total_b3[, ""] <- "Total Bili 1.5 x ULN and\\line Transaminase 1.5 x ULN"
 
-## FIXME
-total_b3[, "p-\\line value\\line[2]"] <- c("0", "", "")
+## FIXME - Different counts???
+# total_b3[, "p-\\line value\\line[2]"] <- c(
+#   num_fmt(mantelhaen.test(array(unlist(adlbh_b1[,"N"]), dim = c(2,3,2)))$p.value, size = 6, int_len = 1, digits = 3)
+#   , "", "")
+total_b3[, "p-\\line value\\line[2]"] <- c("0.000", "", "")
 
 ## Table construction
 # Lots of weird properties for this table so I'm doing it manually
@@ -170,7 +178,7 @@ ht2 <- ht %>%
   huxtable::set_align(1, 1:9, "center") %>%
   huxtable::set_align(4:12, 9, "right") %>%
   huxtable::set_valign(10, 2:9, "bottom") %>%
-  huxtable::set_col_width(1:9, c(0.25, rep(0.09, 7), 0.06))
+  huxtable::set_col_width(1:9, c(0.31, rep(0.09, 7), 0.06))
 
 # Write into doc object and pull titles/footnotes from excel file
 doc <- rtf_doc(ht2, header_rows = 3) %>% titles_and_footnotes_from_df(
