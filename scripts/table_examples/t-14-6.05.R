@@ -6,7 +6,6 @@ library(glue)
 library(tidyverse, lib.loc = .libPaths()[2])
 library(haven)
 library(tibble)
-library(coin)
 
 source('./scripts/table_examples/config.R')
 source('./scripts/table_examples/funcs.R')
@@ -41,95 +40,117 @@ n_pct <- function(n, pct, n_width=3, pct_width=3) {
 }
 
 adlbc <- read_xpt(glue("{adam_lib}/adlbc.xpt")) %>%
-  filter(SAFETY == "Y", BLTRFL != "")
+  filter(SAFFL == "Y", ANL01FL == "Y")
 adlbh <- read_xpt(glue("{adam_lib}/adlbh.xpt")) %>%
-  filter(SAFETY == "Y", BLTRFL != "")
-comb <- rbind(adlbc, adlbh) %>%
-  filter(LBTRMXFL == "Y")
+  filter(SAFFL == "Y", ANL01FL == "Y")
+comb <- rbind(adlbc, adlbh)
 
+
+comb$PARAM<- recode(comb$PARAM,
+                    "Alanine Aminotransferase (U/L)" = "ALANINE AMINOTRANSFERASE",
+                    "Albumin (g/L)" = "ALBUMIN",
+                    "Alkaline Phosphatase (U/L)" = "ALKALINE PHOSPHATASE",
+                    "Aspartate Aminotransferase (U/L)" = "ASPARTATE AMINOTRANSFERASE",
+                    "Bilirubin (umol/L)" = "BILIRUBIN",
+                    "Calcium (mmol/L)" = "CALCIUM",
+                    "Chloride (mmol/L)" = "CHLORIDE",
+                    "Cholesterol (mmol/L)" = "CHOLESTEROL",
+                    "Creatine Kinase (U/L)" = "CREATINE KINASE",
+                    "Creatinine (umol/L)" = "CREATININE",
+                    "Gamma Glutamyl Transferase (U/L)" = "GAMMA GLUTAMYL TRANSFERASE",
+                    "Glucose (mmol/L)" = "GLUCOSE",
+                    "Phosphate (mmol/L)" = "PHOSPHATE",
+                    "Potassium (mmol/L)" = "POTASSIUM",
+                    "Protein (g/L)" = "PROTEIN",
+                    "Sodium (mmol/L)" = "SODIUM",
+                    "Urate (umol/L)" = "URATE",
+                    "Blood Urea Nitrogen (mmol/L)" = "UREA NITROGEN",
+                    "Basophils (GI/L)" = "BASOPHILS",
+                    "Eosinophils (GI/L)" = "EOSINOPHILS",
+                    "Ery. Mean Corpuscular HGB Concentration (mmol/L)" = "ERY. MEAN CORPUSCULAR HB CONCENTRATION",
+                    "Ery. Mean Corpuscular Hemoglobin (fmol(Fe))" = "ERY. MEAN CORPUSCULAR HEMOGLOBIN",
+                    "Ery. Mean Corpuscular Volume (fL)" = "ERY. MEAN CORPUSCULAR VOLUME",
+                    "Erythrocytes (TI/L)" = "ERYTHROCYTES",
+                    "Hematocrit" = "HEMATOCRIT",
+                    "Hemoglobin (mmol/L)" = "HEMOGLOBIN",
+                    "Leukocytes (GI/L)" = "LEUKOCYTES",
+                    "Lymphocytes (GI/L)" = "LYMPHOCYTES",
+                    "Monocytes (GI/L)" = "MONOCYTES",
+                    "Platelet (GI/L)" = "PLATELET")
 #sort tests
-comb$LBTEST <-ordered(comb$LBTEST, c("ALANINE AMINOTRANSFERASE",
-                                     "ALBUMIN",
-                                     "ALKALINE PHOSPHATASE",
-                                     "ASPARTATE AMINOTRANSFERASE",
-                                     "BILIRUBIN",
-                                     "CALCIUM",
-                                     "CHLORIDE",
-                                     "CHOLESTEROL",
-                                     "CREATINE KINASE",
-                                     "CREATININE",
-                                     "GAMMA GLUTAMYL TRANSFERASE",
-                                     "GLUCOSE",
-                                     "PHOSPHATE",
-                                     "POTASSIUM",
-                                     "PROTEIN",
-                                     "SODIUM",
-                                     "URATE",
-                                     "UREA NITROGEN",
-                                     "BASOPHILS",
-                                     "EOSINOPHILS",
-                                     "ERY. MEAN CORPUSCULAR HB CONCENTRATION",
-                                     "ERY. MEAN CORPUSCULAR HEMOGLOBIN",
-                                     "ERY. MEAN CORPUSCULAR VOLUME",
-                                     "ERYTHROCYTES",
-                                     "HEMATOCRIT",
-                                     "HEMOGLOBIN",
-                                     "LEUKOCYTES",
-                                     "LYMPHOCYTES",
-                                     "MONOCYTES",
-                                     "PLATELET"))
+comb$PARAM <-ordered(comb$PARAM, c(
+                    "ALANINE AMINOTRANSFERASE",
+                    "ALBUMIN",
+                    "ALKALINE PHOSPHATASE",
+                    "ASPARTATE AMINOTRANSFERASE",
+                    "BILIRUBIN",
+                    "CALCIUM",
+                    "CHLORIDE",
+                    "CHOLESTEROL",
+                    "CREATINE KINASE",
+                    "CREATININE",
+                    "GAMMA GLUTAMYL TRANSFERASE",
+                    "GLUCOSE",
+                    "PHOSPHATE",
+                    "POTASSIUM",
+                    "PROTEIN",
+                    "SODIUM",
+                    "URATE",
+                    "UREA NITROGEN",
+                    "BASOPHILS",
+                    "EOSINOPHILS",
+                    "ERY. MEAN CORPUSCULAR HB CONCENTRATION",
+                    "ERY. MEAN CORPUSCULAR HEMOGLOBIN",
+                    "ERY. MEAN CORPUSCULAR VOLUME",
+                    "ERYTHROCYTES",
+                    "HEMATOCRIT",
+                    "HEMOGLOBIN",
+                    "LEUKOCYTES",
+                    "LYMPHOCYTES",
+                    "MONOCYTES",
+                    "PLATELET"))
 comb$TRTP <- ordered(comb$TRTP, c("Placebo", "Xanomeline Low Dose", "Xanomeline High Dose"))
-comb$BLTRFL <- ordered(comb$BLTRFL, c("N", "H"))
-comb$LBTRFL <- ordered(comb$LBTRFL, c("N", "H"))
+comb$BNRIND <- ordered(comb$BNRIND, c("N", "H"))
+comb$ANRIND <- ordered(comb$ANRIND, c("N", "H"))
 
+comb <- comb %>%
+  filter(!is.na(comb$PARAM), !is.na(comb$TRTP), !is.na(comb$BNRIND), !is.na(comb$ANRIND), AVISITN != 99)
 
 total_bltrfl1 <- comb%>%
-  filter(!is.na(TRTP), !is.na(BLTRFL), !is.na(LBTRFL), !is.na(LBTEST)) %>%
-  group_by(LBTEST, TRTP, BLTRFL) %>%
-  complete(nesting(TRTP, BLTRFL)) %>%
+  filter(!is.na(TRTP), !is.na(BNRIND), !is.na(ANRIND), !is.na(PARAM)) %>%
+  group_by(PARAM, TRTP, BNRIND) %>%
+  complete(nesting(TRTP, BNRIND)) %>%
   summarise(N = n())
 total_bltrfl <- total_bltrfl1 %>%
-  mutate(LBTRFL = ordered("T", c("T", "N", "H"))) %>%
-  pivot_wider(id_cols = c(LBTEST, LBTRFL), names_from = c(TRTP, BLTRFL), values_from = N)
+  mutate(ANRIND = ordered("T", c("T", "N", "H"))) %>%
+  pivot_wider(id_cols = c(PARAM, ANRIND), names_from = c(TRTP, BNRIND), values_from = N) %>%
+  ungroup()
 
 comb2 <- comb %>%
-  filter( !is.na(TRTP), !is.na(BLTRFL), !is.na(LBTRFL), !is.na(LBTEST)) %>%
-  group_by(LBTEST, TRTP, BLTRFL, LBTRFL) %>%
-  complete(nesting(BLTRFL, LBTRFL)) %>%
+  group_by(PARAM, TRTP, BNRIND, ANRIND) %>%
+  complete(nesting(BNRIND, ANRIND)) %>%
   summarise(N = n()) %>%
-  arrange(LBTEST, BLTRFL, LBTRFL, TRTP)
+  ungroup()
 
-comb2_test <- comb2 %>%
-  filter(LBTEST == "BILIRUBIN")
+##FIXME
+pvals <- comb2 %>%
+  group_by(PARAM) %>%
+  summarise(val = cmh_p(., ANRIND ~ TRTP | BNRIND))
 
-pvalues <- c()
-for(i in seq(nrow(comb2)/12)) {
-  arr <- array(
-    unlist(comb2[((i-1)*12 + 1):(i * 12), "N"]),
-    dim = c(3,2,2)
-  )
-
-  if(all(arr[,,2] == 0)) {
-    pvalues[i] <- ""
-  } else {
-    pvalues[i] <- num_fmt(as.numeric(pvalue(cmh_test(as.table(arr)))), int_len = 1, digits = 3, size = 5)
-  }
-
-}
-
-
-comb3 <- comb2 %>%
-  mutate(n2 = n_pct(N, total_bltrfl1[total_bltrfl1$LBTEST == LBTEST &
-                                       total_bltrfl1$TRTP == TRTP     &
-                                       total_bltrfl1$BLTRFL == BLTRFL, "N"], n_width = 2)) %>%
-  pivot_wider(id_cols = c(LBTEST, LBTRFL), names_from = c(TRTP, BLTRFL), values_from = n2)
+  comb3 <- comb2 %>%
+    group_by(PARAM, TRTP, BNRIND) %>%
+    mutate(n2 = n_pct(N, total_bltrfl1[total_bltrfl1$PARAM == PARAM &
+                                         total_bltrfl1$TRTP == TRTP  &
+                                         total_bltrfl1$BNRIND == BNRIND, "N"], n_width = 2)) %>%
+    ungroup() %>%
+    pivot_wider(id_cols = c(PARAM, ANRIND), names_from = c(TRTP, BNRIND), values_from = n2)
 
 comb4 <- comb3[!apply(comb3, 1, function(x) {
   all(x[4:8] ==  " 0      ") & all(x[2] == "H")
 }), ]
 
 
-comb4$LBTRFL <- ordered(comb4$LBTRFL, c("T", "N", "H"))
+comb4$ANRIND <- ordered(comb4$ANRIND, c("T", "N", "H"))
 
 total_bltrfl$Placebo_N <- num_fmt(total_bltrfl$Placebo_N, size = 2, int_len = 2)
 total_bltrfl$Placebo_H <- num_fmt(total_bltrfl$Placebo_H, size = 2, int_len = 2)
@@ -138,31 +159,37 @@ total_bltrfl$`Xanomeline Low Dose_H` <- num_fmt(total_bltrfl$`Xanomeline Low Dos
 total_bltrfl$`Xanomeline High Dose_N` <- num_fmt(total_bltrfl$`Xanomeline High Dose_N`, size = 2, int_len = 2)
 total_bltrfl$`Xanomeline High Dose_H` <- num_fmt(total_bltrfl$`Xanomeline High Dose_H`, size = 2, int_len = 2)
 
+
+
 comb5 <- comb4 %>%
   rbind(total_bltrfl) %>%
-  arrange(LBTEST, LBTRFL)
+  arrange(PARAM, ANRIND)
 
-comb5$LBTRFL <- as.character(recode(comb5$LBTRFL,
+comb5$ANRIND <- as.character(recode(comb5$ANRIND,
                                     "T" = "n",
                                     "N" = "Normal",
                                     "H" = "High"))
 
-comb5[unlist(comb5[,2] == "n")[,1], 9] <- pvalues
+comb5[unlist(comb5[,2] == "n")[,1], 9] <- pvals$val
 comb5 <- pad_row(comb5, which(comb5[,2] == "n")) %>%
   ungroup() %>%
-  add_row("LBTEST" = NA, .before = 1) %>%
-  add_row("LBTEST" = NA, .before = 1)
+  add_row("PARAM" = NA, .before = 1) %>%
+  add_row("PARAM" = NA, .before = 1)
 comb5 <- comb5 %>%
-  add_row("LBTEST" = NA, .before = 65) %>%
-  add_row("LBTEST" = NA, .before = 65)
+  add_row("PARAM" = NA, .before = 65) %>%
+  add_row("PARAM" = NA, .before = 65)
 
-comb5[,1] <- as.character(comb5$LBTEST)
+comb5[!(unlist(comb5[,2]) %in% "n") , 1] <- NA
+
+comb5 <- comb5[!apply(comb5, 1, function(x) {
+  all(x[4:9] ==  " 0      ") & all(x[3] == "High")
+}), ]
+
+comb5[,1] <- as.character(comb5$PARAM)
 comb5[2,1] <- "CHEMISTRY"
 comb5[3,1] <- "----------"
 comb5[66,1] <- "HEMATOLOGY"
 comb5[67,1] <- "----------"
-
-comb5[!(unlist(comb5[,2]) %in% "n") , 1] <- NA
 
 names(comb5) <- c(
   "",
@@ -175,11 +202,6 @@ names(comb5) <- c(
   "High at Baseline",
   "p-\\line value\\line[2]"
 )
-
-comb5 <- comb5[!apply(comb5, 1, function(x) {
-  all(x[4:9] ==  " 0      ") & all(x[3] == "High")
-}), ]
-
 
 dm <- read_xpt(glue("{sdtm_lib}/dm.xpt"))
 headers <- dm %>%
@@ -196,8 +218,8 @@ ht <- comb5 %>%
 
 ht <- pad_row(ht, c(1,1))
 ht[1, 3] <- headers[1, "label"]
-ht[1, 5] <- headers[2, "label"]
-ht[1, 7] <- headers[3, "label"]
+ht[1, 5] <- headers[3, "label"]
+ht[1, 7] <- headers[2, "label"]
 
 ht2 <- ht %>%
   huxtable::merge_cells(1, 3:4) %>%
@@ -214,7 +236,7 @@ ht2 <- ht %>%
   huxtable::set_align(3, 1:9, "center") %>%
   huxtable::set_align(1, 1:9, "center") %>%
   huxtable::set_align(4:102, 9, "right") %>%
-  huxtable::set_col_width(1:9, c(0.25, rep(0.09, 7), 0.06))
+  huxtable::set_col_width(1:9, c(0.23, rep(0.09, 7), 0.06))
 
 
 # Write into doc object and pull titles/footnotes from excel file
