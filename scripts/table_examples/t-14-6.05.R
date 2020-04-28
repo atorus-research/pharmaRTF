@@ -1,6 +1,5 @@
 ## 14-6.05
 
-library(vcdExtra)
 library(huxtable)
 library(glue)
 library(tidyverse)
@@ -261,8 +260,8 @@ doc <- rtf_doc(ht2, header_rows = 3) %>% titles_and_footnotes_from_df(
   set_font_size(10) %>%
   set_ignore_cell_padding(TRUE) %>%
   set_column_header_buffer(top = 1) %>%
-  set_header_height(0.75) %>%
-  set_footer_height(1)
+  set_header_height(1) %>%
+  set_footer_height(1.3)
 
 
 # Write out the RTF
