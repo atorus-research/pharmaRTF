@@ -2,7 +2,7 @@
 
 library(huxtable)
 library(glue)
-library(tidyverse)
+library(tidyverse, lib.loc = .libPaths()[2])
 library(haven)
 
 source('./scripts/table_examples/config.R')
@@ -38,7 +38,7 @@ n_pct <- function(n, pct, n_width=3, pct_width=3) {
 }
 
 # Old data used because new data is missing columns
-adlbhy <- read_xpt(glue("{adam_lib}/adlbhy.xpt")) %>%
+adlbhy <- read_xpt(glue("{old_adam_lib}/adlbhy.xpt")) %>%
   filter(SAFETY == "Y")
 
 adlbhy[adlbhy$HYBLTRFL == "", "HYBLTRFL"] <- "N"
@@ -51,18 +51,20 @@ total_t <- adlbhy %>%
   filter(!is.na(TRTP), !is.na(HYBLTRFL), HYMXTRFL == "Y") %>%
   group_by(TRTP, HYBLTRFL) %>%
   complete(nesting(TRTP, HYBLTRFL)) %>%
-  summarise(N = n())
+  summarise(N = n(),
+            Nc = num_fmt(n(), size = 2, int_len = 2))
 total_tl <- total_t %>%
   mutate("Shift\\line[1]" = ordered("T", c("T", "N", "H"))) %>%
-  pivot_wider(id_cols = c("Shift\\line[1]"), names_from = c(TRTP, HYBLTRFL), values_from = N)
+  pivot_wider(id_cols = c("Shift\\line[1]"), names_from = c(TRTP, HYBLTRFL), values_from = Nc)
 
 adlbhy_t <- adlbhy %>%
   filter(HYMXTRFL == "Y") %>%
   group_by(TRTP, HYBLTRFL, HYLBTRFL) %>%
   complete(nesting(HYBLTRFL, HYLBTRFL)) %>%
-  summarise(N = n_pct(n(), sum(total_t[total_t$TRTP == unique(.$TRTP) &
-                                   total_t$HYBLTRFL == unique(.$HYBLTRFL), "N"]), n_width = 2)) %>%
-  pivot_wider(id_cols = c("HYLBTRFL"), names_from = c("TRTP", "HYBLTRFL"), values_from = c("N"))
+  summarise(N = n()) %>%
+  mutate(N2 = n_pct(N, total_t[total_t$TRTP == TRTP &
+                               total_t$HYBLTRFL == HYBLTRFL, "N"], n_width = 2)) %>%
+  pivot_wider(id_cols = c("HYLBTRFL"), names_from = c("TRTP", "HYBLTRFL"), values_from = c("N2"))
 
 names(adlbhy_t)[1] <- "Shift\\line[1]"
 
@@ -70,6 +72,8 @@ total_t3 <- total_tl %>%
   rbind(adlbhy_t)
 
 total_t3[, ""] <- "Transaminase 1.5 x ULN"
+
+### FIXME
 total_t3[, "p-\\line value\\line[2]"] <- c("0", "", "")
 
 adlbhy[adlbhy$HYBLBIFL == "", "HYBLBIFL"] <- "N"
@@ -81,24 +85,28 @@ total_b <- adlbhy %>%
   filter(!is.na(TRTP), !is.na(HYBLBIFL), HYMXTRFL == "Y") %>%
   group_by(TRTP, HYBLBIFL) %>%
   complete(nesting(TRTP, HYBLBIFL)) %>%
-  summarise(N = n())
+  summarise(N = n(),
+            Nc = num_fmt(n(), size = 2, int_len = 2))
 total_bl <- total_b %>%
   mutate("Shift\\line[1]" = ordered("T", c("T", "N", "H"))) %>%
-  pivot_wider(id_cols = c("Shift\\line[1]"), names_from = c(TRTP, HYBLBIFL), values_from = N)
+  pivot_wider(id_cols = c("Shift\\line[1]"), names_from = c(TRTP, HYBLBIFL), values_from = Nc)
 
 adlbhy_b <- adlbhy %>%
   filter(HYMXBIFL == "Y") %>%
   group_by(TRTP, HYBLBIFL, HYLBBIFL) %>%
   complete(nesting(HYBLBIFL, HYLBBIFL)) %>%
-  summarise(n = n_pct(n(), sum(total_b[total_b$TRTP == unique(.$TRTP) &
-                                         total_b$HYBLBIFL == unique(.$HYBLBIFL), "N"]), n_width = 2)) %>%
-  pivot_wider(id_cols = c("HYLBBIFL"), names_from = c("TRTP", "HYBLBIFL"), values_from = c("n"))
+  summarise(N = n()) %>%
+  mutate(N2 = n_pct(N, total_b[total_b$TRTP == TRTP &
+                               total_b$HYBLBIFL == HYBLBIFL, "N"], n_width = 2)) %>%
+  pivot_wider(id_cols = c("HYLBBIFL"), names_from = c("TRTP", "HYBLBIFL"), values_from = c("N2"))
 
 names(adlbhy_b)[1] <- "Shift\\line[1]"
 
 total_b3 <- total_bl %>%
   rbind(adlbhy_b)
 total_b3[, ""] <- "Total Bili 1.5 x ULN and\\line Transaminase 1.5 x ULN"
+
+## FIXME
 total_b3[, "p-\\line value\\line[2]"] <- c("0", "", "")
 
 ## Table construction
