@@ -30,10 +30,10 @@ n_pct <- function(n, pct, n_width=3, pct_width=3) {
 
 ## Chem
 adlbc <- read_xpt(glue("{adam_lib}/adlbc.xpt")) %>%
-  filter(SAFETY == "Y", LBPRMXFL == "Y")
+  filter(SAFFL == "Y", ANL01FL == "Y")
 
 adlbc$TRTP <- ordered(adlbc$TRTP, c("Placebo", "Xanomeline Low Dose", "Xanomeline High Dose"))
-adlbc$LBTEST <- ordered(adlbc$LBTEST, c(
+adlbc$PARAM <- ordered(adlbc$PARAM, c(
   "ALBUMIN",
   "ALKALINE PHOSPHATASE",
   "ALANINE AMINOTRANSFERASE",
@@ -53,15 +53,19 @@ adlbc$LBTEST <- ordered(adlbc$LBTEST, c(
   "PROTEIN",
   "URATE"
 ))
-adlbc$LBPRFL <- ordered(adlbc$LBPRFL, c("L", "N", "H"))
+adlbc$ANL01FL <- ordered(adlbc$ANL01FL, c("L", "N", "H"))
 
 adlbc2 <- adlbc %>%
-  filter(LBPRFL %in% c("L", "N", "H")) %>%
-  group_by(LBTEST, TRTP, LBPRFL) %>%
-  complete(nesting(LBTEST, TRTP, LBPRFL)) %>%
+  filter(ANL01FL %in% c("L", "N", "H")) %>%
+  group_by(PARAM, TRTP, ANL01FL) %>%
+  complete(nesting(PARAM, TRTP, ANL01FL)) %>%
   summarise(N = n()) %>%
-  group_by(LBTEST, TRTP) %>%
+  group_by(PARAM, TRTP) %>%
   mutate(tot = sum(N))
+
+pvals <- adlbc2 %>%
+  filter(PARAM == "ALBUMIN") %>%
+  fish_p(tot, TRTP)
 
 adlbc_pvals <- list()
 
@@ -73,7 +77,7 @@ for(i in seq(nrow(adlbc2)/9)) {
 
 adlbc3 <- adlbc2 %>%
   mutate(n_w_pct = n_pct(N, tot, n_width = 2)) %>%
-  pivot_wider(id_cols = LBTEST,names_from = c(TRTP, LBPRFL), values_from = n_w_pct) %>%
+  pivot_wider(id_cols = PARAM,names_from = c(TRTP, ANL01FL), values_from = n_w_pct) %>%
   add_column("p-val\\line [1]" = num_fmt(unlist(adlbc_pvals), digits = 3, int_len = 1, size = 5))
 
 ### Heme
@@ -81,7 +85,7 @@ adlbh <- read_xpt(glue("{adam_lib}/adlbh.xpt")) %>%
   filter(SAFETY == "Y", LBPRMXFL == "Y")
 
 adlbh$TRTP <- ordered(adlbh$TRTP, c("Placebo", "Xanomeline Low Dose", "Xanomeline High Dose"))
-adlbh$LBTEST <- ordered(adlbh$LBTEST, c(
+adlbh$PARAM <- ordered(adlbh$PARAM, c(
   "BASOPHILS",
   "EOSINOPHILS",
   "HEMATOCRIT",
@@ -95,15 +99,15 @@ adlbh$LBTEST <- ordered(adlbh$LBTEST, c(
   "ERYTHROCYTES",
   "LEUKOCYTES"
 ))
-adlbh$LBPRFL <- ordered(adlbh$LBPRFL, c("L", "N", "H"))
+adlbh$ANL01FL <- ordered(adlbh$ANL01FL, c("L", "N", "H"))
 
 
 adlbh2 <- adlbh %>%
-  filter(LBPRFL %in% c("L", "N", "H")) %>%
-  group_by(LBTEST, TRTP, LBPRFL) %>%
-  complete(nesting(LBTEST, TRTP, LBPRFL)) %>%
+  filter(ANL01FL %in% c("L", "N", "H")) %>%
+  group_by(PARAM, TRTP, ANL01FL) %>%
+  complete(nesting(PARAM, TRTP, ANL01FL)) %>%
   summarise(N = n()) %>%
-  group_by(LBTEST, TRTP) %>%
+  group_by(PARAM, TRTP) %>%
   mutate(tot = sum(N))
 
 adlbh_pvals <- list()
@@ -117,17 +121,17 @@ for(i in seq(nrow(adlbh2)/9)) {
 
 adlbh3 <- adlbh2 %>%
   mutate(n_w_pct = n_pct(N, tot, n_width = 2)) %>%
-  pivot_wider(id_cols = LBTEST,names_from = c(TRTP, LBPRFL), values_from = n_w_pct) %>%
+  pivot_wider(id_cols = PARAM,names_from = c(TRTP, ANL01FL), values_from = n_w_pct) %>%
   add_column("p-val\\line [1]" = num_fmt(unlist(adlbh_pvals), digits = 3, int_len = 1, size = 5))
 
 final <- adlbc3 %>%
   ungroup() %>%
-  add_row("LBTEST" = "----------", .before = 1) %>%
-  add_row("LBTEST" = "CHEMISTRY", .before = 1) %>%
-  add_row("LBTEST" = "", .before = 1) %>%
-  add_row("LBTEST" = "") %>%
-  add_row("LBTEST" = "HEMATOLOGY") %>%
-  add_row("LBTEST" = "----------") %>%
+  add_row("PARAM" = "----------", .before = 1) %>%
+  add_row("PARAM" = "CHEMISTRY", .before = 1) %>%
+  add_row("PARAM" = "", .before = 1) %>%
+  add_row("PARAM" = "") %>%
+  add_row("PARAM" = "HEMATOLOGY") %>%
+  add_row("PARAM" = "----------") %>%
   rbind(ungroup(adlbh3))
 
 
