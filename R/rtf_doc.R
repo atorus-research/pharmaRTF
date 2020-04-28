@@ -39,15 +39,19 @@ supported_table_types <- c('huxtable', 'gt_tbl')
 #' \item{margins - Inches of margins in the document as a named vector. Names
 #'   are \code{top}, \code{bottom}, \code{left}, and \code{right}. Defaults to 1
 #'   for all.}
-#' \item{orientation - Orientation of the document. The actual height and width
-#'   of the document is determined by the pagesize attribute, this is just a
-#'   flag for an RTF reader. Defaults to 'landscape'.}
+#' \item{orientation - Orientation of the document. Defaults to 'landscape'. When 'portrait',
+#'   the height and width are switched while writing the document to effectively rotate the document
+#'   90 degrees. For example, if width is 11" and height is 8.5", while writing the document will have a
+#'   height of 11" and a width of 8.5". Additionally, when 'landscape', a keyword is written
+#'   to the RTF to indicate that the document is landscape. .}
 #' \item{header_height - Height of the header where the titles and column
 #'   headers are displayed. Defaults to .5 inches.}
 #' \item{footer_height - Height of the footer where the footnotes are displayed.
 #'   Defaults to .5 inches.}
 #' \item{pagesize - Size of the page in inches. Defaults to 8.5(height) by
-#'   11(width).}
+#'   11(width). These defaults align with the default orientation of 'landscape'. When the orientation
+#'   is switched to 'portrait', the height and width will switch while the RTF document is being generated,
+#'   but the document attributes themselves will not change.}
 #' \item{header_rows - Huxtable table only. Number of rows that are defined as
 #'   the header that will be repeated across pages. Defaults to 1}
 #' \item{ignore_cell_padding - Huxtable table only. Flag to ignore cell padding padding
@@ -172,7 +176,7 @@ new_rtf_doc <- function(table, titles, footnotes) {
             orientation= 'landscape',
             header_height= .5,
             footer_height= .5,
-            pagesize= c(height=8.5, width=11),
+            pagesize= c(width=11, height=8.5),
             font= 'Courier New',
             font_size= 12,
             ignore_cell_padding= FALSE,

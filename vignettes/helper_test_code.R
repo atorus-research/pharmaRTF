@@ -73,13 +73,28 @@ eval_test_code <- function(one_file) {
       }
     ))})
 
+  # if(file.exists("~/pharmaRTF/vignettes/Validation/vur_auto.Rds")) {
+  #   vur <- readRDS("~/pharmaRTF/vignettes/Validation/vur_auto.Rds")
+  #   out$Log <- NA
+  #   print(out)
+  #   print(vur)
+  #   for(i in seq(nrow(out))){
+  #     test_i <- out[i, "Test"]
+  #     if(any(vur$ID %in% test_i)) {
+  #       out[which(vur$ID %in% test_i), "Log"] <- vur[vur$ID %in% test_i, "Log"]
+  #     }
+  #   }
+  # }
+
   # formatting
   rownames(out) <- NULL
   kable(
     out,
-    escape = FALSE,
-    col.names = c("Test", "Results", "Pass/Fail")) %>%
-    kableExtra::kable_styling()
+    escape = TRUE,
+    col.names = c("Check", "Results", "Pass/Fail"),
+    format = "latex",
+    longtable = TRUE) %>%
+    kable_styling(latex_options = c("repeat_header"))
 }
 
 #' @title Generate at data.frame from the test code roxygen documentation blocks.
@@ -116,11 +131,10 @@ scrape_test_code_block <- function(one_file){
     } else {
       roxy_block <- gsub(pattern = "#' ", replacement = "",
                          out_cleaned[grep(pattern = "#' ", out_cleaned)])
-      title_line <-  strsplit(split = '\\"|\\\'',
-                              out_cleaned[grepl(pattern = "test_that", x = out_cleaned)])[[1]][2]
-      return(data.frame(title = title_line,
-                        last_update_by = get_section_contents("Last updated by", roxy_block),
-                        last_updated_date = lubridate::parse_date_time(get_section_contents("last update date", roxy_block), orders = c("ymd", "mdy")),
+      if(length(roxy_block) == 0) return(data.frame())
+      return(data.frame(title = str_replace(basename(one_file), "_", "\\\\_"),
+                        last_update_by = get_section_contents("Updated By", roxy_block),
+                        last_updated_date = lubridate::parse_date_time(get_section_contents("Updated Date", roxy_block), orders = c("ymd", "mdy")),
                         stringsAsFactors = FALSE))
     }
   }))
@@ -211,42 +225,76 @@ make_test_case_rmd <- function(file) {
   # Read in the test data from the CSV
   test_case_df <- read.csv(file, stringsAsFactors=FALSE)
 
-  # Loop each case number and write out the text
-  for (caseno in unique(test_case_df$CaseNo)) {
-    # Prepare the output rows
-    dat <- test_case_df %>%
-      # Filter to current case
-      filter(CaseNo == caseno) %>%
-      # Requires rowwise operations
-      rowwise() %>%
-      # Append any necessary text to the front of lines based on type
-      mutate(out = case_when(
-        # Title
-        LineType == "Title" ~ paste("#' @title", Text),
+  # Prepare the output rows
+  dat <- test_case_df %>%
+    # Requires rowwise operations
+    rowwise() %>%
+    # Append any necessary text to the front of lines based on type
+    mutate(out = case_when(
+      # Title
+      LineType == "Title" ~ paste("#' @title", Text),
 
-        # Last Updated By
-        LineType == "UpdatedBy" ~ paste("#' @section Last Updated By:\n#'", Text),
+      # Last Updated By
+      LineType == "UpdatedBy" ~ paste("#' @section Last Updated By:\n#'", Text),
 
-        # Last Updated Date
-        LineType == "UpdatedDate" ~ paste("#' @section Last Update Date:\n#'", Text),
+      # Last Updated Date
+      LineType == "UpdatedDate" ~ paste("#' @section Last Update Date:\n#'", Text),
 
-        # Setup
-        LineType == "Setup" ~ paste0(paste(rep(' ', Level*2), collapse=''), "+ Setup: ", Text, "\n"),
+      # Setup
+      LineType == "Setup" ~ paste0(paste(rep(' ', Level*2), collapse=''), "+ Setup: ", Text, "\n"),
 
-        # Test Cases
-        LineType == "TestCases" ~ paste0(paste(rep(' ', Level*2), collapse=''), "+ ", ID, ": ", Text)
-      ))
+      # Test Cases
+      LineType == "TestCases" & is.na(CheckID) ~ paste0(paste(rep(' ', Level*2), collapse=''), "+ ", TestID, ": ", Text),
 
-    # Create the file text vector - need to write 'Test Cases' inbetween the headers lines and the rest of the text
-    outfile <- c(
-      dat[!(dat$LineType %in% c("TestCases", "Setup")), ][['out']],
-      c('', '+ _Test Cases_', ''),
-      dat[dat$LineType %in% c("TestCases", "Setup"), ][['out']]
-    )
+      # Test Cases
+      LineType == "TestCases" & !is.na(CheckID) ~ paste0(paste(rep(' ', Level*2), collapse=''), "+ ", TestID, ".", CheckID, ": ", Text)
+    ))
 
-    # Write the lines to each output file
-    writeLines(outfile, paste0('vignettes/Validation/Test_Cases/test_case_', str_pad(caseno, width=3, pad="0"), '.Rmd'))
-  }
+  # Create the file text vector - need to write 'Test Cases' inbetween the headers lines and the rest of the text
+  outfile <- c(
+    dat[!(dat$LineType %in% c("TestCases", "Setup")), ][['out']],
+    c('', 'This section contains details of each test executed. Checks verifying each test are included as sub-bullets of their associated test.', ''),
+    dat[dat$LineType %in% c("TestCases", "Setup"), ][['out']]
+  )
+
+  # Write the lines to each output file
+  writeLines(outfile, 'vignettes/Validation/Test_Cases/test_cases.Rmd')
 }
 
+#' @name make_specification_rmd
+#' @title Convert a given CSV dataset into a specificcation RMD file
+#' @param file character vector specifying CSV file location
+make_specification_rmd <- function(file) {
+  require(stringr)
 
+  # Read in the test data from the CSV
+  specs_df <- read.csv(file, stringsAsFactors=FALSE)
+
+  # Prepare the output rows
+  dat <- specs_df %>%
+    # Requires rowwise operations
+    rowwise() %>%
+    # Append any necessary text to the front of lines based on type
+    mutate(out = case_when(
+      # Title
+      LineType == "Title" ~ paste("#' @title", Text),
+
+      # Last Updated By
+      LineType == "UpdatedBy" ~ paste("#' @section Last Updated By:\n#'", Text),
+
+      # Last Updated Date
+      LineType == "UpdatedDate" ~ paste("#' @section Last Update Date:\n#'", Text),
+
+      # Test Cases
+      LineType == "Specs" ~ paste0(paste(rep(' ', Level*2), collapse=''), "+ ", SpecID, ": ", Text)
+    ))
+
+  # Create the file text vector - need to write 'Test Cases' inbetween the headers lines and the rest of the text
+  outfile <- c(
+    dat[dat$LineType != 'Specs', ][['out']],
+    dat[dat$LineType == 'Specs', ][['out']]
+  )
+
+  # Write the lines to each output file
+  writeLines(outfile, 'vignettes/Validation/Specifications/specification.Rmd')
+}

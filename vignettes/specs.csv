@@ -1,0 +1,35 @@
+﻿LineType,Level,SpecID,Text
+UpdatedBy,0,,Ashley Tarasiewicz
+UpdatedDate,0,,4/24/2020
+Specs,0,A,The RTF written out to a file can be opened in Microsoft Word
+Specs,0,B,Paging of the table works appropriately 
+Specs,0,C,Changes to document level margins are reflected in the output document
+Specs,0,D,Changes to document level header and footer height are reflected in the output document
+Specs,0,E,Changes to document level page size are reflected in the output document
+Specs,0,F,Changes to document level orientation are reflected in the output document
+Specs,0,G,Changes to document level default font size are reflected in the output document
+Specs,0,H,Changes to document level default font are reflected in the output document
+Specs,0,I,Changes to document level header rows are reflected in the output document
+Specs,0,J,Changes to document level column header buffer are reflected in the output document
+Specs,0,K,Changes to document level ignore cell padding are reflected in the output document
+Specs,0,L,Titles and footnotes can be manually entered in the RTF document creation
+Specs,0,M,Titles and footnotes can be manually entered using add_titles/add_footnotes
+Specs,0,N,Titles and footnotes can be manually entered importing from a separate file using a reader
+Specs,0,O,PAGE_FORMAT for titles and footnotes works properly
+Specs,0,P,DATE_FORMAT for titles and footnotes works properly
+Specs,0,Q,FILE_PATH for titles and footnotes works properly
+Specs,0,R,Bold titles/footnotes attributes update correctly when specified
+Specs,0,S,Italic titles/footnotes attributes update correctly when specified
+Specs,0,T,"Align titles/footnotes attributes update correctly when specified, i.e. split titles/footnotes flush left and right as expected"
+Specs,0,U,Font titles/footnotes attributes update correctly when specified
+Specs,0,V,Font size titles/footnotes attributes update correctly when specified
+Specs,0,W,"Index titles/footnotes attributes update correctly when specified, i.e. specified indices sort appropriately when entered in separte orders, NULL indices sort last"
+Specs,0,X,View functions (i.e. view_titles and view_footnotes) render data frames appropriately
+Specs,0,Y,Updates to huxtable table bold table level property is properly formatted in the resulting RTF
+Specs,0,Z,Updates to huxtable table italic table level property is properly formatted in the resulting RTF
+Specs,0,AA,"Updates to huxtable table alignment (center, left, right) table level property is properly formatted in the resulting RTF"
+Specs,0,AB,"Updates to huxtable table vertical alignment (center, top, bottom) table level property is properly formatted in the resulting RTF"
+Specs,0,AC,Updates to huxtable table table width table level property is properly formatted in the resulting RTF
+Specs,0,AD,Updates to huxtable table column width table level property is properly formatted in the resulting RTF
+Specs,0,AE,Updates to huxtable table row height table level property is properly formatted in the resulting RTF
+Specs,0,AF,Updates to huxtable table cell merging table level property is properly formatted in the resulting RTF

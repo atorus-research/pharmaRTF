@@ -27,9 +27,10 @@ server <- function(input, output) {
 
     vur <- reactiveValues(df = {
         df <- read.csv("../test_cases.csv")
-        df <- df[df$TestType == "visual",]
+        df <- df[df$CheckType == "visual",]
         df$Response <- FALSE
         df$Log <- NA
+        df$ID <- paste0(df$TestID, ".", df$CheckID)
         df
         })
 
@@ -47,12 +48,13 @@ server <- function(input, output) {
     })
 
     observeEvent(input$saveButton, {
-        saveRDS(vur$df, "vur_auto.Rds")
+        saveRDS(vur$df, "~/pharmaRTF/vignettes/Validation/vur_auto.Rds")
         showModal(modalDialog("Validation User Responses written"))
-        rmarkdown::render("../../Validate.Rmd", "pdf_document")
+        rmarkdown::render("~/pharmaRTF/vignettes/Validate.Rmd", "pdf_document")
+        # file.remove("~/pharmaRTF/vignettes/Validation/vur_auto.Rds")
     })
 
-    output$UserDf <- renderTable(print(vur$df[, c("CaseNo", "Text", "OutputFile", "Response")]))
+    output$UserDf <- renderTable(vur$df[, c("ID", "Text", "OutputFile", "Response")])
 
     output$userInfo <- renderText({
         paste0("User: ", Sys.getenv("USER"), "\n",
