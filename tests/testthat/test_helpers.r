@@ -129,7 +129,7 @@ test_that("format_text_string placeholder test", {
 
 test_that("correct_defaults retuns the correct defaults", {
 
-  expect_equal(correct_defaults("type"), "")
+  expect_equal(correct_defaults("type"), NULL)
   expect_equal(correct_defaults("text1"), "")
   expect_equal(correct_defaults("text2"), "")
   expect_equal(correct_defaults("align"), "center")

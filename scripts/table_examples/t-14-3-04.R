@@ -12,35 +12,28 @@ source('./scripts/table_examples/config.R')
 source('./scripts/table_examples/funcs.R')
 
 # Read in the ADLB datasets ----
-cibc <- read_xpt(glue("{adam_lib}/adqscibc.xpt")) %>%
-  filter(EFFICACY == "Y" & ITTV=='Y')
+cibc <- read_xpt(glue("{adam_lib}/adcibc.xpt")) %>%
+  filter(EFFFL == "Y" & ITTFL=='Y' & PARAMCD == 'CIBICVAL' & ANL01FL == 'Y')
 
 # Calculate the header Ns ----
 header_n <- cibc %>%
-  distinct(USUBJID, TRTP, TRTPCD, TRTPN) %>%
-  group_by(TRTPCD, TRTP, TRTPN) %>%
-  summarize(N = n()) %>%
-  mutate(
-    labels = str_replace_all(str_wrap(glue('{TRTP} (N={N})'), width=10), "\n", function(x) "\\line ")
-  ) %>%
-  ungroup() %>%
-  arrange(TRTPN) %>%
-  select(-TRTP, -TRTPN)
+  distinct(USUBJID, TRTP, TRTPN) %>%
+  get_header_n(TRTP, TRTPN)
 
 column_headers <- header_n %>%
   select(-N) %>%
-  pivot_wider(names_from = TRTPCD, values_from=labels) %>%
+  pivot_wider(names_from = TRTPN, values_from=labels) %>%
   mutate(rowlbl1 = '')
 
 # Run each group
-summary_portion <- summary_data(cibc, VAL, 'Wk8', 'Week 8') %>%
+summary_portion <- summary_data(cibc, AVAL, 8, 'Week 8') %>%
   pad_row()
 
 # Gather the model data
-model_portion <- efficacy_models(cibc, 'VAL', 8)
+model_portion <- efficacy_models(cibc, 'AVAL', 8)
 
 final <- bind_rows(column_headers, summary_portion, model_portion) %>%
-  select(rowlbl1, Pbo, Xan_Lo, Xan_Hi)
+  select(rowlbl1, `0`, `54`, `81`)
 
 # Make the table
 ht <- as_hux(final) %>%
