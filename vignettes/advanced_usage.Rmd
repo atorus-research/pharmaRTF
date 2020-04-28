@@ -1,0 +1,85 @@
+---
+title: "Advanced Usage of pharmaRTF"
+author: "Mike Stackhouse"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Advanced Usage of pharmaRTF}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+
+library(tidyverse)
+library(pharmaRTF)
+```
+
+## Introduction
+
+This vignette will focus on a few more intricate features of the pharmaRTF package. After reviewing this document, you should have a good idea of how to get the most out of pharmaRTF. Specifically, this vignette covers:
+
+- Understanding document orientation within pharmaRTF
+- Multi-level column headers
+- Minimizing cell padding
+- Setting spacing between column headers and titles
+- Split titles
+- Special titles/footnote formats
+
+## Understanding Document Orientation within pharmaRTF
+
+In development of this feature, we realized as a team that the orientation of an RTF document has a bit of room for confusion. This spawns from the fact that within word, orientation is automatically determined by the document height and width, despite there being a keyword within RTF syntax that specifies landscape orientation. That said, we believe the most intuitive way to set the orientation of a document with with a property function, which in pharmaRTF is simply `orientation`/`set_orientation`. 
+
+The default orientation of a `pharmaRTF` document is landscape, as this is typically what you would use on the clinical reports that the package is designed for. `orientation` is closely tied with the `page_size` attribute. When the orientation of an `rtf_doc` object is set to landscape, the height and width of the `pagesize` attribute will write out as specified in the object, with `height` writing to the height document property and `width` writing to the width property. 
+
+
+```{r orientation1}
+ht <- huxtable::as_hux(iris, add_colnames=TRUE) %>% 
+  huxtable::set_width(1.2)
+
+doc <- rtf_doc(ht)
+pagesize(doc)
+
+```
+
+When you switch the orientation to 'portrait', the height and width properties will not change. Rather, when the actual RTF document is written out, the height and width will be reversed, effectively flipping the document on its side. 
+
+```{r orientation2}
+doc <- rtf_doc(ht) %>% 
+  # Set orientation to portrait
+  set_orientation('portrait')
+
+# Page size does not change
+pagesize(doc)
+
+```
+
+So why not switch the height and width properties in the object? This opens the door for inadvertent confusion. Consider the case where a user changes the orientation of the document. At that point, assume  you switched the height and width. Next, the user manually sets height and width themselves. At this point, the change in orientation would be overriden by whatever height and width the user chose manually. This is why we decided to only have the reversal happen at the time of writing the RTF code. Note that **height and width will always align with the object default, which is landscape**. But the document itself will write out with portrait orientation.
+
+```{r orientation3, echo=FALSE, eval=FALSE}
+write_rtf(doc, file="table5.rtf")
+
+```
+
+
+```{r table5_img1, out.width = "800px", echo = FALSE}
+knitr::include_graphics("table5_img1.png")
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+

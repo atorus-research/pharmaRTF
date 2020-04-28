@@ -45,7 +45,7 @@ _Note: we also plan to support GT tables when the RTF support matures_
 
 Before you start worrying about creating an RTF document, you first need to create and style your table. For that, use huxtable:
 
-```{r huxtable_code, out.width = "800px"}
+```{r huxtable_code}
 dat <- iris %>% 
   select(Species, everything())
 
@@ -92,7 +92,7 @@ The resulting file looks like:
 knitr::include_graphics("table1_img1.png")
 ```
 
-The document opens and presents properly within microsoft word. Furthermore, the document paging works properly, with titles and column headers repeating pages to page:
+The document opens and presents properly within microsoft word. Furthermore, the document paging works properly, with titles and column headers repeating pages to page. Note that **the column headers repeat from page to page** - this is because pharmaRTF pulls the column headers out of the huxtable table and into the document header. 
 
 ```{r table1_img2, out.width = "800px", echo = FALSE}
 knitr::include_graphics("table1_img2.png")
@@ -107,7 +107,7 @@ Note that we didn't edit any document settings. By default, pharmaRTF will outpu
 - 1" margins on all sides
 - .5" header and footer heights
 
-All of this attributes can be changed using property functions. For example:
+All of these attributes can be changed using property functions. For example:
 
 ```{r table2, eval = FALSE}
 doc <- rtf_doc(ht, titles=list(hf_line("The Iris Dataset", bold=TRUE))) %>% 
@@ -142,9 +142,11 @@ knitr::include_graphics("table3_img1.png")
 ```
 
 This completes a basic introduction to using pharmaRTF, but there's still more to learn!
-- To see how to read titles and footnotes from external files, see [this vignette](external_files.html)
-- To learn more advanced usage of pharmaRTF, see [this vignette](advanced_usage.html)
+
 - To learn tips and tricks for using huxtable with pharmaRTF, see [this vignette](huxtable_tips.html)
+- To learn more advanced usage of pharmaRTF, see [this vignette](advanced_usage.html)
+- To see how to read titles and footnotes from external files, see [this vignette](external_files.html)
+
 
 
 
