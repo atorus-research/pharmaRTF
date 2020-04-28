@@ -4,5 +4,5 @@
 
 # Set data library paths ----
 sdtm_lib <- "../Explore/CDISC_Pilot/m5/datasets/CDISCPILOT01/tabulations"
-adam_lib <- "../Explore/CDISC_Pilot/m5/datasets/CDISCPILOT01/analysis"
-
+old_adam_lib <- "../Explore/CDISC_Pilot/m5/datasets/CDISCPILOT01/analysis"
+adam_lib <- "~/Explore/Updated Pilot Submission Package/900172/m5/datasets/cdiscpilot01/analysis/adam/datasets"
