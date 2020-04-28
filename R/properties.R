@@ -791,6 +791,14 @@ set_footer_height <- function(x, value) UseMethod('footer_height<-')
 #' \code{rtf_doc} object. Stored as a named vector with \code{height} and
 #' \code{width} names.
 #'
+#' Note that when the orientation of the document is switched
+#' to 'portrait', the height and width will reverse when the RTF document is being
+#' written - but the attribute values will not change. This is because the default
+#' \code{rtf_doc} orientation is 'landscape', and switching the attributes of the
+#' object allows for a possibility of inadvertently overriding the functionality
+#' of the \cdoe{orientation} attribute.
+#'
+#'
 #' @param x A \code{rtf_doc} object
 #' @param ... Additonal arguments passed to method dispatch
 #'
@@ -811,6 +819,12 @@ set_footer_height <- function(x, value) UseMethod('footer_height<-')
 #'
 #' pagesize(rtf) <- c(height = 12)
 #' # Sets height of page to 12 inches
+#'
+#' orientation(rtf) <- 'portrait'
+#' pagesize(rtf)
+#' #  width height
+#' #    8.5   12.0
+#' # Note: Despite changing orientation, attributes don't change
 #'
 #' @export
 #' @rdname pagesize

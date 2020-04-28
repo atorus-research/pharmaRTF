@@ -174,7 +174,7 @@ new_rtf_doc <- function(table, titles, footnotes) {
             orientation= 'landscape',
             header_height= .5,
             footer_height= .5,
-            pagesize= c(width=8.5, height=11),
+            pagesize= c(width=11, height=8.5),
             font= 'Courier New',
             font_size= 12,
             ignore_cell_padding= FALSE,
