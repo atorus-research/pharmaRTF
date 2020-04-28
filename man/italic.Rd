@@ -25,7 +25,7 @@ For \code{italic()}, the italic attribute of the supplied
   modified object.
 }
 \description{
-These functions modify or return the italics attribute of a \code{hf_line}
+These property functions modify or return the italics attribute of a \code{hf_line}
 object. The italic attribute takes on a logical value of TRUE or FALSE, where
 TRUE italicizes the text of the line.
 }

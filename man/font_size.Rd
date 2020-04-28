@@ -25,14 +25,14 @@ For \code{font_size()}, the font_size attribute of the supplied
   \code{set_font_size}, the modified object.
 }
 \description{
-These property function modify or return the font sizes of an rtf_doc object
-or individual titles/footnotes objects of the hf_line class.
+These property functions modify or return the font sizes of an \code{rtf_doc} object
+or individual titles/footnotes objects of the \code{hf_line} class.
 
 When used on an rtf_doc object to retrieve font sizes, the document level
-default font size within the rtf_doc is returned. When used on an rtf_doc to
+default font size within the \code{rtf_doc} is returned. When used on an \code{rtf_doc} to
 set fonts, the default font size for the RTF document is set.
 
-When used on titles/footnotes (hf_line objects), the font size is either
+When used on titles/footnotes (\code{hf_line} objects), the font size is either
 returned of set for that individual line.
 }
 \examples{

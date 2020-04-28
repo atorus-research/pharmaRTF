@@ -125,3 +125,22 @@ test_that("format_text_string placeholder test", {
   expect_equal(format_text_string(dtFormat1), paste0("{", Sys.Date(), "}"))
 
 })
+
+
+test_that("correct_defaults retuns the correct defaults", {
+
+  expect_equal(correct_defaults("type"), NULL)
+  expect_equal(correct_defaults("text1"), "")
+  expect_equal(correct_defaults("text2"), "")
+  expect_equal(correct_defaults("align"), "center")
+  expect_equal(correct_defaults("font"), as.character(NA))
+  expect_equal(correct_defaults("bold"), FALSE)
+  expect_equal(correct_defaults("italic"), FALSE)
+  expect_equal(correct_defaults("index"), NA)
+  expect_equal(correct_defaults("font_size"), as.numeric(NA))
+
+
+})
+
+
+

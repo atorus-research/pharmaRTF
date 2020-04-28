@@ -96,15 +96,21 @@ doc_properties_string <- function(doc){
 
   # Height and width string
   ps <- pagesize(doc)
-  # Make the height and width string
-  ht_wd <- sprintf('\\paperw%s\\paperh%s', ps['width'] * 1440, ps['height'] * 1440)
+
 
   # Header and footer heights
   hf_ht <- sprintf("\\headery%s\\footery%s", header_height(doc) * 1440, footer_height(doc) * 1440)
 
   # Get orientation string
-  if (orientation(doc) == 'landscape') ortn <- '\\lndscpsxn\n'
-  else ortn <- ''
+  if (orientation(doc) == 'landscape') {
+    ortn <- '\\lndscpsxn\n'
+    # If the orientation is landscape, reverse the height and width, effectively flipping 90 degrees
+    ht_wd <- sprintf('\\paperw%s\\paperh%s', ps['width'] * 1440, ps['height'] * 1440)
+  } else{
+    ortn <- ''
+    # For portrait, use the values as they were entered
+    ht_wd <- sprintf('\\paperw%s\\paperh%s', ps['height'] * 1440, ps['width'] * 1440)
+  }
 
   # Font size
   fs <- sprintf("\\fs%s\n", font_size(doc)*2)
@@ -133,7 +139,7 @@ hf_line_string <- function(line, doc=NULL) {
   bd <- '' # Bold (On or off - default off)
   it <- '' # Italic (One or off - default off)
   al <- '\\ql\n' # Alignment (Defaults to left \ql - left aligned)
-  tabs <- '\\b' # Overwritten if split alignment
+  tabs <- '' # Overwritten if split alignment
 
   # Read the font information
   # If font is overridden generate the string
@@ -186,7 +192,7 @@ hf_line_string <- function(line, doc=NULL) {
 #' @noRd
 hf_string <- function(doc, type=NULL) {
   # Get a character vector of the formatted RTF string
-  lines <- sapply(doc[[type]], hf_line_string, doc=doc)
+  lines <- sapply(order_lines(doc[[type]]), hf_line_string, doc=doc)
 
   # Piece together each of the lines
   body <- paste(lines, collapse="\n\\par")
@@ -200,7 +206,7 @@ hf_string <- function(doc, type=NULL) {
     # If generating titles then take the headers of the table
     paste('{', command, body, '\n\\par\n', get_column_headers(doc), '\n}', sep='')
   } else {
-    paste('{', command, body, '\n}', sep='')
+    paste('{', command, body, '\\par\n}', sep='')
   }
 }
 
