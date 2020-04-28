@@ -13,16 +13,18 @@ source('./scripts/table_examples/config.R')
 source('./scripts/table_examples/funcs.R')
 
 #Read in Source and order factors
-adsl <- read_xpt(glue("{adam_lib2}/adsl.xpt"))
+adsl <- read_xpt(glue("{adam_lib}/adsl.xpt"))
 adsl$COMP24FL <- ordered(adsl$COMP24FL, c("Y", "N", NA))
 adsl$ARM <- ordered(adsl$ARM, c("Placebo", "Xanomeline Low Dose", "Xanomeline High Dose"))
-adsl$DCDECOD <- ordered(adsl$DCDECOD, c("ADVERSE EVENT", "DEATH", "LACK OF EFFICACY, PATIENT CAREGIVER PERCEPTION",
-                                        "UNABLE TO CONTACT PATIENT (LOST TO FOLLOW-UP)",
-                                        "PERSONAL CONFLICT OR OTHER PATIENT/CAREGIVER DECISION",
-                                        "PHYSICIAN DECISION", "PROTOCOL ENTRY CRITERIA NOT MET",
-                                        "PROTOCOL VIOLATION",
-                                        "SPONSOR DECISION (STUDY OR PATIENT DISCONTINUED BY THE SPONSOR)"))
-adsl$DCREASCD <- factor(adsl$DCREASCD, unique(adsl$DCREASCD))
+adsl$DCREASCD <- ordered(adsl$DCREASCD, c("Adverse Event",
+                                          "Death",
+                                          "Lack of Efficacy",
+                                          "Lost to Follow-up",
+                                          "Withdrew Consent",
+                                          "Physician Decision",
+                                          "I/E Not Met",
+                                          "Protocol Violation",
+                                          "Sponsor Decision"))
 
 
 #### Completion Status Table
@@ -54,15 +56,15 @@ comp_df <- attach_p(comp_df, comp_p)
 ## By ARM
 term_reas <- adsl %>%
   filter(COMP24FL == "N") %>%
-  group_by(DCDECOD, ARM) %>%
-  complete(nesting(DCDECOD, ARM)) %>%
+  group_by(DCREASCD, ARM) %>%
+  complete(nesting(DCREASCD, ARM)) %>%
   summarise(n = n())
 
 ## Total
 term_reas_tot <- adsl %>%
   filter(COMP24FL == "N", !is.na(DCDECOD)) %>%
-  group_by(DCDECOD) %>%
-  complete(nesting(DCDECOD, ARM)) %>%
+  group_by(DCREASCD) %>%
+  complete(nesting(DCREASCD, ARM)) %>%
   summarise(n = n())
 
 
@@ -92,11 +94,11 @@ term_p_1 <- adsl %>%
   fish_p(DCREASCD, ARM)
 term_df <- attach_p(term_df, term_p_1)
 
-term_p_2 <- adsl %>%
-  select(ARM, DCDECOD) %>%
-  mutate(loefl = ifelse(DCDECOD %in% 'LACK OF EFFICACY, PATIENT CAREGIVER PERCEPTION', 1, 0)) %>%
-  fish_p(ARM ,loefl, width = 6)
-term_df[5,] <- attach_p(term_df[5,], term_p_2)
+# term_p_2 <- adsl %>%
+#   select(ARM, DCREASCD) %>%
+#   mutate(loefl = ifelse(DCREASCD %in% 'LACK OF EFFICACY, PATIENT CAREGIVER PERCEPTION', 1, 0)) %>%
+#   fish_p(ARM ,loefl, width = 6)
+# term_df[5,] <- attach_p(term_df[5,], term_p_2)
 
 
 ## Add Table lables
@@ -135,6 +137,7 @@ huxtable::col_width(ht) <- c(.4, .12, .12, .12, .12, .12)
 huxtable::bottom_padding(ht) <- 0
 huxtable::top_padding(ht) <- 0
 huxtable::valign(ht)[1,] <- "bottom"
+huxtable::merge_cells(ht, 8, 1:2)
 
 
 # Write into doc object and pull titles/footnotes from excel file
@@ -142,7 +145,9 @@ doc <- rtf_doc(ht) %>% titles_and_footnotes_from_df(
   from.file='./scripts/table_examples/titles.xlsx',
   reader=example_custom_reader,
   table_number='14-1.02') %>%
-  set_font_size(10)
+  set_font_size(10) %>%
+  set_ignore_cell_padding(TRUE)
 
 # Write out the RTF
 write_rtf(doc, file='./scripts/table_examples/outputs/14-1.02.rtf')
+
