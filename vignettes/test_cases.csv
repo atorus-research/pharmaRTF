@@ -16,7 +16,7 @@ TestCases,1,D,T4,,Check document level header and footer height are set to defau
 TestCases,2,,T4,1,"Verify document level header and footer heights are set to expected default: .5,.5",programmatic,test_4.Rdata
 TestCases,2,,T4,2,Verify document level header and footer heights on output are .25 (header) and 1 (footer),visual,test_4.rtf
 TestCases,1,E,T5,,Check document level page size is set to default then change page size and verify changes are reflected in the output,,
-TestCases,2,,T5,1,"Verify document level page size is set to expected default: 8.5,11 ",programmatic,test_5.Rdata
+TestCases,2,,T5,1,"Verify document level page size is set to expected default: 11 (height), 8.5 (width) ",programmatic,test_5.Rdata
 TestCases,2,,T5,2,"Verify document level page size on output is 9 (height), 12 (width)",visual,test_5.rtf
 TestCases,1,F,T6,,Check document level orientation is set to default then change orientation and verify changes are reflected in the output,,
 TestCases,2,,T6,1,Verify document level orientation is set to expected default: landscape,programmatic,test_6.Rdata

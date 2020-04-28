@@ -179,7 +179,7 @@ test_that('T5',{
   # tests
   skip_if(is.null(vur))
 
-  testthat::expect_equal(c(height = 8.5, width = 11), pharmaRTF::pagesize(test_5),label = "T5.1")
+  testthat::expect_equal(c(height = 11, width = 8.5), pharmaRTF::pagesize(test_5),label = "T5.1")
   testthat::expect_true(vur[vur$ID == "T5.2", "Response"])
 
   rm(test_5)
