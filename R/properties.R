@@ -796,7 +796,7 @@ set_footer_height <- function(x, value) UseMethod('footer_height<-')
 #' written - but the attribute values will not change. This is because the default
 #' \code{rtf_doc} orientation is 'landscape', and switching the attributes of the
 #' object allows for a possibility of inadvertently overriding the functionality
-#' of the \cdoe{orientation} attribute.
+#' of the \code{orientation} attribute.
 #'
 #'
 #' @param x A \code{rtf_doc} object
