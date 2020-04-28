@@ -66,20 +66,264 @@ write_rtf(doc, file="table5.rtf")
 ```
 
 
-```{r table5_img1, out.width = "800px", echo = FALSE}
+```{r table5_img1, out.width = "400px", echo = FALSE}
 knitr::include_graphics("table5_img1.png")
 ```
 
 
+## Multi-level Column Headers
+
+A common requirement of tables is to have spanning column headers. When columns need to be grouped in presentation, this is common practice. This requires a combination of work within huxtable and pharmaRTF. The first thing you need to do is create your huxtable object. For more details on how to do this, see the [huxtable tips vignette](huxtable_tips.html). 
+
+```{r column_headers1}
+# Create the column headers data frame
+column_headers <- data.frame(
+  Species = c("", "Species of Flower"),
+  Sepal.Length = c("Sepal", "Length"),
+  Sepal.Width = c("", "Width"),
+  Petal.Length = c("Petal", "Length"),
+  Petal.Width = c("", "Width"),
+  stringsAsFactors = FALSE
+)
+
+# Create the huxtable table
+ht <- huxtable::as_hux(rbind(column_headers, iris)) %>% 
+  # Merge the Sepal cell over the Length and Width
+  huxtable::merge_cells(1, 2:3) %>% 
+  # Merge the Petal cell over the Length and Width
+  huxtable::merge_cells(1, 4:5) %>% 
+  # Align the top cells for both Sepal and Petal
+  huxtable::set_align(1,2, 'center') %>% 
+  huxtable::set_align(1,4, 'center') %>% 
+  # Bold all the column header rows
+  huxtable::set_bold(1:2, 1:ncol(iris), TRUE) %>% 
+  # Bottom border on 1st column header row 
+  huxtable::set_bottom_border(1, 2:4, 1) %>% 
+  # Bottom border on 2nd row
+  huxtable::set_bottom_border(2, 1:ncol(iris), 2) %>% 
+  # Set the page width
+  huxtable::set_width(1.5)
+
+ht[1:10]
+```
+
+Once the huxtable table is created with your multiple rows of column headers, incorporating it into your `rtf_doc` object is simple. Just use the `header_rows` argument when creating your RTF doc.
+
+```{r column_headers2, eval=FALSE}
+doc <- rtf_doc(ht, header_rows=2)
+
+write_rtf(doc, file="table6.rtf")
+
+```
+
+And here you can see that the 2 rows of column headers have been pulled into the header of the document and are repeating from page to page. 
+
+```{r table6_img1, out.width = "800px", echo = FALSE}
+knitr::include_graphics("table6_img1.png")
+```
+
+## Minimizing Cell Padding
+
+An odd quirk of RTF documents is the method in which they do cell padding. The default output actually uses a minimal amount of cell padding, but when looking at your display, it may still be too large for your personal preference of the display. But fear not! We have a method to help minimize the cell padding further.
+
+The root of the issue is that RTF documents have two methods for handling cell padding. You can read more about this within the Details section of the `ignore_cell_padding` function. From a user perspective, it is simply a matter of adding one more line into the creation of your `rtf_doc` object.
+
+```{r ignore_cell_padding, eval=FALSE}
+doc <- rtf_doc(ht, header_rows=2) %>% 
+  set_ignore_cell_padding(TRUE)
+
+# Or avoiding piping
+ignore_cell_padding(doc) <- TRUE
+
+write_rtf(doc, file="table7.rtf")
+
+```
+
+```{r table7_img1, out.width = "800px", echo = FALSE}
+knitr::include_graphics("table7_img1.png")
+```
+
+## Setting Spacing Between Column Headers and Titles
+
+Depending your display, you may want to have a gap between your titles and the column headers, or potentially space below the column headers and the start of the body of the table. One way to deal with this could be to add blank title lines or blank rows to your table - but that would be a hacky fix and less than ideal. This is why the `column_header_buffer` attribute exists in the `rtf_doc` object. 
+
+`column_header_buffer` sets the buffer of spaces you want above and below the column headers. 
+
+```{r column_header_buffer1, eval=FALSE}
+doc <- rtf_doc(ht, header_rows=2) %>% 
+  set_ignore_cell_padding(TRUE) %>% 
+  set_column_header_buffer(top=2, bottom=1) %>% 
+  add_titles(hf_line("The Iris Dataset", bold=TRUE, font_size=20))
 
 
+write_rtf(doc, file="table8.rtf")
+
+```
+
+```{r table8_img1, out.width = "800px", echo = FALSE}
+knitr::include_graphics("table8_img1.png")
+```
+
+## Split titles
+
+Very often, we have tiles in clinical reports where there's text that flushes left and right on the same line. pharmaRTF have a method to handle this within the `hf_line` object for titles and footnotes. `hf_line` objects have two spaces available within the `text` element:
+
+```{r hf_line}
+hf_line('Text1', 'Text2')
+```
+
+When the alignment is set to center, left, or right, these elements will simply concatenate. But when the alignment is set to 'split', the first text alignment will align on the left and the second on the right. This enables you to do those split titles and footnotes that you will often see within reports.
+
+```{r column_header_buffer2, eval=FALSE}
+doc <- rtf_doc(ht, header_rows=2) %>% 
+  add_titles(hf_line("I'm on the left", "I'm on the right", bold=TRUE, align='split'))
 
 
+write_rtf(doc, file="table9.rtf")
+
+```
+
+```{r table9_img1, out.width = "800px", echo = FALSE}
+knitr::include_graphics("table9_img1.png")
+```
+
+## Special Title/Footnote formats
+
+The `hf_line` object has three keywords that trigger special behaivor within titles and footnotes. These are:
+
+- PAGE_FORMAT:
+- DATE_FORMAT:
+- FILE_PATH:
+
+Each one of these warrants some further explanation on their own.
+
+### PAGE_FORMAT:
+
+The `PAGE_FORMAT:` keyword triggers page numbering within a title or a footnote. This format can display both the current page and the total number of pages in the document. The user has full control over how this display happens, except for the fact that the current page must come first. Adding total pages is optional, but it has to be after the current page.
+
+To add the page numbers into your display, you simply specify the keyword within the text element of an `hf_line` object, followed by your desired format. Enter `%s` where you want the page numbers to be display. For example, let's say you want to specify a page format like `Page 1 of 12`. To do this in your title or footnote, you would enter:
+
+```{r page_format1, eval=FALSE}
+hf_line('PAGE_FORMAT: Page %s of %s")
+```
+
+Similarly, let's say you wanted you page numbering to look like `1 | 5`:
+
+```{r page_format2, eval=FALSE}
+hf_line('PAGE_FORMAT: %s | %s")
+```
+
+Or what if you just wanted `Page 5`?
+
+```{r page_format3, eval=FALSE}
+hf_line('PAGE_FORMAT: Page %s")
+```
+
+Whatever text you specify, the first occurence of `%s` will be replaced with the current page, and the second occurence will be replaced with the total. Looking at how this appears in the display:
+
+```{r page_format4, eval=FALSE}
+doc <- rtf_doc(ht, header_rows=2) %>% 
+  add_titles(hf_line("PAGE_FORMAT: Page %s of %s", bold=TRUE, align='right'))
 
 
+write_rtf(doc, file="table10.rtf")
+```
+
+```{r table10_img1, out.width = "800px", echo = FALSE}
+knitr::include_graphics("table10_img1.png")
+```
+
+This also works within split titles:
+
+```{r page_format5, eval=FALSE}
+doc <- rtf_doc(ht, header_rows=2) %>% 
+  add_titles(hf_line("Text on the left", "PAGE_FORMAT: Page %s of %s", bold=TRUE, align='split'))
 
 
+write_rtf(doc, file="table11.rtf")
+```
+
+```{r table11_img1, out.width = "800px", echo = FALSE}
+knitr::include_graphics("table11_img1.png")
+```
+
+### DATE_FORMAT:
+
+Another standard practice is to include the runtime of a document within the report, perhaps in a footnote. The DATE_FORMAT: keyword allows you to do this, writing the program execution time while the RTF document is being written out. 
+
+Date formats are specified using the standard R date formatting tokens. A full list of those tokens and their meaning can be found [here](https://www.stat.berkeley.edu/~s133/dates.html). Similar to PAGE_FORMAT:, as the user, you have full control over how the date is specified, and can include any other text you desire within the string. 
+
+_NOTE: Date-times displayed will be in UTC. We have not yet added the capbility to display the time within a specified locale._
+
+As a practical example, consider entering an ISO-8601 complaint date-time:
+
+```{r date_format1, eval=FALSE}
+hf_line("DATE_FORMAT: %Y-%m-%dT%H:%M:%S")
+
+```
+
+Viewing this within a display, we can see that the time decodes properly. 
+
+```{r date_format2, eval=FALSE}
+doc <- rtf_doc(ht, header_rows=2) %>% 
+  add_titles(hf_line("Text on the left", "DATE_FORMAT: %Y-%m-%dT%H:%M:%S", bold=TRUE, align='split'))
 
 
+write_rtf(doc, file="table12.rtf")
+```
+
+```{r table12_img1, out.width = "800px", echo = FALSE}
+knitr::include_graphics("table12_img1.png")
+```
+
+The formats have more flexibility as well, including display day of the week, full months, etc. 
+
+```{r date_format3, eval=FALSE}
+doc <- rtf_doc(ht, header_rows=2) %>% 
+  add_titles(hf_line("Text on the left", "DATE_FORMAT: Document run on %H:%M %A, %B %d, %Y", bold=TRUE, align='split'))
+
+
+write_rtf(doc, file="table13.rtf")
+```
+
+```{r table13_img1, out.width = "800px", echo = FALSE}
+knitr::include_graphics("table13_img1.png")
+```
+
+### FILE_PATH:
+
+The last of the special formats is FILE_PATH:. This keyword allows you to display the location of the executing R script automatically. This allows traceability of the display to the originating file, which can be desirable in many processes. That said, there's a bit of nuance to the functionality of the is keyword.
+
+The location of an executing R script is not as intuitive as it may seem. This is because there are multiple ways that an R script can be executed:
+
+- Executed in R via the `source` command
+- Executed via the `Rscript` command through the command line
+- Executed interactively
+
+The file path will be determined in the above hiearchy. The only two option above that can return an actual file path are the `source` command and running via `Rscript`. When a file is run interactively, there is no guarantee of the executing files location - because the code is detached from the actual file. Therefore, in these cases, the text `<run_interactively>` will be returned. 
+
+Using the FILE_PATH: keyword, simply use the token `%s` to specify where you want the file path to appear. Like the other keyword, you may also include other text in the output string.
+
+```{r date_format4, eval=FALSE}
+doc <- rtf_doc(ht, header_rows=2) %>% 
+  add_titles(hf_line("Text on the left", "FILE_PATH: Run from: %s", bold=TRUE, align='split'))
+
+
+write_rtf(doc, file="table14.rtf")
+```
+
+```{r table14_img1, out.width = "800px", echo = FALSE}
+knitr::include_graphics("table14_img1.png")
+```
+
+As an example of a populated path:
+
+```{r date_format5, eval=FALSE}
+source('file_path_example.r')
+```
+
+```{r table15_img1, out.width = "800px", echo = FALSE}
+knitr::include_graphics("table15_img1.png")
+```
 
 
