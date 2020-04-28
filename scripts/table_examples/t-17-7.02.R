@@ -28,7 +28,7 @@ pad_row <- function(df, r) {
 }
 
 dm <- read_xpt(glue("{sdtm_lib}/dm.xpt"))
-advs <- read_xpt(glue("{adam_lib}/advs2.xpt")) %>%
+advs <- read_xpt(glue("{adam_lib}/advs.xpt")) %>%
   filter(SAFFL == "Y")
 
 advs$EOTFL <- ifelse(advs[,"AVISIT"] == "End of Treatment", "Y", "")
@@ -123,3 +123,4 @@ doc <- rtf_doc(ht) %>% titles_and_footnotes_from_df(
   set_footer_height(0.85)
 
 write_rtf(doc, file='./scripts/table_examples/outputs/14-7.02.rtf')
+
