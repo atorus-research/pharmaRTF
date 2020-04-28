@@ -37,7 +37,7 @@ advs$W24FL <- ifelse(advs[, "AVISIT"] == "Week 24", "Y", "")
 advs2 <- advs %>%
   filter(EOTFL == "Y" | W24FL == "Y") %>%
   filter(PARAM %in% c("Diastolic Blood Pressure (mmHg)",
-                      "Pulse Rate (BEATS/MIN)",
+                      "Pulse Rate (beats/min)",
                       "Systolic Blood Pressure (mmHg)"))
 
 advs2$PRTFL <- ifelse(advs2[,"EOTFL"] == "Y", "End of Trt.","Week 24")
@@ -48,7 +48,7 @@ advs2$AVISIT <- ordered(advs2$AVISIT, c("Baseline", "Week 24", "End of Treatment
 advs2$PRTFL <- ordered(advs2$PRTFL, c("Week 24", "End of Trt."))
 advs2$PARAM <- ordered(advs2$PARAM, c("Systolic Blood Pressure (mmHg)",
                                       "Diastolic Blood Pressure (mmHg)",
-                                      "Pulse Rate (BEATS/MIN)"))
+                                      "Pulse Rate (beats/min)"))
 
 advs3 <- advs2 %>%
   group_by(PARAM, ATPT, TRTP, PRTFL) %>%
@@ -120,7 +120,7 @@ doc <- rtf_doc(ht) %>% titles_and_footnotes_from_df(
   set_ignore_cell_padding(TRUE) %>%
   set_header_height(1) %>%
   set_column_header_buffer(1,0) %>%
-  set_footer_height(0.85)
+  set_footer_height(1.3)
 
 write_rtf(doc, file='./scripts/table_examples/outputs/14-7.02.rtf')
 
