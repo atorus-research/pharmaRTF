@@ -119,7 +119,7 @@ scrape_spec_rmd(file.path(spec_dir, "specification.Rmd"))
 ```{r matrix, results="asis"} 
 
 # THis looks a little gross
-spec_df <- read.csv("~/pharmaRTF/vignettes/specs.csv")
+spec_df <- read.csv("specs.csv")
 spec_df <- spec_df[spec_df$SpecID != "", ]
 
 specs_tested <- test_cases[test_cases$Specs.Tested != "", ]
@@ -179,7 +179,7 @@ sessionInfo()
 
 # Manual Check Completion History
 ```{r log_info}
-kable(readRDS("~/pharmaRTF/vignettes/Validation/vur_auto.Rds")[, c("ID", "OutputFile", "Response", "Log")],
+kable(readRDS("Validation/vur_auto.Rds")[, c("ID", "OutputFile", "Response", "Log")],
       format = "latex", row.names = FALSE, longtable = TRUE, booktabs = TRUE,
       col.names = c("Check", "Output File Reviewed", "Response", "Log")) %>%
   kable_styling(latex_options = c("repeat_header", "striped"))
