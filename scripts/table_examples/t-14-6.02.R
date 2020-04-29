@@ -30,10 +30,30 @@ n_pct <- function(n, pct, n_width=3, pct_width=3) {
 
 ## Chem
 adlbc <- read_xpt(glue("{adam_lib}/adlbc.xpt")) %>%
-  filter(SAFETY == "Y", LBTRMXFL == "Y")
+  filter(SAFFL == "Y", ANL01FL == "Y", AVISITN != 99)
 
 adlbc$TRTP <- ordered(adlbc$TRTP, c("Placebo", "Xanomeline Low Dose", "Xanomeline High Dose"))
-adlbc$LBTEST <- ordered(adlbc$LBTEST, c(
+adlbc$PARAM<- recode(adlbc$PARAM,
+                    "Alanine Aminotransferase (U/L)" = "ALANINE AMINOTRANSFERASE",
+                    "Albumin (g/L)" = "ALBUMIN",
+                    "Alkaline Phosphatase (U/L)" = "ALKALINE PHOSPHATASE",
+                    "Aspartate Aminotransferase (U/L)" = "ASPARTATE AMINOTRANSFERASE",
+                    "Bilirubin (umol/L)" = "BILIRUBIN",
+                    "Calcium (mmol/L)" = "CALCIUM",
+                    "Chloride (mmol/L)" = "CHLORIDE",
+                    "Cholesterol (mmol/L)" = "CHOLESTEROL",
+                    "Creatine Kinase (U/L)" = "CREATINE KINASE",
+                    "Creatinine (umol/L)" = "CREATININE",
+                    "Gamma Glutamyl Transferase (U/L)" = "GAMMA GLUTAMYL TRANSFERASE",
+                    "Glucose (mmol/L)" = "GLUCOSE",
+                    "Phosphate (mmol/L)" = "PHOSPHATE",
+                    "Potassium (mmol/L)" = "POTASSIUM",
+                    "Protein (g/L)" = "PROTEIN",
+                    "Sodium (mmol/L)" = "SODIUM",
+                    "Urate (umol/L)" = "URATE",
+                    "Blood Urea Nitrogen (mmol/L)" = "UREA NITROGEN")
+#sort tests
+adlbc$PARAM <-ordered(adlbc$PARAM, c(
   "ALBUMIN",
   "ALKALINE PHOSPHATASE",
   "ALANINE AMINOTRANSFERASE",
@@ -52,62 +72,85 @@ adlbc$LBTEST <- ordered(adlbc$LBTEST, c(
   "PHOSPHATE",
   "PROTEIN",
   "URATE"
-))
+  ))
+adlbc$LBNRIND <- recode(adlbc$LBNRIND,
+                        "LOW" = "L",
+                        "NORMAL" = "N",
+                        "HIGH" = "H")
 adlbc$LBNRIND <- ordered(adlbc$LBNRIND, c("L", "N", "H"))
 
 
 adlbc2 <- adlbc %>%
+  filter(!is.na(PARAM), !is.na(TRTP), !is.na(LBNRIND)) %>%
   filter(LBNRIND %in% c("L", "N", "H")) %>%
-  group_by(LBTEST, TRTP, LBNRIND) %>%
-  complete(nesting(LBTEST, TRTP, LBNRIND)) %>%
+  group_by(PARAM, TRTP, LBNRIND) %>%
+  complete(nesting(PARAM, TRTP, LBNRIND)) %>%
   summarise(N = n()) %>%
-  group_by(LBTEST, TRTP) %>%
-  mutate(tot = sum(N))
+  group_by(PARAM, TRTP) %>%
+  mutate(tot = sum(N)) %>%
+  arrange(PARAM, TRTP)
 
-adlbc_pvals <- list()
+adlbc_pvals <- c()
 
 for(i in seq(nrow(adlbc2)/9)) {
   adlbc_pvals[i] <- round(fisher.test(
-    matrix(unlist(adlbc2[((i-1)*9+1):(i*9), "N"]), nrow = 3, ncol = 3, byrow = TRUE)
+    matrix(unlist(adlbc2[((i-1)*9+1):(i*9), "N"]), nrow = 3, ncol = 3, byrow = FALSE)
   )$p.value, 3)
 }
 
 adlbc3 <- adlbc2 %>%
   mutate(n_w_pct = n_pct(N, tot, n_width = 2)) %>%
-  pivot_wider(id_cols = LBTEST,names_from = c(TRTP, LBNRIND), values_from = n_w_pct) %>%
+  pivot_wider(id_cols = PARAM,names_from = c(TRTP, LBNRIND), values_from = n_w_pct) %>%
   add_column("p-val\\line [1]" = unlist(adlbc_pvals))
 
 ### Heme
 adlbh <- read_xpt(glue("{adam_lib}/adlbh.xpt")) %>%
-  filter(SAFETY == "Y", LBTRMXFL == "Y")
+  filter(SAFFL == "Y", ANL01FL == "Y", AVISITN != 99)
 
 adlbh$TRTP <- ordered(adlbh$TRTP, c("Placebo", "Xanomeline Low Dose", "Xanomeline High Dose"))
-adlbh$LBTEST <- ordered(adlbh$LBTEST, c(
+adlbh$PARAM<- recode(adlbh$PARAM,
+                    "Basophils (GI/L)" = "BASOPHILS",
+                    "Eosinophils (GI/L)" = "EOSINOPHILS",
+                    "Ery. Mean Corpuscular HGB Concentration (mmol/L)" = "ERY. MEAN CORPUSCULAR HB CONCENTRATION",
+                    "Ery. Mean Corpuscular Hemoglobin (fmol(Fe))" = "ERY. MEAN CORPUSCULAR HEMOGLOBIN",
+                    "Ery. Mean Corpuscular Volume (fL)" = "ERY. MEAN CORPUSCULAR VOLUME",
+                    "Erythrocytes (TI/L)" = "ERYTHROCYTES",
+                    "Hematocrit" = "HEMATOCRIT",
+                    "Hemoglobin (mmol/L)" = "HEMOGLOBIN",
+                    "Leukocytes (GI/L)" = "LEUKOCYTES",
+                    "Lymphocytes (GI/L)" = "LYMPHOCYTES",
+                    "Monocytes (GI/L)" = "MONOCYTES",
+                    "Platelet (GI/L)" = "PLATELET")
+#sort tests
+adlbh$PARAM <-ordered(adlbh$PARAM, c(
   "BASOPHILS",
   "EOSINOPHILS",
+  "ERY. MEAN CORPUSCULAR HB CONCENTRATION",
+  "ERY. MEAN CORPUSCULAR HEMOGLOBIN",
+  "ERY. MEAN CORPUSCULAR VOLUME",
+  "ERYTHROCYTES",
   "HEMATOCRIT",
   "HEMOGLOBIN",
+  "LEUKOCYTES",
   "LYMPHOCYTES",
-  "ERY. MEAN CORPUSCULAR HEMOGLOBIN",
-  "ERY. MEAN CORPUSCULAR HB CONCENTRATION",
-  "ERY. MEAN CORPUSCULAR VOLUME",
   "MONOCYTES",
-  "PLATELET",
-  "ERYTHROCYTES",
-  "LEUKOCYTES"
-))
+  "PLATELET"))
+adlbh$LBNRIND <- recode(adlbh$LBNRIND,
+                        "LOW" = "L",
+                        "NORMAL" = "N",
+                        "HIGH" = "H")
 adlbh$LBNRIND <- ordered(adlbh$LBNRIND, c("L", "N", "H"))
 
 
 adlbh2 <- adlbh %>%
   filter(LBNRIND %in% c("L", "N", "H")) %>%
-  group_by(LBTEST, TRTP, LBNRIND) %>%
-  complete(nesting(LBTEST, TRTP, LBNRIND)) %>%
+  group_by(PARAM, TRTP, LBNRIND) %>%
+  complete(nesting(PARAM, TRTP, LBNRIND)) %>%
   summarise(N = n()) %>%
-  group_by(LBTEST, TRTP) %>%
+  group_by(PARAM, TRTP) %>%
   mutate(tot = sum(N))
 
-adlbh_pvals <- list()
+adlbh_pvals <- c()
 
 for(i in seq(nrow(adlbh2)/9)) {
   adlbh_pvals[i] <- round(fisher.test(
@@ -118,17 +161,17 @@ for(i in seq(nrow(adlbh2)/9)) {
 
 adlbh3 <- adlbh2 %>%
   mutate(n_w_pct = n_pct(N, tot, n_width = 2)) %>%
-  pivot_wider(id_cols = LBTEST,names_from = c(TRTP, LBNRIND), values_from = n_w_pct) %>%
+  pivot_wider(id_cols = PARAM,names_from = c(TRTP, LBNRIND), values_from = n_w_pct) %>%
   add_column("p-val\\line [1]" = unlist(adlbh_pvals))
 
 final <- adlbc3 %>%
   ungroup() %>%
-  add_row("LBTEST" = "----------", .before = 1) %>%
-  add_row("LBTEST" = "CHEMISTRY", .before = 1) %>%
-  add_row("LBTEST" = "", .before = 1) %>%
-  add_row("LBTEST" = "") %>%
-  add_row("LBTEST" = "HEMATOLOGY") %>%
-  add_row("LBTEST" = "----------") %>%
+  add_row("PARAM" = "----------", .before = 1) %>%
+  add_row("PARAM" = "CHEMISTRY", .before = 1) %>%
+  add_row("PARAM" = "", .before = 1) %>%
+  add_row("PARAM" = "") %>%
+  add_row("PARAM" = "HEMATOLOGY") %>%
+  add_row("PARAM" = "----------") %>%
   rbind(ungroup(adlbh3))
 
 
@@ -190,7 +233,8 @@ ht2 <- ht %>%
   huxtable::set_escape_contents(FALSE) %>%
   huxtable::set_bold(1:3, 1:11, TRUE) %>%
   huxtable::set_valign(1:3, 1:11, "bottom") %>%
-  huxtable::set_align(3, 1:11, "center")
+  huxtable::set_align(3, 1:11, "center") %>%
+  huxtable::set_align(1, 1:11, "center")
 
 
 
@@ -204,7 +248,8 @@ doc <- rtf_doc(ht2, header_rows = 3) %>% titles_and_footnotes_from_df(
   set_font_size(10) %>%
   set_ignore_cell_padding(TRUE) %>%
   set_column_header_buffer(top = 1) %>%
-  set_footer_height(1.1)
+  set_footer_height(1) %>%
+  set_header_height(1)
 
 
 # Write out the RTF

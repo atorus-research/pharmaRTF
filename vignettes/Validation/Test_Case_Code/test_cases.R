@@ -4,7 +4,7 @@ context("Atorus Validation")
 #' @section Updated By:
 #' Ashley Tarasiewicz
 #' @section Updated Date:
-#' 4/23/2020
+#' 4/28/2020
 
 library(pharmaRTF)
 library(huxtable)
@@ -179,7 +179,7 @@ test_that('T5',{
   # tests
   skip_if(is.null(vur))
 
-  testthat::expect_equal(c(height = 8.5, width = 11), pharmaRTF::pagesize(test_5),label = "T5.1")
+  testthat::expect_equal(c(width = 11, height = 8.5), pharmaRTF::pagesize(test_5),label = "T5.1")
   testthat::expect_true(vur[vur$ID == "T5.2", "Response"])
 
   rm(test_5)

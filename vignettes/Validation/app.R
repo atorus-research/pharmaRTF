@@ -11,7 +11,8 @@ ui <- fluidPage(
                 actionButton("backButton", "Prev Question"),
                 actionButton("nextButton", "Next Question"),
                 actionButton("openButton" , "Open File"),
-                title = "Current Test"
+                verbatimTextOutput("checkInfo"),
+                title = "Current Check"
             ),
             box(
                 tableOutput("UserDf"),
@@ -45,6 +46,17 @@ server <- function(input, output) {
         radioButtons("vurButtons",
                      vur$df[((input$nextButton - input$backButton + input$sendButton) %% nrow(vur$df)) + 1, "Text"],
                      choices = c(TRUE, FALSE))
+    })
+
+    output$checkInfo <- renderText({
+        paste0(
+            "Current Test: ", vur$df[((input$nextButton - input$backButton + input$sendButton) %% nrow(vur$df)) + 1,
+                                     "TestID"], "\n",
+            "Current Check: " , vur$df[((input$nextButton - input$backButton + input$sendButton) %% nrow(vur$df)) + 1,
+                                       "CheckID"], "\n",
+            "Manual Check of: ", vur$df[((input$nextButton - input$backButton + input$sendButton) %% nrow(vur$df)) + 1,
+                                          "OutputFile"]
+        )
     })
 
     observeEvent(input$saveButton, {
