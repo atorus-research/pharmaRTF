@@ -138,7 +138,8 @@ huxtable::col_width(ht) <- c(.4, .12, .12, .12, .12, .12)
 huxtable::bottom_padding(ht) <- 0
 huxtable::top_padding(ht) <- 0
 huxtable::valign(ht)[1,] <- "bottom"
-huxtable::merge_cells(ht, 8, 1:2)
+ht[8,2] <- ""
+ht <- huxtable::merge_cells(ht, 8, 1:2)
 
 
 # Write into doc object and pull titles/footnotes from excel file
