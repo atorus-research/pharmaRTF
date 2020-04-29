@@ -125,16 +125,16 @@ adlbh$PARAM<- recode(adlbh$PARAM,
 adlbh$PARAM <-ordered(adlbh$PARAM, c(
   "BASOPHILS",
   "EOSINOPHILS",
-  "ERY. MEAN CORPUSCULAR HB CONCENTRATION",
-  "ERY. MEAN CORPUSCULAR HEMOGLOBIN",
-  "ERY. MEAN CORPUSCULAR VOLUME",
-  "ERYTHROCYTES",
   "HEMATOCRIT",
   "HEMOGLOBIN",
-  "LEUKOCYTES",
   "LYMPHOCYTES",
+  "ERY. MEAN CORPUSCULAR HEMOGLOBIN",
+  "ERY. MEAN CORPUSCULAR HB CONCENTRATION",
+  "ERY. MEAN CORPUSCULAR VOLUME",
   "MONOCYTES",
-  "PLATELET"))
+  "PLATELET",
+  "ERYTHROCYTES",
+  "LEUKOCYTES"))
 adlbh$LBNRIND <- recode(adlbh$LBNRIND,
                         "LOW" = "L",
                         "NORMAL" = "N",
@@ -217,8 +217,8 @@ ht <- final %>%
 
 ht <- pad_row(ht, c(1,1))
 ht[1, 2] <- headers[1, "label"]
-ht[1, 5] <- headers[2, "label"]
-ht[1, 8] <- headers[3, "label"]
+ht[1, 5] <- headers[3, "label"]
+ht[1, 8] <- headers[2, "label"]
 
 ht2 <- ht %>%
   huxtable::merge_cells(1, 2:4) %>%

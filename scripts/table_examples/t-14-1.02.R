@@ -147,7 +147,8 @@ doc <- rtf_doc(ht) %>% titles_and_footnotes_from_df(
   reader=example_custom_reader,
   table_number='14-1.02') %>%
   set_font_size(10) %>%
-  set_ignore_cell_padding(TRUE)
+  set_ignore_cell_padding(TRUE) %>%
+  set_column_header_buffer(top = 1)
 
 # Write out the RTF
 write_rtf(doc, file='./scripts/table_examples/outputs/14-1.02.rtf')
