@@ -1,5 +1,5 @@
-# t-14-3-12.R
-#   CDISC Pilot Table 14-3.12
+# t-14-3-13.R
+#   CDISC Pilot Table 14-3.13
 
 library(glue)
 library(tidyverse)
@@ -32,7 +32,6 @@ cbic <- read_xpt(glue("{adam_lib}/adcibc.xpt")) %>%
   # Create a character version of AVAL for display
   mutate(
     AVALC = ord[2:8, ]$AVALC[AVAL], # The codelist is already in this dataframe so using that
-    AVAL_F = lvls[AVAL]
   )
 
 # Calculate the header Ns ----
@@ -44,7 +43,7 @@ column_headers <- header_n %>%
   select(-N) %>%
   pivot_wider(names_from = TRTPN, values_from=labels) %>%
   mutate(AVISIT = '',
-         AVALC = '',
+         AVALC = 'Assessment',
          p = 'p-value\\line [1]')
 
 # Get the summary N counts for each group
@@ -127,6 +126,7 @@ final <- bind_rows(column_headers, counts) %>%
 ht <- as_hux(final) %>%
   huxtable::set_bold(1, 1:ncol(final), TRUE) %>%
   huxtable::set_align(1, 1:ncol(final), 'center') %>%
+  huxtable::set_align(1,2, 'left') %>%
   huxtable::set_valign(1, 1:ncol(final), 'bottom') %>%
   huxtable::set_bottom_border(1, 1:ncol(final), 1) %>%
   huxtable::set_width(1.2) %>%

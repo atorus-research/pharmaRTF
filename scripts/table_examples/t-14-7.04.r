@@ -28,7 +28,6 @@ n_pct <- function(n, pct) {
 cm <- read_xpt(glue("{sdtm_lib}/cm.xpt"))
 adsl <- read_xpt(glue("{adam_lib}/adsl.xpt"))
 adsl$ARM <- ordered(adsl$ARM, c("Placebo", "Xanomeline Low Dose", "Xanomeline High Dose"))
-### TODO: add ordering for medication names because they aren't alphabetical for some reason
 
 ## Patients receiving at least one medication
 cm_1 <- adsl %>%

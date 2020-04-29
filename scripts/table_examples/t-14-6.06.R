@@ -181,7 +181,7 @@ ht2 <- ht %>%
   huxtable::set_align(1, 1:9, "center") %>%
   huxtable::set_align(4:12, 9, "right") %>%
   huxtable::set_valign(10, 2:9, "bottom") %>%
-  huxtable::set_col_width(1:9, c(0.25, rep(0.09, 7), 0.06))
+  huxtable::set_col_width(1:9, c(0.31, rep(0.09, 7), 0.06))
 
 # Write into doc object and pull titles/footnotes from excel file
 doc <- rtf_doc(ht2, header_rows = 3) %>% titles_and_footnotes_from_df(

@@ -14,47 +14,54 @@ library(tibble)
 source('./scripts/table_examples/config.R')
 source('./scripts/table_examples/funcs.R')
 
-vs <- read_xpt(glue("{sdtm_lib}/vs.xpt")) %>%
-  filter(VSTESTCD == "WEIGHT")
-# Logic for End of TRT
-vs_eot <- ddply(vs,
-                "USUBJID",
-                function(x) {
-                  x <- x[x$VISITDY <= 168 & x$VSBLFL != "Y",]
-                  if(max(x$VSDY) < 0) return()
-                  x[x$VSDY == max(x$VSDY),]
-                })
-vs_eot[,"VISIT"] <- "End of Trt."
-## Bind EOT and other visits, some may be the same visit
-vs <- vs %>%
-  filter(VISIT %in% c("BASELINE", "WEEK 24")) %>%
-  rbind(vs_eot)
+n_pct <- function(n, pct, n_width=3, pct_width=3) {
+  n <- unlist(n)
+  pct <- unique(pct)
+  # n (%) formatted string. e.g. 50 ( 75%)
+  unlist(lapply(n, function(x) {
+    if(x == 0) " 0      "
+    else {
+      as.character(
+        # Form the string using glue and format
+        glue('{format(x, width=n_width)}({format(round((x/pct) * 100), width=pct_width)}%)')
+      )
+    }
+  }))
+}
 
-dm <- read_xpt(glue("{sdtm_lib}/dm.xpt"))
+advs <- read_xpt(glue("{adam_lib}/advs.xpt")) %>%
+  filter(PARAM == "Weight (kg)")
 
-# Merge in Arm Data
-vs_1 <- vs %>%
-  merge(dm[,c("USUBJID", "ARM")], by = "USUBJID")
-## Add ordered factor to order arms
-vs_1$ARM <- ordered(vs_1$ARM, c("Placebo", "Xanomeline Low Dose", "Xanomeline High Dose"))
-## Add ordered VISITS to order visits
-vs_1$VISIT <- ordered(vs_1$VISIT, c("BASELINE", "WEEK 24", "End of Trt."))
+advs$TRTP <- ordered(advs$TRTP, c("Placebo", "Xanomeline Low Dose", "Xanomeline High Dose"))
+
+advs$EOTFL <- ifelse(advs$AVISITN == 99, "Y", NA)
+advs$W24 <- ifelse(advs$AVISITN == 24, "Y", NA)
+advs$ABLFL <- ifelse(advs$ABLFL == "Y", "Y", NA)
+
+#Rbinded data.frame
+advs2 <- rbind(advs[advs$EOTFL %in% "Y", ], advs[advs$W24 %in% "Y",], advs[advs$ABLFL %in% "Y",])
 
 # Create table for stats
-bw_stats <- vs_1 %>%
-  group_by(ARM, VISIT) %>%
+bw_stats <- advs2 %>%
+  group_by(TRTP, ABLFL, W24, EOTFL) %>%
   summarise(n = n(),
-            Mean = mean(VSSTRESN),
-            SD = sd(VSSTRESN),
-            Median = median(VSSTRESN),
-            Min. = min(VSSTRESN),
-            Max. = max(VSSTRESN))
+            Mean = mean(AVAL),
+            SD = sd(AVAL),
+            Median = median(AVAL),
+            Min. = min(AVAL),
+            Max. = max(AVAL)) %>%
+  arrange()
+bw_stats[, 2] <- rep(c("Baseline", "Week 24", "End of Trt."), 3)
+bw_stats <- bw_stats[, c(-3, -4)]
+
 bw_stats <- add_column(bw_stats, "Measure" = "Weight (kg)", .before= 1)
-bw_stats[bw_stats$VISIT != "BASELINE", "ARM"] <- NA
-bw_stats[!(bw_stats$ARM %in% "Placebo"), "Measure"] <- NA
+bw_stats[unlist(bw_stats[, 3]) != "Baseline", "TRTP"] <- NA
+bw_stats[!(bw_stats$TRTP %in% "Placebo"), "Measure"] <- NA
+
+dm <- read_xpt(glue("{sdtm_lib}/dm.xpt"))
 bw_stats <- add_column(bw_stats, "N" = apply(bw_stats,
                            1,
-                           function(x) {aSum <- sum(dm[,"ARM"] == x["ARM"], na.rm = TRUE)
+                           function(x) {aSum <- sum(dm[,"ARM"] == x["TRTP"], na.rm = TRUE)
                            ifelse(aSum == 0, NA, aSum)}),
            .before = 3)
 # Pad blank rows after End of Trt. rows
@@ -71,45 +78,47 @@ pad_row <- function(df, r) {
   }
   df
 }
-bw_stats <- pad_row(bw_stats, which(bw_stats$VISIT == "End of Trt.",) + 1)
+bw_stats <- pad_row(bw_stats, which(bw_stats$ABLFL == "End of Trt.",) + 1)
+names(bw_stats)[4] <- "VISIT"
 
 
 ### Weight Change from Baseline table
 # Create table for baseline changes
-bw_bl <- ddply(vs_1,
+bw_bl <- ddply(advs2,
                 "USUBJID",
                 .fun = function(x) {
-                  bl <- x[x$VISIT == "BASELINE", "VSSTRESN"]
-                  w24 <- x[x$VISIT == "WEEK 24", "VSSTRESN"]
-                  eot <- x[x$VISIT == "End of Trt.", "VSSTRESN"]
-                  arm <- unique(x$ARM)
+                  bl <- x[x$ABLFL %in% "Y", "AVAL"]
+                  w24 <- x[x$W24 %in% "Y", "AVAL"]
+                  eot <- x[x$EOTFL %in% "Y", "AVAL"]
+                  arm <- unique(x$TRTP)
                   ## Done this way to make dplyr easier
                   data.frame(
-                    ARM = arm,
+                    TRTP = arm,
                     change = c(ifelse(length(w24-bl) == 0, NA, w24-bl),
                                ifelse(length(eot-bl) == 0, NA, eot-bl)),
                     VISIT = c("WEEK 24", "End of Trt.")
                   )
-                })
+                }, .inform = TRUE)
 ## Add ordered factor to order arms
-bw_bl$ARM <- ordered(bw_bl$ARM, c("Placebo", "Xanomeline Low Dose", "Xanomeline High Dose"))
+bw_bl$TRTP <- ordered(bw_bl$TRTP, c("Placebo", "Xanomeline Low Dose", "Xanomeline High Dose"))
 bw_bl$VISIT <- ordered(bw_bl$VISIT,c("WEEK 24", "End of Trt."))
 
 bw_bl_1 <- bw_bl %>%
-  group_by(ARM, VISIT) %>%
+  group_by(TRTP, VISIT) %>%
   summarise(n = sum(!is.na(change)),
             Mean = mean(change, na.rm = TRUE),
             SD = sd(change, na.rm = TRUE),
             Median = median(change, na.rm = TRUE),
             Min. = min(change, na.rm = TRUE),
-            Max. = max(change, na.rm = TRUE))
-bw_bl_1 <- add_column(bw_bl_1, "Measure" = "Weight Change from Baseline", .before = 1)
-bw_bl_1[bw_bl_1$VISIT != "WEEK 24", "ARM"] <- NA
-bw_bl_1[!(bw_bl_1$ARM %in% "Placebo"), "Measure"] <- NA
+            Max. = max(change, na.rm = TRUE)) %>%
+  ungroup()
+bw_bl_1 <- add_column(bw_bl_1, "Measure" = "Weight Change\\line from Baseline", .before = 1)
+bw_bl_1[bw_bl_1$VISIT != "WEEK 24", "TRTP"] <- NA
+bw_bl_1[!(bw_bl_1$TRTP %in% "Placebo"), "Measure"] <- NA
 
 bw_bl_1 <- add_column(bw_bl_1, "N" = apply(bw_bl_1,
                                              1,
-                                             function(x) {aSum <- sum(dm[,"ARM"] == x["ARM"], na.rm = TRUE)
+                                             function(x) {aSum <- sum(dm[,"ARM"] == x["TRTP"], na.rm = TRUE)
                                              ifelse(aSum == 0, NA, aSum)}),
                        .before = 3)
 bw_bl_1 <- pad_row(bw_bl_1, which(bw_bl_1$VISIT == "End of Trt.") + 1)
@@ -127,23 +136,25 @@ combinedTable[,"Treatment"] <- apply(combinedTable, 1, function(x){
 })
 combinedTable[,"Planned Relative Time"] <- apply(combinedTable, 1, function(x){
   switch(x["Planned Relative Time"],
-         "BASELINE" = "Baseline",
+         "Baseline" = "Baseline",
          "WEEK 24" = "Week 24",
+         "Week 24" = "Week 24",
          "End of Trt." = "End of Trt.",
          NA)
 })
 
 ### Number formatting
-combinedTable[!is.na(combinedTable$Mean),"Mean"] <- unlist(combinedTable[!is.na(combinedTable$Mean),"Mean"]) %>%
-  aaply(.margins = 1, .fun = num_fmt, digits = 1, size = 3, int_len = 2)
-combinedTable[!is.na(combinedTable$SD),"SD"] <- unlist(combinedTable[!is.na(combinedTable$SD),"SD"]) %>%
-  aaply(.margins = 1, .fun = num_fmt, digits = 2, size = 4, int_len = 2)
-combinedTable[!is.na(combinedTable$Median),"Median"] <- unlist(combinedTable[!is.na(combinedTable$Median),"Median"]) %>%
-  aaply(.margins = 1, .fun = num_fmt, digits = 1, size = 3, int_len = 2)
-combinedTable[!is.na(combinedTable$`Min.`),"Min."] <- unlist(combinedTable[!is.na(combinedTable$`Min.`),"Min."]) %>%
-  aaply(.margins = 1, .fun = num_fmt, digits = 1, size = 3, int_len = 2)
-combinedTable[!is.na(combinedTable$`Max.`),"Max."] <- unlist(combinedTable[!is.na(combinedTable$`Max.`),"Max."]) %>%
-  aaply(.margins = 1, .fun = num_fmt, digits = 1, size = 3, int_len = 3)
+class(combinedTable) <- "data.frame"
+combinedTable[!is.na(combinedTable$Mean),"Mean"] <- num_fmt(unlist(combinedTable[!is.na(combinedTable$Mean),"Mean"]),
+                                                            digits = 1, size = 3, int_len = 2)
+combinedTable[!is.na(combinedTable$SD),"SD"] <-  num_fmt(unlist(combinedTable[!is.na(combinedTable$SD),"SD"]),
+                                                         digits = 2, size = 3, int_len = 2)
+combinedTable[!is.na(combinedTable$Median),"Median"] <-  num_fmt(unlist(combinedTable[!is.na(combinedTable$Median),"Median"]),
+                                                                 digits = 1, size = 3, int_len = 2)
+combinedTable[!is.na(combinedTable$`Min.`),"Min."] <-  num_fmt(unlist(combinedTable[!is.na(combinedTable$`Min.`),"Min."]),
+                                                               digits = 1, size = 3, int_len = 2)
+combinedTable[!is.na(combinedTable$`Max.`),"Max."] <-  num_fmt(unlist(combinedTable[!is.na(combinedTable$`Max.`),"Max."]),
+                                                               digits = 1, size = 3, int_len = 2)
 
 
 ht <- combinedTable %>%
@@ -157,8 +168,9 @@ huxtable::align(ht)[,c(3, 5:10)] <- "center"
 huxtable::width(ht) <- 1.5
 huxtable::bottom_padding(ht) <- 0
 huxtable::top_padding(ht) <- 0
-huxtable::col_width(ht) <- c(0.15, 0.1, 0.05, 0.1, 0.04, 0.065, 0.065, 0.065, 0.065, 0.065)
+huxtable::col_width(ht) <- c(0.25, 0.15, 0.05, 0.185, 0.04, 0.065, 0.065, 0.065, 0.065, 0.065)
 huxtable::valign(ht)[1,] <- "bottom"
+huxtable::escape_contents(ht) <- FALSE
 
 
 

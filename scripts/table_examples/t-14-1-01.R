@@ -1,5 +1,5 @@
-# t-14-6-01.R
-#   CDISC Pilot Table 14-4.01
+# t-14-1-01.R
+#   CDISC Pilot Table 14-1.01
 
 library(glue)
 library(tidyverse)
@@ -17,46 +17,37 @@ adsl <- read_xpt(glue("{adam_lib}/adsl.xpt"))
 # Create the total values upfront for quicker summary ----
 adsl_ <- adsl %>%
   union(adsl %>%
-          mutate(TRTPCD = 'Tot',
-                 TRTP = 'Total',
-                 TRTPN = 99)) %>%
+          mutate(TRT01P = 'Total',
+                 TRT01PN = 99)) %>%
   mutate(
-    COMPL = ifelse(DSDECOD == "PROTOCOL COMPLETED", "Y", "N")
+    COMPL = ifelse(DCDECOD == "PROTOCOL COMPLETED", "Y", "N")
   )
 
 # Calculate the header Ns
-header_n <- adsl_ %>%
-  group_by(TRTPCD, TRTP, TRTPN) %>%
-  summarize(N = n()) %>%
-  mutate(
-    labels = str_replace_all(str_wrap(glue('{TRTP} (N={N})'), width=10), "\n", function(x) "\\line ")
-  ) %>%
-  ungroup() %>%
-  arrange(TRTPN) %>%
-  select(-TRTP, -TRTPN)
+header_n <- get_header_n(adsl_)
 
 # Column headers
-header_n_v <- header_n %>% select(TRTPCD, labels) %>%
-  pivot_wider(names_from = TRTPCD, values_from = labels)
+column_headers <- header_n %>% select(TRT01PN, labels) %>%
+  pivot_wider(names_from = TRT01PN, values_from = labels)
 
 # Intent to treat
-itt <- sum_subgrp(ITT, include.n=FALSE) %>%
+itt <- sum_subgrp(adsl_, ITTFL, order_var=STUDYID, include.n=FALSE, header_n = header_n) %>%
   mutate(rowlbl1 = "Intent-To-Treat (ITT)")
 
 # Safety
-safety <- sum_subgrp(SAFETY, include.n=FALSE) %>%
+safety <- sum_subgrp(adsl_, SAFFL, order_var=STUDYID, include.n=FALSE, header_n = header_n) %>%
   mutate(rowlbl1 = "Safety")
 
 # Efficacy
-efficacy <- sum_subgrp(EFFICACY, include.n=FALSE) %>%
+efficacy <- sum_subgrp(adsl_, EFFFL, order_var=STUDYID, include.n=FALSE, header_n = header_n) %>%
   mutate(rowlbl1 = "Efficacy")
 
 # Commpleters Week 24
-compl_24 <- sum_subgrp(COMPLT24, include.n=FALSE) %>%
+compl_24 <- sum_subgrp(adsl_, COMP24FL, order_var=STUDYID, include.n=FALSE, header_n = header_n) %>%
   mutate(rowlbl1 = "Complete Week 24")
 
 # Study completers
-compl <- sum_subgrp(COMPL, include.n=FALSE) %>%
+compl <- sum_subgrp(adsl_, COMPL, order_var=STUDYID, include.n=FALSE, header_n = header_n) %>%
   mutate(rowlbl1 = "Complete Study")
 
 # Pull the body together
@@ -68,8 +59,8 @@ body <- rbind(itt, safety, efficacy, compl_24, compl) %>%
 rm(itt, safety, efficacy, compl_24, compl)
 
 # Attach the header
-final <- bind_rows(header_n_v, body) %>%
-  select(rowlbl1, Pbo, Xan_Lo, Xan_Hi, Tot)
+final <- bind_rows(column_headers, body) %>%
+  select(rowlbl1, `0`, `54`, `81`, `99`)
 
 # Make the table
 ht <- as_hux(final) %>%
@@ -79,7 +70,7 @@ ht <- as_hux(final) %>%
   huxtable::set_bottom_border(1, 1:ncol(final), 1) %>%
   huxtable::set_width(1.1) %>%
   huxtable::set_escape_contents(FALSE) %>%
-  huxtable::set_col_width(c(.3, .15, .15, .15, .15))
+  huxtable::set_col_width(c(.4, .15, .15, .15, .15))
 
 # Write into doc object and pull titles/footnotes from excel file
 doc <- rtf_doc(ht) %>% titles_and_footnotes_from_df(

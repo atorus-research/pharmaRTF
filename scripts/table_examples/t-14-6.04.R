@@ -44,16 +44,78 @@ n_pct <- function(n, pct, n_width=3, pct_width=3) {
 
 ## Chem
 adlbc <- read_xpt(glue("{adam_lib}/adlbc.xpt")) %>%
-  filter(SAFETY == "Y", BLTRFL != "")
+  filter(SAFFL == "Y", AVISITN != 99)
 adlbh <- read_xpt(glue("{adam_lib}/adlbh.xpt")) %>%
-  filter(SAFETY == "Y", BLTRFL != "")
+  filter(SAFFL == "Y", AVISITN != 99)
 comb <- rbind(adlbc, adlbh)
 
 #sort tests
-comb$LBTEST <-ordered(comb$LBTEST, c(sort(unique(adlbc$LBTEST)), sort(unique(adlbh$LBTEST))))
+comb$PARAM<- recode(comb$PARAM,
+                    "Alanine Aminotransferase (U/L)" = "ALANINE AMINOTRANSFERASE",
+                    "Albumin (g/L)" = "ALBUMIN",
+                    "Alkaline Phosphatase (U/L)" = "ALKALINE PHOSPHATASE",
+                    "Aspartate Aminotransferase (U/L)" = "ASPARTATE AMINOTRANSFERASE",
+                    "Bilirubin (umol/L)" = "BILIRUBIN",
+                    "Calcium (mmol/L)" = "CALCIUM",
+                    "Chloride (mmol/L)" = "CHLORIDE",
+                    "Cholesterol (mmol/L)" = "CHOLESTEROL",
+                    "Creatine Kinase (U/L)" = "CREATINE KINASE",
+                    "Creatinine (umol/L)" = "CREATININE",
+                    "Gamma Glutamyl Transferase (U/L)" = "GAMMA GLUTAMYL TRANSFERASE",
+                    "Glucose (mmol/L)" = "GLUCOSE",
+                    "Phosphate (mmol/L)" = "PHOSPHATE",
+                    "Potassium (mmol/L)" = "POTASSIUM",
+                    "Protein (g/L)" = "PROTEIN",
+                    "Sodium (mmol/L)" = "SODIUM",
+                    "Urate (umol/L)" = "URATE",
+                    "Blood Urea Nitrogen (mmol/L)" = "UREA NITROGEN",
+                    "Basophils (GI/L)" = "BASOPHILS",
+                    "Eosinophils (GI/L)" = "EOSINOPHILS",
+                    "Ery. Mean Corpuscular HGB Concentration (mmol/L)" = "ERY. MEAN CORPUSCULAR HB CONCENTRATION",
+                    "Ery. Mean Corpuscular Hemoglobin (fmol(Fe))" = "ERY. MEAN CORPUSCULAR HEMOGLOBIN",
+                    "Ery. Mean Corpuscular Volume (fL)" = "ERY. MEAN CORPUSCULAR VOLUME",
+                    "Erythrocytes (TI/L)" = "ERYTHROCYTES",
+                    "Hematocrit" = "HEMATOCRIT",
+                    "Hemoglobin (mmol/L)" = "HEMOGLOBIN",
+                    "Leukocytes (GI/L)" = "LEUKOCYTES",
+                    "Lymphocytes (GI/L)" = "LYMPHOCYTES",
+                    "Monocytes (GI/L)" = "MONOCYTES",
+                    "Platelet (GI/L)" = "PLATELET")
+#sort tests
+comb$PARAM <-ordered(comb$PARAM, c(
+  "ALANINE AMINOTRANSFERASE",
+  "ALBUMIN",
+  "ALKALINE PHOSPHATASE",
+  "ASPARTATE AMINOTRANSFERASE",
+  "BILIRUBIN",
+  "CALCIUM",
+  "CHLORIDE",
+  "CHOLESTEROL",
+  "CREATINE KINASE",
+  "CREATININE",
+  "GAMMA GLUTAMYL TRANSFERASE",
+  "GLUCOSE",
+  "PHOSPHATE",
+  "POTASSIUM",
+  "PROTEIN",
+  "SODIUM",
+  "URATE",
+  "UREA NITROGEN",
+  "BASOPHILS",
+  "EOSINOPHILS",
+  "ERY. MEAN CORPUSCULAR HB CONCENTRATION",
+  "ERY. MEAN CORPUSCULAR HEMOGLOBIN",
+  "ERY. MEAN CORPUSCULAR VOLUME",
+  "ERYTHROCYTES",
+  "HEMATOCRIT",
+  "HEMOGLOBIN",
+  "LEUKOCYTES",
+  "LYMPHOCYTES",
+  "MONOCYTES",
+  "PLATELET"))
 comb$TRTP <- ordered(comb$TRTP, c("Placebo", "Xanomeline Low Dose", "Xanomeline High Dose"))
-comb$BLTRFL <- ordered(comb$BLTRFL, c("N", "H"))
-comb$LBTRFL <- ordered(comb$LBTRFL, c("N", "H"))
+comb$ANRIND <- ordered(comb$ANRIND, c("N", "H"))
+comb$BNRIND <- ordered(comb$BNRIND, c("N", "H"))
 comb$VISIT <- ordered(comb$VISIT, c(
   "WEEK 2",
   "WEEK 4",
@@ -66,41 +128,43 @@ comb$VISIT <- ordered(comb$VISIT, c(
   "WEEK 26"
 ))
 
-total_bltrfl1 <- comb%>%
-  filter(!is.na(VISIT), !is.na(TRTP), !is.na(BLTRFL), !is.na(LBTRFL)) %>%
-  group_by(LBTEST, VISIT, TRTP, BLTRFL) %>%
-  complete(nesting(TRTP, BLTRFL)) %>%
+total_ABLFL1 <- comb%>%
+  filter(!is.na(VISIT), !is.na(TRTP), !is.na(BNRIND), !is.na(ANRIND), !is.na(PARAM)) %>%
+  group_by(PARAM, VISIT, TRTP, BNRIND) %>%
+  complete(nesting(TRTP, ABLFL)) %>%
   summarise(N = n())
-total_bltrfl <- total_bltrfl1 %>%
-  mutate(LBTRFL = ordered("T", c("T", "N", "H"))) %>%
-  pivot_wider(id_cols = c(LBTEST, VISIT, LBTRFL), names_from = c(TRTP, BLTRFL), values_from = N)
+total_ABLFL <- total_ABLFL1 %>%
+  mutate(ANRIND = ordered("T", c("T", "N", "H"))) %>%
+  pivot_wider(id_cols = c(PARAM, VISIT, ANRIND), names_from = c(TRTP, BNRIND), values_from = N) %>%
+  ungroup()
 
 comb2 <- comb %>%
-  filter(!is.na(VISIT), !is.na(TRTP), !is.na(BLTRFL), !is.na(LBTRFL)) %>%
-  group_by(LBTEST, VISIT, TRTP, BLTRFL, LBTRFL) %>%
-  complete(nesting(BLTRFL, LBTRFL)) %>%
+  filter(!is.na(VISIT), !is.na(TRTP), !is.na(BNRIND), !is.na(ANRIND)) %>%
+  group_by(PARAM, VISIT, TRTP, BNRIND, ANRIND) %>%
+  complete(nesting(BNRIND, ANRIND)) %>%
   summarise(N = n()) %>%
-  mutate(n2 = n_pct(N, total_bltrfl1[total_bltrfl1$LBTEST == LBTEST &
-                                         total_bltrfl1$VISIT == VISIT   &
-                                         total_bltrfl1$TRTP == TRTP     &
-                                         total_bltrfl1$BLTRFL == BLTRFL, "N"], n_width = 2)) %>%
-  pivot_wider(id_cols = c(LBTEST, VISIT, LBTRFL), names_from = c(TRTP, BLTRFL), values_from = n2)
+  mutate(n2 = n_pct(N, total_ABLFL1[total_ABLFL1$PARAM == PARAM &
+                                         total_ABLFL1$VISIT == VISIT   &
+                                         total_ABLFL1$TRTP == TRTP     &
+                                         total_ABLFL1$BNRIND == BNRIND, "N"], n_width = 2)) %>%
+  ungroup() %>%
+  pivot_wider(id_cols = c(PARAM, VISIT, ANRIND), names_from = c(TRTP, BNRIND), values_from = n2)
 
-comb2$LBTRFL <- ordered(comb2$LBTRFL, c("T", "N", "H"))
+comb2$ANRIND <- ordered(comb2$ANRIND, c("T", "N", "H"))
 
-total_bltrfl$Placebo_N <- num_fmt(total_bltrfl$Placebo_N, size = 2, int_len = 2)
-total_bltrfl$Placebo_H <- num_fmt(total_bltrfl$Placebo_H, size = 2, int_len = 2)
-total_bltrfl$`Xanomeline Low Dose_N` <- num_fmt(total_bltrfl$`Xanomeline Low Dose_N`, size = 2, int_len = 2)
-total_bltrfl$`Xanomeline Low Dose_H` <- num_fmt(total_bltrfl$`Xanomeline Low Dose_H`, size = 2, int_len = 2)
-total_bltrfl$`Xanomeline High Dose_N` <- num_fmt(total_bltrfl$`Xanomeline High Dose_N`, size = 2, int_len = 2)
-total_bltrfl$`Xanomeline High Dose_H` <- num_fmt(total_bltrfl$`Xanomeline High Dose_H`, size = 2, int_len = 2)
+total_ABLFL$Placebo_N <- num_fmt(total_ABLFL$Placebo_N, size = 2, int_len = 2)
+total_ABLFL$Placebo_H <- num_fmt(total_ABLFL$Placebo_H, size = 2, int_len = 2)
+total_ABLFL$`Xanomeline Low Dose_N` <- num_fmt(total_ABLFL$`Xanomeline Low Dose_N`, size = 2, int_len = 2)
+total_ABLFL$`Xanomeline Low Dose_H` <- num_fmt(total_ABLFL$`Xanomeline Low Dose_H`, size = 2, int_len = 2)
+total_ABLFL$`Xanomeline High Dose_N` <- num_fmt(total_ABLFL$`Xanomeline High Dose_N`, size = 2, int_len = 2)
+total_ABLFL$`Xanomeline High Dose_H` <- num_fmt(total_ABLFL$`Xanomeline High Dose_H`, size = 2, int_len = 2)
 
 comb3 <- comb2 %>%
-  rbind(total_bltrfl) %>%
-  arrange(LBTEST, VISIT, LBTRFL)
+  rbind(total_ABLFL) %>%
+  arrange(PARAM, VISIT, ANRIND)
 
 comb3$VISIT <- as.character(str_extract(comb3$VISIT, "[0-9]+"))
-comb3$LBTRFL <- as.character(recode(comb3$LBTRFL,
+comb3$ANRIND <- as.character(recode(comb3$ANRIND,
                        "T" = "n",
                        "N" = "Normal",
                        "H" = "High"))
