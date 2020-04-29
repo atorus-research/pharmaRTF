@@ -212,6 +212,10 @@ scrape_spec_rmd <- function(file, envir = new.env()){
   if (length(grep("^```\\{r.*\\}", clean_lines)) > 0) {
     process_single_rmd(clean_lines, envir = envir)
   } else {
+    clean_lines <- str_replace_all(
+      str_replace_all(clean_lines, "<", "\\\\<"),
+      ">", "\\\\>"
+    )
     cat(clean_lines,sep = "\n")
   }
 }

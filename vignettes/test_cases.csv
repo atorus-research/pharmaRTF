@@ -1,6 +1,6 @@
 LineType,Level,Specs Tested,TestID,CheckID,Text,CheckType,OutputFile
 UpdatedBy,0,,,,Ashley Tarasiewicz,,
-UpdatedDate,0,,,,4/24/2020,,
+UpdatedDate,0,,,,4/28/2020,,
 Setup,0,,,,_No prerequisites required_,,
 TestCases,1,A:B,T1,,Output an RTF using a dataframe requiring one page of output and verify output and paging are appropiate,,
 TestCases,2,,T1,1,Verify document outputs as an RTF and opens in Word,visual,test_1.rtf
@@ -16,7 +16,7 @@ TestCases,1,D,T4,,Check document level header and footer height are set to defau
 TestCases,2,,T4,1,"Verify document level header and footer heights are set to expected default: .5,.5",programmatic,test_4.Rdata
 TestCases,2,,T4,2,Verify document level header and footer heights on output are .25 (header) and 1 (footer),visual,test_4.rtf
 TestCases,1,E,T5,,Check document level page size is set to default then change page size and verify changes are reflected in the output,,
-TestCases,2,,T5,1,"Verify document level page size is set to expected default: 8.5,11 ",programmatic,test_5.Rdata
+TestCases,2,,T5,1,"Verify document level page size is set to expected default: 8.5 (height), 11 (width) ",programmatic,test_5.Rdata
 TestCases,2,,T5,2,"Verify document level page size on output is 9 (height), 12 (width)",visual,test_5.rtf
 TestCases,1,F,T6,,Check document level orientation is set to default then change orientation and verify changes are reflected in the output,,
 TestCases,2,,T6,1,Verify document level orientation is set to expected default: landscape,programmatic,test_6.Rdata
