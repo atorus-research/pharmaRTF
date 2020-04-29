@@ -116,7 +116,7 @@ total_b3[, ""] <- "Total Bili 1.5 x ULN and\\line Transaminase 1.5 x ULN"
 # total_b3[, "p-\\line value\\line[2]"] <- c(
 #   num_fmt(mantelhaen.test(array(unlist(adlbh_b1[,"N"]), dim = c(2,3,2)))$p.value, size = 6, int_len = 1, digits = 3)
 #   , "", "")
-total_b3[, "p-\\line value\\line[2]"] <- c("0.000", "", "")
+total_b3[, "p-\\line value\\line[2]"] <- c("", "", "")
 
 ## Table construction
 # Lots of weird properties for this table so I'm doing it manually
@@ -160,8 +160,8 @@ ht <- comb2 %>%
 
 ht <- pad_row(ht, c(1,1))
 ht[1, 3] <- headers[1, "label"]
-ht[1, 5] <- headers[2, "label"]
-ht[1, 7] <- headers[3, "label"]
+ht[1, 5] <- headers[3, "label"]
+ht[1, 7] <- headers[2, "label"]
 
 ht2 <- ht %>%
   huxtable::merge_cells(1, 3:4) %>%

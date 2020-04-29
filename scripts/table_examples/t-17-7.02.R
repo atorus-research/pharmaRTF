@@ -46,9 +46,11 @@ advs2$TRTP <- ordered(advs2$TRTP, c("Placebo", "Xanomeline Low Dose", "Xanomelin
 ## Add ordered VISITS to order visits
 advs2$AVISIT <- ordered(advs2$AVISIT, c("Baseline", "Week 24", "End of Treatment"))
 advs2$PRTFL <- ordered(advs2$PRTFL, c("Week 24", "End of Trt."))
+advs2$PARAM <- recode(advs2$PARAM,
+                      "Pulse Rate (beats/min)" = "Pulse (bpm)")
 advs2$PARAM <- ordered(advs2$PARAM, c("Systolic Blood Pressure (mmHg)",
                                       "Diastolic Blood Pressure (mmHg)",
-                                      "Pulse Rate (beats/min)"))
+                                      "Pulse (bpm)"))
 
 advs3 <- advs2 %>%
   group_by(PARAM, ATPT, TRTP, PRTFL) %>%
