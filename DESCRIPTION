@@ -31,7 +31,6 @@ Suggests:
     knitr,
     rmarkdown,
     readxl,
-    here,
     kableExtra,
     plyr,
     tidyverse
