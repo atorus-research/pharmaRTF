@@ -12,9 +12,10 @@ source('./scripts/table_examples/funcs.R')
 
 # Read in the ADLB datasets
 adlbc <- read_xpt(glue("{adam_lib}/adlbc.xpt")) %>%
-  filter(SAFFL == 'Y')
+  filter(SAFFL == 'Y' & (AVISITN != 99 | (AVISITN == 99 & AENTMTFL=='Y')))
 adlbh <- read_xpt(glue("{adam_lib}/adlbh.xpt")) %>%
-  filter(SAFFL == 'Y' & !(PARAM %in% c('Anisocytes', 'Poikilocytes', 'Microcytes', 'Macrocytes')))
+  filter(SAFFL == 'Y' & !(PARAM %in% c('Anisocytes', 'Poikilocytes', 'Microcytes', 'Macrocytes'))
+         & (AVISITN != 99 | (AVISITN == 99 & AENTMTFL=='Y')))
 
 # Template for assigning display visit values
 visit_names <- data.frame(
@@ -28,10 +29,7 @@ test_summary <- function(x, df_=NULL) {
   # Build up the visit table and attach on the end visit (using flag)
   visits <- df_ %>%
     # Filter to the specified test
-    filter(AVISIT != 'UNSCHEDULED' & PARAM == x) %>%
-    union(df_ %>%
-            filter(AENTMTFL == 'Y' & PARAM == x) %>%
-            mutate(AVISITN = 99))
+    filter(AVISIT != 'UNSCHEDULED' & PARAM == x)
 
   # Summarize results by visit and treatment
   res <- visits %>%
@@ -49,6 +47,7 @@ test_summary <- function(x, df_=NULL) {
 
   # Build the display string
   df <- merge(res, chgbl, by = c('AVISITN', 'TRTPN'), all=TRUE) %>%
+    rowwise() %>%
     mutate(
       N =
         ifelse(

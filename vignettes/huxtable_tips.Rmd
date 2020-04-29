@@ -23,7 +23,7 @@ library(pharmaRTF)
 
 While pharmaRTF can cover your titles, footnotes, and encapsulating document properties - a key feature to creating the tables you need is having a good understand of huxtable. Huxtable has plenty of great user documentation within its own vignettes, available [here](https://hughjonesd.github.io/huxtable/), but within this vignette we will cover some core features necessary to create beautiful tables. 
 
-## Huxtable basics
+## Huxtable Basics
 
 Something important to understand about huxtable is that it starts as an abstraction of a data frame. This means that in general, you can index and slice the huxtable object the same way you would with a normal `data.frame` object in R. 
 
@@ -33,13 +33,13 @@ ht <- huxtable::as_hux(iris[, c("Species", "Sepal.Length", "Sepal.Width", "Petal
 ht[1:10, c('Species', 'Petal.Width')]
 ```
 
-As you can see here, a nice feature of huxtable is that it has a lot of automatic printing options. Within the code of this vignette, it automatically outputs as an HTML table. When developing within an R script, it will also print formatted text to your console. This can be very useful for development as you get an idea of how your display will look within the RTF document.
+As you can see here, a nice feature of huxtable is that it has a lot of automatic printing options. Within the code of an R markdown file, it automatically outputs as an HTML table. When developing within an R script, it will also print formatted text to your console. This can be very useful for development as you get an idea of how your display will look within the RTF document.
 
 ```{r print_screen}
 huxtable::print_screen(ht[1:10])
 ```
 
-## Changing table shape
+## Changing Table Shape
 
 One thing to note is that the default width of a huxtable table will not fill a whole landscape RTF document (when the page size is 11" x 8.5"). A good rule of thumb to follow is that setting the huxtable table width to 1.5 will fill the page properly
 
@@ -69,7 +69,7 @@ ht[1:10]
 
 ```
 
-## Column headers
+## Column Headers
 
 The `add_colnames` argument inserts the column names into the huxtable table. Something important to understand here is that this argument actually inserts the column names as the first row of the table. Therefore, there are no special properties of the column names compared to other data points within the table:
 ```{r column names}
@@ -96,7 +96,7 @@ Given that the column headers are just another row of the data frame, this also 
 
 ## Cell Formatting
 
-Huxtable supports many different cell formatting properties, including borders, bold, italic, horizontal and vertical alignment, and cell padding. All of these tend to be important to creating outputs in clinical reports. To set a cell property, you simply specify the rows and columns you want to change and apply the property function. When in doubt, consult the documentation to understand the proper values. As with essentially all of the huxtable property functions, there are multiple methods of applying the property to suite your preferred syntax style.
+Huxtable supports many different cell formatting properties, including borders, bold, italic, horizontal and vertical alignment, and cell padding. All of these tend to be important when creating outputs in clinical reports. To set a cell property, you simply specify the rows and columns you want to change and apply the property function. When in doubt, consult the documentation to understand the proper values. As with essentially all of the huxtable property functions, there are multiple methods of applying the property to suite your preferred syntax style.
 
 ```{r cell formatting}
 # Assign attributes directly to object
@@ -155,7 +155,7 @@ ht[1:10]
 
 ## Some Final Notes
 
-Getting your huxtable table right takes some experimentation, and when outputting to RTF it will take multiple iterations to get it right. One very important note is that it's common to have to insert line breaks in your data manually - be it to make your data flow nicely within cells, or to orgnaize column headers properly. Within pharmaRTF, for this you will need to use RTF syntax. Instead of the traditional `\n` - this is just `\line`. But in R, you need to add an extra backslash (`\`) because backslashes are break characters. So to insert a line break in your text, simply add `\\line `. 
+Getting your huxtable table right takes some experimentation, and when outputting to RTF it will take multiple iterations to get it right. One very important note is that it's common to have to insert line breaks in your data manually - be it to make your data flow nicely within cells, or to organize column headers properly. Within pharmaRTF, for this you will need to use RTF syntax. Instead of the traditional `\n` - this is just `\line`. But in R, you need to add an extra backslash (`\`) because backslashes are break characters. So to insert a line break in your text, simply add `\\line `. 
 
 A second step that you need to take is to set `escape_contents` to false. This is because by default, huxtable will do some cleaning when generating the output to try to catch certain syntax - and when the RTF generates, the escape character itself has been escaped. The result is that `\line` will appear in your document as text. Fortunately, this is just one extra line of code. 
 
@@ -178,7 +178,7 @@ And within the RTF output, the lines will display properly.
 knitr::include_graphics("table4_img1.png")
 ```
 
-## Further reading
+## Further Reading
 
 Be sure to check out our other vignettes!
 
