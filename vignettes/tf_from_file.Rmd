@@ -1,0 +1,110 @@
+---
+title: "Sourcing Titles and Footnotes From External Files"
+author: "Mike Stackhouse"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Sourcing Titles and Footnotes From External Files}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+
+library(tidyverse)
+library(pharmaRTF)
+library(readxl)
+```
+
+## Building a Process
+
+In this vignette, we will take you through some final features of pharmaRTF to help tie together how this package can work within your organization, and show you the tools you need to embed this into your own internal process.
+
+Being able to specify everything directly in a program is useful. For adhoc tables or to quickly put together an output, keeping everything central and in one spot is nice. But in a mature process, companies typically have a strategy to centralize the assignment of titles and footnotes. Keeping all of your titles and footnotes in one place has many advantages. You can global replace changes that impact numerous outputs. You cacn keep separate repetitive text instead of repeating it for each table. Updates take place in one file instead of having to open each individual impacted program. In short, centralizing this process is highly desireable within an organization.
+
+pharmaRTF has the tools you need to make this process simple, and this comes from the function `titles_and_footnotes_from_df`. This function allows you to import your titles and footnotes from a data frame. That data frame can either come directly from your R session, or you can build a custom reader function to import the data from an external file. The most common scenario would be to read from an external file, so let's start there. 
+
+## How It Works
+
+The idea behind `titles_and_footnotes_from_df` is simply that there is a set of expectations of what the data looks like that flows into the function. What that data looks like within an external file is irrelevant, as long as it can be transformed to meet the needs of `titles_and_footnotes_from_df` on the way in. This is possible because of the `reader` parameter. The `reader` parameter is just some function that returns a data frame, and that data frame must be compliant with the required variables and types expected by `titles_and_footnotes_from_df`. Those variables, types, and requirements are as follows. 
+
+
+```{r requirements, echo=FALSE}
+requirements <- data.frame(
+  Variable = c('type', 'text1', 'text2', 'align', 'bold', 'italic', 'font', 'font_size', 'index'),
+  `Column Types`= c('character', 'character', 'character', 'character', 'logical', 'logical', 'character', 'numeric', 'numeric'),
+  Required = c('Yes', 'Yes', 'No', 'No', 'No', 'No', 'No', 'No', 'No')
+)
+
+knitr::kable(requirements)
+```
+
+These variables and types should all look familiar, because they're exactly what's required for the object `hf_line`. In fact, `titles_and_footnotes_from_df` simply takes this data and applies the `add_titles` and `add_footnotes` function to the `rtf_doc` object to attach titles and footnotes. 
+
+`type` and `text1` are the only required values, and this is because `titles_and_foonotes_from_df` needs to know where to attach the text, and needs to have text to attacch. For variables that aren't required, they may be omitted from the data returned by the reader function. The default values from the `hf_line` object will be used.
+
+## Custom reader functions
+
+The entire concept behind `titles_and_footnotes_from_df` is allowing the freedom of creating your own process. By allowing the user to pass in a custom reader function to the `reader` parameter, the source of given titles and footnotes can be anything the user wants. You could read from flat text, CSV, Excel, Access, any remote file that R can process and return a data frame meeting the above requirements is on the table.
+
+With this in mind, let's consider a simple example. Assume that I have the excel file `titles.xlsx`. This file looks as follows:
+
+```{r example_file, echo=FALSE}
+knitr::kable(read_excel('../data/titles.xlsx'))
+
+```
+
+Here I have everything I need to generate my titles. I just need to make sure of two things:
+
+- My column types read in appropriately
+- When I read the data, I filter to the appropriate table
+
+So overall this will be a pretty simple function. Let's create it.
+
+```{r example_custom_reader}
+example_custom_reader <- function(..., table_number=NULL) {
+
+  # If a column isn't populated then the type may be guessed wrong so force it
+  col_types <- c('text', 'numeric', 'text', 'text', 'text', 'text', 'logical', 'logical')
+  # pass through arguments from ...
+  df <- readxl::read_excel(..., col_types=col_types)
+
+  # Subset and return that dataframe
+  df[df$table_number==table_number, !names(df) == 'table_number']
+}
+
+```
+
+Within a few steps I have everything I need:
+
+- I use `readxl::read_excel` to import the data from the excel file
+- I filter the data to just contain rows associated with whatever table I specify
+- I remove the `table_number` column and just keep the variables that need to be sent to `titles_and_footnotes_from_df`
+
+Note that here I use the `...` parameter. This is because 
+
+a) the `from.file` paramter is passed forward into the reader function
+b) the `...` option on `titles_and_foonotes_from_df` is also passed forward, allowing you to pass whatever arguments necessary from the `titles_and_footnotes_from_df` call into your custom reader. 
+
+With this function now available, we can see the processed and returned data frame. 
+
+```{r use_custom_Reader}
+example_custom_reader('../data/titles.xlsx', table_number = '14-2.01')
+
+```
+
+
+The resulting file looks like:
+```{r table1_img1, out.width = "800px", echo = FALSE}
+knitr::include_graphics("table1_img1.png")
+```
+
+
+
+
+
+

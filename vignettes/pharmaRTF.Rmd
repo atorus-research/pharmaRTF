@@ -78,7 +78,7 @@ And some additional settings for more customization. `hf_line` is used to create
 - Font size (for the individual line)
 - Index
 
-There a multiple methods for piecing together an `rtf_doc` object. Within this vignette, we will cover the basics. Let's assume that you want to keep the default document attributes, and you'd like to create a single, bold title of "The Iris Dataset". You could use the following:
+There are multiple methods for piecing together an `rtf_doc` object. Within this vignette, we will cover the basics. Let's assume that you want to keep the default document attributes, and you'd like to create a single, bold title of "The Iris Dataset". You could use the following:
 
 ```{r table1, eval=FALSE}
 doc <- rtf_doc(ht, titles=list(hf_line("The Iris Dataset", bold=TRUE)))
