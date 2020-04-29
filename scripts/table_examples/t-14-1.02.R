@@ -35,8 +35,8 @@ comp_stat <- adsl %>%
 #Make data.frame for table, unnamed so the cols are named correctly
 comp_df <- data.frame(
   "Placebo" = n_pct(unlist(comp_stat[c(1,4), "n"]), sum(unlist(comp_stat[c(1,4), "n"]))),
-  "Xanomeline Low Dose" = n_pct(unlist(comp_stat[c(1,4), "n"]), sum(unlist(comp_stat[c(1,4), "n"]))),
-  "Xanomeline High Dose" = n_pct(unlist(comp_stat[c(1,4), "n"]), sum(unlist(comp_stat[c(1,4), "n"]))),
+  "Xanomeline Low Dose" = n_pct(unlist(comp_stat[c(2,5), "n"]), sum(unlist(comp_stat[c(2,5), "n"]))),
+  "Xanomeline High Dose" = n_pct(unlist(comp_stat[c(3,6), "n"]), sum(unlist(comp_stat[c(3,6), "n"]))),
   "Total" = c(n_pct(sum(comp_stat[1:3, "n"]), sum(comp_stat[,"n"])),
               n_pct(sum(comp_stat[4:6, "n"]), sum(comp_stat[,"n"]))),
   row.names = c("\tCompleted Week 24", "\tEarly Termination (prior to Week 24)"),
