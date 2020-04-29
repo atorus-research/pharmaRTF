@@ -14,6 +14,6 @@ steps:
 - script: Rscript -e 'R.version'
   displayName: 'R Version'
 
-- script: sudo Rscript -e 'install.packages("huxtable"); devtools::check()'
+- script: sudo Rscript -e 'install.packages(c("huxtable", "kableExtra")); devtools::check()'
   displayName: 'Package Check'
 
