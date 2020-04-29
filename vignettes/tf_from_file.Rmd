@@ -54,7 +54,7 @@ The entire concept behind `titles_and_footnotes_from_df` is allowing the freedom
 With this in mind, let's consider a simple example. Assume that I have the excel file `titles.xlsx`. This file looks as follows:
 
 ```{r example_file, echo=FALSE}
-knitr::kable(read_excel('../data/titles.xlsx'))
+knitr::kable(read_excel('titles.xlsx'))
 
 ```
 
@@ -95,7 +95,7 @@ b) the `...` option on `titles_and_foonotes_from_df` is also passed forward, all
 With this function now available, we can see the data frame that the function processes and returns. 
 
 ```{r use_custom_Reader}
-example_custom_reader('../data/titles.xlsx', table_number = '14-2.01')
+example_custom_reader('titles.xlsx', table_number = '14-2.01')
 ```
 
 In this example, the data processing was very simple - but in a more advanced case this function could read from multiple sheets, merge in default titles and footnotes, read from different data sources - whatever you suits your process.
@@ -107,7 +107,7 @@ Now with an understanding of how a custom reader function works, let's tie it al
 _Note: The data here comes from the CDISC Pilot, which you can read about [here](https://www.cdisc.org/sdtmadam-pilot-project). Also, see our replication of the tables from this CDISC pilot in our [Github repository](link_tbd.com)._
 
 ```{r prep_huxtable, echo=FALSE, results='hide'}
-huxtable::as_hux(load('../data/t14_4_01.Rdata'))
+huxtable::as_hux(load('t14_4_01.Rdata'))
 ```
 
 ```{r show_huxtable, echo=FALSE}
