@@ -78,6 +78,8 @@ num_fmt <- function(var, digits=0, size=10, int_len=3) {
   ))
 }
 
+num_fmt <- Vectorize(num_fmt)
+
 n_pct <- function(n, pct, n_width=3, pct_width=3, digits=0) {
   # n (%) formatted string. e.g. 50 ( 75%)
   res <- n / pct
@@ -95,6 +97,8 @@ n_pct <- function(n, pct, n_width=3, pct_width=3, digits=0) {
     )
   )
 }
+
+n_pct <- Vectorize(n_pct)
 
 sum_subgrp <- function(.data, subgroup_var, order_var = NULL, include.n=TRUE, pad.row=TRUE, header_n = header_n) {
   # Create n (%) subgroups by TRT01P
