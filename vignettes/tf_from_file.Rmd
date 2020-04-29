@@ -58,6 +58,8 @@ knitr::kable(read_excel('../data/titles.xlsx'))
 
 ```
 
+(For more information about the special text fields you see here, see our [advanced usage](advanced_usage.html) vignette)
+
 Here I have everything I need to generate my titles. I just need to make sure of two things:
 
 - My column types read in appropriately
@@ -90,21 +92,59 @@ Note that here I use the `...` parameter. This is because
 a) the `from.file` paramter is passed forward into the reader function
 b) the `...` option on `titles_and_foonotes_from_df` is also passed forward, allowing you to pass whatever arguments necessary from the `titles_and_footnotes_from_df` call into your custom reader. 
 
-With this function now available, we can see the processed and returned data frame. 
+With this function now available, we can see the data frame that the function processes and returns. 
 
 ```{r use_custom_Reader}
 example_custom_reader('../data/titles.xlsx', table_number = '14-2.01')
-
 ```
 
+In this example, the data processing was very simple - but in a more advanced case this function could read from multiple sheets, merge in default titles and footnotes, read from different data sources - whatever you suits your process.
 
-The resulting file looks like:
+## Putting It Together
+
+Now with an understanding of how a custom reader function works, let's tie it all together. Let's assume that our table has been programmed, and that the huxtable table is ready in our session (see the [huxtable tips vignette](huxtable_tips.html) to for tips on how to prepare your table). 
+
+_Note: The data here comes from the CDISC Pilot, which you can read about [here](https://www.cdisc.org/sdtmadam-pilot-project). Also, see our replication of the tables from this CDISC pilot in our [Github repository](link_tbd.com)._
+
+```{r prep_huxtable, echo=FALSE, results='hide'}
+huxtable::as_hux(load('../data/t14_4_01.Rdata'))
+```
+
+```{r show_huxtable, echo=FALSE}
+ht
+```
+
+Here's how you would go about creating your `rtf_doc` object. (For more information about the functions being used here, see our [advanced usage](advanced_usage.html) vignette)
+
+```{r create_rtfdoc, eval=FALSE}
+doc <- rtf_doc(ht, header_rows = 2) %>% titles_and_footnotes_from_df(
+  from.file='../data/titles.xlsx',
+  reader=example_custom_reader,
+  table_number='14-4.01') %>%
+  set_column_header_buffer(top=1) %>%
+  set_font_size(10)
+
+write_rtf(doc, file="table16.rtf")
+```
+
+Within the `titles_and_footnotes_from_df` function you can see the parmaters used:
+
+- `from.file` is the location of our titles/footnotes
+- `reader` is the function we created within this vignette
+- `table_number` is the number of the table we are creating
+
+In the function call, `from.file` and `table_number` are passed forward into the custom reader. From there, validation of the incoming data frame happens, any missing variables have their defaults applied, and then `add_titles` and `add_footnotes` are called on the titles and footnotes within the data respectively. You can see in the resulting table that the titles and footnotes have been applied 
+
 ```{r table1_img1, out.width = "800px", echo = FALSE}
-knitr::include_graphics("table1_img1.png")
+knitr::include_graphics("table16_img1.png")
 ```
 
+And there you have it. By using this process, the creation of your `rtf_doc` simplfies greatly, and this code becomes very reusable from program to program, allowing you to focus on the nuance of your table creation rather than the redundant application of creating titles and footnotes. As mentioned, it's necessary to be able to manually specify your titles and footnotes as needed - but automating the process of applying them is much more desirable when your studies reach a certain scale. 
 
+## Further Reading
 
+If you have no already reviewed them, be sure to check out our other vignettes
 
-
-
+- To pick up the basics of using pharmaRTF, see [this vignette](pharmaRTF.html)
+- To learn tips and tricks for using huxtable with pharmaRTF, see [this vignette](huxtable_tips.html)
+- To learn more advanced usage of pharmaRTF, see [this vignette](advanced_usage.html)
