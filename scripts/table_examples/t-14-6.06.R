@@ -2,8 +2,9 @@
 
 library(huxtable)
 library(glue)
-library(tidyverse, lib.loc = .libPaths()[2])
+library(tidyverse)
 library(haven)
+library(pharmaRTF)
 
 source('./scripts/table_examples/config.R')
 source('./scripts/table_examples/funcs.R')
@@ -76,7 +77,7 @@ names(adlbhy_t)[1] <- "Shift\\line[1]"
 total_t3 <- total_tl %>%
   rbind(adlbhy_t)
 
-total_t3[, ""] <- "Transaminase 1.5 x ULN"
+total_t3[, " "] <- "Transaminase 1.5 x ULN"
 
 total_t3[, "p-\\line value\\line[2]"] <- c(
   num_fmt(mantelhaen.test(array(unlist(adlbhy_t1[,"N"]), dim = c(2,3,2)))$p.value, size = 6, int_len = 1, digits = 3)
@@ -112,7 +113,7 @@ names(adlbhy_b)[1] <- "Shift\\line[1]"
 
 total_b3 <- total_bl %>%
   rbind(adlbhy_b)
-total_b3[, ""] <- "Total Bili 1.5 x ULN and\\line Transaminase 1.5 x ULN"
+total_b3[, " "] <- "Total Bili 1.5 x ULN and\\line Transaminase 1.5 x ULN"
 
 ## FIXME - Different counts???
 # total_b3[, "p-\\line value\\line[2]"] <- c(
@@ -124,7 +125,7 @@ total_b3[, "p-\\line value\\line[2]"] <- c("0.000", "", "")
 # Lots of weird properties for this table so I'm doing it manually
 comb <- rbind(total_t3, total_b3)
 comb <- comb[, c(8,1,2,3,4,5,6,7,9)]
-comb[(comb$`Shift\\line[1]` != "T"), ""] <- ""
+comb[(comb$`Shift\\line[1]` != "T"), " "] <- ""
 comb$`Shift\\line[1]` <- as.character(recode(comb$`Shift\\line[1]`,
                                     "T" = "n",
                                     "N" = "Normal",
@@ -136,7 +137,7 @@ comb2 <- comb2 %>%
   add_row("Shift\\line[1]" = NA, .before = 6)
 
 names(comb2) <- c(
-  "",
+  " ",
   "Shift\\line[1]",
   "Normal at Baseline",
   "High at Baseline",
