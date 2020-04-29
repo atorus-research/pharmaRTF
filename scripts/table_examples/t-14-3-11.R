@@ -1,5 +1,5 @@
-# t-14-3-09.R
-#   CDISC Pilot Table 14-3.09
+# t-14-3-11.R
+#   CDISC Pilot Table 14-3.11
 
 library(glue)
 library(tidyverse)
@@ -53,4 +53,4 @@ doc <- rtf_doc(ht) %>% pharmaRTF:::titles_and_footnotes_from_df(
   set_column_header_buffer(top=1)
 
 # Write out the RTF
-write_rtf(doc, file='./scripts/table_examples/outputs/14-3.09.rtf')
+write_rtf(doc, file='./scripts/table_examples/outputs/14-3.11.rtf')
