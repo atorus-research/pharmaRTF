@@ -30,9 +30,9 @@ This vignette will focus on a few more intricate features of the pharmaRTF packa
 - Split titles
 - Special titles/footnote formats
 
-## Understanding Document Orientation within pharmaRTF
+## Understanding Document Orientation Within pharmaRTF
 
-In development of this feature, we realized as a team that the orientation of an RTF document has a bit of room for confusion. This spawns from the fact that within word, orientation is automatically determined by the document height and width, despite there being a keyword within RTF syntax that specifies landscape orientation. That said, we believe the most intuitive way to set the orientation of a document with with a property function, which in pharmaRTF is simply `orientation`/`set_orientation`. 
+In development of this feature, we realized as a team that the orientation of an RTF document has a bit of room for confusion. This spawns from the fact that within Microsoft Word, orientation is automatically determined by the document height and width, despite there being a keyword within RTF syntax that specifies landscape orientation. That said, we believe the most intuitive way to set the orientation of a document is with a property function, which in pharmaRTF is simply `orientation`/`set_orientation`. 
 
 The default orientation of a `pharmaRTF` document is landscape, as this is typically what you would use on the clinical reports that the package is designed for. `orientation` is closely tied with the `page_size` attribute. When the orientation of an `rtf_doc` object is set to landscape, the height and width of the `pagesize` attribute will write out as specified in the object, with `height` writing to the height document property and `width` writing to the width property. 
 
@@ -58,7 +58,9 @@ pagesize(doc)
 
 ```
 
-So why not switch the height and width properties in the object? This opens the door for inadvertent confusion. Consider the case where a user changes the orientation of the document. At that point, assume  you switched the height and width. Next, the user manually sets height and width themselves. At this point, the change in orientation would be overriden by whatever height and width the user chose manually. This is why we decided to only have the reversal happen at the time of writing the RTF code. Note that **height and width will always align with the object default, which is landscape**. But the document itself will write out with portrait orientation.
+So why not switch the height and width properties in the object? This opens the door for inadvertent confusion. Consider the case where a user changes the orientation of the document. At that point, assume  you switched the height and width. Next, the user manually sets height and width themselves. At this point, the change in orientation would be overridden by whatever height and width the user chooses manually. This is why we decided to only have the reversal happen at the time of writing the RTF code. Note that **height and width will always align with the object default, which is landscape**. But the document itself will write out with portrait orientation.
+
+After changing the orientation, you can see that the height and the width have switched in the output document, and the document is in portrait orientation
 
 ```{r orientation3, echo=FALSE, eval=FALSE}
 write_rtf(doc, file="table5.rtf")
@@ -116,7 +118,7 @@ write_rtf(doc, file="table6.rtf")
 
 ```
 
-And here you can see that the 2 rows of column headers have been pulled into the header of the document and are repeating from page to page. 
+Below you can see that the 2 rows of column headers have been pulled into the header of the document and are repeating from page to page. 
 
 ```{r table6_img1, out.width = "800px", echo = FALSE}
 knitr::include_graphics("table6_img1.png")
@@ -164,9 +166,9 @@ write_rtf(doc, file="table8.rtf")
 knitr::include_graphics("table8_img1.png")
 ```
 
-## Split titles
+## Split Titles
 
-Very often, we have tiles in clinical reports where there's text that flushes left and right on the same line. pharmaRTF have a method to handle this within the `hf_line` object for titles and footnotes. `hf_line` objects have two spaces available within the `text` element:
+Very often, we have tiles in clinical reports where there's text that flushes left and right on the same line. pharmaRTF has a method to handle this within the `hf_line` object for titles and footnotes. `hf_line` objects have two spaces available within the `text` element:
 
 ```{r hf_line}
 hf_line('Text1', 'Text2')
@@ -187,21 +189,21 @@ write_rtf(doc, file="table9.rtf")
 knitr::include_graphics("table9_img1.png")
 ```
 
-## Special Title/Footnote formats
+## Special Title/Footnote Formats
 
-The `hf_line` object has three keywords that trigger special behaivor within titles and footnotes. These are:
+The `hf_line` object has three keywords that trigger special behavior within titles and footnotes. These are:
 
 - PAGE_FORMAT:
 - DATE_FORMAT:
 - FILE_PATH:
 
-Each one of these warrants some further explanation on their own.
+When the text of a title/footnote **starts with** these keywords (note that it _must start_ with this text), it triggers a special action. The text can either be in the first or second text element. Each one of these warrants some further explanation on their own.
 
 ### PAGE_FORMAT:
 
 The `PAGE_FORMAT:` keyword triggers page numbering within a title or a footnote. This format can display both the current page and the total number of pages in the document. The user has full control over how this display happens, except for the fact that the current page must come first. Adding total pages is optional, but it has to be after the current page.
 
-To add the page numbers into your display, you simply specify the keyword within the text element of an `hf_line` object, followed by your desired format. Enter `%s` where you want the page numbers to be display. For example, let's say you want to specify a page format like `Page 1 of 12`. To do this in your title or footnote, you would enter:
+To add the page numbers into your display, you simply specify the keyword within the text element of an `hf_line` object, followed by your desired format. Enter `%s` where you want the page numbers to display. For example, let's say you want to specify a page format like `Page 1 of 12`. To do this in your title or footnote, you would enter:
 
 ```{r page_format1, eval=FALSE}
 hf_line('PAGE_FORMAT: Page %s of %s")
@@ -219,7 +221,7 @@ Or what if you just wanted `Page 5`?
 hf_line('PAGE_FORMAT: Page %s")
 ```
 
-Whatever text you specify, the first occurence of `%s` will be replaced with the current page, and the second occurence will be replaced with the total. Looking at how this appears in the display:
+Whatever text you specify, the first occurrence of `%s` will be replaced with the current page, and the second occurrence will be replaced with the total. Looking at how this appears in the display:
 
 ```{r page_format4, eval=FALSE}
 doc <- rtf_doc(ht, header_rows=2) %>% 
@@ -249,11 +251,11 @@ knitr::include_graphics("table11_img1.png")
 
 ### DATE_FORMAT:
 
-Another standard practice is to include the runtime of a document within the report, perhaps in a footnote. The DATE_FORMAT: keyword allows you to do this, writing the program execution time while the RTF document is being written out. 
+Another standard practice is to include the run time of a document within the report, perhaps in a footnote. The DATE_FORMAT: keyword allows you to do this, writing the program execution time while the RTF document is being written out. 
 
 Date formats are specified using the standard R date formatting tokens. A full list of those tokens and their meaning can be found [here](https://www.stat.berkeley.edu/~s133/dates.html). Similar to PAGE_FORMAT:, as the user, you have full control over how the date is specified, and can include any other text you desire within the string. 
 
-_NOTE: Date-times displayed will be in UTC. We have not yet added the capbility to display the time within a specified locale._
+_NOTE: Date-times displayed will be in UTC. We have not yet added the capability to display the time within a specified locale._
 
 As a practical example, consider entering an ISO-8601 complaint date-time:
 
@@ -300,9 +302,9 @@ The location of an executing R script is not as intuitive as it may seem. This i
 - Executed via the `Rscript` command through the command line
 - Executed interactively
 
-The file path will be determined in the above hiearchy. The only two option above that can return an actual file path are the `source` command and running via `Rscript`. When a file is run interactively, there is no guarantee of the executing files location - because the code is detached from the actual file. Therefore, in these cases, the text `<run_interactively>` will be returned. 
+The file path will be determined in the above hierarchy. The only two options above that can return an actual file path are the `source` command and running via `Rscript`. When a file is run interactively, there is no guarantee of the executing files location - because the code is detached from the actual file. Therefore, in these cases, the text `<run_interactively>` will be returned. 
 
-Using the FILE_PATH: keyword, simply use the token `%s` to specify where you want the file path to appear. Like the other keyword, you may also include other text in the output string.
+Using the FILE_PATH: keyword, simply use the token `%s` to specify where you want the file path to appear. Like the other keywords, you may also include other text in the output string.
 
 ```{r date_format4, eval=FALSE}
 doc <- rtf_doc(ht, header_rows=2) %>% 
@@ -328,7 +330,7 @@ knitr::include_graphics("table15_img1.png")
 
 ## Further Reading
 
-If you have no already reviewed them, be sure to check out our other vignettes.
+If you have not already reviewed them, be sure to check out our other vignettes!
 
 - To pick up the basics of using pharmaRTF, see [this vignette](pharmaRTF.html)
 - To learn tips and tricks for using huxtable with pharmaRTF, see [this vignette](huxtable_tips.html)
