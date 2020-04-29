@@ -14,6 +14,10 @@ header-includes:
 - \usepackage{booktabs}
 - \fancyhead[CO, CE]{The Header - Atorus}
 - \fancyfoot[CO, CE]{The footer - Atorus \thepage}
+vignette: >
+  %\VignetteIndexEntry{pharmaRTF Validation Report}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
 ---
 \newpage
 \tableofcontents

@@ -29,6 +29,11 @@ Suggests:
     gt (>= 0.2.0),
     magrittr (>= 1.5),
     knitr,
-    rmarkdown
+    rmarkdown,
+    readxl,
+    here,
+    kableExtra,
+    plyr,
+    tidyverse
 RoxygenNote: 7.0.2
 VignetteBuilder: knitr
