@@ -54,24 +54,24 @@ adlbc$PARAM<- recode(adlbc$PARAM,
                     "Blood Urea Nitrogen (mmol/L)" = "UREA NITROGEN")
 #sort tests
 adlbc$PARAM <-ordered(adlbc$PARAM, c(
-  "ALANINE AMINOTRANSFERASE",
   "ALBUMIN",
   "ALKALINE PHOSPHATASE",
+  "ALANINE AMINOTRANSFERASE",
   "ASPARTATE AMINOTRANSFERASE",
   "BILIRUBIN",
+  "UREA NITROGEN",
   "CALCIUM",
-  "CHLORIDE",
   "CHOLESTEROL",
   "CREATINE KINASE",
+  "CHLORIDE",
   "CREATININE",
   "GAMMA GLUTAMYL TRANSFERASE",
   "GLUCOSE",
-  "PHOSPHATE",
   "POTASSIUM",
-  "PROTEIN",
   "SODIUM",
-  "URATE",
-  "UREA NITROGEN"
+  "PHOSPHATE",
+  "PROTEIN",
+  "URATE"
   ))
 adlbc$LBNRIND <- recode(adlbc$LBNRIND,
                         "LOW" = "L",
@@ -87,15 +87,16 @@ adlbc2 <- adlbc %>%
   complete(nesting(PARAM, TRTP, LBNRIND)) %>%
   summarise(N = n()) %>%
   group_by(PARAM, TRTP) %>%
-  mutate(tot = sum(N))
+  mutate(tot = sum(N)) %>%
+  arrange(PARAM, TRTP)
 
-adlbc_pvals <- 0
+adlbc_pvals <- c()
 
-# for(i in seq(nrow(adlbc2)/9)) {
-#   adlbc_pvals[i] <- round(fisher.test(
-#     matrix(unlist(adlbc2[((i-1)*9+1):(i*9), "N"]), nrow = 3, ncol = 3, byrow = TRUE)
-#   )$p.value, 3)
-# }
+for(i in seq(nrow(adlbc2)/9)) {
+  adlbc_pvals[i] <- round(fisher.test(
+    matrix(unlist(adlbc2[((i-1)*9+1):(i*9), "N"]), nrow = 3, ncol = 3, byrow = FALSE)
+  )$p.value, 3)
+}
 
 adlbc3 <- adlbc2 %>%
   mutate(n_w_pct = n_pct(N, tot, n_width = 2)) %>%
@@ -149,13 +150,13 @@ adlbh2 <- adlbh %>%
   group_by(PARAM, TRTP) %>%
   mutate(tot = sum(N))
 
-adlbh_pvals <- 0
+adlbh_pvals <- c()
 
-# for(i in seq(nrow(adlbh2)/9)) {
-#   adlbh_pvals[i] <- round(fisher.test(
-#     matrix(unlist(adlbh2[((i-1)*9+1):(i*9), "N"]), nrow = 3, ncol = 3, byrow = TRUE)
-#   )$p.value, 3)
-# }
+for(i in seq(nrow(adlbh2)/9)) {
+  adlbh_pvals[i] <- round(fisher.test(
+    matrix(unlist(adlbh2[((i-1)*9+1):(i*9), "N"]), nrow = 3, ncol = 3, byrow = TRUE)
+  )$p.value, 3)
+}
 
 
 adlbh3 <- adlbh2 %>%
@@ -247,7 +248,8 @@ doc <- rtf_doc(ht2, header_rows = 3) %>% titles_and_footnotes_from_df(
   set_font_size(10) %>%
   set_ignore_cell_padding(TRUE) %>%
   set_column_header_buffer(top = 1) %>%
-  set_footer_height(1.1)
+  set_footer_height(1) %>%
+  set_header_height(1)
 
 
 # Write out the RTF

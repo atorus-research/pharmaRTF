@@ -1,11 +1,11 @@
 ## 14-6.05
 
-
 library(huxtable)
 library(glue)
-library(tidyverse, lib.loc = .libPaths()[2])
+library(tidyverse)
 library(haven)
 library(tibble)
+
 
 source('./scripts/table_examples/config.R')
 source('./scripts/table_examples/funcs.R')
@@ -132,18 +132,31 @@ comb2 <- comb %>%
   summarise(N = n()) %>%
   ungroup()
 
-##FIXME
-pvals <- comb2 %>%
-  group_by(PARAM) %>%
-  summarise(val = cmh_p(., ANRIND ~ TRTP | BNRIND))
 
-  comb3 <- comb2 %>%
-    group_by(PARAM, TRTP, BNRIND) %>%
-    mutate(n2 = n_pct(N, total_bltrfl1[total_bltrfl1$PARAM == PARAM &
-                                         total_bltrfl1$TRTP == TRTP  &
-                                         total_bltrfl1$BNRIND == BNRIND, "N"], n_width = 2)) %>%
-    ungroup() %>%
-    pivot_wider(id_cols = c(PARAM, ANRIND), names_from = c(TRTP, BNRIND), values_from = n2)
+##FIXME
+pvals <- c()
+for(i in levels(comb$PARAM)) {
+  mat <-  comb[comb$PARAM == i, c("ANRIND", "TRTP", "BNRIND")]
+
+  if(all(mat[, "ANRIND"] == "N")) pvals[i] <- ""
+  else {
+    pvals[i] <- tryCatch(num_fmt(cmh_p(mat, ANRIND ~ TRTP | BNRIND, alternate = "rmeans"), digits = 3, int_len = 1),
+                         error = function(c) ""
+             )
+  }
+}
+
+temp1 <- mat %>%
+  group_by(TRTP) %>%
+  summarise(n = n())
+
+comb3 <- comb2 %>%
+  group_by(PARAM, TRTP, BNRIND) %>%
+  mutate(n2 = n_pct(N, total_bltrfl1[total_bltrfl1$PARAM == PARAM &
+                                       total_bltrfl1$TRTP == TRTP  &
+                                       total_bltrfl1$BNRIND == BNRIND, "N"], n_width = 2)) %>%
+  ungroup() %>%
+  pivot_wider(id_cols = c(PARAM, ANRIND), names_from = c(TRTP, BNRIND), values_from = n2)
 
 comb4 <- comb3[!apply(comb3, 1, function(x) {
   all(x[4:8] ==  " 0      ") & all(x[2] == "H")
@@ -170,7 +183,7 @@ comb5$ANRIND <- as.character(recode(comb5$ANRIND,
                                     "N" = "Normal",
                                     "H" = "High"))
 
-comb5[unlist(comb5[,2] == "n")[,1], 9] <- pvals$val
+comb5[unlist(comb5[,2] == "n")[,1], 9] <- pvals
 comb5 <- pad_row(comb5, which(comb5[,2] == "n")) %>%
   ungroup() %>%
   add_row("PARAM" = NA, .before = 1) %>%
@@ -247,8 +260,8 @@ doc <- rtf_doc(ht2, header_rows = 3) %>% titles_and_footnotes_from_df(
   set_font_size(10) %>%
   set_ignore_cell_padding(TRUE) %>%
   set_column_header_buffer(top = 1) %>%
-  set_header_height(0.75) %>%
-  set_footer_height(1)
+  set_header_height(1) %>%
+  set_footer_height(1.3)
 
 
 # Write out the RTF
