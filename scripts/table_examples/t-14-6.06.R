@@ -38,35 +38,38 @@ n_pct <- function(n, pct, n_width=3, pct_width=3) {
 }
 
 # Old data used because new data is missing columns
-adlbhy <- read_xpt(glue("{old_adam_lib}/adlbhy.xpt")) %>%
-  filter(SAFETY == "Y")
+adlbhy <- read_xpt(glue("{adam_lib}/adlbhy.xpt")) %>%
+  filter(SAFFL == "Y", PARAMCD %in% c("TRANSHY", "HYLAW"), !is.na(SHIFT1N), !is.na(BASE), AVISITN > 0)
 
-adlbhy[adlbhy$HYBLTRFL == "", "HYBLTRFL"] <- "N"
-adlbhy$HYBLTRFL <- ordered(adlbhy$HYBLTRFL, c("N", "Y"))
-adlbhy[adlbhy$HYLBTRFL == "", "HYLBTRFL"] <- "N"
-adlbhy$HYLBTRFL <- ordered(adlbhy$HYLBTRFL, c("N", "Y"))
-adlbhy$TRTP <- ordered(adlbhy$TRTP, c("Placebo", "Xanomeline Low Dose", "Xanomeline High Dose"))
+adlbhy2 <- adlbhy %>%
+  group_by(USUBJID) %>%
+  filter(AVAL == max(AVAL)) %>%
+  filter(AVISITN == max(AVISITN)) %>%
+  ungroup()
 
-total_t <- adlbhy %>%
-  filter(!is.na(TRTP), !is.na(HYBLTRFL), HYMXTRFL == "Y") %>%
-  group_by(TRTP, HYBLTRFL) %>%
-  complete(nesting(TRTP, HYBLTRFL)) %>%
+adlbhy2$BASE <- ordered(adlbhy2$BASE, c(0, 1))
+adlbhy2$AVAL <- ordered(adlbhy2$AVAL, c(0, 1))
+adlbhy2$TRTP <- ordered(adlbhy2$TRTP, c("Placebo", "Xanomeline Low Dose", "Xanomeline High Dose"))
+
+total_t <- adlbhy2 %>%
+  filter(!is.na(TRTP), !is.na(BASE), PARAMCD == "TRANSHY") %>%
+  group_by(TRTP, BASE) %>%
+  complete(nesting(TRTP, BASE)) %>%
   summarise(N = n(),
             Nc = num_fmt(n(), size = 2, int_len = 2))
 total_tl <- total_t %>%
   mutate("Shift\\line[1]" = ordered("T", c("T", "N", "H"))) %>%
-  pivot_wider(id_cols = c("Shift\\line[1]"), names_from = c(TRTP, HYBLTRFL), values_from = Nc)
+  pivot_wider(id_cols = c("Shift\\line[1]"), names_from = c(TRTP, BASE), values_from = Nc)
 
-adlbhy_t1 <- adlbhy %>%
-  filter(HYMXTRFL == "Y") %>%
-  group_by(TRTP, HYBLTRFL, HYLBTRFL) %>%
-  complete(nesting(HYBLTRFL, HYLBTRFL)) %>%
-  summarise(N = n()) %>%
-  arrange(HYBLTRFL)
-adlbhy_t <- adlbhy_t1%>%
+adlbhy_t1 <- adlbhy2 %>%
+  filter(PARAMCD == "TRANSHY") %>%
+  group_by(TRTP, BASE, AVAL) %>%
+  complete(nesting(BASE, AVAL)) %>%
+  summarise(N = n())
+adlbhy_t <- adlbhy_t1 %>%
   mutate(N2 = n_pct(N, total_t[total_t$TRTP == TRTP &
-                               total_t$HYBLTRFL == HYBLTRFL, "N"], n_width = 2)) %>%
-  pivot_wider(id_cols = c("HYLBTRFL"), names_from = c("TRTP", "HYBLTRFL"), values_from = c("N2"))
+                               total_t$BASE == BASE, "N"], n_width = 2)) %>%
+  pivot_wider(id_cols = c("AVAL"), names_from = c("TRTP", "BASE"), values_from = c("N2"))
 
 names(adlbhy_t)[1] <- "Shift\\line[1]"
 
@@ -79,31 +82,31 @@ total_t3[, "p-\\line value\\line[2]"] <- c(
   num_fmt(mantelhaen.test(array(unlist(adlbhy_t1[,"N"]), dim = c(2,3,2)))$p.value, size = 6, int_len = 1, digits = 3)
   , "", "")
 
-adlbhy[adlbhy$HYBLBIFL == "", "HYBLBIFL"] <- "N"
-adlbhy$HYBLBIFL <- ordered(adlbhy$HYBLBIFL, c("N", "Y"))
-adlbhy[adlbhy$HYLBBIFL == "", "HYLBBIFL"] <- "N"
-adlbhy$HYLBBIFL <- ordered(adlbhy$HYLBBIFL, c("N", "Y"))
+adlbhy3 <- adlbhy2 %>%
+  filter(PARAMCD %in% c("HYLAW"))
 
-total_b <- adlbhy %>%
-  filter(!is.na(TRTP), !is.na(HYBLBIFL), HYMXTRFL == "Y") %>%
-  group_by(TRTP, HYBLBIFL) %>%
-  complete(nesting(TRTP, HYBLBIFL)) %>%
+adlbhy3$BASE <- ordered(adlbhy3$BASE, c(0, 1))
+adlbhy3$AVAL <- ordered(adlbhy3$AVAL, c(0, 1))
+adlbhy3$TRTP <- ordered(adlbhy3$TRTP, c("Placebo", "Xanomeline Low Dose", "Xanomeline High Dose"))
+
+total_b <- adlbhy3 %>%
+  filter(!is.na(TRTP), !is.na(BASE)) %>%
+  group_by(TRTP, BASE) %>%
+  complete(nesting(TRTP, BASE)) %>%
   summarise(N = n(),
             Nc = num_fmt(n(), size = 2, int_len = 2))
 total_bl <- total_b %>%
   mutate("Shift\\line[1]" = ordered("T", c("T", "N", "H"))) %>%
-  pivot_wider(id_cols = c("Shift\\line[1]"), names_from = c(TRTP, HYBLBIFL), values_from = Nc)
+  pivot_wider(id_cols = c("Shift\\line[1]"), names_from = c(TRTP, BASE), values_from = Nc)
 
-adlbh_b1 <- adlbhy %>%
-  filter(HYMXBIFL == "Y") %>%
-  group_by(TRTP, HYBLBIFL, HYLBBIFL) %>%
-  complete(nesting(HYBLBIFL, HYLBBIFL)) %>%
-  summarise(N = n()) %>%
-  arrange(HYBLBIFL)
-adlbh_b <- adlbh_b1%>%
+adlbhy_b1 <- adlbhy3 %>%
+  group_by(TRTP, BASE, AVAL) %>%
+  complete(nesting(BASE, AVAL)) %>%
+  summarise(N = n())
+adlbhy_b <- adlbhy_b1 %>%
   mutate(N2 = n_pct(N, total_b[total_b$TRTP == TRTP &
-                               total_b$HYBLBIFL == HYBLBIFL, "N"], n_width = 2)) %>%
-  pivot_wider(id_cols = c("HYLBBIFL"), names_from = c("TRTP", "HYBLBIFL"), values_from = c("N2"))
+                               total_b$BASE == BASE, "N"], n_width = 2)) %>%
+  pivot_wider(id_cols = c("AVAL"), names_from = c("TRTP", "BASE"), values_from = c("N2"))
 
 names(adlbhy_b)[1] <- "Shift\\line[1]"
 
@@ -192,3 +195,4 @@ doc <- rtf_doc(ht2, header_rows = 3) %>% titles_and_footnotes_from_df(
   set_footer_height(1)
 
 write_rtf(doc, file='./scripts/table_examples/outputs/14-6.06.rtf')
+
