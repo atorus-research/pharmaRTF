@@ -5,6 +5,7 @@ library(glue)
 library(tidyverse)
 library(haven)
 library(tibble)
+library(pharmaRTF)
 
 
 source('./scripts/table_examples/config.R')

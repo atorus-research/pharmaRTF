@@ -4,6 +4,7 @@ library(huxtable)
 library(glue)
 library(tidyverse, lib.loc = .libPaths()[2])
 library(haven)
+library(pharmaRTF)
 
 source('./scripts/table_examples/config.R')
 source('./scripts/table_examples/funcs.R')
@@ -100,7 +101,7 @@ adlbh_b1 <- adlbhy %>%
   complete(nesting(HYBLBIFL, HYLBBIFL)) %>%
   summarise(N = n()) %>%
   arrange(HYBLBIFL)
-adlbh_b <- adlbh_b1%>%
+adlbhy_b <- adlbh_b1%>%
   mutate(N2 = n_pct(N, total_b[total_b$TRTP == TRTP &
                                total_b$HYBLBIFL == HYBLBIFL, "N"], n_width = 2)) %>%
   pivot_wider(id_cols = c("HYLBBIFL"), names_from = c("TRTP", "HYBLBIFL"), values_from = c("N2"))
