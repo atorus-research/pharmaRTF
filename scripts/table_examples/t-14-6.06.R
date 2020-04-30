@@ -40,7 +40,7 @@ n_pct <- function(n, pct, n_width=3, pct_width=3) {
 
 # Old data used because new data is missing columns
 adlbhy <- read_xpt(glue("{adam_lib}/adlbhy.xpt")) %>%
-  filter(SAFFL == "Y", PARAMCD %in% c("TRANSHY", "HYLAW"), !is.na(SHIFT1N), !is.na(BASE), AVISITN > 0)
+  filter(SAFFL == "Y", PARAMCD %in% c("TRANSHY", "HYLAW"), !is.na(BASE), AVISITN > 0)
 
 adlbhy2 <- adlbhy %>%
   group_by(USUBJID) %>%
