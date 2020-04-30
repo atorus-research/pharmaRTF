@@ -1,6 +1,6 @@
 # pharmaRTF 
-<!--https://img.shields.io/azure-devops/build/atorus/32a592e8-d9a9-4ccd-bd26-65bc1c2a634d/1-->
-
+[<img src="https://img.shields.io/badge/Slack-OSTCR-blue?style=flat&logo=slack">](https://ostinclinicalresearch.slack.com)
+[<img src="https://img.shields.io/badge/Slack-RValidationHub-blue?style=flat&logo=slack">](https://RValidationHub.slack.com)
 
 ## What is pharmaRTF? 
 
