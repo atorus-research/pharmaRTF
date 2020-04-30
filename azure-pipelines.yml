@@ -6,9 +6,9 @@
 trigger: none
 
 pool:
-  vmImage: 'windows-latest'
+  vmImage: 'macOS-latest'
 
-container: 'rocker/r-ver:latest'
+container: 'rocker/tidyverse:latest'
 
 steps:
 - script: Rscript -e 'R.version'
