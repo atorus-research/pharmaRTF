@@ -11,12 +11,9 @@ pool:
 container: 'rocker/tidyverse:latest'
 
 steps:
-- script: sudo apt-get install texlive-latex-base
-  displayName: 'install pdflatex'
-
 - script: Rscript -e 'R.version'
   displayName: 'R Version'
 
-- script: sudo Rscript -e 'install.packages(c("huxtable", "kableExtra")); devtools::check()'
+- script: sudo Rscript -e 'install.packages(c("huxtable", "kableExtra")); devtools::test()'
   displayName: 'Package Check'
 
