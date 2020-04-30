@@ -6,14 +6,14 @@
 trigger: none
 
 pool:
-  vmImage: 'ubuntu-latest'
+  vmImage: 'windows-latest'
 
-container: 'rocker/tidyverse:latest'
+container: 'rocker/r-ver:latest'
 
 steps:
 - script: Rscript -e 'R.version'
   displayName: 'R Version'
 
-- script: sudo Rscript -e 'install.packages(c("huxtable", "kableExtra")); devtools::test()'
+- script: Rscript -e 'install.packages(c("huxtable", "kableExtra")); devtools::test()'
   displayName: 'Package Check'
 
