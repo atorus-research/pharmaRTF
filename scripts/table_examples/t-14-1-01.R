@@ -20,7 +20,7 @@ adsl_ <- adsl %>%
           mutate(TRT01P = 'Total',
                  TRT01PN = 99)) %>%
   mutate(
-    COMPL = ifelse(DCDECOD == "PROTOCOL COMPLETED", "Y", "N")
+    COMPL = ifelse(DCDECOD == "COMPLETED", "Y", "N")
   )
 
 # Calculate the header Ns

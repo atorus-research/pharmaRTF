@@ -72,7 +72,7 @@ test_that("rtf_doc sets the correct defaults", {
   expect_equal(orientation(rtf), "landscape")
   expect_equal(header_height(rtf), 0.5)
   expect_equal(footer_height(rtf), 0.5)
-  expect_equal(pagesize(rtf), c(width = 8.5, height = 11))
+  expect_equal(pagesize(rtf), c(width = 11, height = 8.5))
   expect_equal(header_rows(rtf), 1)
   expect_equal(ignore_cell_padding(rtf), FALSE)
   expect_equal(column_header_buffer(rtf), c(top = 0, bottom = 0))
