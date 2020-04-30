@@ -56,7 +56,7 @@ test_that("doc_properties_string populates correctly", {
   #Twips are 1/1440 inch
   pagesize(rtf) <- c(width = 10)
   expect_equal(doc_properties_string(rtf),
-               "\\paperw14400\\paperh15840\\widowctrl\\ftnbj\\fet0\\sectd\\linex0\n\\margl1440\\margr1440\\margt1440\\margb1440\n\\headery720\\footery720\\fs24\n")
+               "\\paperw12240\\paperh14400\\widowctrl\\ftnbj\\fet0\\sectd\\linex0\n\\margl1440\\margr1440\\margt1440\\margb1440\n\\headery720\\footery720\\fs24\n")
   pagesize(rtf) <- c(height = 10)
   expect_equal(doc_properties_string(rtf),
                "\\paperw14400\\paperh14400\\widowctrl\\ftnbj\\fet0\\sectd\\linex0\n\\margl1440\\margr1440\\margt1440\\margb1440\n\\headery720\\footery720\\fs24\n")
@@ -86,7 +86,7 @@ test_that("doc_properties_string populates correctly", {
   pagesize(rtf) <- c(height = 10, width = 5)
   orientation(rtf) <- "landscape"
   expect_equal(doc_properties_string(rtf),
-               "\\paperw14400\\paperh7200\\widowctrl\\ftnbj\\fet0\\sectd\\linex0\n\\lndscpsxn\n\\margl2880\\margr2880\\margt2880\\margb2880\n\\headery1440\\footery1440\\fs10\n")
+               "\\paperw7200\\paperh14400\\widowctrl\\ftnbj\\fet0\\sectd\\linex0\n\\lndscpsxn\n\\margl2880\\margr2880\\margt2880\\margb2880\n\\headery1440\\footery1440\\fs10\n")
 
 
 })

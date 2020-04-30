@@ -22,20 +22,24 @@ header_n <- adsl %>%
 
 # Overall counts
 overall <- ae_counts(adae) %>%
-  mutate(AEBODSYS = 'ANY BODY SYSTEM', AETERM = 'ANY BODY SYSTEM', ord1=1)
+  mutate(AETERM = 'ANY BODY SYSTEM', AEBODSYS = 'ANY BODY SYSTEM', ord1=1, ord2=1)
 
 # System Organ Class counts
 bodsys <- ae_counts(adae, AEBODSYS) %>%
-  mutate(AETERM = AEBODSYS, ord1=2) %>%
+  mutate(AETERM = AEBODSYS, ord1=2, ord2=1) %>%
   arrange(AEBODSYS)
+
+pad <- bodsys %>%
+  select(AEBODSYS, ord1, ord2) %>%
+  mutate(ord3=999)
 
 # Individual term counts
 term <- ae_counts(adae, AEBODSYS, AETERM, sort=TRUE) %>%
-  mutate(AETERM = paste0('  ', AETERM), ord1=2)
+  mutate(AETERM = paste0('  ', AETERM), ord1=2, ord2=2)
 
 # Bring the data together
-combined <- bind_rows(overall, bodsys, term) %>%
-  arrange(ord1, AEBODSYS, desc(ord2), AETERM)
+combined <- bind_rows(overall, bodsys, pad, term) %>%
+  arrange(ord1, AEBODSYS, ord2, desc(ord3), AETERM)
 
 # Build and attach column headers
 column_headers <- header_n %>%
@@ -90,7 +94,8 @@ doc <- rtf_doc(ht, header_rows = 2) %>% titles_and_footnotes_from_df(
   from.file='./scripts/table_examples/titles.xlsx',
   reader=example_custom_reader,
   table_number='14-5.01') %>%
-  set_font_size(10)
+  set_font_size(10) %>%
+  set_ignore_cell_padding(TRUE)
 
 # Write out the RTF
 write_rtf(doc, file='./scripts/table_examples/outputs/14-5.01.rtf')

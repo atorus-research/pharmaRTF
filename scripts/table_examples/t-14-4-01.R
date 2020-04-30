@@ -50,7 +50,7 @@ cumdose <- adsl_ %>% desc_stats(CUMDOSE, group=TRTPCD, int_len=5) %>%
   mutate(rowlbl1 = 'Cumulative dose at end of study [2]')
 
 # Spanner - want this to be the top left cell of the cells that will merge
-spanner <- data.frame(`0_C` = 'Completers at Week 24', `0_S` = 'Safety Population [1]', stringsAsFactors = FALSE)
+spanner <- tibble(`0_C` = 'Completers at Week 24', `0_S` = 'Safety Population [1]')
 
 # Join it all together, order columns, clean grouped cells
 final <- bind_rows(spanner, header, avgdd, cumdose) %>%
@@ -72,16 +72,17 @@ huxtable::bold(ht)[1:2, ] <- TRUE
 huxtable::align(ht)[1:2, ] <- 'center'
 huxtable::width(ht) <- 1.5
 huxtable::escape_contents(ht) <- FALSE
-huxtable::col_width(ht) <- c(.37, .1, .1, .1, .1, .1, .1, .1)
+huxtable::col_width(ht) <- c(.36, .07, .1, .11, .11, .1, .11, .11)
 huxtable::bottom_padding(ht) <- 0
 huxtable::top_padding(ht) <- 0
 ht
 
 # Write into doc object and pull titles/footnotes from excel file
-doc <- rtf_doc(ht, header.rows = 2) %>% titles_and_footnotes_from_df(
+doc <- rtf_doc(ht, header_rows = 2) %>% titles_and_footnotes_from_df(
   from.file='./scripts/table_examples/titles.xlsx',
   reader=example_custom_reader,
   table_number='14-4.01') %>%
+  set_column_header_buffer(top=1) %>%
   set_font_size(10)
 
 # Write out the RTF

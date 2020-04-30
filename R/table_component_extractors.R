@@ -34,11 +34,11 @@ get_column_headers.huxtable <- function(doc) {
   }
 }
 
-#' @noRd
-get_column_headers.gt_tbl <- function(doc) {
-  data <- gt:::build_data(doc$table, context='rtf')
-  gt:::create_columns_component_r(data = data)
-}
+# #' @noRd
+# get_column_headers.gt_tbl <- function(doc) {
+#   data <- gt:::build_data(doc$table, context='rtf')
+#   gt:::create_columns_component_r(data = data)
+# }
 
 #' Return the RTF string for the body of a table
 #'
@@ -66,8 +66,8 @@ get_table_body.huxtable <- function(doc) {
   }
 }
 
-#' @noRd
-get_table_body.gt_tbl <- function(doc) {
-  data <- gt:::build_data(doc$table, context='rtf')
-  gt:::create_body_component_r(data = data)
-}
+# #' @noRd
+# get_table_body.gt_tbl <- function(doc) {
+#   data <- gt:::build_data(doc$table, context='rtf')
+#   gt:::create_body_component_r(data = data)
+# }

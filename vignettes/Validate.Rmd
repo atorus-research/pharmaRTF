@@ -14,6 +14,10 @@ header-includes:
 - \usepackage{booktabs}
 - \fancyhead[CO, CE]{The Header - Atorus}
 - \fancyfoot[CO, CE]{The footer - Atorus \thepage}
+vignette:  >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
 ---
 \newpage
 \tableofcontents
@@ -22,7 +26,6 @@ header-includes:
 library(plyr)
 library(dplyr)
 library(testthat)
-library(here)
 library(knitr)
 library(kableExtra)
 library(stringr)
@@ -38,13 +41,15 @@ opts_chunk$set(
   tidy = FALSE
 )
 
-test_code_dir <- here("vignettes", "Validation", "Test_Case_Code")
-spec_dir <- here("vignettes","Validation", "Specifications")
-test_case_dir <- here("vignettes","Validation", "Test_Cases")
-test_cases <- read.csv("~/pharmaRTF/vignettes/test_cases.csv")
+test_code_dir <- paste0("Validation/Test_Case_Code")
+spec_dir <- paste0("Validation/Specifications")
+test_case_dir <-  paste0("Validation/Test_Cases")
+test_cases <- read.csv("test_cases.csv", stringsAsFactors = FALSE)
 
-source(here("vignettes", "helper_test_code.R")) # handles environment and access to test_that contents
-source(here("vignettes", "roxy_block_details.R")) # scrapes roxygen block for authorship details
+source("helper_test_code.R") # handles environment and access to test_that contents
+
+
+source("roxy_block_details.R") # scrapes roxygen block for authorship details
 ```
 
 # Validation Files Information

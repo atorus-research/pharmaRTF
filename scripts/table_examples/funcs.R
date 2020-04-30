@@ -237,7 +237,7 @@ ae_counts <- function(.data, ..., N_counts = header_n, sort=FALSE) {
       cAEs_0  = ifelse(n_0  > 0, paste0('[',AEs_0,  ']'), ''),
       cAEs_54 = ifelse(n_54 > 0, paste0('[',AEs_54, ']'), ''),
       cAEs_81 = ifelse(n_81 > 0, paste0('[',AEs_81, ']'), ''),
-      ord2 = AEs_81 # Use for descending event order
+      ord3 = n_81 # Use for descending event order
     )
 
   # Remove numeric columns not used in display
