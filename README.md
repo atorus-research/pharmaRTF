@@ -2,7 +2,6 @@
 <!--https://img.shields.io/azure-devops/build/atorus/32a592e8-d9a9-4ccd-bd26-65bc1c2a634d/1-->
 
 
-
 ## What is pharmaRTF? 
 
 If you've worked in the pharmaceutical industry as a SAS&copy; programmer doing data analysis for clinical trials, there's a fair chance that you've spent a good amount of time creating RTF outputs. While there are more modern document file formats supported by SAS&copy; and other data analysis languages, RTF remains prolific. Though antiquated, RTF files still remain useful. They support the rich-text format necessary to create documents containing different fonts, colors, and text attributes. Furthermore, RTF documents make it easy for medical writers to insert outputs into different reports and publications as needed. Regardless, outputting data displays to RTF documents is a process embedded in many companies still to this day. 
