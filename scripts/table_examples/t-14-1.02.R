@@ -100,7 +100,7 @@ term_p_2 <- adsl %>%
   select(ARM, DCREASCD) %>%
   mutate(loefl = ifelse(DCREASCD %in% "Lack of Efficacy", 1, 0)) %>%
   fish_p(ARM ,loefl, width = 6)
-term_df[5,] <- attach_p(term_df[5,], term_p_2)
+term_df[3,] <- attach_p(term_df[3,], term_p_2)
 
 
 ## Add Table lables
