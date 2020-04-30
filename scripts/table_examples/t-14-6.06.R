@@ -119,7 +119,7 @@ total_b3[, " "] <- "Total Bili 1.5 x ULN and\\line Transaminase 1.5 x ULN"
 # total_b3[, "p-\\line value\\line[2]"] <- c(
 #   num_fmt(mantelhaen.test(array(unlist(adlbh_b1[,"N"]), dim = c(2,3,2)))$p.value, size = 6, int_len = 1, digits = 3)
 #   , "", "")
-total_b3[, "p-\\line value\\line[2]"] <- c("0.000", "", "")
+total_b3[, "p-\\line value\\line[2]"] <- c("", "", "")
 
 ## Table construction
 # Lots of weird properties for this table so I'm doing it manually

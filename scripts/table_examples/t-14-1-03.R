@@ -97,8 +97,8 @@ headers[4,] <- list(
 )
 
 df[1, 3] <- headers[1, "labels"]
-df[1, 6] <- headers[2, "labels"]
-df[1, 9] <- headers[3, "labels"]
+df[1, 6] <- headers[3, "labels"]
+df[1, 9] <- headers[2, "labels"]
 df[1, 12] <- headers[4, "labels"]
 
 ht <- df %>%

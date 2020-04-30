@@ -139,7 +139,7 @@ total_ABLFL <- total_ABLFL1 %>%
   ungroup()
 
 comb2 <- comb %>%
-  filter(!is.na(VISIT), !is.na(TRTP), !is.na(BNRIND), !is.na(ANRIND)) %>%
+  filter(!is.na(VISIT), !is.na(TRTP), !is.na(BNRIND), !is.na(ANRIND), !is.na(PARAM)) %>%
   group_by(PARAM, VISIT, TRTP, BNRIND, ANRIND) %>%
   complete(nesting(BNRIND, ANRIND)) %>%
   summarise(N = n()) %>%
@@ -188,8 +188,8 @@ comb4 <- pad_row(comb3, which(comb3$`Shift to` == "n")) %>%
   add_row("Week" = NA, .before = 1) %>%
   add_row("Week" = NA, .before = 1)
 comb4 <- comb4 %>%
-  add_row("Week" = NA, .before = 577) %>%
-  add_row("Week" = NA, .before = 577)
+  add_row("Week" = NA, .before = 541) %>%
+  add_row("Week" = NA, .before = 541)
 
 comb4[,1] <- as.character(comb4$...1)
 
@@ -197,8 +197,8 @@ comb4[!(comb4$`Shift to` %in% "n") , 2] <- NA
 comb4[!(comb4$Week %in% "2"), 1] <- NA
 comb4[2,1] <- "CHEMISTRY"
 comb4[3,1] <- "----------"
-comb4[578,1] <- "HEMATOLOGY"
-comb4[579,1] <- "----------"
+comb4[542,1] <- "HEMATOLOGY"
+comb4[543,1] <- "----------"
 
 
 names(comb4) <- c(
@@ -230,8 +230,8 @@ ht <- comb4 %>%
 
 ht <- pad_row(ht, c(1,1))
 ht[1, 4] <- headers[1, "label"]
-ht[1, 6] <- headers[2, "label"]
-ht[1, 8] <- headers[3, "label"]
+ht[1, 6] <- headers[3, "label"]
+ht[1, 8] <- headers[2, "label"]
 
 ht2 <- ht %>%
   huxtable::merge_cells(1, 4:5) %>%

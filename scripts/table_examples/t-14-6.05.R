@@ -5,6 +5,7 @@ library(glue)
 library(tidyverse)
 library(haven)
 library(tibble)
+library(pharmaRTF)
 
 
 source('./scripts/table_examples/config.R')
@@ -159,7 +160,7 @@ comb3 <- comb2 %>%
   pivot_wider(id_cols = c(PARAM, ANRIND), names_from = c(TRTP, BNRIND), values_from = n2)
 
 comb4 <- comb3[!apply(comb3, 1, function(x) {
-  all(x[4:8] ==  " 0      ") & all(x[2] == "H")
+  all(x[3:8] ==  " 0      ") & all(x[2] == "H")
 }), ]
 
 

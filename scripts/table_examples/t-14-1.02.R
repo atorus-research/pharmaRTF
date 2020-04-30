@@ -35,8 +35,8 @@ comp_stat <- adsl %>%
 #Make data.frame for table, unnamed so the cols are named correctly
 comp_df <- data.frame(
   "Placebo" = n_pct(unlist(comp_stat[c(1,4), "n"]), sum(unlist(comp_stat[c(1,4), "n"]))),
-  "Xanomeline Low Dose" = n_pct(unlist(comp_stat[c(1,4), "n"]), sum(unlist(comp_stat[c(1,4), "n"]))),
-  "Xanomeline High Dose" = n_pct(unlist(comp_stat[c(1,4), "n"]), sum(unlist(comp_stat[c(1,4), "n"]))),
+  "Xanomeline Low Dose" = n_pct(unlist(comp_stat[c(2,5), "n"]), sum(unlist(comp_stat[c(2,5), "n"]))),
+  "Xanomeline High Dose" = n_pct(unlist(comp_stat[c(3,6), "n"]), sum(unlist(comp_stat[c(3,6), "n"]))),
   "Total" = c(n_pct(sum(comp_stat[1:3, "n"]), sum(comp_stat[,"n"])),
               n_pct(sum(comp_stat[4:6, "n"]), sum(comp_stat[,"n"]))),
   row.names = c("\tCompleted Week 24", "\tEarly Termination (prior to Week 24)"),
@@ -140,7 +140,8 @@ huxtable::col_width(ht) <- c(.4, .12, .12, .12, .12, .12)
 huxtable::bottom_padding(ht) <- 0
 huxtable::top_padding(ht) <- 0
 huxtable::valign(ht)[1,] <- "bottom"
-huxtable::merge_cells(ht, 8, 1:2)
+ht[8,2] <- ""
+ht <- huxtable::merge_cells(ht, 8, 1:2)
 
 
 # Write into doc object and pull titles/footnotes from excel file
@@ -149,7 +150,8 @@ doc <- rtf_doc(ht) %>% titles_and_footnotes_from_df(
   reader=example_custom_reader,
   table_number='14-1.02') %>%
   set_font_size(10) %>%
-  set_ignore_cell_padding(TRUE)
+  set_ignore_cell_padding(TRUE) %>%
+  set_column_header_buffer(top = 1)
 
 # Write out the RTF
 write_rtf(doc, file='./scripts/table_examples/outputs/14-1.02.rtf')
