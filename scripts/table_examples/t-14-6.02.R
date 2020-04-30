@@ -101,7 +101,7 @@ for(i in seq(nrow(adlbc2)/9)) {
 adlbc3 <- adlbc2 %>%
   mutate(n_w_pct = n_pct(N, tot, n_width = 2)) %>%
   pivot_wider(id_cols = PARAM,names_from = c(TRTP, LBNRIND), values_from = n_w_pct) %>%
-  add_column("p-val\\line [1]" = unlist(adlbc_pvals))
+  add_column("p-val\\line [1]" = num_fmt(unlist(adlbc_pvals), size = 4, digits = 3, int_len = 1))
 
 ### Heme
 adlbh <- read_xpt(glue("{adam_lib}/adlbh.xpt")) %>%
@@ -152,12 +152,15 @@ adlbh2 <- adlbh %>%
 
 adlbh_pvals <- c()
 
+#Some differences between SAS an R algorithms
 for(i in seq(nrow(adlbh2)/9)) {
-  adlbh_pvals[i] <- round(fisher.test(
-    matrix(unlist(adlbh2[((i-1)*9+1):(i*9), "N"]), nrow = 3, ncol = 3, byrow = TRUE)
-  )$p.value, 3)
+  mat <- matrix(unlist(adlbh2[((i-1)*9+1):(i*9), "N"]), nrow = 3, ncol = 3, byrow = TRUE)
+  if(all(mat[,1] == 0) & all(mat[,3] == 0)) {
+    adlbh_pvals[i] <- as.numeric(NA)
+  } else {
+    adlbh_pvals[i] <- num_fmt(round(fisher.test(mat)$p.value, 3), size = 4, digits = 3, int_len = 1)
+  }
 }
-
 
 adlbh3 <- adlbh2 %>%
   mutate(n_w_pct = n_pct(N, tot, n_width = 2)) %>%
