@@ -12,37 +12,33 @@ source('./scripts/table_examples/config.R')
 source('./scripts/table_examples/funcs.R')
 
 # Read in the ADLB datasets ----
-adas <- read_xpt(glue("{adam_lib}/adqsadas.xpt")) %>%
-  filter(COMPLT24 == "Y" & ITTV=='Y' & ITYPE != 'LOCF')
+adas <- read_xpt(glue("{adam_lib}/adadas.xpt")) %>%
+  filter(COMP24FL == "Y" & EFFFL=='Y' & PARAMCD == 'ACTOT' & ANL01FL == 'Y' & DTYPE != 'LOCF')
+# NOTE!: Despite following the analysis results metadata in the CDISC Pilot Define.xml, the baseline counts
+#        on Placebo and Xan Lo are off by 1. We have 60 and 28 respectively. This was confirmed on both this
+#        cut of data and following the ARM on the original cut of data as well.
 
 # Calculate the header Ns ----
 header_n <- adas %>%
-  distinct(USUBJID, TRTP, TRTPCD, TRTPN) %>%
-  group_by(TRTPCD, TRTP, TRTPN) %>%
-  summarize(N = n()) %>%
-  mutate(
-    labels = str_replace_all(str_wrap(glue('{TRTP} (N={N})'), width=10), "\n", function(x) "\\line ")
-  ) %>%
-  ungroup() %>%
-  arrange(TRTPN) %>%
-  select(-TRTP, -TRTPN)
+  distinct(USUBJID, TRTP, TRTPN) %>%
+  get_header_n(TRTP, TRTPN)
 
 column_headers <- header_n %>%
   select(-N) %>%
-  pivot_wider(names_from = TRTPCD, values_from=labels) %>%
+  pivot_wider(names_from = TRTPN, values_from=labels) %>%
   mutate(rowlbl1 = '')
 
 # Run each group
-summary_portion <- bind_rows(summary_data(adas, VAL, 'BL', 'Baseline'),
-                             summary_data(adas, VAL, 'Wk24', 'Week 24'),
-                             summary_data(adas, CHG, 'Wk24', 'Change from Baseline')) %>%
+summary_portion <- bind_rows(summary_data(adas, AVAL, 0, 'Baseline'),
+                             summary_data(adas, AVAL, 24, 'Week 24'),
+                             summary_data(adas, CHG,  24, 'Change from Baseline')) %>%
   pad_row()
 
 # Gather the model data
 model_portion <- efficacy_models(adas, 'CHG', 24)
 
 final <- bind_rows(column_headers, summary_portion, model_portion) %>%
-  select(rowlbl1, Pbo, Xan_Lo, Xan_Hi)
+  select(rowlbl1, `0`, `54`, `81`)
 
 # Make the table
 ht <- as_hux(final) %>%
@@ -54,6 +50,7 @@ ht <- as_hux(final) %>%
   huxtable::set_escape_contents(FALSE) %>%
   huxtable::set_col_width(c(.5, 1/6, 1/6, 1/6))
 ht
+
 
 # Write into doc object and pull titles/footnotes from excel file
 ## TODO: `titles_and_footnotes_from_df`` should be an exported function so remove internal reference when updated
@@ -67,6 +64,7 @@ doc <- rtf_doc(ht) %>% pharmaRTF:::titles_and_footnotes_from_df(
 
 # Write out the RTF
 write_rtf(doc, file='./scripts/table_examples/outputs/14-3.07.rtf')
+
 
 
 

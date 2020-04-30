@@ -27,7 +27,8 @@ For \code{column_header_buffer}, the column_header_buffer attribute
 }
 \description{
 These property functions modify and return the column header buffers of a
-\code{rtf_doc}. This attribute adds rows to the top or bottom of the table
+\code{rtf_doc} object. These are stored as a named vector. Names should be \code{top} and
+\code{bottom}. This attribute adds rows to the top or bottom of the table
 column headers to pad it from the titles above or the table below.
 }
 \examples{

@@ -1,0 +1,144 @@
+LineType,Level,Specs Tested,TestID,CheckID,Text,CheckType,OutputFile
+UpdatedBy,0,,,,Ashley Tarasiewicz,,
+UpdatedDate,0,,,,4/28/2020,,
+Setup,0,,,,_No prerequisites required_,,
+TestCases,1,A:B,T1,,Output an RTF using a dataframe requiring one page of output and verify output and paging are appropiate,,
+TestCases,2,,T1,1,Verify document outputs as an RTF and opens in Word,visual,test_1.rtf
+TestCases,2,,T1,2,"Verify output has column headers ""Header1"", ""Header2"" above the table, a title ""Title"" at the top, and a footnote ""Footnote"" at the bottom",visual,test_1.rtf
+TestCases,1,A:B,T2,,Output an RTF using a dataframe requiring multiple pages of output and verify output and paging are appropiate,,
+TestCases,2,,T2,1,Verify document outputs as an RTF and opens in Word,visual,test_2.rtf
+TestCases,2,,T2,2,"Verify output has column headers ""Header1"", ""Header2"" above the table, a title ""Title"" at the top, and a footnote ""Footnote"" at the bottom",visual,test_2.rtf
+TestCases,2,,T2,3,"Verify output has the column headers, title, and footnote repeat on each page",visual,test_2.rtf
+TestCases,1,C,T3,,Check document level margins are set to the default value then change margins and verify changes are reflected in the output,,
+TestCases,2,,T3,1,"Verify document level margins are set to expected default: 1,1,1,1",programmatic,test_3.Rdata
+TestCases,2,,T3,2,"Verify document level margins on output are 2 (top), .5 (bottom), 1.5 (left), .25 (right)",visual,test_3.rtf
+TestCases,1,D,T4,,Check document level header and footer height are set to default then change header and footer height and verify changes are reflected in the output,,
+TestCases,2,,T4,1,"Verify document level header and footer heights are set to expected default: .5,.5",programmatic,test_4.Rdata
+TestCases,2,,T4,2,Verify document level header and footer heights on output are .25 (header) and 1 (footer),visual,test_4.rtf
+TestCases,1,E,T5,,Check document level page size is set to default then change page size and verify changes are reflected in the output,,
+TestCases,2,,T5,1,"Verify document level page size is set to expected default: 8.5 (height), 11 (width) ",programmatic,test_5.Rdata
+TestCases,2,,T5,2,"Verify document level page size on output is 9 (height), 12 (width)",visual,test_5.rtf
+TestCases,1,F,T6,,Check document level orientation is set to default then change orientation and verify changes are reflected in the output,,
+TestCases,2,,T6,1,Verify document level orientation is set to expected default: landscape,programmatic,test_6.Rdata
+TestCases,2,,T6,2,Verify document level orientation on output is portrait,visual,test_6.rtf
+TestCases,1,G,T7,,Check document level font size is set to default then change font size and verify changes are reflected in the output,,
+TestCases,2,,T7,1,Verify document level font size is set to expected default: 12,programmatic,test_7.Rdata
+TestCases,2,,T7,2,Verify document level font size on output is 14,visual,test_7.rtf
+TestCases,1,H,T8,,Check document level font is set to default then change font and verify changes are reflected in the output,,
+TestCases,2,,T8,1,Verify document level font is set to expected default: Courier New,programmatic,test_8.Rdata
+TestCases,2,,T8,2,Verify document level font on output is Comic Sans,visual,test_8.rtf
+TestCases,1,I,T9,,Check document level header rows is set to default then change header rows and verify changes are reflected in the output,,
+TestCases,2,,T9,1,Verify document level header rows is set to expected default: 1,programmatic,test_9.Rdata
+TestCases,2,,T9,2,"Verify document level header rows on output are 2 (rows starting with ""Header1"" and ""1"" are in the header)",visual,test_9.rtf
+TestCases,1,J,T10,,Check document level column header buffers is set to default then change column header buffers and verify changes are reflected in the output,,
+TestCases,2,,T10,1,"Verify document level column header buffers are set to expected default: 0,0",programmatic,test_10.Rdata
+TestCases,2,,T10,2,"Verify document level column header buffers on output are 2 (2 rows above header), 1 (1 row below header)",visual,test_10.rtf
+TestCases,1,K,T11,,Check document level ignore cell padding is set to default then change ignore cell padding and verify changes are reflected in the output,,
+TestCases,2,,T11,1,Verify document level ignore cell padding is set to expected default: FALSE,programmatic,test_11.Rdata
+TestCases,2,,T11,2,Verify document level ignore cell padding on output is TRUE (gap is closed between rows),visual,test_11.rtf
+TestCases,1,L,T12,,Output an RTF with one title and one footnote created in the RTF document creation and verify the output,,
+TestCases,2,,T12,1,"Verify output has a title ""rtf_doc Title 1"" at the top, and a footnote ""rtf_doc Footnote 1"" at the bottom",visual,test_12.rtf
+TestCases,1,L,T13,,Output an RTF with multiple titles and multiple footnotes created in the RTF document creation and verify the output,,
+TestCases,2,,T13,1,"Verify output has titles ""rtf_doc Title 1"", ""rtf_doc Title 2"", ""rtf_doc Title 3"" at the top, and footnotes ""rtf_doc Footnote 1"", ""rtf_doc Footnote 2"", ""rtf_doc Footnote 3"" at the bottom",visual,test_13.rtf
+TestCases,1,M,T14,,Output an RTF with one title and one footnote using add_titles and add_footnotes  and verify the output,,
+TestCases,2,,T14,1,"Verify output has a title ""add_titles Title 1"" at the top, and a footnote ""add_footnotes Footnote 1"" at the bottom",visual,test_14.rtf
+TestCases,1,M,T15,,Output an RTF with multiple titles and multiple footnotes using add_titles and add_footnotes and verify the output,,
+TestCases,2,,T15,1,"Verify output has titles ""add_titles Title 1"", ""add_titles Title 2"", ""add_titles Title 3"" at the top, and footnotes ""add_footnotes Footnote 1"", ""add_footnotes Footnote 2"", ""add_footnotes Footnote 3"" at the bottom",visual,test_15.rtf
+TestCases,1,M,T16,,"Output an RTF with multiple titles and multiple footnotes created in the RTF document creation, then replace the titles and footnotes using add_titles and add_footnotes and verify the output",,
+TestCases,2,,T16,1,"Verify output has titles ""add_titles Title 1"", ""add_titles Title 2"", ""add_titles Title 3"" at the top, and footnotes ""add_footnotes Footnote 1"", ""add_footnotes Footnote 2"", ""add_footnotes Footnote 3"" at the bottom",visual,test_16.rtf
+TestCases,1,L:M,T17,,"Output an RTF with multiple titles and multiple footnotes created in the RTF document creation, then append the titles and footnotes using add_titles and add_footnotes and verify the output",,
+TestCases,2,,T17,1,"Verify output has titles ""rtf_doc Title 1"", ""rtf_doc Title 2"", ""rtf_doc Title 3"", ""add_titles Title 1"", ""add_titles Title 2"", ""add_titles Title 3"" at the top, and footnotes ""rtf_doc Footnote 1"", ""rtf_doc Footnote 2"", ""rtf_doc Footnote 3"", ""add_footnotes Footnote 1"", ""add_footnotes Footnote 2"", ""add_footnotes Footnote 3"" at the bottom",visual,test_17.rtf
+TestCases,1,N,T18,,Output an RTF with titles and footnotes created by importing from a separate file using from.file of titles_and_footnotes_from_df and verify the output,,
+TestCases,2,,T18,1,"Verify output has titles ""from.file Title 1"", ""from.file Title 2"", ""from.file Title 3"" at the top, and footnotes ""from.file Footnote 1"", ""from.file Footnote 2"", ""from.file Footnote 3"" at the bottom",visual,test_18.rtf
+TestCases,1,N,T19,,Output an RTF with titles and footnotes created by importing from a separate file using from.df of titles_and_footnotes_from_df and verify the output,,
+TestCases,2,,T19,1,"Verify output has titles ""from.df Title 1"", ""from.df Title 2"", ""from.df Title 3"" at the top, and footnotes ""from.df Footnote 1"", ""from.df Footnote 2"", ""from.df Footnote 3"" at the bottom",visual,test_19.rtf
+TestCases,1,L:O:P:Q,T20,,Output an RTF with titles and footnotes capturing PAGE_FORMAT DATE_FORMAT and FILE_PATH created in the RTF document creation and verify the output,,
+TestCases,2,,T20,1,"Verify output has titles ""rtf_docPage <x> of <y>"", ""rtf_doc<date>"", ""rtf_docSource: <source>"" at the top, and footnotes ""rtf_docPage <x>"", ""rtf_doc<date>"", ""rtf_docSource: <source>"" at the bottom",visual,test_20.rtf
+TestCases,1,M:O:P:Q,T21,,Output an RTF with titles and footnotes capturing PAGE_FORMAT DATE_FORMAT and FILE_PATH using add_titles and add_footnotes and verify the output,,
+TestCases,2,,T21,1,"Verify output has titles ""add_titlesPage <x> of <y>"", ""add_titles<date>"", ""add_titlesSource: <source>"" at the top, and footnotes ""add_footnotesPage <x>"", ""add_footnotes<date>"", ""add_footnotesSource: <source>"" at the bottom",visual,test_21.rtf
+TestCases,1,N:O:P:Q,T22,,Output an RTF with titles and footnotes capturing PAGE_FORMAT DATE_FORMAT and FILE_PATH created by importing from a separate file using a reader and verify the output,,
+TestCases,2,,T22,1,"Verify output has titles ""externalPage <x> of <y>"", ""external<date>"", ""externalSource: <source>"" at the top, and footnotes ""externalPage <x>"", ""external<date>"", ""externalSource: <source>"" at the bottom",visual,test_22.rtf
+TestCases,1,L:R,T23,,Check bold attribute of titles/footnotes created in the RTF document creation is set to default then change bold attribute and verify changes are reflected in the output,,
+TestCases,2,,T23,1,Verify titles/footnotes bold is set to expected default: FALSE,programmatic,test_23.Rdata
+TestCases,2,,T23,2,"Verify output has bold titles ""rtf_doc Title 1"", ""rtf_doc Title 2"", non bold title ""rtf_doc Title 3"", bold footnotes ""rtf_doc Footnote 1"", ""rtf_doc Footnote 3"", and non bold footnote ""rtf_doc Footnote 2""",visual,test_23.rtf
+TestCases,1,M:R,T24,,Check bold attribute of titles/footnotes created using add_titles and add_footnotes is set to default then change bold attribute and verify changes are reflected in the output,,
+TestCases,2,,T24,1,Verify titles/footnotes bold is set to expected default: FALSE,programmatic,test_24.Rdata
+TestCases,2,,T24,2,"Verify output has bold titles ""add_titles Title 1"", ""add_titles Title 2"", non bold title ""add_titles Title 3"", bold footnotes ""add_footnotes Footnote 1"", ""add_footnotes Footnote 3"", and non bold footnote ""add_footnotes Footnote 2""",visual,test_24.rtf
+TestCases,1,N:R,T25,,Check bold attribute of titles/footnotes created by importing from a separate file using a reader is set to default then change bold attribute and verify changes are reflected in the output,,
+TestCases,2,,T25,1,Verify titles/footnotes bold is set to expected default: FALSE,programmatic,test_25.Rdata
+TestCases,2,,T25,2,"Verify output has bold titles ""external Title 1"", ""external Title 2"", non bold title ""external Title 3"", bold footnotes ""external Footnote 1"", ""external Footnote 3"", and non bold footnote ""external Footnote 2""",visual,test_25.rtf
+TestCases,1,L:S,T26,,Check italic attribute of titles/footnotes created in the RTF document creation is set to default then change italic attribute and verify changes are reflected in the output,,
+TestCases,2,,T26,1,Verify titles/footnotes italic is set to expected default: FALSE,programmatic,test_26.Rdata
+TestCases,2,,T26,2,"Verify output has italic titles ""rtf_doc Title 2"", ""rtf_doc Title 3"", non italic title ""rtf_doc Title 1"", italic footnote ""rtf_doc Footnote 3"", and non italic footnotes ""rtf_doc Footnote 1"", ""rtf_doc Footnote 2""",visual,test_26.rtf
+TestCases,1,M:S,T27,,Check italic attribute of titles/footnotes created using add_titles and add_footnotes is set to default then change italic attribute and verify changes are reflected in the output,,
+TestCases,2,,T27,1,Verify titles/footnotes italic is set to expected default: FALSE,programmatic,test_27.Rdata
+TestCases,2,,T27,2,"Verify output has italic titles ""add_titles Title 2"", ""add_titles Title 3"", non italic title ""add_titles Title 1"", italic footnote ""add_footnotes Footnote 3"", and non italic footnotes ""add_footnotes Footnote 1"", ""add_footnotes Footnote 2""",visual,test_27.rtf
+TestCases,1,N:S,T28,,Check italic attribute of titles/footnotes created by importing from a separate file using a reader is set to default then change italic attribute and verify changes are reflected in the output,,
+TestCases,2,,T28,1,Verify titles/footnotes italic is set to expected default: FALSE,programmatic,test_28.Rdata
+TestCases,2,,T28,2,"Verify output has italic titles ""external Title 2"", ""external Title 3"", non italic title ""external Title 1"", italic footnote ""external Footnote 3"", and non italic footnotes ""external Footnote 1"", ""external Footnote 2""",visual,test_28.rtf
+TestCases,1,L:T,T29,,Check align attribute of titles/footnotes created in the RTF document creation is set to default then change align attribute and verify changes are reflected in the output,,
+TestCases,2,,T29,1,Verify titles/footnotes align is set to expected default: center,programmatic,test_29.Rdata
+TestCases,2,,T29,2,"Verify output has left aligned title ""rtf_doc Title 1"", right aligned title ""rtf_doc Title 2"", center aligned title ""rtf_doc Title 3"", left aligned footnotes ""rtf_doc Footnote 1"", ""rtf_doc Footnote 2"", and split footnote ""rtf_doc Footnote 3 Part 1"", ""rtf_doc Footnote 3 Part 2""",visual,test_29.rtf
+TestCases,1,M:T,T30,,Check align attribute of titles/footnotes created using add_titles and add_footnotes is set to default then change align attribute and verify changes are reflected in the output,,
+TestCases,2,,T30,1,Verify titles/footnotes align is set to expected default: center,programmatic,test_30.Rdata
+TestCases,2,,T30,2,"Verify output has left aligned title ""add_titles Title 1"", right aligned title ""add_titles Title 2"", center aligned title ""add_titles Title 3"", left aligned footnotes ""add_footnotes Footnote 1"", ""add_footnotes Footnote 2"", and split footnote ""add_footnotes Footnote 3 Part 1"", ""add_footnotes Footnote 3 Part 2""",visual,test_30.rtf
+TestCases,1,N:T,T31,,Check align attribute of titles/footnotes created by importing from a separate file using a reader is set to value specified in the file then change align attribute and verify changes are reflected in the output,,
+TestCases,2,,T31,1,Verify titles/footnotes align is set to file value: center,programmatic,test_31.Rdata
+TestCases,2,,T31,2,"Verify output has left aligned title ""external Title 1"", right aligned title ""external Title 2"", center aligned title ""external Title 3"", left aligned footnotes ""external Footnote 1"", ""external Footnote 2"", and split footnote ""external Footnote 3 Part 1"", ""external Footnote 3 Part 2""",visual,test_31.rtf
+TestCases,1,L:U,T32,,Check font attribute of titles/footnotes created in the RTF document creation is set to default then change font attribute and verify changes are reflected in the output,,
+TestCases,2,,T32,1,Verify titles/footnotes font is set to expected default: NA,programmatic,test_32.Rdata
+TestCases,2,,T32,2,"Verify output has Comic Sans titles ""rtf_doc Title 1"", ""rtf_doc Title 2"", Courier New title ""rtf_doc Title 3"", Comic Sans footnotes ""rtf_doc Footnote 1"", ""rtf_doc Footnote 3"", and Courier New footnote ""rtf_doc Footnote 2""",visual,test_32.rtf
+TestCases,1,M:U,T33,,Check font attribute of titles/footnotes created using add_titles and add_footnotes is set to default then change font attribute and verify changes are reflected in the output,,
+TestCases,2,,T33,1,Verify titles/footnotes font is set to expected default: NA,programmatic,test_33.Rdata
+TestCases,2,,T33,2,"Verify output has Comic Sans titles ""add_titles Title 1"", ""add_titles Title 2"", Courier New title ""add_titles Title 3"", Comic Sans footnotes ""add_footnotes Footnote 1"", ""add_footnotes Footnote 3"", and Courier New footnote ""add_footnotes Footnote 2""",visual,test_33.rtf
+TestCases,1,N:U,T34,,Check font attribute of titles/footnotes created by importing from a separate file using a reader is set to default then change font attribute and verify changes are reflected in the output,,
+TestCases,2,,T34,1,Verify titles/footnotes font is set to expected default: NA,programmatic,test_34.Rdata
+TestCases,2,,T34,2,"Verify output has Comic Sans titles ""external Title 1"", ""external Title 2"", Courier New title ""external Title 3"", Comic Sans footnotes ""external Footnote 1"", ""external Footnote 3"", and Courier New footnote ""external Footnote 2""",visual,test_34.rtf
+TestCases,1,L:V,T35,,Check font size attribute of titles/footnotes created in the RTF document creation is set to default then change font size attribute and verify changes are reflected in the output,,
+TestCases,2,,T35,1,Verify titles/footnotes font size is set to expected default: NA,programmatic,test_35.Rdata
+TestCases,2,,T35,2,"Verify output has size 12 title ""rtf_doc Title 1"", size 14 title ""rtf_doc Title 2"", size 10  title ""rtf_doc Title 3"", size 30 footnote ""rtf_doc Footnote 1"", and size 12 footnotes ""rtf_doc Footnote 2"", ""rtf_doc Footnote 3""",visual,test_35.rtf
+TestCases,1,M:V,T36,,Check font size attribute of titles/footnotes created using add_titles and add_footnotes is set to default then change font size attribute and verify changes are reflected in the output,,
+TestCases,2,,T36,1,Verify titles/footnotes font size is set to expected default: NA,programmatic,test_36.Rdata
+TestCases,2,,T36,2,"Verify output has size 12 title ""add_titles Title 1"", size 14 title ""add_titles Title 2"", size 10  title ""add_titles Title 3"", size 30 footnote ""add_footnotes Footnote 1"", and size 12 footnotes ""add_footnotes Footnote 2"", ""add_footnotes Footnote 3""",visual,test_36.rtf
+TestCases,1,N:V,T37,,Check font size attribute of titles/footnotes created by importing from a separate file using a reader is set to default then change font size attribute and verify changes are reflected in the output,,
+TestCases,2,,T37,1,Verify titles/footnotes font size is set to expected default: NA,programmatic,test_37.Rdata
+TestCases,2,,T37,2,"Verify output has size 12 title ""external Title 1"", size 14 title ""external Title 2"", size 10  title ""external Title 3"", size 30 footnote ""external Footnote 1"", and size 12 footnotes ""external Footnote 2"", ""external Footnote 3""",visual,test_37.rtf
+TestCases,1,L:W,T38,,Check index attribute of titles/footnotes created in the RTF document creation is set to default then change index attribute and verify changes are reflected in the output,,
+TestCases,2,,T38,1,Verify titles/footnotes index is set to expected default: NA,programmatic,test_38.Rdata
+TestCases,2,,T38,2,"Verify output has titles in the order: ""rtf_doc Title 3"", ""rtf_doc Title 2"", ""rtf_doc Title 1"", and footnotes in the order: ""rtf_doc Footnote 2"", ""rtf_doc Footnote 3"", ""rtf_doc Footnote 1""",visual,test_38.rtf
+TestCases,1,M:W,T39,,Check index attribute of titles/footnotes created using add_titles and add_footnotes is set to default then change index attribute and verify changes are reflected in the output,,
+TestCases,2,,T39,1,Verify titles/footnotes index is set to expected default: NA,programmatic,test_39.Rdata
+TestCases,2,,T39,2,"Verify output has titles in the order: ""add_titles Title 3"", ""add_titles Title 2"", ""add_titles Title 1"", and footnotes in the order: ""add_footnotes Footnote 2"", ""add_footnotes Footnote 3"", ""add_footnotes Footnote 1""",visual,test_39.rtf
+TestCases,1,N:W,T40,,Check index attribute of titles/footnotes created by importing from a separate file using a reader is set to default then change index attribute and verify changes are reflected in the output,,
+TestCases,2,,T40,1,Verify titles/footnotes index is set to expected default: NA,programmatic,test_40.Rdata
+TestCases,2,,T40,2,"Verify output has titles in the order: ""external Title 3"", ""external Title 2"", ""external Title 1"", and footnotes in the order: ""external Footnote 2"", ""external Footnote 3"", ""external Footnote 1""",visual,test_40.rtf
+TestCases,1,L:R:S:T:U:V:W:X,T41,,"Create titles in the RTF document creation, change attributes and verify changes are reflected in the view function dataframe",,
+TestCases,2,,T41,1,"Verify title is: bold=TRUE, italic=TRUE, align=right, font=Comic Sans, font size=13, index=4",programmatic,view_test_41.Rdata
+TestCases,1,L:R:S:T:U:V:W:X,T42,,"Create footnotes in the RTF document creation, change attributes and verify changes are reflected in the view function dataframe",,
+TestCases,2,,T42,1,"Verify footnote is: bold=TRUE, italic=TRUE, align=right, font=Comic Sans, font size=13, index=4",programmatic,view_test_42.Rdata
+TestCases,1,M:R:S:T:U:V:W:X,T43,,"Create titles using add_titles, change attributes and verify changes are reflected in the view function dataframe",,
+TestCases,2,,T43,1,"Verify title is: bold=TRUE, italic=TRUE, align=right, font=Comic Sans, font size=13, index=4",programmatic,view_test_43.Rdata
+TestCases,1,M:R:S:T:U:V:W:X,T44,,"Create footnotes using add_footnotes, change attributes and verify changes are reflected in the view function dataframe",,
+TestCases,2,,T44,1,"Verify footnote is: bold=TRUE, italic=TRUE, align=right, font=Comic Sans, font size=13, index=4",programmatic,view_test_44.Rdata
+TestCases,1,N:R:S:T:U:V:W:X,T45,,"Create titles by importing from a separate file using a reader, change attributes and verify changes are reflected in the view function dataframe",,
+TestCases,2,,T45,1,"Verify title is: bold=TRUE, italic=TRUE, align=right, font=Comic Sans, font size=13, index=4",programmatic,view_test_45.Rdata
+TestCases,1,N:R:S:T:U:V:W:X,T46,,"Create footnotes by importing from a separate file using a reader, change attributes and verify changes are reflected in the view function dataframe",,
+TestCases,2,,T46,1,"Verify footnote is: bold=TRUE, italic=TRUE, align=right, font=Comic Sans, font size=13, index=4",programmatic,view_test_46.Rdata
+TestCases,1,Y,T47,,Output an RTF using huxtable table bold table level property and verify output,,
+TestCases,2,,T47,1,"Verify output has bold text in the ""Header1"" column",visual,test_47.rtf
+TestCases,1,Z,T48,,Output an RTF using huxtable table italic table level property and verify output,,
+TestCases,2,,T48,1,"Verify output has italic text in the ""Header1"" column",visual,test_48.rtf
+TestCases,1,AA,T49,,Output an RTF using huxtable table alignment table level property and verify output,,
+TestCases,2,,T49,1,"Verify output has right aligned text in the ""Header1"" column",visual,test_49.rtf
+TestCases,1,AB:AE,T50,,Output an RTF using huxtable table row height and vertical alignment table level properties and verify output,,
+TestCases,2,,T50,1,Verify huxtable table row heights are: .08 (rows 1-13) and .16 (row 14),programmatic,ht_test_50.Rdata
+TestCases,2,,T50,2,"Verify output has the row containing the text ""13"" roughly twice the height of the other rows",visual,test_50.rtf
+TestCases,2,,T50,3,"Verify output has bottom aligned text in the ""Header1"" column",visual,test_50.rtf
+TestCases,1,AC,T51,,Output an RTF using huxtable table width table level property and verify output,,
+TestCases,2,,T51,1,Verify huxtable table width is 1.5,programmatic,ht_test_51.Rdata
+TestCases,2,,T51,2,Verify output has a table width roughly expanding the document,visual,test_51.rtf
+TestCases,1,AD,T52,,Output an RTF using huxtable table column width table level property and verify output,,
+TestCases,2,,T52,1,Verify huxtable table column widths are .4 (column 1) and .8 (column 2),programmatic,ht_test_52.Rdata
+TestCases,2,,T52,2,"Verify output has ""Header2"" column roughly twice the width of ""Header1"" column",visual,test_52.rtf
+TestCases,1,AF,T53,,Output an RTF using huxtable table cell merging table level property and verify output,,
+TestCases,2,,T53,1,"Verify output has a merged cell for the first row that contains the text ""1"" and spans both the ""Header1"" and ""Header2"" columns",visual,test_53.rtf

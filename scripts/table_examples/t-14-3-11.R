@@ -1,5 +1,5 @@
-# t-14-3-09.R
-#   CDISC Pilot Table 14-3.09
+# t-14-3-11.R
+#   CDISC Pilot Table 14-3.11
 
 library(glue)
 library(tidyverse)
@@ -12,32 +12,24 @@ source('./scripts/table_examples/config.R')
 source('./scripts/table_examples/funcs.R')
 
 # Read in the ADLB datasets ----
-adas <- read_xpt(glue("{adam_lib}/adqsadas.xpt")) %>%
-  filter(EFFICACY == "Y" & ITTV=='Y' & ITYPE != 'LOCF' & AWEEK > 0)
+adas <- read_xpt(glue("{adam_lib}/adadas.xpt")) %>%
+  filter(EFFFL == "Y" & PARAMCD == 'ACTOT' & ANL01FL == 'Y' & DTYPE != 'LOCF' & AVISITN > 0)
 
 # Calculate the header Ns ----
 header_n <- adas %>%
-  distinct(USUBJID, TRTP, TRTPCD, TRTPN) %>%
-  group_by(TRTPCD, TRTP, TRTPN) %>%
-  summarize(N = n()) %>%
-  mutate(
-    labels = str_replace_all(str_wrap(glue('{TRTP} (N={N})'), width=10), "\n", function(x) "\\line ")
-  ) %>%
-  ungroup() %>%
-  arrange(TRTPN) %>%
-  select(-TRTP, -TRTPN)
+  distinct(USUBJID, TRTP, TRTPN) %>%
+  get_header_n(TRTP, TRTPN)
 
 column_headers <- header_n %>%
   select(-N) %>%
-  pivot_wider(names_from = TRTPCD, values_from=labels) %>%
+  pivot_wider(names_from = TRTPN, values_from=labels) %>%
   mutate(rowlbl1 = '')
 
-
 # Gather the model data
-model_portion <- efficacy_models(adas, 'CHG', 24)
+model_portion <- efficacy_models(adas, 'CHG', 24, model_type='repeated')
 
-final <- bind_rows(column_headers, summary_portion, model_portion) %>%
-  select(rowlbl1, Pbo, Xan_Lo, Xan_Hi)
+final <- bind_rows(column_headers, model_portion) %>%
+  select(rowlbl1, `0`, `54`, `81`)
 
 # Make the table
 ht <- as_hux(final) %>%
@@ -55,24 +47,10 @@ ht
 doc <- rtf_doc(ht) %>% pharmaRTF:::titles_and_footnotes_from_df(
   from.file='./scripts/table_examples/titles.xlsx',
   reader=example_custom_reader,
-  table_number='14-3.09') %>%
+  table_number='14-3.11') %>%
   set_font_size(10) %>%
-
   set_ignore_cell_padding(TRUE) %>%
   set_column_header_buffer(top=1)
 
 # Write out the RTF
-write_rtf(doc, file='./scripts/table_examples/outputs/14-3.09.rtf')
-
-
-op <- options(contrasts = c("contr.sum","contr.poly"))
-model <- lmer(CHG ~ TRTPCD_F + SITEGRP + AWEEKC + TRTPCD_F:AWEEKC + BASE + BASE:AWEEKC + (AWEEK | USUBJID), data=adas)
-
-lsm <- emmeans::lsmeans(model, ~TRTPCD_F, lmer.df='kenward-roger')
-lsm
-diffs <- emmeans::contrast(lsm, method="pairwise", adjust=NULL)
-diffs
-confint(diffs)
-
-
-
+write_rtf(doc, file='./scripts/table_examples/outputs/14-3.11.rtf')

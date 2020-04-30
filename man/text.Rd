@@ -25,7 +25,7 @@ For \code{text()}, the text vector of the supplied \code{hf_line}
   object. For \code{`text<-()`} and \code{set_text()}, the modfied object.
 }
 \description{
-These functions modify or return the fonts of a \code{rtf_doc} object.
+These property functions modify or return the fonts of a \code{rtf_doc} object.
 \code{text()} will always return a vector of length 2. If the text is only
 of length one an empty string will be appended.
 }

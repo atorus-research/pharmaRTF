@@ -7,14 +7,14 @@
 #' Return or set font
 #'
 #' @description
-#' These property function modify or return the fonts of an rtf_doc object or
-#' individual titles/footnotes objects of the hf_line class.
+#' These property functions modify or return the fonts of an \code{rtf_doc} object or
+#' individual titles/footnotes objects of the \code{hf_line} class.
 #'
-#' When used on an rtf_doc object to retrieve fonts, the distinct set of fonts
+#' When used on an \code{rtf_doc} object to retrieve fonts, the distinct set of fonts
 #' of all objects contained within the rtf_doc are returned. When used on an
-#' rtf_doc to set fonts, the default font for the RTF document is set.
+#' \code{rtf_doc} to set fonts, the default font for the RTF document is set.
 #'
-#' When used on titles/footnotes (hf_line objects), the font is either returned
+#' When used on titles/footnotes (\code{hf_line} objects), the font is either returned
 #' of set for that individual line.
 #'
 #' @param x \code{rtf_doc} object, the table of a \code{rtf_doc} object, or a
@@ -38,7 +38,15 @@
 #' # Returns "Courier New" "Comic Sans"
 #'
 #' pharmaRTF::font(rtf) <- "Times"
+#'
+#' pharmaRTF::font(rtf)
 #' # Returns "Times" "Comic Sans"
+#'
+#' pharmaRTF::font(rtf$titles[[1]]) <- "Windings"
+#'
+#' pharmaRTF::font(rtf)
+#' # Returns "Times" "Windings"
+#'
 #'
 #' @export
 #' @rdname font
@@ -109,14 +117,14 @@ set_font <- function(x, value) UseMethod('font<-')
 #' Return or set font size
 #'
 #' @description
-#' These property function modify or return the font sizes of an rtf_doc object
-#' or individual titles/footnotes objects of the hf_line class.
+#' These property functions modify or return the font sizes of an \code{rtf_doc} object
+#' or individual titles/footnotes objects of the \code{hf_line} class.
 #'
 #' When used on an rtf_doc object to retrieve font sizes, the document level
-#' default font size within the rtf_doc is returned. When used on an rtf_doc to
+#' default font size within the \code{rtf_doc} is returned. When used on an \code{rtf_doc} to
 #' set fonts, the default font size for the RTF document is set.
 #'
-#' When used on titles/footnotes (hf_line objects), the font size is either
+#' When used on titles/footnotes (\code{hf_line} objects), the font size is either
 #' returned of set for that individual line.
 #'
 #' @param x \code{rtf_doc} object or \code{hf_line} object.
@@ -176,8 +184,10 @@ set_font_size <- function(x, value) UseMethod('font_size<-')
 
 #' @export
 'font_size<-.hf_line' <- function(x, value) {
-  assert_that(is.numeric(value) && value %% 0.5 == 0,
-              msg = "Font size must be numeric and divisible by .5")
+  if (!is.na(value)) {
+    assert_that(is.numeric(value) && value %% 0.5 == 0,
+                msg = "Font size must be numeric and divisible by .5")
+  }
   attr(x, 'font_size') <- value
   x
 }
@@ -222,6 +232,11 @@ set_font_size <- function(x, value) UseMethod('font_size<-')
 #'
 #' pharmaRTF::align(rtf$titles[[1]]) <- "left"
 #' # Sets alignment to 'left'
+#'
+#' pharmaRTF::text(rtf$titles[[1]]) <- c("Left Text", "Right Text")
+#' pharmaRTF::align(rtf$titles[[1]]) <- "split"
+#' # When rtf is printed, "Left Text" will be left aligned, and "Right Text"
+#' # will be right aligned. Both will appear on the same line in the document.
 #'
 #' @export
 #' @rdname align
@@ -322,7 +337,7 @@ set_bold <- function(x, value) UseMethod('bold<-')
 ## Italic (getters) ----
 #' Return or set italics
 #'
-#' These functions modify or return the italics attribute of a \code{hf_line}
+#' These property functions modify or return the italics attribute of a \code{hf_line}
 #' object. The italic attribute takes on a logical value of TRUE or FALSE, where
 #' TRUE italicizes the text of the line.
 #'
@@ -384,7 +399,7 @@ set_italic <- function(x, value) UseMethod('italic<-')
 ## Text (getter) ----
 #' Return or set text
 #'
-#' These functions modify or return the fonts of a \code{rtf_doc} object.
+#' These property functions modify or return the fonts of a \code{rtf_doc} object.
 #' \code{text()} will always return a vector of length 2. If the text is only
 #' of length one an empty string will be appended.
 #'
@@ -459,10 +474,9 @@ set_text <- function(x, value) UseMethod('text<-')
 ## Index (getters) ----
 #' Return or set index
 #'
-#' These functions modify or return the index of a \code{hf_line} object. The
-#' index sets the order in which a title will appear. The default index value in
-#' NULL, and NULL values will sort behind any populated index Indices can be any
-#' numeric value as long as they are not duplicated.
+#' These property functions modify or return the index of a \code{hf_line}
+#' object. The index sets the order in which a title will appear. Indicies
+#' can be any numeric value as long as they are not duplicated.
 #'
 #' @param x A \code{hf_line} object
 #' @param ... Additonal arguments passed to method dispatch
@@ -512,7 +526,7 @@ set_index <- function(x, value) UseMethod('index<-')
 #' @export
 'index<-.hf_line' <- function(x, value) {
   # Check that argument is valid
-  assert_that(is.numeric(value) | is.null(value))
+  assert_that(is.numeric(value) | is.na(value))
 
   attr(x, 'index') <- value
   x
@@ -523,7 +537,7 @@ set_index <- function(x, value) UseMethod('index<-')
 ## Margins (getters) ----
 #' Return or set margins
 #'
-#' These functions return or set the margin attribute of a \code{rtf_doc}
+#' These property functions return or set the margin attribute of a \code{rtf_doc}
 #' object. These are stored as a named vector. Names should be \code{top},
 #' \code{bottom}, \code{left}, and \code{right}. Margins are measured in inches.
 #'
@@ -559,14 +573,14 @@ margins.rtf_doc <- function(x, ...) {
 
 ## Margins (setters) ----
 #' @param x A \code{rtf_doc} object
-#' @param value A named list or vector detailing the
+#' @param value A named list or vector detailing the page margins
 #'
 #' @export
 #' @rdname margins
 'margins<-' <- function(x, value) UseMethod('margins<-')
 
 #' @param x A \code{rtf_doc} object
-#' @param value A named list or vector detailing the
+#' @param value A named list or vector detailing the page margins
 #'
 #' @export
 #' @rdname margins
@@ -607,8 +621,9 @@ set_margins <- function(x, value) UseMethod('margins<-')
 ## Orientation (getters) ----
 #' Return or set orientation
 #'
-#' These functions modify or return the orientation attribute. Options are
-#' landscape or portrait.
+#' These property functions modify or return the orientation attribute of a
+#' \code{rtf_doc} object. Options are landscape or portrait. See the \code{\link{rtf_doc}}
+#' help page for important notes about this property.
 #'
 #' @param x A \code{rtf_doc} object
 #' @param ... Additonal arguments passed to method dispatch
@@ -671,8 +686,8 @@ set_orientation <- function(x, value) UseMethod('orientation<-')
 ## Header height (getters)----
 #' Return or set header/footer height
 #'
-#' These functions modify or return the header_height/footer_height attribute
-#' of a rtf_doc object. The header/footer height is the default amount of
+#' These property functions modify or return the header_height/footer_height attribute
+#' of a \code{rtf_doc} object. The header/footer height is the default amount of
 #' space allocated to the header/footer from the margin. If the content of the
 #' header/footer exceeds this amount of space, it will be expanded.
 #'
@@ -772,9 +787,17 @@ set_footer_height <- function(x, value) UseMethod('footer_height<-')
 ## Page Size (getters) ----
 #' Return or set pagesize
 #'
-#' These functions modify or return the \code{pagesize} attribute of a
+#' These property functions modify or return the \code{pagesize} attribute of a
 #' \code{rtf_doc} object. Stored as a named vector with \code{height} and
 #' \code{width} names.
+#'
+#' Note that when the orientation of the document is switched
+#' to 'portrait', the height and width will reverse when the RTF document is being
+#' written - but the attribute values will not change. This is because the default
+#' \code{rtf_doc} orientation is 'landscape', and switching the attributes of the
+#' object allows for a possibility of inadvertently overriding the functionality
+#' of the \code{orientation} attribute.
+#'
 #'
 #' @param x A \code{rtf_doc} object
 #' @param ... Additonal arguments passed to method dispatch
@@ -796,6 +819,12 @@ set_footer_height <- function(x, value) UseMethod('footer_height<-')
 #'
 #' pagesize(rtf) <- c(height = 12)
 #' # Sets height of page to 12 inches
+#'
+#' orientation(rtf) <- 'portrait'
+#' pagesize(rtf)
+#' #  width height
+#' #    8.5   12.0
+#' # Note: Despite changing orientation, attributes don't change
 #'
 #' @export
 #' @rdname pagesize
@@ -858,8 +887,8 @@ set_pagesize <- function(x, value) UseMethod('pagesize<-')
 #' Return or set the header_rows
 #'
 #' @description
-#' These functions modify or return the header_rows attribute of a rtf_doc
-#' object. Only required and valid when the rtf_doc table object is a
+#' These property functions modify or return the header_rows attribute of a \code{rtf_doc}
+#' object. Only required and valid when the \code{rtf_doc} table object is a
 #' huxtable.
 #'
 #' The header rows control the number of rows taken from a huxtable table into
@@ -887,7 +916,7 @@ set_pagesize <- function(x, value) UseMethod('pagesize<-')
 #' # Both of these return 1, the default
 #'
 #' header_rows(rtf$table) <- 0
-#' # Sets reader_rows to 0
+#' # Sets header_rows to 0
 #'
 #' @export
 #' @rdname header_rows
@@ -948,7 +977,7 @@ set_header_rows <- function(x, value) UseMethod('header_rows<-')
 ## Ignore Cell Padding (getters) ----
 #' Return or set ignore_cell_padding
 #'
-#' These functions modify and return the ignore_cell_padding attribute of a
+#' These property functions modify and return the ignore_cell_padding attribute of a
 #' \code{rtf_doc} object. By default, the huxtable package will pad rows of a
 #' table. This attribute will remove those default settings – which allow the
 #' cells to have a smaller amount of padding than setting the cell padding to
@@ -1036,7 +1065,8 @@ set_ignore_cell_padding <- function(x, value) UseMethod('ignore_cell_padding<-')
 #' Return or set column_header_buffer attributes
 #'
 #' These property functions modify and return the column header buffers of a
-#' \code{rtf_doc}. This attribute adds rows to the top or bottom of the table
+#' \code{rtf_doc} object. These are stored as a named vector. Names should be \code{top} and
+#' \code{bottom}. This attribute adds rows to the top or bottom of the table
 #' column headers to pad it from the titles above or the table below.
 #'
 #' @param x A \code{rtf_doc} object

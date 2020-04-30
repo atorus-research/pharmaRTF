@@ -17,7 +17,7 @@ set_margins(x, value)
 
 \item{...}{Additonal arguments passed to method dispatch}
 
-\item{value}{A named list or vector detailing the}
+\item{value}{A named list or vector detailing the page margins}
 }
 \value{
 For \code{margin()}, a named vector of the margin attribute of the
@@ -25,7 +25,7 @@ For \code{margin()}, a named vector of the margin attribute of the
   the modified object.
 }
 \description{
-These functions return or set the margin attribute of a \code{rtf_doc}
+These property functions return or set the margin attribute of a \code{rtf_doc}
 object. These are stored as a named vector. Names should be \code{top},
 \code{bottom}, \code{left}, and \code{right}. Margins are measured in inches.
 }
