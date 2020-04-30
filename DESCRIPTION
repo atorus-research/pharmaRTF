@@ -14,6 +14,7 @@ Description: Enhanced RTF wrapper written in R for use with existing R tables
     or features to the document that are required/expected in a report for a
     regulatory submission, such as multiple levels of titles and footnotes,
     making the document landscape, and controlling properties such as margins.
+Depends: R (>= 3.5.0)
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
