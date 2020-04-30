@@ -34,7 +34,8 @@ methods are not functional.
 
 The titles and footnotes are composed of \code{hf_line} objects.
 
-See the <vignettes> for a more complete view of intended usage.
+See the vignette for a more complete view of intended usage.
+\code{vignette("pharmaRTF", package = "pharmaRTF")}
 }
 \section{\code{rtf_doc} Properties}{
 
