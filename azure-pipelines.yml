@@ -11,6 +11,9 @@ pool:
 container: 'rocker/tidyverse:latest'
 
 steps:
+- script: sudo apt-get install pdflatex
+  displayName: 'install pdflatex'
+
 - script: Rscript -e 'R.version'
   displayName: 'R Version'
 
