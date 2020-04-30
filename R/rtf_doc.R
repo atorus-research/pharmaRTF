@@ -16,7 +16,7 @@ supported_table_types <- c('huxtable', 'gt_tbl')
 #' The titles and footnotes are composed of \code{hf_line} objects.
 #'
 #' See the vignette for a more complete view of intended usage.
-#' \href{../doc/pharmaRTF.html}{\code{vignette("pharmaRTF", package = "pharmaRTF")}}
+#' \code{vignette("pharmaRTF", package = "pharmaRTF")}
 #'
 #' @param table A table of a supported class.
 #' @param titles A list of \code{hf_line} objects containing table titles and

@@ -195,7 +195,7 @@ validate_hf_dataframe <- function(df, required_columns, columns) {
 #' function, which gives you the capability to keep titles and footnotes for
 #' all of your outputs in a central file and pass a filtering option, or any
 #' additional parameters as necessary. For an example implementation, see our
-#' vignette here. \href{../doc/tf_from_file.html}{\code{vignette("tf_from_file", package = "pharmaRTF")}.
+#' vignette here. \code{vignette("tf_from_file", package = "pharmaRTF")}.
 #'
 #' @param doc A \code{rtf_doc} object to append header and footnote
 #'   information.
