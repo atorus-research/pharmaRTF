@@ -163,8 +163,8 @@ ht <- comb2 %>%
 
 ht <- pad_row(ht, c(1,1))
 ht[1, 3] <- headers[1, "label"]
-ht[1, 5] <- headers[2, "label"]
-ht[1, 7] <- headers[3, "label"]
+ht[1, 5] <- headers[3, "label"]
+ht[1, 7] <- headers[2, "label"]
 
 ht2 <- ht %>%
   huxtable::merge_cells(1, 3:4) %>%

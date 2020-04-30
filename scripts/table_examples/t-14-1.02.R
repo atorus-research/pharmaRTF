@@ -91,7 +91,9 @@ term_df["\tMissing", ] <- "  0 (  0%)"
 
 # p-value
 term_p_1 <- adsl %>%
-  fish_p(DCREASCD, ARM, width = 6)
+  select(ARM, DCREASCD) %>%
+  mutate(loefl = ifelse(DCREASCD %in% "Adverse Event", 1, 0)) %>%
+  fish_p(loefl, ARM, width = 6)
 term_df <- attach_p(term_df, term_p_1)
 
 term_p_2 <- adsl %>%
