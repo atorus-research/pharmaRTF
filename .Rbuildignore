@@ -3,3 +3,5 @@
 ^azure-pipelines\.yml$
 ^scripts$
 ^cran-comments\.md$
+^doc$
+^Meta$

@@ -35,23 +35,7 @@ information to a custom reader for your process. See Details section for more
 information.
 }
 \details{
-Titles_and_footnotes_from_df allows you to attach titles and footnotes
-(as hf_line objects) from a data.frame. This data.frame could be a
-data.frame in your local environment, or read in from an external file. The
-best way to utilize this method is to create a custom reader function. This
-custom reader function is a function that you develop to:
 
-\itemize{
-\item{Read a source file into a data.frame}
-\item{Preprocess as necessary to keep only necessary records and variables}
-\item{Ensure that variables are the correct data type}
-}
-
-Titles_and_footnotes_from_df allows you to pass arguments into the reader
-function, which gives you the capability to keep titles and footnotes for
-all of your outputs in a central file and pass a filtering option, or any
-additional parameters as necessary. For an example implementation, see our
-vignette here. \code{vignette("tf_from_file", package = "pharmaRTF")}.
 }
 \section{Required Columns}{
 

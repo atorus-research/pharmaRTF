@@ -36,3 +36,5 @@ vignettes/*.pdf
 rsconnect/
 table_examples/outputs/
 inst/doc
+doc
+Meta
