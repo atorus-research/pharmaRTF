@@ -31,6 +31,10 @@ model_portion <- efficacy_models(adas, 'CHG', 24, model_type='repeated')
 final <- bind_rows(column_headers, model_portion) %>%
   select(rowlbl1, `0`, `54`, `81`)
 
+# Take off footnote references
+final[4,1] <- "p-value(Xan - Placebo)"
+final[8,1] <- "p-value(Xan High - Xan Low)"
+
 # Make the table
 ht <- as_hux(final) %>%
   huxtable::set_bold(1, 1:ncol(final), TRUE) %>%

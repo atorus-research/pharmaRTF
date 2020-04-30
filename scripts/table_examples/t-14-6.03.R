@@ -1,6 +1,5 @@
 # table 14-6.03
 
-
 library(huxtable)
 library(plyr)
 library(dplyr)
@@ -29,29 +28,29 @@ n_pct <- function(n, pct, n_width=3, pct_width=3) {
 }
 
 ## Chem
-adlbc <- read_xpt(glue("{adam_lib}/adlbc.xpt")) %>%
+adlbc <- read_xpt(glue("{adam_lib}/adlbcpv.xpt")) %>%
   filter(SAFFL == "Y", ANL01FL == "Y", AVISITN != 99)
 
 adlbc$TRTP <- ordered(adlbc$TRTP, c("Placebo", "Xanomeline Low Dose", "Xanomeline High Dose"))
 adlbc$PARAM <- recode(adlbc$PARAM,
-  "Albumin (g/L)" = "ALBUMIN",
-  "Alkaline Phosphatase (U/L)" = "ALKALINE PHOSPHATASE",
-  "Alanine Aminotransferase (U/L)" = "ALANINE AMINOTRANSFERASE",
-  "Aspartate Aminotransferase (U/L)" = "ASPARTATE AMINOTRANSFERASE",
-  "Bilirubin (umol/L)" = "BILIRUBIN",
-  "Blood Urea Nitrogen (mmol/L)" = "UREA NITROGEN",
-  "Calcium (mmol/L)" = "CALCIUM",
-  "Cholesterol (mmol/L)" = "CHOLESTEROL",
-  "Creatine Kinase (U/L)" = "CREATINE KINASE",
-  "Chloride (mmol/L)" = "CHLORIDE",
-  "Creatinine (umol/L)" = "CREATININE",
-  "Gamma Glutamyl Transferase (U/L)" = "GAMMA GLUTAMYL TRANSFERASE",
-  "Glucose (mmol/L)" = "GLUCOSE",
-  "Potassium (mmol/L)" = "POTASSIUM",
-  "Sodium (mmol/L)" = "SODIUM",
-  "Phosphate (mmol/L)" = "PHOSPHATE",
-  "Protein (g/L)" = "PROTEIN",
-  "Urate (umol/L)" = "URATE"
+  "Albumin (g/L) change from previous visit, relative to normal range" = "ALBUMIN",
+  "Alkaline Phosphatase (U/L) change from previous visit, relative to normal range" = "ALKALINE PHOSPHATASE",
+  "Alanine Aminotransferase (U/L) change from previous visit, relative to normal range" = "ALANINE AMINOTRANSFERASE",
+  "Aspartate Aminotransferase (U/L) change from previous visit, relative to normal range" = "ASPARTATE AMINOTRANSFERASE",
+  "Bilirubin (umol/L) change from previous visit, relative to normal range" = "BILIRUBIN",
+  "Blood Urea Nitrogen (mmol/L) change from previous visit, relative to normal range" = "UREA NITROGEN",
+  "Calcium (mmol/L) change from previous visit, relative to normal range" = "CALCIUM",
+  "Cholesterol (mmol/L) change from previous visit, relative to normal range" = "CHOLESTEROL",
+  "Creatine Kinase (U/L) change from previous visit, relative to normal range" = "CREATINE KINASE",
+  "Chloride (mmol/L) change from previous visit, relative to normal range" = "CHLORIDE",
+  "Creatinine (umol/L) change from previous visit, relative to normal range" = "CREATININE",
+  "Gamma Glutamyl Transferase (U/L) change from previous visit, relative to normal range" = "GAMMA GLUTAMYL TRANSFERASE",
+  "Glucose (mmol/L) change from previous visit, relative to normal range" = "GLUCOSE",
+  "Potassium (mmol/L) change from previous visit, relative to normal range" = "POTASSIUM",
+  "Sodium (mmol/L) change from previous visit, relative to normal range" = "SODIUM",
+  "Phosphate (mmol/L) change from previous visit, relative to normal range" = "PHOSPHATE",
+  "Protein (g/L) change from previous visit, relative to normal range" = "PROTEIN",
+  "Urate (umol/L) change from previous visit, relative to normal range" = "URATE"
 )
 adlbc$PARAM <- ordered(adlbc$PARAM, c(
   "ALBUMIN",
@@ -101,23 +100,23 @@ adlbc3 <- adlbc2 %>%
   add_column("p-val\\line [1]" = num_fmt(unlist(adlbc_pvals), digits = 3, int_len = 1, size = 5))
 
 ### Heme
-adlbh <- read_xpt(glue("{adam_lib}/adlbh.xpt")) %>%
+adlbh <- read_xpt(glue("{adam_lib}/adlbhpv.xpt")) %>%
   filter(SAFFL == "Y", ANL01FL == "Y", AVISITN != 99)
 
 adlbh$TRTP <- ordered(adlbh$TRTP, c("Placebo", "Xanomeline Low Dose", "Xanomeline High Dose"))
 adlbh$PARAM <- recode(adlbh$PARAM,
-  "Basophils (GI/L)" = "BASOPHILS",
-  "Eosinophils (GI/L)" = "EOSINOPHILS",
-  "Hematocrit" = "HEMATOCRIT",
-  "Hemoglobin (mmol/L)" = "HEMOGLOBIN",
-  "Lymphocytes (GI/L)" = "LYMPHOCYTES",
-  "Ery. Mean Corpuscular Hemoglobin (fmol(Fe))" = "ERY. MEAN CORPUSCULAR HEMOGLOBIN",
-  "Ery. Mean Corpuscular HGB Concentration (mmol/L)" = "ERY. MEAN CORPUSCULAR HB CONCENTRATION",
-  "Ery. Mean Corpuscular Volume (fL)" = "ERY. MEAN CORPUSCULAR VOLUME",
-  "Monocytes (GI/L)" = "MONOCYTES",
-  "Platelet (GI/L)" = "PLATELET",
-  "Erythrocytes (TI/L)" = "ERYTHROCYTES",
-  "Leukocytes (GI/L)" = "LEUKOCYTES"
+  "Basophils (GI/L) change from previous visit, relative to normal range" = "BASOPHILS",
+  "Eosinophils (GI/L) change from previous visit, relative to normal range" = "EOSINOPHILS",
+  "Hematocrit change from previous visit, relative to normal range" = "HEMATOCRIT",
+  "Hemoglobin (mmol/L) change from previous visit, relative to normal range" = "HEMOGLOBIN",
+  "Lymphocytes (GI/L) change from previous visit, relative to normal range" = "LYMPHOCYTES",
+  "Ery. Mean Corpuscular Hemoglobin (fmol(Fe)) change from previous visit, relative to normal range" = "ERY. MEAN CORPUSCULAR HEMOGLOBIN",
+  "Ery. Mean Corpuscular HGB Concentration (mmol/L) change from previous visit, relative to normal rang" = "ERY. MEAN CORPUSCULAR HB CONCENTRATION",
+  "Ery. Mean Corpuscular Volume (fL) change from previous visit, relative to normal range" = "ERY. MEAN CORPUSCULAR VOLUME",
+  "Monocytes (GI/L) change from previous visit, relative to normal range" = "MONOCYTES",
+  "Platelet (GI/L) change from previous visit, relative to normal range" = "PLATELET",
+  "Erythrocytes (TI/L) change from previous visit, relative to normal range" = "ERYTHROCYTES",
+  "Leukocytes (GI/L) change from previous visit, relative to normal range" = "LEUKOCYTES"
 )
 adlbh$PARAM <- ordered(adlbh$PARAM, c(
   "BASOPHILS",
@@ -152,7 +151,6 @@ for(i in seq(nrow(adlbh2)/9)) {
   )$p.value, 3)
 }
 
-
 adlbh3 <- adlbh2 %>%
   mutate(n_w_pct = n_pct(N, tot, n_width = 2)) %>%
   pivot_wider(id_cols = PARAM,names_from = c(TRTP, ANRIND), values_from = n_w_pct) %>%
@@ -163,6 +161,10 @@ final <- adlbc3 %>%
   add_row("PARAM" = "----------", .before = 1) %>%
   add_row("PARAM" = "CHEMISTRY", .before = 1) %>%
   add_row("PARAM" = "", .before = 1) %>%
+  add_row("PARAM" = "") %>%
+  add_row("PARAM" = "") %>%
+  add_row("PARAM" = "") %>%
+  add_row("PARAM" = "") %>%
   add_row("PARAM" = "") %>%
   add_row("PARAM" = "HEMATOLOGY") %>%
   add_row("PARAM" = "----------") %>%
@@ -229,10 +231,6 @@ ht2 <- ht %>%
   huxtable::set_valign(1:3, 1:11, "bottom") %>%
   huxtable::set_align(3, 1:11, "center") %>%
   huxtable::set_align(1, 1:11, "center")
-
-
-
-
 
 # Write into doc object and pull titles/footnotes from excel file
 doc <- rtf_doc(ht2, header_rows = 3) %>% titles_and_footnotes_from_df(

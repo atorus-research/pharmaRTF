@@ -13,9 +13,44 @@ source('./scripts/table_examples/funcs.R')
 # Read in the ADLB datasets
 adlbc <- read_xpt(glue("{adam_lib}/adlbc.xpt")) %>%
   filter(SAFFL == 'Y' & (AVISITN != 99 | (AVISITN == 99 & AENTMTFL=='Y')))
+
+adlbc$PARAM<- recode(adlbc$PARAM,
+                     "Alanine Aminotransferase (U/L)" = "ALANINE AMINOTRANSFERASE",
+                     "Albumin (g/L)" = "ALBUMIN",
+                     "Alkaline Phosphatase (U/L)" = "ALKALINE PHOSPHATASE",
+                     "Aspartate Aminotransferase (U/L)" = "ASPARTATE AMINOTRANSFERASE",
+                     "Bilirubin (umol/L)" = "BILIRUBIN",
+                     "Calcium (mmol/L)" = "CALCIUM",
+                     "Chloride (mmol/L)" = "CHLORIDE",
+                     "Cholesterol (mmol/L)" = "CHOLESTEROL",
+                     "Creatine Kinase (U/L)" = "CREATINE KINASE",
+                     "Creatinine (umol/L)" = "CREATININE",
+                     "Gamma Glutamyl Transferase (U/L)" = "GAMMA GLUTAMYL TRANSFERASE",
+                     "Glucose (mmol/L)" = "GLUCOSE",
+                     "Phosphate (mmol/L)" = "PHOSPHATE",
+                     "Potassium (mmol/L)" = "POTASSIUM",
+                     "Protein (g/L)" = "PROTEIN",
+                     "Sodium (mmol/L)" = "SODIUM",
+                     "Urate (umol/L)" = "URATE",
+                     "Blood Urea Nitrogen (mmol/L)" = "UREA NITROGEN")
+
 adlbh <- read_xpt(glue("{adam_lib}/adlbh.xpt")) %>%
-  filter(SAFFL == 'Y' & !(PARAM %in% c('Anisocytes', 'Poikilocytes', 'Microcytes', 'Macrocytes'))
+  filter(SAFFL == 'Y' & !(PARAM %in% c('Anisocytes', 'Poikilocytes', 'Microcytes', 'Macrocytes', 'Polychromasia'))
          & (AVISITN != 99 | (AVISITN == 99 & AENTMTFL=='Y')))
+
+adlbh$PARAM<- recode(adlbh$PARAM,
+                     "Basophils (GI/L)" = "BASOPHILS",
+                     "Eosinophils (GI/L)" = "EOSINOPHILS",
+                     "Ery. Mean Corpuscular HGB Concentration (mmol/L)" = "ERY. MEAN CORPUSCULAR HB CONCENTRATION",
+                     "Ery. Mean Corpuscular Hemoglobin (fmol(Fe))" = "ERY. MEAN CORPUSCULAR HEMOGLOBIN",
+                     "Ery. Mean Corpuscular Volume (fL)" = "ERY. MEAN CORPUSCULAR VOLUME",
+                     "Erythrocytes (TI/L)" = "ERYTHROCYTES",
+                     "Hematocrit" = "HEMATOCRIT",
+                     "Hemoglobin (mmol/L)" = "HEMOGLOBIN",
+                     "Leukocytes (GI/L)" = "LEUKOCYTES",
+                     "Lymphocytes (GI/L)" = "LYMPHOCYTES",
+                     "Monocytes (GI/L)" = "MONOCYTES",
+                     "Platelet (GI/L)" = "PLATELET")
 
 # Template for assigning display visit values
 visit_names <- data.frame(
@@ -149,7 +184,8 @@ doc <- rtf_doc(final, header_rows = 2) %>% titles_and_footnotes_from_df(
   reader=example_custom_reader,
   table_number='14-6.01') %>%
   set_font_size(10) %>%
-  set_ignore_cell_padding(TRUE)
+  set_ignore_cell_padding(TRUE) %>%
+  set_column_header_buffer(top=1)
 
 # Write out the RTF
 write_rtf(doc, file='./scripts/table_examples/outputs/14-6.01.rtf')

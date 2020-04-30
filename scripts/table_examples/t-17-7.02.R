@@ -29,7 +29,7 @@ pad_row <- function(df, r) {
 
 dm <- read_xpt(glue("{sdtm_lib}/dm.xpt"))
 advs <- read_xpt(glue("{adam_lib}/advs.xpt")) %>%
-  filter(SAFFL == "Y")
+  filter(SAFFL == "Y" & !is.na(BASE))
 
 advs$EOTFL <- ifelse(advs[,"AVISIT"] == "End of Treatment", "Y", "")
 advs$W24FL <- ifelse(advs[, "AVISIT"] == "Week 24", "Y", "")
