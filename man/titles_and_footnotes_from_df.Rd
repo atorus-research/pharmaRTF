@@ -51,7 +51,7 @@ Titles_and_footnotes_from_df allows you to pass arguments into the reader
 function, which gives you the capability to keep titles and footnotes for
 all of your outputs in a central file and pass a filtering option, or any
 additional parameters as necessary. For an example implementation, see our
-vignette here. \code{vignette("tf_from_file", package = "pharmaRTF")}.
+\href{https://atorus-research.github.io/tf_from_file.html}{vignette}.
 }
 \section{Required Columns}{
 

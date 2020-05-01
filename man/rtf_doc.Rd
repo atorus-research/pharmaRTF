@@ -34,8 +34,8 @@ methods are not functional.
 
 The titles and footnotes are composed of \code{hf_line} objects.
 
-See the vignette for a more complete view of intended usage.
-\code{vignette("pharmaRTF", package = "pharmaRTF")}
+See the \href{https://atorus-research.github.io/pharmaRTF.html}{vignette}
+for a more complete view of intended usage.
 }
 \section{\code{rtf_doc} Properties}{
 
