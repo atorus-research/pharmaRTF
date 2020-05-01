@@ -125,8 +125,8 @@ write_rtf(doc, file="table3.rtf")
 
 This completes a basic introduction to using pharmaRTF, but there's still more to learn!
 
-- To learn tips and tricks for using huxtable with pharmaRTF, see [this vignette](huxtable_tips.html)
-- To learn more advanced usage of pharmaRTF, see [this vignette](advanced_usage.html)
-- To see how to read titles and footnotes from external files, see [this vignette](tf_from_file.html)
+- To learn tips and tricks for using huxtable with pharmaRTF, see [this vignette](https://atorus-research.github.io/huxtable_tips.html)
+- To learn more advanced usage of pharmaRTF, see [this vignette](https://atorus-research.github.io/advanced_usage.html)
+- To see how to read titles and footnotes from external files, see [this vignette](https://atorus-research.github.io/tf_from_file.html)
 
 
