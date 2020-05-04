@@ -17,3 +17,12 @@ steps:
 - script: sudo Rscript -e 'install.packages(c("huxtable", "kableExtra")); devtools::test()'
   displayName: 'Package Check'
 
+- task: GitHubRelease@1
+  inputs:
+    gitHubConnection: 'github connection 1'
+    repositoryName: 'atorus-research/pharmaRTF'
+    action: 'create'
+    target: '$(Build.SourceVersion)'
+    tagSource: 'gitTag'
+    changeLogCompareToRelease: 'lastFullRelease'
+    changeLogType: 'commitBased'
