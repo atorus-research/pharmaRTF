@@ -15,7 +15,7 @@ header-includes:
 - \fancyhead[CO, CE]{The Header - Atorus}
 - \fancyfoot[CO, CE]{The footer - Atorus \thepage}
 vignette:  >
-  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteIndexEntry{Validate}
   %\VignetteEngine{knitr::rmarkdown}
   \usepackage[utf8]{inputenc}
 ---

@@ -6,7 +6,7 @@
 
 If you've worked in the pharmaceutical industry as a SAS&copy; programmer doing data analysis for clinical trials, there's a fair chance that you've spent a good amount of time creating RTF outputs. While there are more modern document file formats supported by SAS&copy; and other data analysis languages, RTF remains prolific. Though antiquated, RTF files still remain useful. They support the rich-text format necessary to create documents containing different fonts, colors, and text attributes. Furthermore, RTF documents make it easy for medical writers to insert outputs into different reports and publications as needed. Regardless, outputting data displays to RTF documents is a process embedded in many companies still to this day. 
 
-There are many different table packages available in R. For example, [stargazer](https://cran.r-project.org/package=stargazer) allows you to easily summarize data and create statistical tables in different output formats, such as LaTeX, HTML, ASCII. [kableExtra](https://cran.r-project.org/web/packages/kableExtra/vignettes/awesome_table_in_html.html) lets you build common complex tables and manipulate table styles in HTML outputs. RStudio has been developing [gt](https://github.com/rstudio/gt) which aims to make table creation simple by breaking it into a cohesive set of parts. While there are many more options, few of these support RTF output. 
+There are many different table packages available in R. For example, [stargazer](https://cran.r-project.org/package=stargazer) allows you to easily summarize data and create statistical tables in different output formats, such as LaTeX, HTML, ASCII. [kableExtra](https://haozhu233.github.io/kableExtra/awesome_table_in_html.html) lets you build common complex tables and manipulate table styles in HTML outputs. RStudio has been developing [gt](https://github.com/rstudio/gt) which aims to make table creation simple by breaking it into a cohesive set of parts. While there are many more options, few of these support RTF output. 
 
 
 _Note: gt plans to support RTF in the future, but this functionality is not yet mature._
@@ -74,11 +74,11 @@ write_rtf(doc, file="table1.rtf")
 ```
 
 The resulting file looks like:
-<!--![table1_png]("https://github.com/atorus-research/pharmaRTF/vignettes/table1_img1.png")-->
+![table1_png](https://raw.githubusercontent.com/atorus-research/pharmaRTF/master/vignettes/table1_img1.png)
 
 The document opens and presents properly as an RTF document within Microsoft Word. Furthermore, the document paging works properly, with titles and column headers repeating pages to page. Note that **the column headers repeat from page to page** - this is because pharmaRTF pulls the column headers out of the huxtable table and into the document header. 
 
-<!--![table1_png2]("https://github.com/atorus-research/pharmaRTF/vignettes/table1_img2.png")-->
+![table1_png2](https://raw.githubusercontent.com/atorus-research/pharmaRTF/master/vignettes/table1_img2.png)
 
 
 In the above example, note that we didn't edit any document settings. By default, pharmaRTF will output RTF files with:
@@ -102,7 +102,7 @@ doc <- rtf_doc(ht, titles=list(hf_line("The Iris Dataset", bold=TRUE))) %>%
 write_rtf(doc, file="table2.rtf")
 ```
 
-<!--![table2_img1]("https://github.com/atorus-research/pharmaRTF/vignettes/table2_img1.png")-->
+![table2_img1](https://raw.githubusercontent.com/atorus-research/pharmaRTF/master/vignettes/table2_img1.png)
 
 
 While this display is impractical, it's possible! And customization to all these attributes may be necessary depending on individual circumstances. 
@@ -119,7 +119,7 @@ doc <- add_footnotes(doc, hf_line("Note: This is a footnote!", italic=TRUE, alig
 write_rtf(doc, file="table3.rtf")
 ```
 
-<!--![table3_img1]("https://github.com/atorus-research/pharmaRTF/vignettes/table3_img1.png")-->
+![table3_img1](https://raw.githubusercontent.com/atorus-research/pharmaRTF/master/vignettes/table3_img1.png)
 
 ## Further Reading
 
@@ -128,5 +128,3 @@ This completes a basic introduction to using pharmaRTF, but there's still more t
 - To learn tips and tricks for using huxtable with pharmaRTF, see [this vignette](https://atorus-research.github.io/huxtable_tips.html)
 - To learn more advanced usage of pharmaRTF, see [this vignette](https://atorus-research.github.io/advanced_usage.html)
 - To see how to read titles and footnotes from external files, see [this vignette](https://atorus-research.github.io/tf_from_file.html)
-
-

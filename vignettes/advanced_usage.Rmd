@@ -75,7 +75,7 @@ knitr::include_graphics("table5_img1.png")
 
 ## Multi-level Column Headers
 
-A common requirement of tables is to have spanning column headers. When columns need to be grouped in presentation, this is common practice. This requires a combination of work within huxtable and pharmaRTF. The first thing you need to do is create your huxtable object. For more details on how to do this, see the [huxtable tips vignette](huxtable_tips.html). 
+A common requirement of tables is to have spanning column headers. When columns need to be grouped in presentation, this is common practice. This requires a combination of work within huxtable and pharmaRTF. The first thing you need to do is create your huxtable object. For more details on how to do this, see the [huxtable tips vignette](https://atorus-research.github.io/huxtable_tips.html). 
 
 ```{r column_headers1}
 # Create the column headers data frame
@@ -332,6 +332,6 @@ knitr::include_graphics("table15_img1.png")
 
 If you have not already reviewed them, be sure to check out our other vignettes!
 
-- To pick up the basics of using pharmaRTF, see [this vignette](pharmaRTF.html)
-- To learn tips and tricks for using huxtable with pharmaRTF, see [this vignette](huxtable_tips.html)
-- To see how to read titles and footnotes from external files, see [this vignette](tf_from_file.html)
+- To pick up the basics of using pharmaRTF, see [this vignette](https://atorus-research.github.io/pharmaRTF.html)
+- To learn tips and tricks for using huxtable with pharmaRTF, see [this vignette](https://atorus-research.github.io/huxtable_tips.html)
+- To learn more advanced usage of pharmaRTF, see [this vignette](https://atorus-research.github.io/advanced_usage.html)
