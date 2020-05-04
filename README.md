@@ -74,11 +74,11 @@ write_rtf(doc, file="table1.rtf")
 ```
 
 The resulting file looks like:
-<!--![table1_png]("https://github.com/atorus-research/pharmaRTF/vignettes/table1_img1.png")-->
+![table1_png](https://raw.githubusercontent.com/atorus-research/pharmaRTF/master/vignettes/table1_img1.png)
 
 The document opens and presents properly as an RTF document within Microsoft Word. Furthermore, the document paging works properly, with titles and column headers repeating pages to page. Note that **the column headers repeat from page to page** - this is because pharmaRTF pulls the column headers out of the huxtable table and into the document header. 
 
-<!--![table1_png2]("https://github.com/atorus-research/pharmaRTF/vignettes/table1_img2.png")-->
+![table1_png2](https://raw.githubusercontent.com/atorus-research/pharmaRTF/master/vignettes/table1_img2.png)
 
 
 In the above example, note that we didn't edit any document settings. By default, pharmaRTF will output RTF files with:
@@ -102,7 +102,7 @@ doc <- rtf_doc(ht, titles=list(hf_line("The Iris Dataset", bold=TRUE))) %>%
 write_rtf(doc, file="table2.rtf")
 ```
 
-<!--![table2_img1]("https://github.com/atorus-research/pharmaRTF/vignettes/table2_img1.png")-->
+![table2_img1](https://raw.githubusercontent.com/atorus-research/pharmaRTF/master/vignettes/table2_img1.png)
 
 
 While this display is impractical, it's possible! And customization to all these attributes may be necessary depending on individual circumstances. 
@@ -119,7 +119,7 @@ doc <- add_footnotes(doc, hf_line("Note: This is a footnote!", italic=TRUE, alig
 write_rtf(doc, file="table3.rtf")
 ```
 
-<!--![table3_img1]("https://github.com/atorus-research/pharmaRTF/vignettes/table3_img1.png")-->
+![table3_img1](https://raw.githubusercontent.com/atorus-research/pharmaRTF/master/vignettes/table3_img1.png)
 
 ## Further Reading
 
