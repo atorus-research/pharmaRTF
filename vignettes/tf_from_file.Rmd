@@ -20,7 +20,7 @@ library(pharmaRTF)
 library(readxl)
 ```
 
-_We recommend that before reviewing this vignette, you review the [basics of pharmaRTF](pharmaRTF.html) and [the more advanced features](advanced_usage.html)._
+_We recommend that before reviewing this vignette, you review the [basics of pharmaRTF](https://atorus-research.github.io/pharmaRTF.html) and [the more advanced features](https://atorus-research.github.io/advanced_usage.html)._
 
 ## Working pharmaRTF Into Your Process
 
@@ -60,7 +60,7 @@ knitr::kable(read_excel('titles.xlsx'))
 
 ```
 
-(For more information about the special text fields you see here, see our [advanced usage](advanced_usage.html) vignette)
+(For more information about the special text fields you see here, see our [advanced usage](https://atorus-research.github.io/advanced_usage.html) vignette)
 
 Here I have everything I need to generate my titles. I just need to make sure of two things:
 
@@ -104,7 +104,7 @@ Here can see the data frame that the function processes and returns. In this exa
 
 ## Putting It Together
 
-Now with an understanding of how a custom reader function works, let's tie it all together. Let's assume that our table has been programmed, and that the huxtable table is ready in our session (see the [huxtable tips vignette](huxtable_tips.html) to for tips on how to prepare your table). The huxtable table is our session looks like this: 
+Now with an understanding of how a custom reader function works, let's tie it all together. Let's assume that our table has been programmed, and that the huxtable table is ready in our session (see the [huxtable tips vignette](https://atorus-research.github.io/huxtable_tips.html) to for tips on how to prepare your table). The huxtable table is our session looks like this: 
 
 ```{r prep_huxtable, echo=FALSE, results='hide'}
 huxtable::as_hux(load('t14_4_01.Rdata'))
@@ -114,9 +114,9 @@ huxtable::as_hux(load('t14_4_01.Rdata'))
 ht
 ```
 
-_Note: The data here comes from the CDISC Pilot, which you can read about [here](https://www.cdisc.org/sdtmadam-pilot-project). Also, see our replication of the tables from this CDISC pilot in our [Github repository](link_tbd.com)._
+_Note: The data here comes from the CDISC Pilot, which you can read about [here](https://www.cdisc.org/sdtmadam-pilot-project). Also, see our replication of the tables from this CDISC pilot in our [Github repository](https://github.com/atorus-research/CDISC_pilot_replication)._
 
-Here's how you would go about creating your `rtf_doc` object. (For more information about the functions being used here, see our [advanced usage](advanced_usage.html) vignette)
+Here's how you would go about creating your `rtf_doc` object. (For more information about the functions being used here, see our [advanced usage](https://atorus-research.github.io/advanced_usage.html) vignette)
 
 ```{r create_rtfdoc, eval=FALSE}
 doc <- rtf_doc(ht, header_rows = 2) %>% titles_and_footnotes_from_df(
@@ -147,6 +147,6 @@ And there you have it. By using this process, the addition of titles and footnot
 
 If you have not already reviewed them, be sure to check out our other vignettes
 
-- To pick up the basics of using pharmaRTF, see [this vignette](pharmaRTF.html)
-- To learn tips and tricks for using huxtable with pharmaRTF, see [this vignette](huxtable_tips.html)
-- To learn more advanced usage of pharmaRTF, see [this vignette](advanced_usage.html)
+- To pick up the basics of using pharmaRTF, see [this vignette](https://atorus-research.github.io/pharmaRTF.html)
+- To learn tips and tricks for using huxtable with pharmaRTF, see [this vignette](https://atorus-research.github.io/huxtable_tips.html)
+- To learn more advanced usage of pharmaRTF, see [this vignette](https://atorus-research.github.io/advanced_usage.html)

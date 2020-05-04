@@ -23,7 +23,7 @@ library(pharmaRTF)
 
 If you've worked in the pharmaceutical industry as a SAS&copy; programmer doing data analysis for clinical trials, there's a fair chance that you've spent a good amount of time creating RTF outputs. While there are more modern document file formats supported by SAS&copy; and other data analysis languages, RTF remains prolific. Though antiquated, RTF files still remain useful. They support the rich-text format necessary to create documents containing different fonts, colors, and text attributes. Furthermore, RTF documents make it easy for medical writers to insert outputs into different reports and publications as needed. Regardless, outputting data displays to RTF documents is a process embedded in many companies still to this day. 
 
-There are many different table packages available in R. For example, [stargazer](https://cran.r-project.org/package=stargazer) allows you to easily summarize data and create statistical tables in different output formats, such as LaTeX, HTML, ASCII. [kableExtra](https://cran.r-project.org/web/packages/kableExtra/vignettes/awesome_table_in_html.html) lets you build common complex tables and manipulate table styles in HTML outputs. RStudio has been developing [gt](https://github.com/rstudio/gt) which aims to make table creation simple by breaking it into a cohesive set of parts. While there are many more options, few of these support RTF output. 
+There are many different table packages available in R. For example, [stargazer](https://cran.r-project.org/package=stargazer) allows you to easily summarize data and create statistical tables in different output formats, such as LaTeX, HTML, ASCII. [kableExtra](https://haozhu233.github.io/kableExtra/awesome_table_in_html.html) lets you build common complex tables and manipulate table styles in HTML outputs. RStudio has been developing [gt](https://github.com/rstudio/gt) which aims to make table creation simple by breaking it into a cohesive set of parts. While there are many more options, few of these support RTF output. 
 
 _Note: gt plans to support RTF in the future, but this functionality is not yet mature._
 
@@ -150,10 +150,6 @@ knitr::include_graphics("table3_img1.png")
 
 This completes a basic introduction to using pharmaRTF, but there's still more to learn!
 
-- To learn tips and tricks for using huxtable with pharmaRTF, see [this vignette](huxtable_tips.html)
-- To learn more advanced usage of pharmaRTF, see [this vignette](advanced_usage.html)
-- To see how to read titles and footnotes from external files, see [this vignette](tf_from_file.html)
-
-
-
-
+- To learn tips and tricks for using huxtable with pharmaRTF, see [this vignette](https://atorus-research.github.io/huxtable_tips.html)
+- To learn more advanced usage of pharmaRTF, see [this vignette](https://atorus-research.github.io/advanced_usage.html)
+- To see how to read titles and footnotes from external files, see [this vignette](https://atorus-research.github.io/tf_from_file.html)
