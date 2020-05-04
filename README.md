@@ -128,5 +128,3 @@ This completes a basic introduction to using pharmaRTF, but there's still more t
 - To learn tips and tricks for using huxtable with pharmaRTF, see [this vignette](https://atorus-research.github.io/huxtable_tips.html)
 - To learn more advanced usage of pharmaRTF, see [this vignette](https://atorus-research.github.io/advanced_usage.html)
 - To see how to read titles and footnotes from external files, see [this vignette](https://atorus-research.github.io/tf_from_file.html)
-
-
