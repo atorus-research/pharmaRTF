@@ -27,6 +27,14 @@ pharmaRTF was developed to plug this gap without reinventing the wheel. Huxtable
 
 _Note: we also plan to support GT tables when the RTF support matures_
 
+## Installation
+
+We're working on getting the package up on CRAN! In the meantime, you can install the latest version of `pharmaRTF` with:
+
+```
+devtools::install_github("https://github.com/atorus-research/pharmaRTF.git")
+```
+
 ## The Basics
 
 Before you start worrying about creating an RTF document, you first need to create and style your table. For that, use huxtable:
