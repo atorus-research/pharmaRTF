@@ -3,7 +3,8 @@
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
 
-trigger: none
+trigger:
+- master
 
 pool:
   vmImage: 'ubuntu-16.04'
@@ -16,13 +17,3 @@ steps:
 
 - script: sudo Rscript -e 'install.packages(c("huxtable", "kableExtra")); devtools::test()'
   displayName: 'Package Check'
-
-- task: GitHubRelease@1
-  inputs:
-    gitHubConnection: 'github connection 1'
-    repositoryName: 'atorus-research/pharmaRTF'
-    action: 'create'
-    target: '$(Build.SourceVersion)'
-    tagSource: 'gitTag'
-    changeLogCompareToRelease: 'lastFullRelease'
-    changeLogType: 'commitBased'
