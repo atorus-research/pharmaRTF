@@ -23,6 +23,10 @@ library(pharmaRTF)
 
 While pharmaRTF can cover your titles, footnotes, and encapsulating document properties - a key feature to creating the tables you need is having a good understand of huxtable. Huxtable has plenty of great user documentation within its own vignettes, available [here](https://hughjonesd.github.io/huxtable/), but within this vignette we will cover some core features necessary to create beautiful tables. 
 
+## A Small Note
+
+Some of the syntax we use throughout this document uses the `%>%` pipe operator. This is to display support for a tidyverse style of coding. You can find the `%>%` operator in the [magittr](https://cran.r-project.org/web/packages/magrittr/vignettes/magrittr.html) package.
+
 ## Huxtable Basics
 
 Something important to understand about huxtable is that it starts as an abstraction of a data frame. This means that in general, you can index and slice the huxtable object the same way you would with a normal `data.frame` object in R. 

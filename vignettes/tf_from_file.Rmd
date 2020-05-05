@@ -30,6 +30,10 @@ Being able to specify everything directly in a program is useful. For adhoc tabl
 
 pharmaRTF has the tools you need to make this process simple, and this comes from the function `titles_and_footnotes_from_df`. This function allows you to import your titles and footnotes from a data frame. That data frame can either come directly from your R session, or you can build a custom reader function to import the data from an external file. So let's take a look.
 
+## A Small Note
+
+Some of the syntax we use throughout this document uses the `%>%` pipe operator. This is to display support for a tidyverse style of coding. You can find the `%>%` operator in the [magittr](https://cran.r-project.org/web/packages/magrittr/vignettes/magrittr.html) package.
+
 ## How It Works
 
 The idea behind `titles_and_footnotes_from_df` is simply that there is a set of expectations of what the data looks like that flows into the function. What that data looks like within an external file is irrelevant, as long as it can be transformed to meet the needs of `titles_and_footnotes_from_df` on the way in. This is possible because of the `reader` parameter. The `reader` parameter is just some function that returns a data frame, and that data frame must be compliant with the required variables and types expected by `titles_and_footnotes_from_df`. Those variables, types, and requirements are as follows. 
