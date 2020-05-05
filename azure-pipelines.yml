@@ -3,8 +3,7 @@
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
 
-trigger:
-- master
+trigger: none
 
 pool:
   vmImage: 'ubuntu-16.04'
@@ -15,5 +14,5 @@ steps:
 - script: Rscript -e 'R.version'
   displayName: 'R Version'
 
-- script: sudo Rscript -e 'install.packages(c("huxtable", "kableExtra")); devtools::test()'
+- script: sudo Rscript -e 'install.packages(c("huxtable", "kableExtra")); devtools::check(args = c("--timings", "--no-build-vignettes"))'
   displayName: 'Package Check'
