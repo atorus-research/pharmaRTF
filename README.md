@@ -39,6 +39,10 @@ We're working on getting the package up on CRAN! In the meantime, you can instal
 devtools::install_github("https://github.com/atorus-research/pharmaRTF.git")
 ```
 
+## A Small Note
+
+Some of the syntax we use throughout this document uses the `%>%` pipe operator. This is to display support for a tidyverse style of coding. You can find the `%>%` operator in the [magittr](https://cran.r-project.org/web/packages/magrittr/vignettes/magrittr.html) package.
+
 ## The Basics
 
 Before you start worrying about creating an RTF document, you first need to create and style your table. For that, use huxtable:
