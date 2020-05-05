@@ -1,6 +1,10 @@
 # pharmaRTF 
 [<img src="https://img.shields.io/badge/Slack-OSTCR-blue?style=flat&logo=slack">](https://ostinclinicalresearch.slack.com)
 [<img src="https://img.shields.io/badge/Slack-RValidationHub-blue?style=flat&logo=slack">](https://RValidationHub.slack.com)
+[<img src="https://img.shields.io/cran/v/pharmaRTF">](https://cran.r-project.org/package=pharmaRTF)
+[![Build Status](https://travis-ci.com/atorus-research/pharmaRTF.svg?branch=master)](https://travis-ci.com/atorus-research/pharmaRTF)
+[<img src="https://img.shields.io/codecov/c/github/atorus-research/pharmaRTF">](https://img.shields.io/codecov/c/github/atorus-research/pharmaRTF)
+[<img src="https://img.shields.io/github/license/atorus-research/pharmaRTF">](https://github.com/atorus-research/pharmaRTF/blob/master/LICENSE)
 
 ## What is pharmaRTF? 
 
@@ -34,6 +38,10 @@ We're working on getting the package up on CRAN! In the meantime, you can instal
 ```
 devtools::install_github("https://github.com/atorus-research/pharmaRTF.git")
 ```
+
+## A Small Note
+
+Some of the syntax we use throughout this document uses the `%>%` pipe operator. This is to display support for a tidyverse style of coding. You can find the `%>%` operator in the [magittr](https://cran.r-project.org/web/packages/magrittr/vignettes/magrittr.html) package.
 
 ## The Basics
 

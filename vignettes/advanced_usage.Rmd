@@ -30,6 +30,10 @@ This vignette will focus on a few more intricate features of the pharmaRTF packa
 - Split titles
 - Special titles/footnote formats
 
+## A Small Note
+
+Some of the syntax we use throughout this document uses the `%>%` pipe operator. This is to display support for a tidyverse style of coding. You can find the `%>%` operator in the [magittr](https://cran.r-project.org/web/packages/magrittr/vignettes/magrittr.html) package.
+
 ## Understanding Document Orientation Within pharmaRTF
 
 In development of this feature, we realized as a team that the orientation of an RTF document has a bit of room for confusion. This spawns from the fact that within Microsoft Word, orientation is automatically determined by the document height and width, despite there being a keyword within RTF syntax that specifies landscape orientation. That said, we believe the most intuitive way to set the orientation of a document is with a property function, which in pharmaRTF is simply `orientation`/`set_orientation`. 
