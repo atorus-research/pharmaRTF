@@ -3,7 +3,7 @@
 [<img src="https://img.shields.io/badge/Slack-RValidationHub-blue?style=flat&logo=slack">](https://RValidationHub.slack.com)
 [<img src="https://img.shields.io/cran/v/pharmaRTF">](https://cran.r-project.org/package=pharmaRTF)
 [![Build Status](https://travis-ci.com/atorus-research/pharmaRTF.svg?branch=master)](https://travis-ci.com/atorus-research/pharmaRTF)
-[<img src="https://img.shields.io/codecov/c/github/atorus-research/pharmaRTF">](https://img.shields.io/codecov/c/github/atorus-research/pharmaRTF)
+[<img src="https://img.shields.io/codecov/c/github/atorus-research/pharmaRTF">](https://codecov.io/gh/atorus-research/pharmaRTF)
 [<img src="https://img.shields.io/github/license/atorus-research/pharmaRTF">](https://github.com/atorus-research/pharmaRTF/blob/master/LICENSE)
 
 ## What is pharmaRTF? 
