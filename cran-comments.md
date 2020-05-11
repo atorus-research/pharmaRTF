@@ -1,3 +1,9 @@
+## Resubmission2
+In this version I have:
+* Updated the LICENSE file per the CRAN template.
+* DESCRIPTION title was updated to be less than 65 characters.
+* DESCRIPTION description was updated to include single quotes around package names.
+
 ## Resubmission
 This is a resubmission. In this version I have:
 * Updated the links to vignettes in the readme and vignettes.
