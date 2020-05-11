@@ -16,4 +16,3 @@ steps:
 
 - script: sudo Rscript -e 'install.packages(c("huxtable", "kableExtra")); devtools::test()'
   displayName: 'Package Check'
-
