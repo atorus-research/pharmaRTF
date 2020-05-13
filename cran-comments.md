@@ -1,5 +1,5 @@
 ## Resubmission 3
-A note regarding the validation vignette: In certain places in the validation vignette there are helper functions that appear to write to the users default directory. These functions only wrote to the users directory during the validation process. Once the initital vur_auto.Rds file is created, the test_rtf would not be written for an ordinary user.
+A note regarding the validation vignette: In certain places in the validation vignette there are helper functions that appear to write to the users default directory. This is to provide an executable functional testing document of the package with the package source code. This document is specified in the .Rbuildignore file so it does not execute during package build, but is available to the user to generate.
 In this version I have:
 
 * Added a \value tag to the write_rtf function documentation
