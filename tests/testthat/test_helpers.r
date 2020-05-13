@@ -94,23 +94,27 @@ test_that("reaplce_cell_padding replaces padding flags correctly", {
   )
   rtf <- rtf_doc(ht)
 
-  write_rtf(rtf)
+  fname <- tempfile()
 
-  expect_true(str_detect(read_file("test.rtf"), "\\\\clpadfl3"))
-  expect_true(str_detect(read_file("test.rtf"), "\\\\clpadft3"))
-  expect_true(str_detect(read_file("test.rtf"), "\\\\clpadfb3"))
-  expect_true(str_detect(read_file("test.rtf"), "\\\\clpadfr3"))
+  write_rtf(rtf, file=fname)
+
+  expect_true(str_detect(read_file(fname), "\\\\clpadfl3"))
+  expect_true(str_detect(read_file(fname), "\\\\clpadft3"))
+  expect_true(str_detect(read_file(fname), "\\\\clpadfb3"))
+  expect_true(str_detect(read_file(fname), "\\\\clpadfr3"))
+  file.remove(fname)
 
   ignore_cell_padding(rtf) <- TRUE
-  write_rtf(rtf)
-  expect_false(str_detect(read_file("test.rtf"), "\\\\clpadfl3"))
-  expect_false(str_detect(read_file("test.rtf"), "\\\\clpadft3"))
-  expect_false(str_detect(read_file("test.rtf"), "\\\\clpadfb3"))
-  expect_false(str_detect(read_file("test.rtf"), "\\\\clpadfr3"))
-  expect_true(str_detect(read_file("test.rtf"), "\\\\clpadfl0"))
-  expect_true(str_detect(read_file("test.rtf"), "\\\\clpadft0"))
-  expect_true(str_detect(read_file("test.rtf"), "\\\\clpadfb0"))
-  expect_true(str_detect(read_file("test.rtf"), "\\\\clpadfr0"))
+  write_rtf(rtf, file=fname)
+  expect_false(str_detect(read_file(fname), "\\\\clpadfl3"))
+  expect_false(str_detect(read_file(fname), "\\\\clpadft3"))
+  expect_false(str_detect(read_file(fname), "\\\\clpadfb3"))
+  expect_false(str_detect(read_file(fname), "\\\\clpadfr3"))
+  expect_true(str_detect(read_file(fname), "\\\\clpadfl0"))
+  expect_true(str_detect(read_file(fname), "\\\\clpadft0"))
+  expect_true(str_detect(read_file(fname), "\\\\clpadfb0"))
+  expect_true(str_detect(read_file(fname), "\\\\clpadfr0"))
+  file.remove(fname)
 })
 
 test_that("format_text_string placeholder test", {
