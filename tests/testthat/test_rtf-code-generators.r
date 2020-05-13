@@ -124,6 +124,19 @@ test_that("header_string lines populates correctly" ,{
   expect_equal(tools::md5sum("headers2.txt")[[1]], tools::md5sum(tmp2)[[1]])
 })
 
+test_that("write_rtf generates expected errors", {
+  # Dummy huxtable
+  ht <- huxtable(
+    column1 = 1:5,
+    column2 = letters[1:5]
+  )
+  # rtf_doc object
+  rtf1 <- rtf_doc(ht)
+
+  expect_error(write_rtf(rtf))
+  expect_error(write_rtf(rtf, file='/as12asd/345eg/'))
+})
+
 test_that("write_rtf writes an expected rtf_file - 1", {
   mat <- matrix(
     c(1:5, letters[1:5], LETTERS[1:5],

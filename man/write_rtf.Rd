@@ -4,7 +4,7 @@
 \alias{write_rtf}
 \title{Write RTF document}
 \usage{
-write_rtf(doc, file = "test.rtf")
+write_rtf(doc, file = NULL)
 }
 \arguments{
 \item{doc}{The RTF document to be written.}
@@ -26,7 +26,7 @@ ht <- huxtable::huxtable(
 )
 rtf <- rtf_doc(ht)
 
-write_rtf(rtf) #writes a table with no header/footnotes to 'test.rtf'
+write_rtf(rtf, file=tempfile()) #writes a table with no header/footnotes to 'test.rtf'
 
 }
 \seealso{
