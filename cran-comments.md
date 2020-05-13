@@ -1,12 +1,10 @@
 ## Resubmission 3
-A note regarding the validation vignette: In certain places in the validation vignette there are helper functions that appear to write to the users default directory. These functions only wrote to the users directory during the validation process. Once the initital vur_auto.Rds file is created, the test_rtf would not be written for an ordinary user.
-In this version I have:
 
 * Added a \value tag to the write_rtf function documentation
 * Added 'Atorus Research LLC' to the DESCRIPTION as the copyright holder.
 * Removed the \dontrun from the write_rtf function example.
 * Uncommented the write_rtf line in the rtf_doc.R function
-* Added helper files for the validation vignette to the .Rbuildignore to remove any portion that writes to the users default directory.
+* Added the validation vignette files to the .Rbuildignore.
 
 ## Resubmission 2
 In this version I have:

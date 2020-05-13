@@ -1,6 +1,7 @@
 context("rtf-code-generators")
 library(huxtable)
 library(readr)
+library(stringr)
 
 test_that("hf_string orderes lines properly", {
   ht <- huxtable::huxtable(
@@ -112,18 +113,15 @@ test_that("header_string lines populates correctly" ,{
   rtf2 <- rtf_doc(ht, titles = headers_l)
   headers2 <- header_string(rtf2)
 
-  ## Manually Verified
-  expect_true(TRUE)
-  # ## expect headers are equal to the check files, removes return line.
-  # expect_equal(headers1,
-  #              str_sub(read_file("headers1.txt"),
-  #                      start = 1,
-  #                      end = str_length(read_file("headers1.txt"))))
-  #
-  # expect_equal(headers2,
-  #              str_sub(read_file("headers2.txt"),
-  #                      start = 1,
-  #                      end = str_length(read_file("headers2.txt"))))
+  tmp1 <- tempfile()
+  tmp2 <- tempfile()
+
+  write_file(headers1, tmp1)
+  write_file(headers2, tmp2)
+
+  ## expect headers are equal to the check files, removes return line.
+  expect_equal(tools::md5sum("headers1.txt")[[1]], tools::md5sum(tmp1)[[1]])
+  expect_equal(tools::md5sum("headers2.txt")[[1]], tools::md5sum(tmp2)[[1]])
 })
 
 test_that("write_rtf writes an expected rtf_file - 1", {
