@@ -1,4 +1,5 @@
 ## Resubmission 3
+
 A note regarding the validation vignette: In certain places in the validation vignette there are helper functions that appear to write to the users default directory. This is to provide an executable functional testing document of the package with the package source code. This document is specified in the .Rbuildignore file so it does not execute during package build, but is available to the user to generate.
 In this version I have:
 
@@ -6,7 +7,7 @@ In this version I have:
 * Added 'Atorus Research LLC' to the DESCRIPTION as the copyright holder.
 * Removed the \dontrun from the write_rtf function example.
 * Uncommented the write_rtf line in the rtf_doc.R function
-* Added helper files for the validation vignette to the .Rbuildignore to remove any portion that writes to the users default directory.
+* Added the validation vignette files to the .Rbuildignore.
 
 ## Resubmission 2
 In this version I have:
