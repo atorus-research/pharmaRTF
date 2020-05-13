@@ -8,9 +8,9 @@
 \par\qc
 {\f2\fs24 Text4}
 \par\qc
-{\f1\fs15 Text5}
+{\f1\fs30 Text5}
 \par\ql\tx7245\tqr\tx12960
-{\f1\fs24 Text6}\pmartabqr
+{\f1\fs24 Text6}\pmartabqr 
 {\f1\fs24 Text7}
 \par\qr
 {\f1\fs24 Text8}
@@ -20,7 +20,7 @@
 
 {
 \trowd
-\trqc \clbrdrt\clbrdrl\clbrdrb\clbrdrr\clvertalt\clNoWrap\clpadfl3\clpadl80 \clpadft3\clpadt80 \clpadfb3\clpadb80 \clpadfr3\clpadr80 \cellx2160
+\trqc \clbrdrt\clbrdrl\clbrdrb\clbrdrr\clvertalt\clNoWrap\clpadfl3\clpadl80 \clpadft3\clpadt80 \clpadfb3\clpadb80 \clpadfr3\clpadr80 \cellx2160 
 \clbrdrt\clbrdrl\clbrdrb\clbrdrr\clvertalt\clNoWrap\clpadfl3\clpadl80 \clpadft3\clpadt80 \clpadfb3\clpadb80 \clpadfr3\clpadr80 \cellx4320 \pard\intbl\qr{\fs24 {1}}\cell
 \pard\intbl\ql{\fs24 {a}}\cell
 \row

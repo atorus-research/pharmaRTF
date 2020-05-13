@@ -6,7 +6,7 @@
 ^doc$
 ^Meta$
 ^\.travis\.yml$
-^vignettes/Validation/val_script_calls\.R$
-^vignettes/Validation/app\.R$
-^vignetts/Validation/Test_Case_Code/input$
-^vignetts/Validation/Test_Case_Code/output$
+^vignettes/Validate\.Rmd$
+^vignettes/test_cases\.csv$
+^vignettes/specs\.csv$
+^vignettes/Validation$
