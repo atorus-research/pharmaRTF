@@ -237,22 +237,29 @@ footer_string <- function(doc) {
 #' @param doc The RTF document to be written.
 #' @param file A character string naming a file open for writing.
 #'
+#' @return File is written to the file provided by sinking the console output.
+#'   No output is returned to the R environment.
+#'
 #' @examples
-#' \dontrun{
 #' ## Create and write RTF document
-#' #' ht <- huxtable::huxtable(
+#' ht <- huxtable::huxtable(
 #'  column1 = 1:5,
 #'  column2 = letters[1:5]
 #' )
 #' rtf <- rtf_doc(ht)
 #'
-#' write_rtf(rtf) #writes a table with no header/footnotes to 'test.rtf'
-#' }
+#' write_rtf(rtf, file=tempfile()) #writes a table with no header/footnotes to 'test.rtf'
 #'
 #' @seealso \url{http://www.biblioscape.com/rtf15_spec.htm},
 #'   \url{http://latex2rtf.sourceforge.net/rtfspec_7.html#rtfspec_tabledef}
+#'
+#' @importFrom assertthat is.writeable
 #' @export
-write_rtf <- function(doc, file='test.rtf') {
+write_rtf <- function(doc, file=NULL) {
+
+  # Make sure the file parameter was provided
+  assert_that(!is.null(file), msg="File cannot be NULL Please specify a valid file path")
+  force(file)
 
   # Write to the specified file
   sink(file)

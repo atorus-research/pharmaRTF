@@ -4,27 +4,29 @@
 \alias{write_rtf}
 \title{Write RTF document}
 \usage{
-write_rtf(doc, file = "test.rtf")
+write_rtf(doc, file = NULL)
 }
 \arguments{
 \item{doc}{The RTF document to be written.}
 
 \item{file}{A character string naming a file open for writing.}
 }
+\value{
+File is written to the file provided by sinking the console output.
+  No output is returned to the R environment.
+}
 \description{
 Writes the RTF document to a specified file.
 }
 \examples{
-\dontrun{
 ## Create and write RTF document
-#' ht <- huxtable::huxtable(
+ht <- huxtable::huxtable(
  column1 = 1:5,
  column2 = letters[1:5]
 )
 rtf <- rtf_doc(ht)
 
-write_rtf(rtf) #writes a table with no header/footnotes to 'test.rtf'
-}
+write_rtf(rtf, file=tempfile()) #writes a table with no header/footnotes to 'test.rtf'
 
 }
 \seealso{

@@ -33,4 +33,9 @@ Authors:
   \item Ashley Tarasiewicz \email{Ashley.Tarasiewicz@atorusresearch.com}
 }
 
+Other contributors:
+\itemize{
+  \item Atorus Research LLC [copyright holder]
+}
+
 }

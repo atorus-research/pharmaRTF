@@ -83,9 +83,8 @@ supported_table_types <- c('huxtable', 'gt_tbl')
 #'   set_ignore_cell_padding(TRUE)
 #'
 #' names(rtf)
-#' # >[1] "table" "titles" "footnotes"
 #'
-#' # write_rtf(rtf, file = "filePath/rtf.rtf")
+#' write_rtf(rtf, file = tempfile())
 #'
 #' @seealso \code{\link{hf_line}}
 #'

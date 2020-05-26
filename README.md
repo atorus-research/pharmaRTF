@@ -3,7 +3,7 @@
 [<img src="https://img.shields.io/badge/Slack-RValidationHub-blue?style=flat&logo=slack">](https://RValidationHub.slack.com)
 [<img src="https://img.shields.io/cran/v/pharmaRTF">](https://cran.r-project.org/package=pharmaRTF)
 [![Build Status](https://travis-ci.com/atorus-research/pharmaRTF.svg?branch=master)](https://travis-ci.com/atorus-research/pharmaRTF)
-[<img src="https://img.shields.io/codecov/c/github/atorus-research/pharmaRTF">](https://img.shields.io/codecov/c/github/atorus-research/pharmaRTF)
+[<img src="https://img.shields.io/codecov/c/github/atorus-research/pharmaRTF">](https://codecov.io/gh/atorus-research/pharmaRTF)
 [<img src="https://img.shields.io/github/license/atorus-research/pharmaRTF">](https://github.com/atorus-research/pharmaRTF/blob/master/LICENSE)
 
 ## What is pharmaRTF? 
@@ -33,15 +33,20 @@ _Note: we also plan to support GT tables when the RTF support matures_
 
 ## Installation
 
-We're working on getting the package up on CRAN! In the meantime, you can install the latest version of `pharmaRTF` with:
+`pharmaRTF` is on CRAN! You can install it with:
+```
+install.packages("pharmaRTF")
+```
 
+You can install the lastest version on GitHub with:
 ```
 devtools::install_github("https://github.com/atorus-research/pharmaRTF.git")
 ```
 
 ## A Small Note
 
-Some of the syntax we use throughout this document uses the `%>%` pipe operator. This is to display support for a tidyverse style of coding. You can find the `%>%` operator in the [magittr](https://cran.r-project.org/web/packages/magrittr/vignettes/magrittr.html) package.
+Some of the syntax we use throughout this document uses the `%>%` pipe operator. This is to display support for a tidyverse style of coding. You can find the `%>%` operator in the [magittr](https://cran.r-project.org/package=magrittr/vignettes/magrittr.html
+3) package.
 
 ## The Basics
 
