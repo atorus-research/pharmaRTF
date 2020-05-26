@@ -33,15 +33,20 @@ _Note: we also plan to support GT tables when the RTF support matures_
 
 ## Installation
 
-We're working on getting the package up on CRAN! In the meantime, you can install the latest version of `pharmaRTF` with:
+`pharmaRTF` is on CRAN! You can install it with:
+```
+install.packages("pharmaRTF")
+```
 
+You can install the lastest version on GitHub with:
 ```
 devtools::install_github("https://github.com/atorus-research/pharmaRTF.git")
 ```
 
 ## A Small Note
 
-Some of the syntax we use throughout this document uses the `%>%` pipe operator. This is to display support for a tidyverse style of coding. You can find the `%>%` operator in the [magittr](https://cran.r-project.org/package=magrittr/vignettes/magrittr.html) package.
+Some of the syntax we use throughout this document uses the `%>%` pipe operator. This is to display support for a tidyverse style of coding. You can find the `%>%` operator in the [magittr](https://cran.r-project.org/package=magrittr/vignettes/magrittr.html
+3) package.
 
 ## The Basics
 
