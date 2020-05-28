@@ -45,8 +45,7 @@ devtools::install_github("https://github.com/atorus-research/pharmaRTF.git")
 
 ## A Small Note
 
-Some of the syntax we use throughout this document uses the `%>%` pipe operator. This is to display support for a tidyverse style of coding. You can find the `%>%` operator in the [magittr](https://cran.r-project.org/package=magrittr/vignettes/magrittr.html
-3) package.
+Some of the syntax we use throughout this document uses the `%>%` pipe operator. This is to display support for a tidyverse style of coding. You can find the `%>%` operator in the [magittr](https://cran.r-project.org/package=magrittr/vignettes/magrittr.html) package.
 
 ## The Basics
 
