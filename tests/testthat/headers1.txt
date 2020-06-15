@@ -4,8 +4,8 @@
 
 {
 \trowd
-\trqc \clbrdrt\clbrdrl\clbrdrb\clbrdrr\clvertalt\clpadfl3\clpadl120 \clpadft3\clpadt120 \clpadfb3\clpadb120 \clpadfr3\clpadr120 \cellx2160 
-\clbrdrt\clbrdrl\clbrdrb\clbrdrr\clvertalt\clpadfl3\clpadl120 \clpadft3\clpadt120 \clpadfb3\clpadb120 \clpadfr3\clpadr120 \cellx4320 \pard\intbl\qr{\fs24 {1}}\cell
+\trqc \clbrdrt\clbrdrl\clbrdrb\clbrdrr\clvertalt\clNoWrap\clpadfl3\clpadl120 \clpadft3\clpadt120 \clpadfb3\clpadb120 \clpadfr3\clpadr120 \cellx2160 
+\clbrdrt\clbrdrl\clbrdrb\clbrdrr\clvertalt\clNoWrap\clpadfl3\clpadl120 \clpadft3\clpadt120 \clpadfb3\clpadb120 \clpadfr3\clpadr120 \cellx4320 \pard\intbl\qr{\fs24 {1}}\cell
 \pard\intbl\ql{\fs24 {a}}\cell
 \row
 }

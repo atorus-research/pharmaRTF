@@ -101,6 +101,7 @@ test_that("header_string lines populates correctly" ,{
     column2 = letters[1:5],
     add_colnames = FALSE
   )
+  huxtable::wrap(ht) <- FALSE
   rtf1 <- rtf_doc(ht)
   headers1 <- header_string(rtf1)
 
