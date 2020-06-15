@@ -7,7 +7,8 @@ library(pharmaRTF)
 test_that("rtf_doc returns a list with a table, title, and footnotes", {
   ht <- huxtable(
     column1 = 1:5,
-    column2 = letters[1:5]
+    column2 = letters[1:5],
+    add_colnames = FALSE
   )
   rtf <- rtf_doc(ht)
 

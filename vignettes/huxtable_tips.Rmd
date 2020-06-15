@@ -40,7 +40,7 @@ ht[1:10, c('Species', 'Petal.Width')]
 As you can see here, a nice feature of huxtable is that it has a lot of automatic printing options. Within the code of an R markdown file, it automatically outputs as an HTML table. When developing within an R script, it will also print formatted text to your console. This can be very useful for development as you get an idea of how your display will look within the RTF document.
 
 ```{r print_screen}
-huxtable::print_screen(ht[1:10])
+huxtable::print_screen(ht[1:10,])
 ```
 
 ## Changing Table Shape
@@ -55,7 +55,7 @@ huxtable::width(ht) <- 1.5
 ht <- ht %>% 
   huxtable::set_width(1.5)
 
-ht[1:10]
+ht[1:10,]
 
 ```
 
@@ -69,7 +69,7 @@ huxtable::col_width(ht) <- c(.4, .15, .15, .15, .15)
 ht <- ht %>% 
   huxtable::set_col_width(c(.4, .15, .15, .15, .15))
 
-ht[1:10]
+ht[1:10,]
 
 ```
 
@@ -93,7 +93,7 @@ column_headers <- data.frame(
 )
 
 ht <- huxtable::as_hux(rbind(column_headers, iris))
-ht[1:10]
+ht[1:10,]
 ```
  
 Given that the column headers are just another row of the data frame, this also means that you can use multiple rows as your column headers. More on how to take advantage of that later. 
@@ -116,7 +116,7 @@ ht <- ht %>%
   # Align the 3rd row, 2nd column right
   huxtable::set_align(3, 2, 'right') 
 
-ht[1:10]
+ht[1:10,]
 
 ```
 
@@ -154,7 +154,7 @@ ht <- huxtable::as_hux(rbind(column_headers, iris)) %>%
   # Bottom border on 2nd row
   huxtable::set_bottom_border(2, 1:ncol(iris), 2)
 
-ht[1:10]
+ht[1:10,]
 ```
 
 ## Some Final Notes
@@ -170,7 +170,7 @@ ht[2, 1] <- "Species of\\line flower"
 huxtable::escape_contents(ht) <- FALSE
 # Set display width
 huxtable::width(ht) <- 1.5
-ht[1:10]
+ht[1:10,]
 
 doc <- rtf_doc(ht, header_rows = 2)
 write_rtf(doc, file='table4.rtf')

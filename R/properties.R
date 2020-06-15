@@ -903,8 +903,7 @@ set_pagesize <- function(x, value) UseMethod('pagesize<-')
 #'   \code{set_header_rows()}, the modified object.
 #'
 #' @examples
-#' library(huxtable)
-#' ht <- huxtable(
+#' ht <- huxtable::huxtable(
 #'   column1 = 1:5,
 #'   column2 = letters[1:5]
 #' )
