@@ -6,13 +6,15 @@ library(stringr)
 test_that("hf_string orderes lines properly", {
   ht <- huxtable::huxtable(
     column1 = c("Header1", 1:26),
-    column2 = c("Header2", letters[1:26])
+    column2 = c("Header2", letters[1:26]),
+    add_colnames = FALSE
   )
 
   titles <- list(hf_line("rtf_doc Title 1"), hf_line("rtf_doc Title 2"), hf_line("rtf_doc Title 3"))
   footnotes <- list(hf_line("rtf_doc Footnote 1"), hf_line("rtf_doc Footnote 2"), hf_line("rtf_doc Footnote 3"))
 
-  rtf <- pharmaRTF::rtf_doc(ht, titles = titles, footnotes = footnotes)
+  rtf <- pharmaRTF::rtf_doc(ht, titles = titles, footnotes = footnotes) %>%
+    set_ignore_cell_padding(TRUE)
 
   pharmaRTF::index(rtf$titles[[2]]) <- 2
   pharmaRTF::index(rtf$titles[[3]]) <- 1
@@ -21,14 +23,15 @@ test_that("hf_string orderes lines properly", {
   pharmaRTF::index(rtf$footnotes[[2]]) <- 1
   pharmaRTF::index(rtf$footnotes[[3]]) <- 2
 
-  expect_equal(hf_string(rtf, "titles"), "{\\header\n\\qc\n{\\f1\\fs24 rtf_doc Title 3}\n\\par\\qc\n{\\f1\\fs24 rtf_doc Title 2}\n\\par\\qc\n{\\f1\\fs24 rtf_doc Title 1}\n\\par\n\n{\n\\trowd\n\\trqc \\clbrdrt\\clbrdrl\\clbrdrb\\clbrdrr\\clvertalt\\clNoWrap\\clpadfl3\\clpadl80 \\clpadft3\\clpadt80 \\clpadfb3\\clpadb80 \\clpadfr3\\clpadr80 \\cellx2160 \n\\clbrdrt\\clbrdrl\\clbrdrb\\clbrdrr\\clvertalt\\clNoWrap\\clpadfl3\\clpadl80 \\clpadft3\\clpadt80 \\clpadfb3\\clpadb80 \\clpadfr3\\clpadr80 \\cellx4320 \\pard\\intbl\\ql{\\fs24 {Header1}}\\cell\n\\pard\\intbl\\ql{\\fs24 {Header2}}\\cell\n\\row\n}\n\n}")
+  expect_equal(hf_string(rtf, "titles"), "{\\header\n\\qc\n{\\f1\\fs24 rtf_doc Title 3}\n\\par\\qc\n{\\f1\\fs24 rtf_doc Title 2}\n\\par\\qc\n{\\f1\\fs24 rtf_doc Title 1}\n\\par\n\n{\n\\trowd\n\\trqc \\clbrdrt\\clbrdrl\\clbrdrb\\clbrdrr\\clvertalt\\clNoWrap\\clpadfl0\\clpadl80 \\clpadft0\\clpadt80 \\clpadfb0\\clpadb80 \\clpadfr0\\clpadr80 \\cellx2160 \n\\clbrdrt\\clbrdrl\\clbrdrb\\clbrdrr\\clvertalt\\clNoWrap\\clpadfl0\\clpadl80 \\clpadft0\\clpadt80 \\clpadfb0\\clpadb80 \\clpadfr0\\clpadr80 \\cellx4320 \\pard\\intbl\\ql{\\fs24 {Header1}}\\cell\n\\pard\\intbl\\ql{\\fs24 {Header2}}\\cell\n\\row\n}\n\n}")
   expect_equal(hf_string(rtf, "footnotes"), "{\\footer\n\\qc\n{\\f1\\fs24 rtf_doc Footnote 2}\n\\par\\qc\n{\\f1\\fs24 rtf_doc Footnote 3}\n\\par\\qc\n{\\f1\\fs24 rtf_doc Footnote 1}\\par\n}")
 })
 
 test_that("font_table_string adds fonts correctly", {
   ht <- huxtable(
     column1 = 1:5,
-    column2 = letters[1:5]
+    column2 = letters[1:5],
+    add_colnames = FALSE
   )
   rtf <- rtf_doc(ht)
 
@@ -95,8 +98,10 @@ test_that("doc_properties_string populates correctly", {
 test_that("header_string lines populates correctly" ,{
   ht <- huxtable(
     column1 = 1:5,
-    column2 = letters[1:5]
+    column2 = letters[1:5],
+    add_colnames = FALSE
   )
+  huxtable::wrap(ht) <- FALSE
   rtf1 <- rtf_doc(ht)
   headers1 <- header_string(rtf1)
 
@@ -122,6 +127,19 @@ test_that("header_string lines populates correctly" ,{
   ## expect headers are equal to the check files, removes return line.
   expect_equal(tools::md5sum("headers1.txt")[[1]], tools::md5sum(tmp1)[[1]])
   expect_equal(tools::md5sum("headers2.txt")[[1]], tools::md5sum(tmp2)[[1]])
+})
+
+test_that("write_rtf generates expected errors", {
+  # Dummy huxtable
+  ht <- huxtable(
+    column1 = 1:5,
+    column2 = letters[1:5]
+  )
+  # rtf_doc object
+  rtf1 <- rtf_doc(ht)
+
+  expect_error(write_rtf(rtf))
+  expect_error(supressWarnings(write_rtf(rtf, file='/as12asd/345eg/')))
 })
 
 test_that("write_rtf writes an expected rtf_file - 1", {

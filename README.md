@@ -6,6 +6,12 @@
 [<img src="https://img.shields.io/codecov/c/github/atorus-research/pharmaRTF">](https://codecov.io/gh/atorus-research/pharmaRTF)
 [<img src="https://img.shields.io/github/license/atorus-research/pharmaRTF">](https://github.com/atorus-research/pharmaRTF/blob/master/LICENSE)
 
+## Version 0.1.1 updates
+ - The `header_rows` parameter no allows you to prevent column headers from moving to the RTF document header by setting `header_rows` to 0. 
+ - Huxtable v5.0.0 had some backwards compatibility breaking changes. All updates within pharmaRTF are compatible back to Huxtable v4.7.1. See a full list of changes [here](https://hughjonesd.github.io/whats-new-in-huxtable-5.0.0.html). The changes that impacted pharmaRTF were:
+   - The way indexing was handled has changed. You can no longer index columns like `ht[1:5]`. The new syntax is `ht[1:5, ]`. 
+   - Additionally, the `add_columns` argument now changed from a default of `TRUE` instead of `FALSE`. 
+   
 ## What is pharmaRTF? 
 
 If you've worked in the pharmaceutical industry as a SAS&copy; programmer doing data analysis for clinical trials, there's a fair chance that you've spent a good amount of time creating RTF outputs. While there are more modern document file formats supported by SAS&copy; and other data analysis languages, RTF remains prolific. Though antiquated, RTF files still remain useful. They support the rich-text format necessary to create documents containing different fonts, colors, and text attributes. Furthermore, RTF documents make it easy for medical writers to insert outputs into different reports and publications as needed. Regardless, outputting data displays to RTF documents is a process embedded in many companies still to this day. 
@@ -33,8 +39,12 @@ _Note: we also plan to support GT tables when the RTF support matures_
 
 ## Installation
 
-We're working on getting the package up on CRAN! In the meantime, you can install the latest version of `pharmaRTF` with:
+`pharmaRTF` is on CRAN! You can install it with:
+```
+install.packages("pharmaRTF")
+```
 
+You can install the lastest version on GitHub with:
 ```
 devtools::install_github("https://github.com/atorus-research/pharmaRTF.git")
 ```

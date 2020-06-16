@@ -16,7 +16,7 @@ associated formatting.}
 and associated formatting.}
 
 \item{header_rows}{An integer determining how many rows of the table are
-column headers. Only used for huxtable tables.}
+column headers. Only used for huxtable tables. Can be set to 0 to disable repeating column headers.}
 }
 \value{
 A list with a table, titles, and footnotes component. Class of
@@ -63,7 +63,7 @@ not overridden by \code{hf_line} or table properties.
   is switched to 'portrait', the height and width will switch while the RTF document is being generated,
   but the document attributes themselves will not change.}
 \item{header_rows - Huxtable table only. Number of rows that are defined as
-  the header that will be repeated across pages. Defaults to 1}
+  the header that will be repeated across pages. Defaults to 1. Can be set to 0 to disable repeating column headers.}
 \item{ignore_cell_padding - Huxtable table only. Flag to ignore cell padding padding
   that is added during RTF encoding. Minimizes the amount of space between
   rows. Defaults to FALSE.}
