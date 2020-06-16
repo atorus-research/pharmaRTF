@@ -239,7 +239,8 @@ needs_buffer <- function(doc){
 #' @noRd
 insert_buffer <- function(doc, col_headers){
   # Save col_headers width property
-  col_width <- huxtable::width(col_headers)
+  col_width <- huxtable::col_width(doc$table)
+  tab_width <- huxtable::width(doc$table)
 
   rows <- column_header_buffer(doc)
 
@@ -274,7 +275,10 @@ insert_buffer <- function(doc, col_headers){
   }
 
   # Reset the width property
-  huxtable::width(col_headers) <- col_width
+  huxtable::col_width(doc$table) <- col_width
+  huxtable::col_width(col_headers) <- col_width
+  huxtable::width(doc$table) <- tab_width
+  huxtable::width(col_headers) <- tab_width
 
   col_headers
 }
