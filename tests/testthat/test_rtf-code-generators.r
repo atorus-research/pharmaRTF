@@ -23,7 +23,7 @@ test_that("hf_string orderes lines properly", {
   pharmaRTF::index(rtf$footnotes[[2]]) <- 1
   pharmaRTF::index(rtf$footnotes[[3]]) <- 2
 
-  expect_equal(hf_string(rtf, "titles"), "{\\header\n\\qc\n{\\f1\\fs24 rtf_doc Title 3}\n\\par\\qc\n{\\f1\\fs24 rtf_doc Title 2}\n\\par\\qc\n{\\f1\\fs24 rtf_doc Title 1}\n\\par\n\n{\n\\trowd\n\\trqc \\clbrdrt\\clbrdrl\\clbrdrb\\clbrdrr\\clvertalt\\clpadfl0\\clpadl120 \\clpadft0\\clpadt120 \\clpadfb0\\clpadb120 \\clpadfr0\\clpadr120 \\cellx2160 \n\\clbrdrt\\clbrdrl\\clbrdrb\\clbrdrr\\clvertalt\\clpadfl0\\clpadl120 \\clpadft0\\clpadt120 \\clpadfb0\\clpadb120 \\clpadfr0\\clpadr120 \\cellx4320 \\pard\\intbl\\ql{\\fs24 {Header1}}\\cell\n\\pard\\intbl\\ql{\\fs24 {Header2}}\\cell\n\\row\n}\n\n}")
+  expect_equal(hf_string(rtf, "titles"), "{\\header\n\\qc\n{\\f1\\fs24 rtf_doc Title 3}\n\\par\\qc\n{\\f1\\fs24 rtf_doc Title 2}\n\\par\\qc\n{\\f1\\fs24 rtf_doc Title 1}\n\\par\n\n{\n\\trowd\n\\trqc \\clbrdrt\\clbrdrl\\clbrdrb\\clbrdrr\\clvertalt\\clNoWrap\\clpadfl0\\clpadl80 \\clpadft0\\clpadt80 \\clpadfb0\\clpadb80 \\clpadfr0\\clpadr80 \\cellx2160 \n\\clbrdrt\\clbrdrl\\clbrdrb\\clbrdrr\\clvertalt\\clNoWrap\\clpadfl0\\clpadl80 \\clpadft0\\clpadt80 \\clpadfb0\\clpadb80 \\clpadfr0\\clpadr80 \\cellx4320 \\pard\\intbl\\ql{\\fs24 {Header1}}\\cell\n\\pard\\intbl\\ql{\\fs24 {Header2}}\\cell\n\\row\n}\n\n}")
   expect_equal(hf_string(rtf, "footnotes"), "{\\footer\n\\qc\n{\\f1\\fs24 rtf_doc Footnote 2}\n\\par\\qc\n{\\f1\\fs24 rtf_doc Footnote 3}\n\\par\\qc\n{\\f1\\fs24 rtf_doc Footnote 1}\\par\n}")
 })
 
