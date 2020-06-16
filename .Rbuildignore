@@ -14,3 +14,4 @@
 ^vignettes/test_cases\.csv$
 ^vignettes/specs\.csv$
 ^vignettes/Validation$
+^validation\.pdf$

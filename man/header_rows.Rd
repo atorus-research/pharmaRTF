@@ -31,11 +31,10 @@ huxtable.
 
 The header rows control the number of rows taken from a huxtable table into
 the header of the document as the column header. When pulled into the
-headers, these rows are repeated on each page.
+headers, these rows are repeated on each page.  Can be set to 0 to disable repeating column headers.
 }
 \examples{
-library(huxtable)
-ht <- huxtable(
+ht <- huxtable::huxtable(
   column1 = 1:5,
   column2 = letters[1:5]
 )

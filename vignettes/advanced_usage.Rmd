@@ -110,7 +110,7 @@ ht <- huxtable::as_hux(rbind(column_headers, iris)) %>%
   # Set the page width
   huxtable::set_width(1.5)
 
-ht[1:10]
+ht[1:10,]
 ```
 
 Once the huxtable table is created with your multiple rows of column headers, incorporating it into your `rtf_doc` object is simple. Just use the `header_rows` argument when creating your RTF doc.

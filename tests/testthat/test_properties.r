@@ -70,6 +70,15 @@ test_that("margins returns the correct values", {
   expect_equal(margins(rtf), c(top = 5, bottom = 5, left = 5, right = 5))
 })
 
+test_that("header_rows can handle a value of 0", {
+  ht <- huxtable(
+    column1 = 1:5,
+    column2 = letters[1:5]
+  )
+  rtf <- rtf_doc(ht, header_rows = 0)
+
+  expect_equal(header_rows(rtf), 0)
+})
 
 #### Errors ####
 test_that("font throws error when given a non-character", {

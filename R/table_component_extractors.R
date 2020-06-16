@@ -12,6 +12,8 @@ get_column_headers <- function(doc) UseMethod('get_column_headers', object=doc$t
 #' @noRd
 get_column_headers.huxtable <- function(doc) {
 
+  if(header_rows(doc) == 0) return("")
+
   # Get the column header
   col_headers <- doc$table[1:header_rows(doc$table), ]
 
