@@ -233,30 +233,38 @@ needs_buffer <- function(doc){
 #' @param doc \code{rtf_doc} object
 #' @param col_headers Column headers of the \code{rtf_doc}
 #'
+#' @importFrom huxtable as_hux
+#'
 #' @return Column headers with buffers added
 #' @noRd
 insert_buffer <- function(doc, col_headers){
+  # Save col_headers width property
+  col_width <- huxtable::width(col_headers)
 
   rows <- column_header_buffer(doc)
 
   # Copy col headers and blank it out
-  top <- col_headers[0, ]
-  bottom <- col_headers[0, ]
+  top <- col_headers[FALSE,]
+  bottom <- col_headers[FALSE,]
   # Turn off borders
   huxtable::bottom_border(top) <- 0
   huxtable::bottom_border(bottom) <- 0
 
+  top <- as.data.frame(top)
+  bottom <- as.data.frame(bottom)
   # Insert the desired amount of space above
   if (rows['top'] > 0) {
     # Create the set number of blank rows
     top[1:rows['top'], ] <- ''
     # attach it to the top of the column headers
+    top <- as_hux(top, add_colnames = FALSE)
     col_headers <- rbind(top, col_headers)
   }
 
   if (rows['bottom'] > 0) {
     # Create hte set number of blank rows
     bottom[1:rows['bottom'], ] <- ''
+    bottom <- as_hux(bottom, add_colnames = FALSE)
     # Switch the border style and thickness down to the bottom and clean off the bottom column header row
     huxtable::bottom_border(bottom[nrow(bottom), ]) <- huxtable::bottom_border(col_headers[nrow(col_headers), ])
     huxtable::bottom_border(col_headers[nrow(col_headers), ]) <- 0
@@ -264,6 +272,9 @@ insert_buffer <- function(doc, col_headers){
     # Bind the space to the bottom
     col_headers <- rbind(col_headers, bottom)
   }
+
+  # Reset the width property
+  huxtable::width(col_headers) <- col_width
 
   col_headers
 }
