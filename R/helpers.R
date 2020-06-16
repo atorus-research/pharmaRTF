@@ -238,6 +238,8 @@ needs_buffer <- function(doc){
 #' @return Column headers with buffers added
 #' @noRd
 insert_buffer <- function(doc, col_headers){
+  # Save col_headers width property
+  col_width <- huxtable::width(col_headers)
 
   rows <- column_header_buffer(doc)
 
@@ -270,6 +272,9 @@ insert_buffer <- function(doc, col_headers){
     # Bind the space to the bottom
     col_headers <- rbind(col_headers, bottom)
   }
+
+  # Reset the width property
+  huxtable::width(col_headers) <- col_width
 
   col_headers
 }

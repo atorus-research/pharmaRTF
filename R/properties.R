@@ -893,7 +893,7 @@ set_pagesize <- function(x, value) UseMethod('pagesize<-')
 #'
 #' The header rows control the number of rows taken from a huxtable table into
 #' the header of the document as the column header. When pulled into the
-#' headers, these rows are repeated on each page.
+#' headers, these rows are repeated on each page.  Can be set to 0 to disable repeating column headers.
 #'
 #' @param x A \code{rtf_doc} object
 #' @param ... Additonal arguments passed to method dispatch
