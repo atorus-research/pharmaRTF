@@ -19,6 +19,14 @@ library(tidyverse)
 library(pharmaRTF)
 ```
 
+## Notes
+
+Huxtable v5.0.0 introduced some backwards compatibility breaking changes. Read about these updates [here](https://hughjonesd.github.io/whats-new-in-huxtable-5.0.0.html). The changes that impact `pharmaRTF` and its related usage were:
+   - The way indexing was handled has changed. You can no longer index columns like `ht[1:5]`. The new syntax is `ht[1:5, ]`. 
+   - Additionally, the `add_columns` argument now changed from a default of `TRUE` instead of `FALSE`. 
+
+pharmaRTF is compatible back to Huxtable v4.7.1. 
+   
 ## Introduction
 
 While pharmaRTF can cover your titles, footnotes, and encapsulating document properties - a key feature to creating the tables you need is having a good understand of huxtable. Huxtable has plenty of great user documentation within its own vignettes, available [here](https://hughjonesd.github.io/huxtable/), but within this vignette we will cover some core features necessary to create beautiful tables. 
