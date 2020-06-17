@@ -110,7 +110,7 @@ ht <- huxtable::as_hux(rbind(column_headers, iris)) %>%
   # Set the page width
   huxtable::set_width(1.5)
 
-ht[1:10]
+ht[1:10,]
 ```
 
 Once the huxtable table is created with your multiple rows of column headers, incorporating it into your `rtf_doc` object is simple. Just use the `header_rows` argument when creating your RTF doc.
@@ -126,6 +126,23 @@ Below you can see that the 2 rows of column headers have been pulled into the he
 
 ```{r table6_img1, out.width = "800px", echo = FALSE}
 knitr::include_graphics("table6_img1.png")
+```
+
+New in pharmaRTF v0.1.1, `header_rows` now additionally offers the capability to prevent column headers from being pulled into the RTF document header. You can do this as follows:
+
+```{r column_headers3, eval=FALSE}
+# Method 1
+doc <- rtf_doc(ht, header_rows=0)
+
+# Method 2
+doc <- rtf_doc(ht) %>% 
+  set_header_rows(0)
+
+write_rtf(doc, file="table6.rtf")
+```
+
+```{r table6_img2, out.width = "800px", echo = FALSE}
+knitr::include_graphics("table6_img2.png")
 ```
 
 ## Minimizing Cell Padding

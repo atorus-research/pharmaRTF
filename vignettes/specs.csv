@@ -1,8 +1,8 @@
-﻿LineType,Level,SpecID,Text
+LineType,Level,SpecID,Text
 UpdatedBy,0,,Ashley Tarasiewicz
-UpdatedDate,0,,4/24/2020
+UpdatedDate,0,,6/16/2020
 Specs,0,A,The RTF written out to a file can be opened in Microsoft Word
-Specs,0,B,Paging of the table works appropriately 
+Specs,0,B,Paging of the table works appropriately
 Specs,0,C,Changes to document level margins are reflected in the output document
 Specs,0,D,Changes to document level header and footer height are reflected in the output document
 Specs,0,E,Changes to document level page size are reflected in the output document
@@ -33,3 +33,4 @@ Specs,0,AC,Updates to huxtable table table width table level property is properl
 Specs,0,AD,Updates to huxtable table column width table level property is properly formatted in the resulting RTF
 Specs,0,AE,Updates to huxtable table row height table level property is properly formatted in the resulting RTF
 Specs,0,AF,Updates to huxtable table cell merging table level property is properly formatted in the resulting RTF
+Specs,0,AG,"When the header_rows attribute is 0, the column headers write to the RTF body instead of the document header"
