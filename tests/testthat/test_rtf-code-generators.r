@@ -9,6 +9,12 @@ test_that("hf_string orderes lines properly", {
     column2 = c("Header2", letters[1:26]),
     add_colnames = FALSE
   )
+  huxtable::wrap(ht) <- FALSE
+  huxtable::right_padding(ht) <- 4
+  huxtable::left_padding(ht) <- 4
+  huxtable::top_padding(ht) <- 4
+  huxtable::bottom_padding(ht) <- 4
+
 
   titles <- list(hf_line("rtf_doc Title 1"), hf_line("rtf_doc Title 2"), hf_line("rtf_doc Title 3"))
   footnotes <- list(hf_line("rtf_doc Footnote 1"), hf_line("rtf_doc Footnote 2"), hf_line("rtf_doc Footnote 3"))
