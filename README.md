@@ -5,6 +5,7 @@
 [![Build Status](https://travis-ci.com/atorus-research/pharmaRTF.svg?branch=master)](https://travis-ci.com/atorus-research/pharmaRTF)
 [<img src="https://img.shields.io/codecov/c/github/atorus-research/pharmaRTF">](https://codecov.io/gh/atorus-research/pharmaRTF)
 [<img src="https://img.shields.io/github/license/atorus-research/pharmaRTF">](https://github.com/atorus-research/pharmaRTF/blob/master/LICENSE)
+[![CRAN Downloads](https://cranlogs.r-pkg.org/badges/pharmaRTF)](https://cran.r-project.org/package=pharmaRTF)
 
 ## Version 0.1.1 updates
  - The `header_rows` parameter no allows you to prevent column headers from moving to the RTF document header by setting `header_rows` to 0. 
