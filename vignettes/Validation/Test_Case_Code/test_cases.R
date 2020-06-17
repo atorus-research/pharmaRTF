@@ -4,7 +4,7 @@ context("Atorus Validation")
 #' @section Updated By:
 #' Ashley Tarasiewicz
 #' @section Updated Date:
-#' 4/28/2020
+#' 6/16/2020
 
 library(pharmaRTF)
 library(huxtable)
@@ -2047,6 +2047,30 @@ test_that('T53',{
   skip_if(is.null(vur))
 
   expect_true(vur[vur$ID == "T53.1", "Response"])
+})
+
+test_that('T54',{
+  # output creation
+  if(is.null(vur)) {
+    ht <- huxtable::huxtable(
+      column1 = c("Header1", 1:10),
+      column2 = c("Header2", letters[1:10])
+    )
+    test_54 <- pharmaRTF::rtf_doc(ht)
+
+
+    # change document level header rows to 0 and output rtf for manual review
+    pharmaRTF::header_rows(test_54) <- 0
+    pharmaRTF::write_rtf(test_54, file='~/pharmaRTF/vignettes/Validation/Test_Case_Code/output/test_54.rtf')
+
+    rm(ht)
+    rm(test_54)
+  }
+
+  # tests
+  skip_if(is.null(vur))
+
+  testthat::expect_true(vur[vur$ID == "T54.1", "Response"])
 })
 
 rm(vur)
