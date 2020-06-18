@@ -5,7 +5,7 @@ Version: 0.1.1
 Authors@R: c(
     person(family = "Miller", given = "Eli", email = "eli.miller@atorusresearch.com", role = "aut", comment = c(ORCID = "0000-0002-2127-9456")), 
     person(family = "Tarasiewicz", given = "Ashley", email = "Ashley.Tarasiewicz@atorusresearch.com", role = "aut"),
-    person(family = "Stackhouse", given = "Michael", email = "mike.stackhouse@atorusresearch.com", role = c("aut", "cre")),
+    person(family = "Stackhouse", given = "Michael", email = "mike.stackhouse@atorusresearch.com", role = c("aut", "cre"), comment = c(ORCID = "0000-0001-6030-723X")),
     person(given = "Atorus Research LLC", role = "cph")
     )
 Description: Enhanced RTF wrapper written in R for use with existing R tables
