@@ -36,7 +36,7 @@ Some of the syntax we use throughout this document uses the `%>%` pipe operator.
 
 ## Understanding Document Orientation Within pharmaRTF
 
-In development of this feature, we realized as a team that the orientation of an RTF document has a bit of room for confusion. This spawns from the fact that within Microsoft Word, orientation is automatically determined by the document height and width, despite there being a keyword within RTF syntax that specifies landscape orientation. That said, we believe the most intuitive way to set the orientation of a document is with a property function, which in pharmaRTF is simply `orientation`/`set_orientation`. 
+In development of this feature, we realized as a team that the orientation of an RTF document has a bit of room for confusion. This spawns from the fact that within Microsoft Word, orientation is automatically determined by the document height and width, despite there being a keyword within RTF syntax that specifies landscape orientation. That said, we believe the most intuitive way to set the orientation of a document is with a property function, which in pharmaRTF is simply `orientation()`/`set_orientation()`. 
 
 The default orientation of a `pharmaRTF` document is landscape, as this is typically what you would use on the clinical reports that the package is designed for. `orientation` is closely tied with the `page_size` attribute. When the orientation of an `rtf_doc` object is set to landscape, the height and width of the `pagesize` attribute will write out as specified in the object, with `height` writing to the height document property and `width` writing to the width property. 
 
@@ -79,7 +79,7 @@ knitr::include_graphics("table5_img1.png")
 
 ## Multi-level Column Headers
 
-A common requirement of tables is to have spanning column headers. When columns need to be grouped in presentation, this is common practice. This requires a combination of work within huxtable and pharmaRTF. The first thing you need to do is create your huxtable object. For more details on how to do this, see the [huxtable tips vignette](https://atorus-research.github.io/huxtable_tips.html). 
+A common requirement of tables is to have spanning column headers. When columns need to be grouped in presentation, this is common practice. This requires a combination of work within huxtable and pharmaRTF. The first thing you need to do is create your huxtable object. For more details on how to do this, see the [huxtable tips vignette](https://atorus-research.github.io/pharmaRTF/huxtable_tips.html). 
 
 ```{r column_headers1}
 # Create the column headers data frame
@@ -149,7 +149,7 @@ knitr::include_graphics("table6_img2.png")
 
 An odd quirk of RTF documents is the method in which they do cell padding. The default output actually uses a minimal amount of cell padding, but when looking at your display, it may still be too large for your personal preference of the display. But fear not! We have a method to help minimize the cell padding further.
 
-The root of the issue is that RTF documents have two methods for handling cell padding. You can read more about this within the Details section of the `ignore_cell_padding` function. From a user perspective, it is simply a matter of adding one more line into the creation of your `rtf_doc` object.
+The root of the issue is that RTF documents have two methods for handling cell padding. You can read more about this within the Details section of the `ignore_cell_padding()` function. From a user perspective, it is simply a matter of adding one more line into the creation of your `rtf_doc` object.
 
 ```{r ignore_cell_padding, eval=FALSE}
 doc <- rtf_doc(ht, header_rows=2) %>% 
@@ -170,7 +170,7 @@ knitr::include_graphics("table7_img1.png")
 
 Depending your display, you may want to have a gap between your titles and the column headers, or potentially space below the column headers and the start of the body of the table. One way to deal with this could be to add blank title lines or blank rows to your table - but that would be a hacky fix and less than ideal. This is why the `column_header_buffer` attribute exists in the `rtf_doc` object. 
 
-`column_header_buffer` sets the buffer of spaces you want above and below the column headers. 
+`column_header_buffer()` sets the buffer of spaces you want above and below the column headers. 
 
 ```{r column_header_buffer1, eval=FALSE}
 doc <- rtf_doc(ht, header_rows=2) %>% 
@@ -319,11 +319,11 @@ The last of the special formats is FILE_PATH:. This keyword allows you to displa
 
 The location of an executing R script is not as intuitive as it may seem. This is because there are multiple ways that an R script can be executed:
 
-- Executed in R via the `source` command
+- Executed in R via the `source()` command
 - Executed via the `Rscript` command through the command line
 - Executed interactively
 
-The file path will be determined in the above hierarchy. The only two options above that can return an actual file path are the `source` command and running via `Rscript`. When a file is run interactively, there is no guarantee of the executing files location - because the code is detached from the actual file. Therefore, in these cases, the text `<run_interactively>` will be returned. 
+The file path will be determined in the above hierarchy. The only two options above that can return an actual file path are the `source()` command and running via `Rscript`. When a file is run interactively, there is no guarantee of the executing files location - because the code is detached from the actual file. Therefore, in these cases, the text `<run_interactively>` will be returned. 
 
 Using the FILE_PATH: keyword, simply use the token `%s` to specify where you want the file path to appear. Like the other keywords, you may also include other text in the output string.
 
@@ -353,6 +353,6 @@ knitr::include_graphics("table15_img1.png")
 
 If you have not already reviewed them, be sure to check out our other vignettes!
 
-- To pick up the basics of using pharmaRTF, see [this vignette](https://atorus-research.github.io/pharmaRTF.html)
-- To learn tips and tricks for using huxtable with pharmaRTF, see [this vignette](https://atorus-research.github.io/huxtable_tips.html)
-- To learn more advanced usage of pharmaRTF, see [this vignette](https://atorus-research.github.io/advanced_usage.html)
+- To pick up the basics of using pharmaRTF, see `vignette("pharmaRTF")`
+- To learn tips and tricks for using huxtable with pharmaRTF, see `vignette("huxtable_tips")`
+- To learn more advanced usage of pharmaRTF, see `vignette("advanced_usage")`

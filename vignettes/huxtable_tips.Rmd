@@ -194,6 +194,6 @@ knitr::include_graphics("table4_img1.png")
 
 Be sure to check out our other vignettes!
 
-- To pick up the basics of using pharmaRTF, see [this vignette](https://atorus-research.github.io/pharmaRTF.html)
-- To learn more advanced usage of pharmaRTF, see [this vignette](https://atorus-research.github.io/advanced_usage.html)
-- To see how to read titles and footnotes from external files, see [this vignette](https://atorus-research.github.io/tf_from_file.html)
+- To pick up the basics of using pharmaRTF, see `vignette("pharmaRTF")`
+- To learn more advanced usage of pharmaRTF, see `vignette("advanced_usage")`
+- To see how to read titles and footnotes from external files, see `vignette("tf_from_file")`
