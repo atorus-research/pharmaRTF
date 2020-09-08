@@ -16,3 +16,6 @@
 ^vignettes/Validation$
 ^validation\.pdf$
 ^\.github$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
