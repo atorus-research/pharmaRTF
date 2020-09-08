@@ -1,6 +1,6 @@
 LineType,Level,Specs Tested,TestID,CheckID,Text,CheckType,OutputFile
 UpdatedBy,0,,,,Ashley Tarasiewicz,,
-UpdatedDate,0,,,,4/28/2020,,
+UpdatedDate,0,,,,6/16/2020,,
 Setup,0,,,,_No prerequisites required_,,
 TestCases,1,A:B,T1,,Output an RTF using a dataframe requiring one page of output and verify output and paging are appropiate,,
 TestCases,2,,T1,1,Verify document outputs as an RTF and opens in Word,visual,test_1.rtf
@@ -142,3 +142,5 @@ TestCases,2,,T52,1,Verify huxtable table column widths are .4 (column 1) and .8 
 TestCases,2,,T52,2,"Verify output has ""Header2"" column roughly twice the width of ""Header1"" column",visual,test_52.rtf
 TestCases,1,AF,T53,,Output an RTF using huxtable table cell merging table level property and verify output,,
 TestCases,2,,T53,1,"Verify output has a merged cell for the first row that contains the text ""1"" and spans both the ""Header1"" and ""Header2"" columns",visual,test_53.rtf
+TestCases,1,AG,T54,,Output an RTF with header_rows attribute = 0 and verify output,,
+TestCases,2,,T54,1,Verify document level header rows on output are 0 (all rows are in the body),visual,test_54.rtf

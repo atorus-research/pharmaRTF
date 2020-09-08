@@ -1,9 +1,9 @@
 #' @section Last Updated By:
 #' Ashley Tarasiewicz
 #' @section Last Update Date:
-#' 4/24/2020
+#' 6/16/2020
 + A: The RTF written out to a file can be opened in Microsoft Word
-+ B: Paging of the table works appropriately 
++ B: Paging of the table works appropriately
 + C: Changes to document level margins are reflected in the output document
 + D: Changes to document level header and footer height are reflected in the output document
 + E: Changes to document level page size are reflected in the output document
@@ -34,3 +34,4 @@
 + AD: Updates to huxtable table column width table level property is properly formatted in the resulting RTF
 + AE: Updates to huxtable table row height table level property is properly formatted in the resulting RTF
 + AF: Updates to huxtable table cell merging table level property is properly formatted in the resulting RTF
++ AG: When the header_rows attribute is 0, the column headers write to the RTF body instead of the document header

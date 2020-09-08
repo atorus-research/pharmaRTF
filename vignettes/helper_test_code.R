@@ -262,7 +262,7 @@ make_test_case_rmd <- function(file) {
   )
 
   # Write the lines to each output file
-  writeLines(outfile, 'vignettes/Validation/Test_Cases/test_cases.Rmd')
+  writeLines(outfile, "~/pharmaRTF/vignettes/Validation/Test_Cases/test_cases.Rmd")
 }
 
 #' @name make_specification_rmd
@@ -300,5 +300,5 @@ make_specification_rmd <- function(file) {
   )
 
   # Write the lines to each output file
-  writeLines(outfile, 'vignettes/Validation/Specifications/specification.Rmd')
+  writeLines(outfile, "~/pharmaRTF/vignettes/Validation/Specifications/specification.Rmd")
 }

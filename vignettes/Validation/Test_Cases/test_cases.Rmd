@@ -1,7 +1,7 @@
 #' @section Last Updated By:
 #' Ashley Tarasiewicz
 #' @section Last Update Date:
-#' 4/28/2020
+#' 6/16/2020
 
 This section contains details of each test executed. Checks verifying each test are included as sub-bullets of their associated test.
 
@@ -147,3 +147,5 @@ This section contains details of each test executed. Checks verifying each test 
     + T52.2: Verify output has "Header2" column roughly twice the width of "Header1" column
   + T53: Output an RTF using huxtable table cell merging table level property and verify output
     + T53.1: Verify output has a merged cell for the first row that contains the text "1" and spans both the "Header1" and "Header2" columns
+  + T54: Output an RTF with header_rows attribute = 0 and verify output
+    + T54.1: Verify document level header rows on output are 0 (all rows are in the body)
