@@ -1,0 +1,20 @@
+destination: docs
+
+template:
+  params:
+    bootswatch: yeti
+opengraph:
+  image:
+    src: man/figures/logo.png
+    alt: "pharmaRTF Hex Sticker"
+  twitter:
+    creator: "@AtorusR"
+    card: summary_large_image
+
+articles:
+- title: pharmaRTF Vignettes
+  navbar: pharmaRTF Vignettes
+  contents:
+    - advanced_usage
+    - huxtable_tips
+    - tf_from_file

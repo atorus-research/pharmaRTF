@@ -134,7 +134,7 @@ write_rtf(doc, file="table2.rtf")
 
 While this display is impractical, it's possible! And customization to all these attributes may be necessary depending on individual circumstances. 
 
-pharmaRTF also offers different interface options depending on your preference. For example, if you don't like piping using `%>%`, other versions of property functions are available. Additionally, titles and footnotes can be attached using the `add_titles` and `add_footnotes` functions.
+pharmaRTF also offers different interface options depending on your preference. For example, if you don't like piping using `%>%`, other versions of property functions are available. Additionally, titles and footnotes can be attached using the `add_titles()` and `add_footnotes()` functions.
 
 ```r
 doc <- rtf_doc(ht)
@@ -152,6 +152,6 @@ write_rtf(doc, file="table3.rtf")
 
 This completes a basic introduction to using pharmaRTF, but there's still more to learn!
 
-- To learn tips and tricks for using huxtable with pharmaRTF, see [this vignette](https://atorus-research.github.io/huxtable_tips.html)
-- To learn more advanced usage of pharmaRTF, see [this vignette](https://atorus-research.github.io/advanced_usage.html)
-- To see how to read titles and footnotes from external files, see [this vignette](https://atorus-research.github.io/tf_from_file.html)
+- To learn tips and tricks for using huxtable with pharmaRTF, see `vignette("huxtable_tips")`
+- To learn more advanced usage of pharmaRTF, see `vignette("advanced_usage")`
+- To see how to read titles and footnotes from external files, see `vignette("tf_from_file")`
