@@ -11,6 +11,7 @@ opengraph:
   twitter:
     creator: "@AtorusR"
     card: summary_large_image
+  ganalytics: UA-165685385-3
 
 
 articles:
