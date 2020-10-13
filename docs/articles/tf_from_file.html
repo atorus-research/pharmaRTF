@@ -103,7 +103,7 @@
       <h1 data-toc-skip>Sourcing Titles and Footnotes From External Files</h1>
                         <h4 class="author">Mike Stackhouse</h4>
             
-            <h4 class="date">2020-09-04</h4>
+            <h4 class="date">2020-10-13</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/atorus-research/pharmaRTF/blob/master/vignettes/tf_from_file.Rmd"><code>vignettes/tf_from_file.Rmd</code></a></small>
       <div class="hidden name"><code>tf_from_file.Rmd</code></div>
@@ -192,6 +192,16 @@
 <p>The entire concept behind <code><a href="../reference/titles_and_footnotes_from_df.html">titles_and_footnotes_from_df()</a></code> is allowing the freedom of creating your own process. By allowing the user to pass in a custom reader function to the <code>reader</code> parameter, the source of given titles and footnotes can be anything the user wants. You could read from flat text, CSV, Excel, Access, any remote file that R can process and return a data frame meeting the above requirements is on the table.</p>
 <p>With this in mind, let’s consider a simple example. Assume that I have the excel file <code>titles.xlsx</code>. This file looks as follows:</p>
 <table class="table">
+<colgroup>
+<col width="5%">
+<col width="2%">
+<col width="3%">
+<col width="64%">
+<col width="14%">
+<col width="3%">
+<col width="2%">
+<col width="3%">
+</colgroup>
 <thead><tr class="header">
 <th align="left">table_number</th>
 <th align="right">index</th>
