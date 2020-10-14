@@ -3,6 +3,7 @@ destination: docs
 template:
   params:
     bootswatch: yeti
+    ganalytics: UA-165685385-3
 opengraph:
   image:
     src: man/figures/logo.png
@@ -10,6 +11,7 @@ opengraph:
   twitter:
     creator: "@AtorusR"
     card: summary_large_image
+
 
 articles:
 - title: pharmaRTF Vignettes
