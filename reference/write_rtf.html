@@ -63,6 +63,16 @@
 <![endif]-->
 
 
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-165685385-3"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-165685385-3');
+</script>
+
 
   </head>
 
@@ -151,7 +161,7 @@
     <p>Writes the RTF document to a specified file.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>write_rtf</span>(<span class='kw'>doc</span>, file = <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>write_rtf</span><span class='op'>(</span><span class='va'>doc</span>, file <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -177,13 +187,13 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>## Create and write RTF document</span>
-<span class='kw'>ht</span> <span class='op'>&lt;-</span> <span class='kw'>huxtable</span>::<span class='fu'><a href='https://rdrr.io/pkg/huxtable/man/huxtable.html'>huxtable</a></span>(
- column1 = <span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span>,
- column2 = <span class='kw'>letters</span>[<span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span>]
-)
-<span class='kw'>rtf</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rtf_doc.html'>rtf_doc</a></span>(<span class='kw'>ht</span>)
+<span class='va'>ht</span> <span class='op'>&lt;-</span> <span class='fu'>huxtable</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/huxtable/man/huxtable.html'>huxtable</a></span><span class='op'>(</span>
+ column1 <span class='op'>=</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span>,
+ column2 <span class='op'>=</span> <span class='va'>letters</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span><span class='op'>]</span>
+<span class='op'>)</span>
+<span class='va'>rtf</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rtf_doc.html'>rtf_doc</a></span><span class='op'>(</span><span class='va'>ht</span><span class='op'>)</span>
 
-<span class='fu'>write_rtf</span>(<span class='kw'>rtf</span>, file=<span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempfile</a></span>()) <span class='co'>#writes a table with no header/footnotes to 'test.rtf'</span>
+<span class='fu'>write_rtf</span><span class='op'>(</span><span class='va'>rtf</span>, file<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempfile</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='co'>#writes a table with no header/footnotes to 'test.rtf'</span>
 
 </div></pre>
   </div>
@@ -201,7 +211,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

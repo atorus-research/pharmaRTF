@@ -1,6 +1,13 @@
 pandoc: 2.7.3
-pkgdown: 1.6.0
+pkgdown: 1.6.1
 pkgdown_sha: ~
-articles: []
-last_built: 2020-09-08T15:14Z
+articles:
+  Validate: Validate.html
+  Validation/Specifications/specification: specification.html
+  Validation/Test_Cases/test_cases: test_cases.html
+  advanced_usage: advanced_usage.html
+  huxtable_tips: huxtable_tips.html
+  pharmaRTF: pharmaRTF.html
+  tf_from_file: tf_from_file.html
+last_built: 2020-10-14T13:43Z
 

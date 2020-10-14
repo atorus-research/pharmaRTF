@@ -68,6 +68,16 @@ headers, these rows are repeated on each page.  Can be set to 0 to disable repea
 <![endif]-->
 
 
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-165685385-3"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-165685385-3');
+</script>
+
 
   </head>
 
@@ -161,11 +171,11 @@ the header of the document as the column header. When pulled into the
 headers, these rows are repeated on each page.  Can be set to 0 to disable repeating column headers.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>header_rows</span>(<span class='kw'>x</span>, <span class='kw'>...</span>)
+    <pre class="usage"><span class='fu'>header_rows</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>header_rows</span>(<span class='kw'>x</span>) <span class='op'>&lt;-</span> <span class='kw'>value</span>
+<span class='fu'>header_rows</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='va'>value</span>
 
-<span class='fu'>set_header_rows</span>(<span class='kw'>x</span>, <span class='kw'>value</span>)</pre>
+<span class='fu'>set_header_rows</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>value</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -191,18 +201,18 @@ headers, these rows are repeated on each page.  Can be set to 0 to disable repea
   <code>set_header_rows()</code>, the modified object.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>ht</span> <span class='op'>&lt;-</span> <span class='kw'>huxtable</span>::<span class='fu'><a href='https://rdrr.io/pkg/huxtable/man/huxtable.html'>huxtable</a></span>(
-  column1 = <span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span>,
-  column2 = <span class='kw'>letters</span>[<span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span>]
-)
-<span class='kw'>rtf</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rtf_doc.html'>rtf_doc</a></span>(<span class='kw'>ht</span>, <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='fu'><a href='hf_line.html'>hf_line</a></span>(<span class='st'>"aTitle"</span>)))
+    <pre class="examples"><div class='input'><span class='va'>ht</span> <span class='op'>&lt;-</span> <span class='fu'>huxtable</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/huxtable/man/huxtable.html'>huxtable</a></span><span class='op'>(</span>
+  column1 <span class='op'>=</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span>,
+  column2 <span class='op'>=</span> <span class='va'>letters</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span><span class='op'>]</span>
+<span class='op'>)</span>
+<span class='va'>rtf</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rtf_doc.html'>rtf_doc</a></span><span class='op'>(</span><span class='va'>ht</span>, <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='fu'><a href='hf_line.html'>hf_line</a></span><span class='op'>(</span><span class='st'>"aTitle"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
 
-<span class='fu'>header_rows</span>(<span class='kw'>rtf</span>)
+<span class='fu'>header_rows</span><span class='op'>(</span><span class='va'>rtf</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='error'>Error in UseMethod("header_rows"): no applicable method for 'header_rows' applied to an object of class "rtf_doc"</span></div><div class='input'><span class='co'># This is a wrapper for header_rows(x$table)</span>
-<span class='fu'>header_rows</span>(<span class='kw'>rtf</span><span class='op'>$</span><span class='kw'>table</span>)
+<span class='fu'>header_rows</span><span class='op'>(</span><span class='va'>rtf</span><span class='op'>$</span><span class='va'>table</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] 1</div><div class='input'><span class='co'># Both of these return 1, the default</span>
 
-<span class='fu'>header_rows</span>(<span class='kw'>rtf</span><span class='op'>$</span><span class='kw'>table</span>) <span class='op'>&lt;-</span> <span class='fl'>0</span>
+<span class='fu'>header_rows</span><span class='op'>(</span><span class='va'>rtf</span><span class='op'>$</span><span class='va'>table</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='fl'>0</span>
 </div><div class='output co'>#&gt; <span class='error'>Error in `header_rows&lt;-.huxtable`(`*tmp*`, value = 0): .Primitive("is.logical")(value) is not TRUE</span></div><div class='input'><span class='co'># Sets header_rows to 0</span>
 
 </div></pre>
@@ -221,7 +231,7 @@ headers, these rows are repeated on each page.  Can be set to 0 to disable repea
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

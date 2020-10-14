@@ -23,7 +23,13 @@
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-<![endif]-->
+<![endif]--><!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=UA-165685385-3"></script><script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-165685385-3');
+</script>
 </head>
 <body data-spy="scroll" data-target="#toc">
     <div class="container template-article">
@@ -103,7 +109,7 @@
       <h1 data-toc-skip>Huxtable Tips</h1>
                         <h4 class="author">Mike Stackhouse</h4>
             
-            <h4 class="date">2020-09-08</h4>
+            <h4 class="date">2020-10-14</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/atorus-research/pharmaRTF/blob/master/vignettes/huxtable_tips.Rmd"><code>vignettes/huxtable_tips.Rmd</code></a></small>
       <div class="hidden name"><code>huxtable_tips.Rmd</code></div>
@@ -133,10 +139,9 @@
 <a href="#huxtable-basics" class="anchor"></a>Huxtable Basics</h2>
 <p>Something important to understand about huxtable is that it starts as an abstraction of a data frame. This means that in general, you can index and slice the huxtable object the same way you would with a normal <code>data.frame</code> object in R.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit">
-<span class="kw">ht</span> <span class="op">&lt;-</span> <span class="kw">huxtable</span>::<span class="fu"><a href="https://rdrr.io/pkg/huxtable/man/as_huxtable.html">as_hux</a></span>(<span class="kw">iris</span>[, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Species"</span>, <span class="st">"Sepal.Length"</span>, <span class="st">"Sepal.Width"</span>, <span class="st">"Petal.Length"</span>, <span class="st">"Petal.Width"</span>)], 
-                       add_colnames=<span class="fl">TRUE</span>)
-<span class="kw">ht</span>[<span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">'Species'</span>, <span class="st">'Petal.Width'</span>)]
-</pre></div>
+<span class="va">ht</span> <span class="op">&lt;-</span> <span class="fu">huxtable</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/huxtable/man/as_huxtable.html">as_hux</a></span><span class="op">(</span><span class="va">iris</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Species"</span>, <span class="st">"Sepal.Length"</span>, <span class="st">"Sepal.Width"</span>, <span class="st">"Petal.Length"</span>, <span class="st">"Petal.Width"</span><span class="op">)</span><span class="op">]</span>, 
+                       add_colnames<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span>
+<span class="va">ht</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'Species'</span>, <span class="st">'Petal.Width'</span><span class="op">)</span><span class="op">]</span></pre></div>
 <table class="table huxtable">
 <col>
 <col>
@@ -183,7 +188,7 @@
 </table>
 <p>As you can see here, a nice feature of huxtable is that it has a lot of automatic printing options. Within the code of an R markdown file, it automatically outputs as an HTML table. When developing within an R script, it will also print formatted text to your console. This can be very useful for development as you get an idea of how your display will look within the RTF document.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit">
-<span class="kw">huxtable</span>::<span class="fu"><a href="https://rdrr.io/pkg/huxtable/man/to_screen.html">print_screen</a></span>(<span class="kw">ht</span>[<span class="fl">1</span><span class="op">:</span><span class="fl">10</span>,])
+<span class="fu">huxtable</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/huxtable/man/to_screen.html">print_screen</a></span><span class="op">(</span><span class="va">ht</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>,<span class="op">]</span><span class="op">)</span>
 <span class="co">#&gt;        Species   Sepal.Length   Sepal.Width   Petal.Length   Petal.Width  </span>
 <span class="co">#&gt;        setosa             5.1           3.5            1.4           0.2  </span>
 <span class="co">#&gt;        setosa             4.9           3              1.4           0.2  </span>
@@ -195,8 +200,7 @@
 <span class="co">#&gt;        setosa             5             3.4            1.5           0.2  </span>
 <span class="co">#&gt;        setosa             4.4           2.9            1.4           0.2  </span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; Column names: Species, Sepal.Length, Sepal.Width, Petal.Length, Petal.Width</span>
-</pre></div>
+<span class="co">#&gt; Column names: Species, Sepal.Length, Sepal.Width, Petal.Length, Petal.Width</span></pre></div>
 </div>
 <div id="changing-table-shape" class="section level2">
 <h2 class="hasAnchor">
@@ -204,14 +208,13 @@
 <p>One thing to note is that the default width of a huxtable table will not fill a whole landscape RTF document (when the page size is 11" x 8.5"). A good rule of thumb to follow is that setting the huxtable table width to 1.5 will fill the page properly</p>
 <div class="sourceCode" id="cb3"><pre class="downlit">
 <span class="co"># Assign the attribute</span>
-<span class="kw">huxtable</span>::<span class="fu"><a href="https://rdrr.io/pkg/huxtable/man/width.html">width</a></span>(<span class="kw">ht</span>) <span class="op">&lt;-</span> <span class="fl">1.5</span>
+<span class="fu">huxtable</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/huxtable/man/width.html">width</a></span><span class="op">(</span><span class="va">ht</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fl">1.5</span>
 
 <span class="co"># Pipe the attribute</span>
-<span class="kw">ht</span> <span class="op">&lt;-</span> <span class="kw">ht</span> <span class="op">%&gt;%</span> 
-  <span class="kw">huxtable</span>::<span class="fu"><a href="https://rdrr.io/pkg/huxtable/man/width.html">set_width</a></span>(<span class="fl">1.5</span>)
+<span class="va">ht</span> <span class="op">&lt;-</span> <span class="va">ht</span> <span class="op">%&gt;%</span> 
+  <span class="fu">huxtable</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/huxtable/man/width.html">set_width</a></span><span class="op">(</span><span class="fl">1.5</span><span class="op">)</span>
 
-<span class="kw">ht</span>[<span class="fl">1</span><span class="op">:</span><span class="fl">10</span>,]
-</pre></div>
+<span class="va">ht</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>,<span class="op">]</span></pre></div>
 <table class="table huxtable">
 <col>
 <col>
@@ -292,14 +295,13 @@
 <p>By default, all columns will have an equal width. You can set individual column widths as a ratio of the total width using the <code>col_width</code> property functions. Note that you want these values to sum to 1 - if they are less than one, the columns won’t fill up the total width of the table</p>
 <div class="sourceCode" id="cb4"><pre class="downlit">
 <span class="co"># Assign the attribute</span>
-<span class="kw">huxtable</span>::<span class="fu"><a href="https://rdrr.io/pkg/huxtable/man/col_width.html">col_width</a></span>(<span class="kw">ht</span>) <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">.4</span>, <span class="fl">.15</span>, <span class="fl">.15</span>, <span class="fl">.15</span>, <span class="fl">.15</span>)
+<span class="fu">huxtable</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/huxtable/man/col_width.html">col_width</a></span><span class="op">(</span><span class="va">ht</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">.4</span>, <span class="fl">.15</span>, <span class="fl">.15</span>, <span class="fl">.15</span>, <span class="fl">.15</span><span class="op">)</span>
 
 <span class="co"># Pipe the attribute</span>
-<span class="kw">ht</span> <span class="op">&lt;-</span> <span class="kw">ht</span> <span class="op">%&gt;%</span> 
-  <span class="kw">huxtable</span>::<span class="fu"><a href="https://rdrr.io/pkg/huxtable/man/col_width.html">set_col_width</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">.4</span>, <span class="fl">.15</span>, <span class="fl">.15</span>, <span class="fl">.15</span>, <span class="fl">.15</span>))
+<span class="va">ht</span> <span class="op">&lt;-</span> <span class="va">ht</span> <span class="op">%&gt;%</span> 
+  <span class="fu">huxtable</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/huxtable/man/col_width.html">set_col_width</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">.4</span>, <span class="fl">.15</span>, <span class="fl">.15</span>, <span class="fl">.15</span>, <span class="fl">.15</span><span class="op">)</span><span class="op">)</span>
 
-<span class="kw">ht</span>[<span class="fl">1</span><span class="op">:</span><span class="fl">10</span>,]
-</pre></div>
+<span class="va">ht</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>,<span class="op">]</span></pre></div>
 <table class="table huxtable">
 <col style="width: 40%">
 <col style="width: 15%">
@@ -383,8 +385,7 @@
 <a href="#column-headers" class="anchor"></a>Column Headers</h2>
 <p>The <code>add_colnames</code> argument inserts the column names into the huxtable table. Something important to understand here is that this argument actually inserts the column names as the first row of the table. Therefore, there are no special properties of the column names compared to other data points within the table:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit">
-<span class="kw">ht</span>[<span class="fl">1</span>,]
-</pre></div>
+<span class="va">ht</span><span class="op">[</span><span class="fl">1</span>,<span class="op">]</span></pre></div>
 <table class="table huxtable">
 <col style="width: 40%">
 <col style="width: 15%">
@@ -401,18 +402,17 @@
 </table>
 <p>This is important to understand, because it actually makes creating column headers very easy in that you don’t have to worry about the variable names in the data. Simply create a data frame of the desired column headers and bind it to the data, and then do not use the <code>add_colnames</code> argument.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit">
-<span class="kw">column_headers</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(
-  Species = <span class="st">"Species of Flower"</span>,
-  Sepal.Length = <span class="st">"Sepal Length"</span>,
-  Sepal.Width = <span class="st">"Sepal Width"</span>,
-  Petal.Length = <span class="st">"Petal Length"</span>,
-  Petal.Width = <span class="st">"Petal Width"</span>,
-  stringsAsFactors = <span class="fl">FALSE</span>
-)
+<span class="va">column_headers</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>
+  Species <span class="op">=</span> <span class="st">"Species of Flower"</span>,
+  Sepal.Length <span class="op">=</span> <span class="st">"Sepal Length"</span>,
+  Sepal.Width <span class="op">=</span> <span class="st">"Sepal Width"</span>,
+  Petal.Length <span class="op">=</span> <span class="st">"Petal Length"</span>,
+  Petal.Width <span class="op">=</span> <span class="st">"Petal Width"</span>,
+  stringsAsFactors <span class="op">=</span> <span class="cn">FALSE</span>
+<span class="op">)</span>
 
-<span class="kw">ht</span> <span class="op">&lt;-</span> <span class="kw">huxtable</span>::<span class="fu"><a href="https://rdrr.io/pkg/huxtable/man/as_huxtable.html">as_hux</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span>(<span class="kw">column_headers</span>, <span class="kw">iris</span>))
-<span class="kw">ht</span>[<span class="fl">1</span><span class="op">:</span><span class="fl">10</span>,]
-</pre></div>
+<span class="va">ht</span> <span class="op">&lt;-</span> <span class="fu">huxtable</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/huxtable/man/as_huxtable.html">as_hux</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span><span class="va">column_headers</span>, <span class="va">iris</span><span class="op">)</span><span class="op">)</span>
+<span class="va">ht</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>,<span class="op">]</span></pre></div>
 <table class="table huxtable">
 <col>
 <col>
@@ -498,20 +498,19 @@
 <p>Huxtable supports many different cell formatting properties, including borders, bold, italic, horizontal and vertical alignment, and cell padding. All of these tend to be important when creating outputs in clinical reports. To set a cell property, you simply specify the rows and columns you want to change and apply the property function. When in doubt, consult the documentation to understand the proper values. As with essentially all of the huxtable property functions, there are multiple methods of applying the property to suite your preferred syntax style.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit">
 <span class="co"># Assign attributes directly to object</span>
-<span class="kw">huxtable</span>::<span class="fu"><a href="https://rdrr.io/pkg/huxtable/man/bold.html">bold</a></span>(<span class="kw">ht</span>[<span class="fl">1</span>, ]) <span class="op">&lt;-</span> <span class="fl">TRUE</span>
-<span class="kw">huxtable</span>::<span class="fu"><a href="https://rdrr.io/pkg/huxtable/man/bold.html">italic</a></span>(<span class="kw">ht</span>[<span class="fl">2</span>, ]) <span class="op">&lt;-</span> <span class="fl">TRUE</span>
+<span class="fu">huxtable</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/huxtable/man/bold.html">bold</a></span><span class="op">(</span><span class="va">ht</span><span class="op">[</span><span class="fl">1</span>, <span class="op">]</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="cn">TRUE</span>
+<span class="fu">huxtable</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/huxtable/man/bold.html">italic</a></span><span class="op">(</span><span class="va">ht</span><span class="op">[</span><span class="fl">2</span>, <span class="op">]</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="cn">TRUE</span>
 
 <span class="co"># Use piping</span>
-<span class="kw">ht</span> <span class="op">&lt;-</span> <span class="kw">ht</span> <span class="op">%&gt;%</span>
+<span class="va">ht</span> <span class="op">&lt;-</span> <span class="va">ht</span> <span class="op">%&gt;%</span>
   <span class="co"># Bottom border top row</span>
-  <span class="kw">huxtable</span>::<span class="fu"><a href="https://rdrr.io/pkg/huxtable/man/borders.html">set_bottom_border</a></span>(<span class="fl">1</span>, <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span>(<span class="kw">ht</span>), <span class="fl">1</span>) <span class="op">%&gt;%</span> 
+  <span class="fu">huxtable</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/huxtable/man/borders.html">set_bottom_border</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span><span class="op">(</span><span class="va">ht</span><span class="op">)</span>, <span class="fl">1</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="co"># Thicker bottom border on 2nd row</span>
-  <span class="kw">huxtable</span>::<span class="fu"><a href="https://rdrr.io/pkg/huxtable/man/borders.html">set_bottom_border</a></span>(<span class="fl">2</span>, <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span>(<span class="kw">ht</span>), <span class="fl">4</span>) <span class="op">%&gt;%</span> 
+  <span class="fu">huxtable</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/huxtable/man/borders.html">set_bottom_border</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span><span class="op">(</span><span class="va">ht</span><span class="op">)</span>, <span class="fl">4</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="co"># Align the 3rd row, 2nd column right</span>
-  <span class="kw">huxtable</span>::<span class="fu"><a href="https://rdrr.io/pkg/huxtable/man/align.html">set_align</a></span>(<span class="fl">3</span>, <span class="fl">2</span>, <span class="st">'right'</span>) 
+  <span class="fu">huxtable</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/huxtable/man/align.html">set_align</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">2</span>, <span class="st">'right'</span><span class="op">)</span> 
 
-<span class="kw">ht</span>[<span class="fl">1</span><span class="op">:</span><span class="fl">10</span>,]
-</pre></div>
+<span class="va">ht</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>,<span class="op">]</span></pre></div>
 <table class="table huxtable">
 <col>
 <col>
@@ -598,33 +597,32 @@
 <div class="sourceCode" id="cb8"><pre class="downlit">
 
 <span class="co"># Create the column headers data frame</span>
-<span class="kw">column_headers</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(
-  Species = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">""</span>, <span class="st">"Species of Flower"</span>),
-  Sepal.Length = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Sepal"</span>, <span class="st">"Length"</span>),
-  Sepal.Width = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">""</span>, <span class="st">"Width"</span>),
-  Petal.Length = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Petal"</span>, <span class="st">"Length"</span>),
-  Petal.Width = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">""</span>, <span class="st">"Width"</span>),
-  stringsAsFactors = <span class="fl">FALSE</span>
-)
+<span class="va">column_headers</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>
+  Species <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">""</span>, <span class="st">"Species of Flower"</span><span class="op">)</span>,
+  Sepal.Length <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Sepal"</span>, <span class="st">"Length"</span><span class="op">)</span>,
+  Sepal.Width <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">""</span>, <span class="st">"Width"</span><span class="op">)</span>,
+  Petal.Length <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Petal"</span>, <span class="st">"Length"</span><span class="op">)</span>,
+  Petal.Width <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">""</span>, <span class="st">"Width"</span><span class="op">)</span>,
+  stringsAsFactors <span class="op">=</span> <span class="cn">FALSE</span>
+<span class="op">)</span>
 
 <span class="co"># Create the huxtable table</span>
-<span class="kw">ht</span> <span class="op">&lt;-</span> <span class="kw">huxtable</span>::<span class="fu"><a href="https://rdrr.io/pkg/huxtable/man/as_huxtable.html">as_hux</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span>(<span class="kw">column_headers</span>, <span class="kw">iris</span>)) <span class="op">%&gt;%</span> 
+<span class="va">ht</span> <span class="op">&lt;-</span> <span class="fu">huxtable</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/huxtable/man/as_huxtable.html">as_hux</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span><span class="va">column_headers</span>, <span class="va">iris</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="co"># Merge the Sepal cell over the Length and Width</span>
-  <span class="kw">huxtable</span>::<span class="fu"><a href="https://rdrr.io/pkg/huxtable/man/merge_cells.html">merge_cells</a></span>(<span class="fl">1</span>, <span class="fl">2</span><span class="op">:</span><span class="fl">3</span>) <span class="op">%&gt;%</span> 
+  <span class="fu">huxtable</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/huxtable/man/merge_cells.html">merge_cells</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="co"># Merge the Petal cell over the Length and Width</span>
-  <span class="kw">huxtable</span>::<span class="fu"><a href="https://rdrr.io/pkg/huxtable/man/merge_cells.html">merge_cells</a></span>(<span class="fl">1</span>, <span class="fl">4</span><span class="op">:</span><span class="fl">5</span>) <span class="op">%&gt;%</span> 
+  <span class="fu">huxtable</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/huxtable/man/merge_cells.html">merge_cells</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">4</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="co"># Align the top cells for both Sepal and Petal</span>
-  <span class="kw">huxtable</span>::<span class="fu"><a href="https://rdrr.io/pkg/huxtable/man/align.html">set_align</a></span>(<span class="fl">1</span>,<span class="fl">2</span>, <span class="st">'center'</span>) <span class="op">%&gt;%</span> 
-  <span class="kw">huxtable</span>::<span class="fu"><a href="https://rdrr.io/pkg/huxtable/man/align.html">set_align</a></span>(<span class="fl">1</span>,<span class="fl">4</span>, <span class="st">'center'</span>) <span class="op">%&gt;%</span> 
+  <span class="fu">huxtable</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/huxtable/man/align.html">set_align</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span>, <span class="st">'center'</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">huxtable</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/huxtable/man/align.html">set_align</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">4</span>, <span class="st">'center'</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="co"># Bold all the column header rows</span>
-  <span class="kw">huxtable</span>::<span class="fu"><a href="https://rdrr.io/pkg/huxtable/man/bold.html">set_bold</a></span>(<span class="fl">1</span><span class="op">:</span><span class="fl">2</span>, <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span>(<span class="kw">iris</span>), <span class="fl">TRUE</span>) <span class="op">%&gt;%</span> 
+  <span class="fu">huxtable</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/huxtable/man/bold.html">set_bold</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span>, <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span>, <span class="cn">TRUE</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="co"># Bottom border on 1st column header row </span>
-  <span class="kw">huxtable</span>::<span class="fu"><a href="https://rdrr.io/pkg/huxtable/man/borders.html">set_bottom_border</a></span>(<span class="fl">1</span>, <span class="fl">2</span><span class="op">:</span><span class="fl">4</span>, <span class="fl">1</span>) <span class="op">%&gt;%</span> 
+  <span class="fu">huxtable</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/huxtable/man/borders.html">set_bottom_border</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">:</span><span class="fl">4</span>, <span class="fl">1</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="co"># Bottom border on 2nd row</span>
-  <span class="kw">huxtable</span>::<span class="fu"><a href="https://rdrr.io/pkg/huxtable/man/borders.html">set_bottom_border</a></span>(<span class="fl">2</span>, <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span>(<span class="kw">iris</span>), <span class="fl">2</span>)
+  <span class="fu">huxtable</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/huxtable/man/borders.html">set_bottom_border</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span>, <span class="fl">2</span><span class="op">)</span>
 
-<span class="kw">ht</span>[<span class="fl">1</span><span class="op">:</span><span class="fl">10</span>,]
-</pre></div>
+<span class="va">ht</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>,<span class="op">]</span></pre></div>
 <table class="table huxtable">
 <col>
 <col>
@@ -708,13 +706,12 @@
 <p>A second step that you need to take is to set <code>escape_contents</code> to false. This is because by default, huxtable will do some cleaning when generating the output to try to catch certain syntax - and when the RTF generates, the escape character itself has been escaped. The result is that <code>\line</code> will appear in your document as text. Fortunately, this is just one extra line of code.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit">
 <span class="co"># Overwrite the column header cell</span>
-<span class="kw">ht</span>[<span class="fl">2</span>, <span class="fl">1</span>] <span class="op">&lt;-</span> <span class="st">"Species of\\line flower"</span>
+<span class="va">ht</span><span class="op">[</span><span class="fl">2</span>, <span class="fl">1</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"Species of\\line flower"</span>
 <span class="co"># Set escape contents to false</span>
-<span class="kw">huxtable</span>::<span class="fu"><a href="https://rdrr.io/pkg/huxtable/man/escape_contents.html">escape_contents</a></span>(<span class="kw">ht</span>) <span class="op">&lt;-</span> <span class="fl">FALSE</span>
+<span class="fu">huxtable</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/huxtable/man/escape_contents.html">escape_contents</a></span><span class="op">(</span><span class="va">ht</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="cn">FALSE</span>
 <span class="co"># Set display width</span>
-<span class="kw">huxtable</span>::<span class="fu"><a href="https://rdrr.io/pkg/huxtable/man/width.html">width</a></span>(<span class="kw">ht</span>) <span class="op">&lt;-</span> <span class="fl">1.5</span>
-<span class="kw">ht</span>[<span class="fl">1</span><span class="op">:</span><span class="fl">10</span>,]
-</pre></div>
+<span class="fu">huxtable</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/huxtable/man/width.html">width</a></span><span class="op">(</span><span class="va">ht</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fl">1.5</span>
+<span class="va">ht</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>,<span class="op">]</span></pre></div>
 <table class="table huxtable">
 <col>
 <col>
@@ -792,9 +789,8 @@
 </table>
 <div class="sourceCode" id="cb10"><pre class="downlit">
 
-<span class="kw">doc</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/rtf_doc.html">rtf_doc</a></span>(<span class="kw">ht</span>, header_rows = <span class="fl">2</span>)
-<span class="fu"><a href="../reference/write_rtf.html">write_rtf</a></span>(<span class="kw">doc</span>, file=<span class="st">'table4.rtf'</span>)
-</pre></div>
+<span class="va">doc</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/rtf_doc.html">rtf_doc</a></span><span class="op">(</span><span class="va">ht</span>, header_rows <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>
+<span class="fu"><a href="../reference/write_rtf.html">write_rtf</a></span><span class="op">(</span><span class="va">doc</span>, file<span class="op">=</span><span class="st">'table4.rtf'</span><span class="op">)</span></pre></div>
 <p>And within the RTF output, the lines will display properly.</p>
 <p><img src="table4_img1.png" width="800px"></p>
 </div>
@@ -828,7 +824,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

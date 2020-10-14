@@ -23,7 +23,13 @@
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-<![endif]-->
+<![endif]--><!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=UA-165685385-3"></script><script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-165685385-3');
+</script>
 </head>
 <body data-spy="scroll" data-target="#toc">
     <div class="container template-article">
@@ -104,7 +110,7 @@
       <h1 data-toc-skip>pharmaRTF Validation Report</h1>
                         <h4 class="author">Eli Miller</h4>
             
-            <h4 class="date">2020-09-08</h4>
+            <h4 class="date">2020-10-14</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/atorus-research/pharmaRTF/blob/master/vignettes/Validate.Rmd"><code>vignettes/Validate.Rmd</code></a></small>
       <div class="hidden name"><code>Validate.Rmd</code></div>
@@ -580,28 +586,24 @@ Ashley Tarasiewicz
 <div id="system-information" class="section level1">
 <h1 class="hasAnchor">
 <a href="#system-information" class="anchor"></a>System Information</h1>
-<p>R version 4.0.2 (2020-06-22) Platform: x86_64-apple-darwin17.0 (64-bit) Running under: macOS Catalina 10.15.6</p>
+<p>R version 4.0.2 (2020-06-22) Platform: x86_64-apple-darwin17.0 (64-bit) Running under: macOS Catalina 10.15.7</p>
 <p>Matrix products: default BLAS: /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRblas.dylib LAPACK: /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRlapack.dylib</p>
 <p>locale: [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8</p>
 <p>attached base packages: [1] stats graphics grDevices utils datasets methods base</p>
-<p>other attached packages: [1] readxl_1.3.1 forcats_0.5.0 readr_1.3.1 tidyr_1.1.2<br>
-[5] tibble_3.0.3 ggplot2_3.3.2 tidyverse_1.3.0 huxtable_5.0.0<br>
-[9] pharmaRTF_0.1.1 purrr_0.3.4 stringr_1.4.0 kableExtra_1.2.1 [13] knitr_1.29 testthat_2.3.2 dplyr_1.0.2 plyr_1.8.6</p>
-<p>loaded via a namespace (and not attached): [1] Rcpp_1.0.5 lubridate_1.7.9 assertthat_0.2.1 rprojroot_1.3-2<br>
-[5] digest_0.6.25 R6_2.4.1 cellranger_1.1.0 backports_1.1.9<br>
-[9] reprex_0.3.0 evaluate_0.14 httr_1.4.2 highr_0.8<br>
-[13] pillar_1.4.6 rlang_0.4.7 rstudioapi_0.11 blob_1.2.1<br>
-[17] rmarkdown_2.3 pkgdown_1.6.0 desc_1.2.0 webshot_0.5.2<br>
-[21] munsell_0.5.0 broom_0.7.0 compiler_4.0.2 modelr_0.1.8<br>
-[25] xfun_0.16 pkgconfig_2.0.3 systemfonts_0.3.1 htmltools_0.5.0<br>
-[29] tidyselect_1.1.0 fansi_0.4.1 viridisLite_0.3.0 crayon_1.3.4<br>
-[33] dbplyr_1.4.4 withr_2.2.0 grid_4.0.2 jsonlite_1.7.1<br>
-[37] gtable_0.3.0 lifecycle_0.2.0 DBI_1.1.0 magrittr_1.5<br>
-[41] scales_1.1.1 cli_2.0.2 stringi_1.4.6 fs_1.5.0<br>
-[45] xml2_1.3.2 ellipsis_0.3.1 ragg_0.3.1 generics_0.0.2<br>
-[49] vctrs_0.3.4 tools_4.0.2 glue_1.4.2 hms_0.5.3<br>
-[53] yaml_2.2.1 colorspace_1.4-1 rvest_0.3.6 cpp11_0.2.1<br>
-[57] memoise_1.1.0 haven_2.3.1</p>
+<p>other attached packages: [1] readxl_1.3.1 forcats_0.5.0 readr_1.4.0 tidyr_1.1.2<br>
+[5] tibble_3.0.4 ggplot2_3.3.2 tidyverse_1.3.0 huxtable_5.1.0<br>
+[9] pharmaRTF_0.1.1 purrr_0.3.4 stringr_1.4.0 kableExtra_1.2.1 [13] knitr_1.30 testthat_2.3.2 dplyr_1.0.2 plyr_1.8.6</p>
+<p>loaded via a namespace (and not attached): [1] Rcpp_1.0.5 lubridate_1.7.9 ps_1.4.0 assertthat_0.2.1 [5] rprojroot_1.3-2 digest_0.6.25 R6_2.4.1 cellranger_1.1.0 [9] backports_1.1.10 reprex_0.3.0 evaluate_0.14 httr_1.4.2<br>
+[13] highr_0.8 pillar_1.4.6 rlang_0.4.8 rstudioapi_0.11<br>
+[17] blob_1.2.1 rmarkdown_2.4 pkgdown_1.6.1 textshaping_0.1.2 [21] desc_1.2.0 webshot_0.5.2 munsell_0.5.0 broom_0.7.1<br>
+[25] compiler_4.0.2 modelr_0.1.8 xfun_0.18 pkgconfig_2.0.3<br>
+[29] systemfonts_0.3.2 htmltools_0.5.0 tidyselect_1.1.0 fansi_0.4.1<br>
+[33] viridisLite_0.3.0 crayon_1.3.4 dbplyr_1.4.4 withr_2.3.0<br>
+[37] grid_4.0.2 jsonlite_1.7.1 gtable_0.3.0 lifecycle_0.2.0<br>
+[41] DBI_1.1.0 magrittr_1.5 scales_1.1.1 cli_2.1.0<br>
+[45] stringi_1.5.3 fs_1.5.0 xml2_1.3.2 ellipsis_0.3.1<br>
+[49] ragg_0.4.0 generics_0.0.2 vctrs_0.3.4 tools_4.0.2<br>
+[53] glue_1.4.2 hms_0.5.3 yaml_2.2.1 colorspace_1.4-1 [57] rvest_0.3.6 memoise_1.1.0 haven_2.3.1</p>
 </div>
 <div id="manual-check-completion-history" class="section level1">
 <h1 class="hasAnchor">
@@ -625,7 +627,7 @@ Ashley Tarasiewicz
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>
