@@ -1,5 +1,6 @@
-## pharmaRTF 0.1.1
-This version updates along with huxtable 5.0 and expands the usage of the package when there are no column headers.
+## pharmaRTF 0.1.2
+
+No functionality changes. Just increment version number for new release of huxtable.
 
 ## Test environments
 * local Ubuntu 18.04.4 LTS, R 3.6.2

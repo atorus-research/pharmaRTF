@@ -24,8 +24,15 @@ R to a pharmaceutical reporting workflow.
 }
 }
 
+\seealso{
+Useful links:
+\itemize{
+  \item Report bugs at \url{https://github.com/atorus-research/pharmaRTF/issues}
+}
+
+}
 \author{
-\strong{Maintainer}: Michael Stackhouse \email{mike.stackhouse@atorusresearch.com}
+\strong{Maintainer}: Michael Stackhouse \email{mike.stackhouse@atorusresearch.com} (\href{https://orcid.org/0000-0001-6030-723X}{ORCID})
 
 Authors:
 \itemize{

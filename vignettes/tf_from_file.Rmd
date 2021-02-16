@@ -118,7 +118,7 @@ huxtable::as_hux(load('t14_4_01.Rdata'))
 ht
 ```
 
-_Note: The data here comes from the CDISC Pilot, which you can read about [here](https://www.cdisc.org/sdtmadam-pilot-project). Also, see our replication of the tables from this CDISC pilot in our [Github repository](https://github.com/atorus-research/CDISC_pilot_replication)._
+_Note: The data here comes from the CDISC Pilot, which you can read about [here](https://bitbucket.cdisc.org/projects/CED/repos/sdtm-adam-pilot-project/raw/sdtmadampilotprojectreport.pdf?at=refs%2Fheads%2Fmaster). Also, see our replication of the tables from this CDISC pilot in our [Github repository](https://github.com/atorus-research/CDISC_pilot_replication)._
 
 Here's how you would go about creating your `rtf_doc` object. (For more information about the functions being used here, see our [advanced usage](https://atorus-research.github.io/advanced_usage.html) vignette)
 

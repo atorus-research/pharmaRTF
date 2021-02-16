@@ -30,7 +30,7 @@
 #' \item{DATE_FORMAT: - Describes the date/time the document was generated.
 #'   Formats are specified using standard R date formatting tokens. Details on
 #'   formatting dates can be found
-#'   \href{https://www.r-bloggers.com/date-formats-in-r/}{here}.}
+#'   \href{https://www.r-bloggers.com/2013/08/date-formats-in-r/}{here}.}
 #' \item{FILE_PATH: - Describes the file path the R session was executed from.
 #' The location of the executing file will be populated over the token
 #' replacement string "\%s". Formats can be specified like "FILE_PATH: Executed

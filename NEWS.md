@@ -1,3 +1,7 @@
+# pharmaRTF 0.1.2
+
+No functionality changes. Increment version with new release of Huxtable
+
 # pharmaRTF 0.1.1
 
 ### API Changes
