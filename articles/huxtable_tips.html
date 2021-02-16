@@ -44,7 +44,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pharmaRTF</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.2</span>
       </span>
     </div>
 
@@ -52,7 +52,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -89,7 +89,7 @@
 <ul class="nav navbar-nav navbar-right">
 <li>
   <a href="https://github.com/atorus-research/pharmaRTF/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -109,7 +109,7 @@
       <h1 data-toc-skip>Huxtable Tips</h1>
                         <h4 class="author">Mike Stackhouse</h4>
             
-            <h4 class="date">2020-10-14</h4>
+            <h4 class="date">2021-02-16</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/atorus-research/pharmaRTF/blob/master/vignettes/huxtable_tips.Rmd"><code>vignettes/huxtable_tips.Rmd</code></a></small>
       <div class="hidden name"><code>huxtable_tips.Rmd</code></div>
@@ -132,16 +132,16 @@
 <div id="a-small-note" class="section level2">
 <h2 class="hasAnchor">
 <a href="#a-small-note" class="anchor"></a>A Small Note</h2>
-<p>Some of the syntax we use throughout this document uses the <code><a href="https://rdrr.io/pkg/magrittr/man/pipe.html">%&gt;%</a></code> pipe operator. This is to display support for a tidyverse style of coding. You can find the <code><a href="https://rdrr.io/pkg/magrittr/man/pipe.html">%&gt;%</a></code> operator in the <a href="https://cran.r-project.org/package=magrittr/vignettes/magrittr.html">magittr</a> package.</p>
+<p>Some of the syntax we use throughout this document uses the <code><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></code> pipe operator. This is to display support for a tidyverse style of coding. You can find the <code><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></code> operator in the <a href="https://cran.r-project.org/package=magrittr/vignettes/magrittr.html">magittr</a> package.</p>
 </div>
 <div id="huxtable-basics" class="section level2">
 <h2 class="hasAnchor">
 <a href="#huxtable-basics" class="anchor"></a>Huxtable Basics</h2>
 <p>Something important to understand about huxtable is that it starts as an abstraction of a data frame. This means that in general, you can index and slice the huxtable object the same way you would with a normal <code>data.frame</code> object in R.</p>
-<div class="sourceCode" id="cb1"><pre class="downlit">
-<span class="va">ht</span> <span class="op">&lt;-</span> <span class="fu">huxtable</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/huxtable/man/as_huxtable.html">as_hux</a></span><span class="op">(</span><span class="va">iris</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Species"</span>, <span class="st">"Sepal.Length"</span>, <span class="st">"Sepal.Width"</span>, <span class="st">"Petal.Length"</span>, <span class="st">"Petal.Width"</span><span class="op">)</span><span class="op">]</span>, 
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">ht</span> <span class="op">&lt;-</span> <span class="fu">huxtable</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/huxtable/man/as_huxtable.html">as_hux</a></span><span class="op">(</span><span class="va">iris</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Species"</span>, <span class="st">"Sepal.Length"</span>, <span class="st">"Sepal.Width"</span>, <span class="st">"Petal.Length"</span>, <span class="st">"Petal.Width"</span><span class="op">)</span><span class="op">]</span>, 
                        add_colnames<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span>
-<span class="va">ht</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'Species'</span>, <span class="st">'Petal.Width'</span><span class="op">)</span><span class="op">]</span></pre></div>
+<span class="va">ht</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'Species'</span>, <span class="st">'Petal.Width'</span><span class="op">)</span><span class="op">]</span></code></pre></div>
 <table class="table huxtable">
 <col>
 <col>
@@ -187,8 +187,8 @@
 </tr>
 </table>
 <p>As you can see here, a nice feature of huxtable is that it has a lot of automatic printing options. Within the code of an R markdown file, it automatically outputs as an HTML table. When developing within an R script, it will also print formatted text to your console. This can be very useful for development as you get an idea of how your display will look within the RTF document.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit">
-<span class="fu">huxtable</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/huxtable/man/to_screen.html">print_screen</a></span><span class="op">(</span><span class="va">ht</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>,<span class="op">]</span><span class="op">)</span>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">huxtable</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/huxtable/man/to_screen.html">print_screen</a></span><span class="op">(</span><span class="va">ht</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>,<span class="op">]</span><span class="op">)</span>
 <span class="co">#&gt;        Species   Sepal.Length   Sepal.Width   Petal.Length   Petal.Width  </span>
 <span class="co">#&gt;        setosa             5.1           3.5            1.4           0.2  </span>
 <span class="co">#&gt;        setosa             4.9           3              1.4           0.2  </span>
@@ -200,21 +200,21 @@
 <span class="co">#&gt;        setosa             5             3.4            1.5           0.2  </span>
 <span class="co">#&gt;        setosa             4.4           2.9            1.4           0.2  </span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; Column names: Species, Sepal.Length, Sepal.Width, Petal.Length, Petal.Width</span></pre></div>
+<span class="co">#&gt; Column names: Species, Sepal.Length, Sepal.Width, Petal.Length, Petal.Width</span></code></pre></div>
 </div>
 <div id="changing-table-shape" class="section level2">
 <h2 class="hasAnchor">
 <a href="#changing-table-shape" class="anchor"></a>Changing Table Shape</h2>
 <p>One thing to note is that the default width of a huxtable table will not fill a whole landscape RTF document (when the page size is 11" x 8.5"). A good rule of thumb to follow is that setting the huxtable table width to 1.5 will fill the page properly</p>
-<div class="sourceCode" id="cb3"><pre class="downlit">
-<span class="co"># Assign the attribute</span>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Assign the attribute</span>
 <span class="fu">huxtable</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/huxtable/man/width.html">width</a></span><span class="op">(</span><span class="va">ht</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fl">1.5</span>
 
 <span class="co"># Pipe the attribute</span>
 <span class="va">ht</span> <span class="op">&lt;-</span> <span class="va">ht</span> <span class="op">%&gt;%</span> 
   <span class="fu">huxtable</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/huxtable/man/width.html">set_width</a></span><span class="op">(</span><span class="fl">1.5</span><span class="op">)</span>
 
-<span class="va">ht</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>,<span class="op">]</span></pre></div>
+<span class="va">ht</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>,<span class="op">]</span></code></pre></div>
 <table class="table huxtable">
 <col>
 <col>
@@ -293,15 +293,15 @@
 </tr>
 </table>
 <p>By default, all columns will have an equal width. You can set individual column widths as a ratio of the total width using the <code>col_width</code> property functions. Note that you want these values to sum to 1 - if they are less than one, the columns won’t fill up the total width of the table</p>
-<div class="sourceCode" id="cb4"><pre class="downlit">
-<span class="co"># Assign the attribute</span>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Assign the attribute</span>
 <span class="fu">huxtable</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/huxtable/man/col_width.html">col_width</a></span><span class="op">(</span><span class="va">ht</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">.4</span>, <span class="fl">.15</span>, <span class="fl">.15</span>, <span class="fl">.15</span>, <span class="fl">.15</span><span class="op">)</span>
 
 <span class="co"># Pipe the attribute</span>
 <span class="va">ht</span> <span class="op">&lt;-</span> <span class="va">ht</span> <span class="op">%&gt;%</span> 
   <span class="fu">huxtable</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/huxtable/man/col_width.html">set_col_width</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">.4</span>, <span class="fl">.15</span>, <span class="fl">.15</span>, <span class="fl">.15</span>, <span class="fl">.15</span><span class="op">)</span><span class="op">)</span>
 
-<span class="va">ht</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>,<span class="op">]</span></pre></div>
+<span class="va">ht</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>,<span class="op">]</span></code></pre></div>
 <table class="table huxtable">
 <col style="width: 40%">
 <col style="width: 15%">
@@ -384,8 +384,8 @@
 <h2 class="hasAnchor">
 <a href="#column-headers" class="anchor"></a>Column Headers</h2>
 <p>The <code>add_colnames</code> argument inserts the column names into the huxtable table. Something important to understand here is that this argument actually inserts the column names as the first row of the table. Therefore, there are no special properties of the column names compared to other data points within the table:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit">
-<span class="va">ht</span><span class="op">[</span><span class="fl">1</span>,<span class="op">]</span></pre></div>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">ht</span><span class="op">[</span><span class="fl">1</span>,<span class="op">]</span></code></pre></div>
 <table class="table huxtable">
 <col style="width: 40%">
 <col style="width: 15%">
@@ -401,8 +401,8 @@
 </tr>
 </table>
 <p>This is important to understand, because it actually makes creating column headers very easy in that you don’t have to worry about the variable names in the data. Simply create a data frame of the desired column headers and bind it to the data, and then do not use the <code>add_colnames</code> argument.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit">
-<span class="va">column_headers</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">column_headers</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>
   Species <span class="op">=</span> <span class="st">"Species of Flower"</span>,
   Sepal.Length <span class="op">=</span> <span class="st">"Sepal Length"</span>,
   Sepal.Width <span class="op">=</span> <span class="st">"Sepal Width"</span>,
@@ -412,7 +412,7 @@
 <span class="op">)</span>
 
 <span class="va">ht</span> <span class="op">&lt;-</span> <span class="fu">huxtable</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/huxtable/man/as_huxtable.html">as_hux</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span><span class="va">column_headers</span>, <span class="va">iris</span><span class="op">)</span><span class="op">)</span>
-<span class="va">ht</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>,<span class="op">]</span></pre></div>
+<span class="va">ht</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>,<span class="op">]</span></code></pre></div>
 <table class="table huxtable">
 <col>
 <col>
@@ -496,8 +496,8 @@
 <h2 class="hasAnchor">
 <a href="#cell-formatting" class="anchor"></a>Cell Formatting</h2>
 <p>Huxtable supports many different cell formatting properties, including borders, bold, italic, horizontal and vertical alignment, and cell padding. All of these tend to be important when creating outputs in clinical reports. To set a cell property, you simply specify the rows and columns you want to change and apply the property function. When in doubt, consult the documentation to understand the proper values. As with essentially all of the huxtable property functions, there are multiple methods of applying the property to suite your preferred syntax style.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit">
-<span class="co"># Assign attributes directly to object</span>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Assign attributes directly to object</span>
 <span class="fu">huxtable</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/huxtable/man/bold.html">bold</a></span><span class="op">(</span><span class="va">ht</span><span class="op">[</span><span class="fl">1</span>, <span class="op">]</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="cn">TRUE</span>
 <span class="fu">huxtable</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/huxtable/man/bold.html">italic</a></span><span class="op">(</span><span class="va">ht</span><span class="op">[</span><span class="fl">2</span>, <span class="op">]</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="cn">TRUE</span>
 
@@ -510,7 +510,7 @@
   <span class="co"># Align the 3rd row, 2nd column right</span>
   <span class="fu">huxtable</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/huxtable/man/align.html">set_align</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">2</span>, <span class="st">'right'</span><span class="op">)</span> 
 
-<span class="va">ht</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>,<span class="op">]</span></pre></div>
+<span class="va">ht</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>,<span class="op">]</span></code></pre></div>
 <table class="table huxtable">
 <col>
 <col>
@@ -594,8 +594,8 @@
 <a href="#cell-merging" class="anchor"></a>Cell Merging</h2>
 <p>Another very useful feature of huxtable is the ability to specify and merge cells. This is done simply by selecting the rows and columns you’d like to merge of the huxtable object. The top left cell’s value will take on the value of the merged cells.</p>
 <p>To tie this in with a practical example, think of spanning headers. As mentioned, since column headers are just rows of the huxtable object, we can create spanning headers by creating 2 rows of column headers and merging cells.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit">
-
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R">
 <span class="co"># Create the column headers data frame</span>
 <span class="va">column_headers</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>
   Species <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">""</span>, <span class="st">"Species of Flower"</span><span class="op">)</span>,
@@ -622,7 +622,7 @@
   <span class="co"># Bottom border on 2nd row</span>
   <span class="fu">huxtable</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/huxtable/man/borders.html">set_bottom_border</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span>, <span class="fl">2</span><span class="op">)</span>
 
-<span class="va">ht</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>,<span class="op">]</span></pre></div>
+<span class="va">ht</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>,<span class="op">]</span></code></pre></div>
 <table class="table huxtable">
 <col>
 <col>
@@ -704,14 +704,14 @@
 <a href="#some-final-notes" class="anchor"></a>Some Final Notes</h2>
 <p>Getting your huxtable table right takes some experimentation, and when outputting to RTF it will take multiple iterations to get it right. One very important note is that it’s common to have to insert line breaks in your data manually - be it to make your data flow nicely within cells, or to organize column headers properly. Within pharmaRTF, for this you will need to use RTF syntax. Instead of the traditional <code>\n</code> - this is just <code>\line</code>. But in R, you need to add an extra backslash (<code>\</code>) because backslashes are break characters. So to insert a line break in your text, simply add <code>\\line</code>.</p>
 <p>A second step that you need to take is to set <code>escape_contents</code> to false. This is because by default, huxtable will do some cleaning when generating the output to try to catch certain syntax - and when the RTF generates, the escape character itself has been escaped. The result is that <code>\line</code> will appear in your document as text. Fortunately, this is just one extra line of code.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit">
-<span class="co"># Overwrite the column header cell</span>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Overwrite the column header cell</span>
 <span class="va">ht</span><span class="op">[</span><span class="fl">2</span>, <span class="fl">1</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"Species of\\line flower"</span>
 <span class="co"># Set escape contents to false</span>
 <span class="fu">huxtable</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/huxtable/man/escape_contents.html">escape_contents</a></span><span class="op">(</span><span class="va">ht</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="cn">FALSE</span>
 <span class="co"># Set display width</span>
 <span class="fu">huxtable</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/huxtable/man/width.html">width</a></span><span class="op">(</span><span class="va">ht</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fl">1.5</span>
-<span class="va">ht</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>,<span class="op">]</span></pre></div>
+<span class="va">ht</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>,<span class="op">]</span></code></pre></div>
 <table class="table huxtable">
 <col>
 <col>
@@ -787,10 +787,10 @@
 <td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">0.3</td>
 </tr>
 </table>
-<div class="sourceCode" id="cb10"><pre class="downlit">
-
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R">
 <span class="va">doc</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/rtf_doc.html">rtf_doc</a></span><span class="op">(</span><span class="va">ht</span>, header_rows <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>
-<span class="fu"><a href="../reference/write_rtf.html">write_rtf</a></span><span class="op">(</span><span class="va">doc</span>, file<span class="op">=</span><span class="st">'table4.rtf'</span><span class="op">)</span></pre></div>
+<span class="fu"><a href="../reference/write_rtf.html">write_rtf</a></span><span class="op">(</span><span class="va">doc</span>, file<span class="op">=</span><span class="st">'table4.rtf'</span><span class="op">)</span></code></pre></div>
 <p>And within the RTF output, the lines will display properly.</p>
 <p><img src="table4_img1.png" width="800px"></p>
 </div>

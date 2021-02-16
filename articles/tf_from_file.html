@@ -44,7 +44,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pharmaRTF</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.2</span>
       </span>
     </div>
 
@@ -52,7 +52,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -89,7 +89,7 @@
 <ul class="nav navbar-nav navbar-right">
 <li>
   <a href="https://github.com/atorus-research/pharmaRTF/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -109,7 +109,7 @@
       <h1 data-toc-skip>Sourcing Titles and Footnotes From External Files</h1>
                         <h4 class="author">Mike Stackhouse</h4>
             
-            <h4 class="date">2020-10-14</h4>
+            <h4 class="date">2021-02-16</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/atorus-research/pharmaRTF/blob/master/vignettes/tf_from_file.Rmd"><code>vignettes/tf_from_file.Rmd</code></a></small>
       <div class="hidden name"><code>tf_from_file.Rmd</code></div>
@@ -129,7 +129,7 @@
 <div id="a-small-note" class="section level2">
 <h2 class="hasAnchor">
 <a href="#a-small-note" class="anchor"></a>A Small Note</h2>
-<p>Some of the syntax we use throughout this document uses the <code><a href="https://rdrr.io/pkg/magrittr/man/pipe.html">%&gt;%</a></code> pipe operator. This is to display support for a tidyverse style of coding. You can find the <code><a href="https://rdrr.io/pkg/magrittr/man/pipe.html">%&gt;%</a></code> operator in the <a href="https://cran.r-project.org/package=magrittr/vignettes/magrittr.html">magittr</a> package.</p>
+<p>Some of the syntax we use throughout this document uses the <code><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></code> pipe operator. This is to display support for a tidyverse style of coding. You can find the <code><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></code> operator in the <a href="https://cran.r-project.org/package=magrittr/vignettes/magrittr.html">magittr</a> package.</p>
 </div>
 <div id="how-it-works" class="section level2">
 <h2 class="hasAnchor">
@@ -368,8 +368,8 @@
 <li>When I read the data, I filter to the appropriate table</li>
 </ul>
 <p>So overall this will be a pretty simple function. Let’s create it.</p>
-<div class="sourceCode" id="cb1"><pre class="downlit">
-<span class="va">example_custom_reader</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">...</span>, <span class="va">table_number</span><span class="op">=</span><span class="cn">NULL</span><span class="op">)</span> <span class="op">{</span>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">example_custom_reader</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">...</span>, <span class="va">table_number</span><span class="op">=</span><span class="cn">NULL</span><span class="op">)</span> <span class="op">{</span>
 
   <span class="co"># If a column isn't populated then the type may be guessed wrong so force it</span>
   <span class="va">col_types</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'text'</span>, <span class="st">'numeric'</span>, <span class="st">'text'</span>, <span class="st">'text'</span>, <span class="st">'text'</span>, <span class="st">'text'</span>, <span class="st">'logical'</span>, <span class="st">'logical'</span><span class="op">)</span>
@@ -378,7 +378,7 @@
 
   <span class="co"># Subset and return that dataframe</span>
   <span class="va">df</span><span class="op">[</span><span class="va">df</span><span class="op">$</span><span class="va">table_number</span><span class="op">==</span><span class="va">table_number</span>, <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span> <span class="op">==</span> <span class="st">'table_number'</span><span class="op">]</span>
-<span class="op">}</span></pre></div>
+<span class="op">}</span></code></pre></div>
 <p>Within a few steps I have everything I need:</p>
 <ul>
 <li>I use <code><a href="https://readxl.tidyverse.org/reference/read_excel.html">readxl::read_excel()</a></code> to import the data from the excel file</li>
@@ -392,8 +392,8 @@
 <li>the <code>...</code> option on <code>titles_and_foonotes_from_df()</code> is also passed forward, allowing you to pass whatever arguments necessary from the <code><a href="../reference/titles_and_footnotes_from_df.html">titles_and_footnotes_from_df()</a></code> call into your custom reader.</li>
 </ol>
 <p>With this function now available, let’s see what the function returns.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit">
-<span class="fu">example_custom_reader</span><span class="op">(</span><span class="st">'titles.xlsx'</span>, table_number <span class="op">=</span> <span class="st">'14-2.01'</span><span class="op">)</span>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">example_custom_reader</span><span class="op">(</span><span class="st">'titles.xlsx'</span>, table_number <span class="op">=</span> <span class="st">'14-2.01'</span><span class="op">)</span>
 <span class="co">#&gt; # A tibble: 7 x 7</span>
 <span class="co">#&gt;   index type    text1                          text2          align bold  italic</span>
 <span class="co">#&gt;   &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;                          &lt;chr&gt;          &lt;chr&gt; &lt;lgl&gt; &lt;lgl&gt; </span>
@@ -403,7 +403,7 @@
 <span class="co">#&gt; 4     4 title   Summary of Demographic and Ba… &lt;NA&gt;           cent… TRUE  TRUE  </span>
 <span class="co">#&gt; 5     1 footno… [1] P-values are results of A… &lt;NA&gt;           left  FALSE TRUE  </span>
 <span class="co">#&gt; 6     2 footno… NOTE: Duration of disease is … &lt;NA&gt;           left  FALSE TRUE  </span>
-<span class="co">#&gt; 7     3 footno… FILE_PATH: Source: %s          DATE_FORMAT: … split FALSE TRUE</span></pre></div>
+<span class="co">#&gt; 7     3 footno… FILE_PATH: Source: %s          DATE_FORMAT: … split FALSE TRUE</span></code></pre></div>
 <p>Here can see the data frame that the function processes and returns. In this example, the data processing was very simple - but in a more advanced case this function could read from multiple sheets, merge in default titles and footnotes, read from different data sources - whatever suits your process.</p>
 </div>
 <div id="putting-it-together" class="section level2">
@@ -586,17 +586,17 @@
 <td style="vertical-align: top; text-align: left; white-space: normal; padding: 0pt 6pt 0pt 6pt; font-weight: normal;"></td>
 </tr>
 </table>
-<p><em>Note: The data here comes from the CDISC Pilot, which you can read about <a href="https://www.cdisc.org/sdtmadam-pilot-project">here</a>. Also, see our replication of the tables from this CDISC pilot in our <a href="https://github.com/atorus-research/CDISC_pilot_replication">Github repository</a>.</em></p>
+<p><em>Note: The data here comes from the CDISC Pilot, which you can read about <a href="https://bitbucket.cdisc.org/projects/CED/repos/sdtm-adam-pilot-project/raw/sdtmadampilotprojectreport.pdf?at=refs%2Fheads%2Fmaster">here</a>. Also, see our replication of the tables from this CDISC pilot in our <a href="https://github.com/atorus-research/CDISC_pilot_replication">Github repository</a>.</em></p>
 <p>Here’s how you would go about creating your <code>rtf_doc</code> object. (For more information about the functions being used here, see our <a href="https://atorus-research.github.io/advanced_usage.html">advanced usage</a> vignette)</p>
-<div class="sourceCode" id="cb3"><pre class="downlit">
-<span class="va">doc</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/rtf_doc.html">rtf_doc</a></span><span class="op">(</span><span class="va">ht</span>, header_rows <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/titles_and_footnotes_from_df.html">titles_and_footnotes_from_df</a></span><span class="op">(</span>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">doc</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/rtf_doc.html">rtf_doc</a></span><span class="op">(</span><span class="va">ht</span>, header_rows <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/titles_and_footnotes_from_df.html">titles_and_footnotes_from_df</a></span><span class="op">(</span>
   from.file<span class="op">=</span><span class="st">'../data/titles.xlsx'</span>,
   reader<span class="op">=</span><span class="va">example_custom_reader</span>,
   table_number<span class="op">=</span><span class="st">'14-4.01'</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/column_header_buffer.html">set_column_header_buffer</a></span><span class="op">(</span>top<span class="op">=</span><span class="fl">1</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/font_size.html">set_font_size</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span>
 
-<span class="fu"><a href="../reference/write_rtf.html">write_rtf</a></span><span class="op">(</span><span class="va">doc</span>, file<span class="op">=</span><span class="st">"table16.rtf"</span><span class="op">)</span></pre></div>
+<span class="fu"><a href="../reference/write_rtf.html">write_rtf</a></span><span class="op">(</span><span class="va">doc</span>, file<span class="op">=</span><span class="st">"table16.rtf"</span><span class="op">)</span></code></pre></div>
 <p>Within the <code><a href="../reference/titles_and_footnotes_from_df.html">titles_and_footnotes_from_df()</a></code> function you can see the parameters used:</p>
 <ul>
 <li>
