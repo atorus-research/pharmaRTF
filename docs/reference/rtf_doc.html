@@ -72,6 +72,16 @@ for a more complete view of intended usage." />
 <![endif]-->
 
 
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-165685385-3"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-165685385-3');
+</script>
+
 
   </head>
 
@@ -89,7 +99,7 @@ for a more complete view of intended usage." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pharmaRTF</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.2</span>
       </span>
     </div>
 
@@ -97,7 +107,7 @@ for a more complete view of intended usage." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -134,7 +144,7 @@ for a more complete view of intended usage." />
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/atorus-research/pharmaRTF/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -250,11 +260,12 @@ not overridden by <code>hf_line</code> or table properties.</p><ul>
 <span class='no'>ht</span> <span class='kw'>%&gt;%</span>
   <span class='kw pkg'>huxtable</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/huxtable/man/bold.html'>set_bold</a></span>(<span class='fl'>1</span>, <span class='fl'>1</span>:<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>ncol</a></span>(<span class='no'>ht</span>), <span class='fl'>TRUE</span>) <span class='kw'>%&gt;%</span>
   <span class='kw pkg'>huxtable</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/huxtable/man/escape_contents.html'>set_escape_contents</a></span>(<span class='fl'>TRUE</span>) <span class='kw'>%&gt;%</span>
-  <span class='kw pkg'>huxtable</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/huxtable/man/col_width.html'>set_col_width</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0.25</span>, <span class='fl'>0.75</span>))</div><div class='output co'>#&gt;   <span style='font-weight: bold;'>   1</span><span>   </span><span style='font-weight: bold;'>a          </span><span>  
-#&gt;      2   b            
-#&gt;      3   c            
-#&gt;      4   d            
-#&gt;      5   e            
+  <span class='kw pkg'>huxtable</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/huxtable/man/col_width.html'>set_col_width</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0.25</span>, <span class='fl'>0.75</span>))</div><div class='output co'>#&gt;                              <span style='font-weight: bold;'>column1</span><span>   </span><span style='font-weight: bold;'>column2    </span><span>  
+#&gt;                                    1   a            
+#&gt;                                    2   b            
+#&gt;                                    3   c            
+#&gt;                                    4   d            
+#&gt;                                    5   e            
 #&gt; 
 #&gt; Column names: column1, column2</div><div class='input'>
 <span class='no'>rtf</span> <span class='kw'>&lt;-</span> <span class='fu'>rtf_doc</span>(<span class='no'>ht</span>, <span class='kw'>titles</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='fu'><a href='hf_line.html'>hf_line</a></span>(<span class='st'>"My Header"</span>)))

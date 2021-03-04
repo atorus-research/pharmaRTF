@@ -68,6 +68,16 @@ headers, these rows are repeated on each page.  Can be set to 0 to disable repea
 <![endif]-->
 
 
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-165685385-3"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-165685385-3');
+</script>
+
 
   </head>
 
@@ -85,7 +95,7 @@ headers, these rows are repeated on each page.  Can be set to 0 to disable repea
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pharmaRTF</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.2</span>
       </span>
     </div>
 
@@ -93,7 +103,7 @@ headers, these rows are repeated on each page.  Can be set to 0 to disable repea
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -130,7 +140,7 @@ headers, these rows are repeated on each page.  Can be set to 0 to disable repea
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/atorus-research/pharmaRTF/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -197,11 +207,12 @@ headers, these rows are repeated on each page.  Can be set to 0 to disable repea
 )
 <span class='no'>rtf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rtf_doc.html'>rtf_doc</a></span>(<span class='no'>ht</span>, <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='fu'><a href='hf_line.html'>hf_line</a></span>(<span class='st'>"aTitle"</span>)))
 
-<span class='fu'>header_rows</span>(<span class='no'>rtf</span>)</div><div class='output co'>#&gt; [1] 1</div><div class='input'><span class='co'># This is a wrapper for header_rows(x$table)</span>
+<span class='fu'>header_rows</span>(<span class='no'>rtf</span>)</div><div class='output co'>#&gt; <span class='error'>Error in UseMethod("header_rows"): no applicable method for 'header_rows' applied to an object of class "rtf_doc"</span></div><div class='input'><span class='co'># This is a wrapper for header_rows(x$table)</span>
 <span class='fu'>header_rows</span>(<span class='no'>rtf</span>$<span class='no'>table</span>)</div><div class='output co'>#&gt; [1] 1</div><div class='input'><span class='co'># Both of these return 1, the default</span>
 
-<span class='fu'>header_rows</span>(<span class='no'>rtf</span>$<span class='no'>table</span>) <span class='kw'>&lt;-</span> <span class='fl'>0</span>
-<span class='co'># Sets header_rows to 0</span></div></pre>
+<span class='fu'>header_rows</span>(<span class='no'>rtf</span>$<span class='no'>table</span>) <span class='kw'>&lt;-</span> <span class='fl'>0</span></div><div class='output co'>#&gt; <span class='error'>Error in `header_rows&lt;-.huxtable`(`*tmp*`, value = 0): .Primitive("is.logical")(value) is not TRUE</span></div><div class='input'># Sets header_rows to 0
+
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
