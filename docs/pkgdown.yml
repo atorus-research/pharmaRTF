@@ -1,4 +1,4 @@
-pandoc: 2.7.3
+pandoc: 2.11.2
 pkgdown: 1.5.1
 pkgdown_sha: ~
 articles:
@@ -9,5 +9,5 @@ articles:
   huxtable_tips: huxtable_tips.html
   pharmaRTF: pharmaRTF.html
   tf_from_file: tf_from_file.html
-last_built: 2020-10-13T20:50Z
+last_built: 2021-03-04T15:52Z
 

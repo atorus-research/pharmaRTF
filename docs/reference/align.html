@@ -67,6 +67,16 @@ be aligned on the left and the second on the right." />
 <![endif]-->
 
 
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-165685385-3"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-165685385-3');
+</script>
+
 
   </head>
 
@@ -84,7 +94,7 @@ be aligned on the left and the second on the right." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pharmaRTF</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.2</span>
       </span>
     </div>
 
@@ -92,7 +102,7 @@ be aligned on the left and the second on the right." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -129,7 +139,7 @@ be aligned on the left and the second on the right." />
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/atorus-research/pharmaRTF/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -192,8 +202,8 @@ be aligned on the left and the second on the right.</p>
 #&gt; <span class='message'>Attaching package: ‘huxtable’</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from ‘package:pharmaRTF’:</span>
 #&gt; <span class='message'></span>
 #&gt; <span class='message'>    align, align&lt;-, bold, bold&lt;-, font, font_size, font_size&lt;-, font&lt;-,</span>
-#&gt; <span class='message'>    italic, italic&lt;-, set_align, set_bold, set_font, set_font_size,</span>
-#&gt; <span class='message'>    set_italic</span></div><div class='input'><span class='no'>ht</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/huxtable/man/huxtable.html'>huxtable</a></span>(
+#&gt; <span class='message'>    header_rows, header_rows&lt;-, italic, italic&lt;-, set_align, set_bold,</span>
+#&gt; <span class='message'>    set_font, set_font_size, set_header_rows, set_italic</span></div><div class='input'><span class='no'>ht</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/huxtable/man/huxtable.html'>huxtable</a></span>(
   <span class='kw'>column1</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fl'>5</span>,
   <span class='kw'>column2</span> <span class='kw'>=</span> <span class='no'>letters</span>[<span class='fl'>1</span>:<span class='fl'>5</span>]
 )
