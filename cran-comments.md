@@ -1,6 +1,6 @@
-## pharmaRTF 0.1.2
+## pharmaRTF 0.1.3
 
-No functionality changes. Just increment version number for new release of huxtable.
+No functionality changes. Update test to not use matrix that is incompatible with development vesion of R.
 
 ## Test environments
 * local Ubuntu 18.04.4 LTS, R 3.6.2

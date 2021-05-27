@@ -1,3 +1,7 @@
+# pharmaRTF 0.1.3
+
+No functionality changes. Increment version number with updates for development version of R.
+
 # pharmaRTF 0.1.2
 
 No functionality changes. Increment version with new release of Huxtable
