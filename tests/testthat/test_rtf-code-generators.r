@@ -150,15 +150,15 @@ test_that("write_rtf generates expected errors", {
 })
 
 test_that("write_rtf writes an expected rtf_file - 1", {
-  mat <- matrix(
-    c(1:5, letters[1:5], LETTERS[1:5],
-    6:10, letters[6:10],LETTERS[6:10]),
-    byrow = TRUE,
-    nrow=5,
-    ncol = 5
+  df <- data.frame(
+    "1" = 1:5,
+    "2" = letters[1:5],
+    "3" = LETTERS[1:5],
+    "4" = 6:10,
+    "5" = letters[6:10]
   )
   ht <- huxtable(
-    mat
+    df
   )
   ht <- huxtable::set_font(ht, 1, 1:5, "Times")
   huxtable::font_size(ht)[,2] <- 15
