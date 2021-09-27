@@ -1,7 +1,7 @@
 Package: pharmaRTF
 Type: Package
 Title: Enhanced RTF Wrapper for Use with Existing Table Packages
-Version: 0.1.3
+Version: 0.1.4
 Authors@R: c(
     person(family = "Miller", given = "Eli", email = "eli.miller@atorusresearch.com", role = "aut", comment = c(ORCID = "0000-0002-2127-9456")), 
     person(family = "Tarasiewicz", given = "Ashley", email = "Ashley.Tarasiewicz@atorusresearch.com", role = "aut"),
