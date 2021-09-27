@@ -44,7 +44,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pharmaRTF</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.4</span>
       </span>
     </div>
 
@@ -109,7 +109,7 @@
       <h1 data-toc-skip>Huxtable Tips</h1>
                         <h4 class="author">Mike Stackhouse</h4>
             
-            <h4 class="date">2021-05-27</h4>
+            <h4 class="date">2021-09-27</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/atorus-research/pharmaRTF/blob/master/vignettes/huxtable_tips.Rmd"><code>vignettes/huxtable_tips.Rmd</code></a></small>
       <div class="hidden name"><code>huxtable_tips.Rmd</code></div>
@@ -595,8 +595,7 @@
 <p>Another very useful feature of huxtable is the ability to specify and merge cells. This is done simply by selecting the rows and columns you’d like to merge of the huxtable object. The top left cell’s value will take on the value of the merged cells.</p>
 <p>To tie this in with a practical example, think of spanning headers. As mentioned, since column headers are just rows of the huxtable object, we can create spanning headers by creating 2 rows of column headers and merging cells.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R">
-<span class="co"># Create the column headers data frame</span>
+<code class="sourceCode R"><span class="co"># Create the column headers data frame</span>
 <span class="va">column_headers</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>
   Species <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">""</span>, <span class="st">"Species of Flower"</span><span class="op">)</span>,
   Sepal.Length <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Sepal"</span>, <span class="st">"Length"</span><span class="op">)</span>,
@@ -788,8 +787,7 @@
 </tr>
 </table>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R">
-<span class="va">doc</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/rtf_doc.html">rtf_doc</a></span><span class="op">(</span><span class="va">ht</span>, header_rows <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">doc</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/rtf_doc.html">rtf_doc</a></span><span class="op">(</span><span class="va">ht</span>, header_rows <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>
 <span class="fu"><a href="../reference/write_rtf.html">write_rtf</a></span><span class="op">(</span><span class="va">doc</span>, file<span class="op">=</span><span class="st">'table4.rtf'</span><span class="op">)</span></code></pre></div>
 <p>And within the RTF output, the lines will display properly.</p>
 <p><img src="table4_img1.png" width="800px"></p>

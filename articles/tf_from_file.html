@@ -44,7 +44,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pharmaRTF</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.4</span>
       </span>
     </div>
 
@@ -109,7 +109,7 @@
       <h1 data-toc-skip>Sourcing Titles and Footnotes From External Files</h1>
                         <h4 class="author">Mike Stackhouse</h4>
             
-            <h4 class="date">2021-05-27</h4>
+            <h4 class="date">2021-09-27</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/atorus-research/pharmaRTF/blob/master/vignettes/tf_from_file.Rmd"><code>vignettes/tf_from_file.Rmd</code></a></small>
       <div class="hidden name"><code>tf_from_file.Rmd</code></div>
@@ -394,16 +394,16 @@
 <p>With this function now available, let’s see what the function returns.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">example_custom_reader</span><span class="op">(</span><span class="st">'titles.xlsx'</span>, table_number <span class="op">=</span> <span class="st">'14-2.01'</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 7 x 7</span>
-<span class="co">#&gt;   index type    text1                          text2          align bold  italic</span>
-<span class="co">#&gt;   &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;                          &lt;chr&gt;          &lt;chr&gt; &lt;lgl&gt; &lt;lgl&gt; </span>
-<span class="co">#&gt; 1     1 title   Protocol: CDISCPILOT01         PAGE_FORMAT: … split TRUE  TRUE  </span>
-<span class="co">#&gt; 2     2 title   Population: Intent-to-Treat    &lt;NA&gt;           left  TRUE  TRUE  </span>
-<span class="co">#&gt; 3     3 title   Table 14-2.01                  &lt;NA&gt;           cent… TRUE  TRUE  </span>
-<span class="co">#&gt; 4     4 title   Summary of Demographic and Ba… &lt;NA&gt;           cent… TRUE  TRUE  </span>
-<span class="co">#&gt; 5     1 footno… [1] P-values are results of A… &lt;NA&gt;           left  FALSE TRUE  </span>
-<span class="co">#&gt; 6     2 footno… NOTE: Duration of disease is … &lt;NA&gt;           left  FALSE TRUE  </span>
-<span class="co">#&gt; 7     3 footno… FILE_PATH: Source: %s          DATE_FORMAT: … split FALSE TRUE</span></code></pre></div>
+<span class="co">#&gt; # A tibble: 7 × 7</span>
+<span class="co">#&gt;   index type     text1                         text2          align bold  italic</span>
+<span class="co">#&gt;   &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;                         &lt;chr&gt;          &lt;chr&gt; &lt;lgl&gt; &lt;lgl&gt; </span>
+<span class="co">#&gt; 1     1 title    Protocol: CDISCPILOT01        PAGE_FORMAT: … split TRUE  TRUE  </span>
+<span class="co">#&gt; 2     2 title    Population: Intent-to-Treat   &lt;NA&gt;           left  TRUE  TRUE  </span>
+<span class="co">#&gt; 3     3 title    Table 14-2.01                 &lt;NA&gt;           cent… TRUE  TRUE  </span>
+<span class="co">#&gt; 4     4 title    Summary of Demographic and B… &lt;NA&gt;           cent… TRUE  TRUE  </span>
+<span class="co">#&gt; 5     1 footnote [1] P-values are results of … &lt;NA&gt;           left  FALSE TRUE  </span>
+<span class="co">#&gt; 6     2 footnote NOTE: Duration of disease is… &lt;NA&gt;           left  FALSE TRUE  </span>
+<span class="co">#&gt; 7     3 footnote FILE_PATH: Source: %s         DATE_FORMAT: … split FALSE TRUE</span></code></pre></div>
 <p>Here can see the data frame that the function processes and returns. In this example, the data processing was very simple - but in a more advanced case this function could read from multiple sheets, merge in default titles and footnotes, read from different data sources - whatever suits your process.</p>
 </div>
 <div id="putting-it-together" class="section level2">
