@@ -11,7 +11,7 @@
 #' @param reader A function to import the information from a file supplied.
 #' @param ... Additional arguments passed to the reader.
 #'
-#' @return A data.frame where each row reemiller9presents a header or footnote object
+#' @return A data.frame where each row represents a header or footnote object
 #'
 #' @noRd
 #'
