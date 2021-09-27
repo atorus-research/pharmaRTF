@@ -1,3 +1,7 @@
+# pharmaRTF 0.1.4
+
+No functionality changes. Bug fix for tibble 3.1.0 update identified in https://github.com/atorus-research/pharmaRTF/issues/6
+
 # pharmaRTF 0.1.3
 
 No functionality changes. Increment version number with updates for development version of R.
