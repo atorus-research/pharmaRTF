@@ -16,6 +16,7 @@ Description: Enhanced RTF wrapper written in R for use with existing R tables
     making the document landscape, and controlling properties such as margins.
 Depends: R (>= 3.5.0)
 License: MIT + file LICENSE
+URL: https://atorus-research.github.io/pharmaRTF/
 BugReports: https://github.com/atorus-research/pharmaRTF/issues
 Encoding: UTF-8
 LazyData: true
