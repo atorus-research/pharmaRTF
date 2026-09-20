@@ -1,6 +1,8 @@
-## pharmaRTF 0.1.4
+## pharmaRTF 0.1.5 Submission 2
 
-No functionality changes. Update to fix bug with new version of tibble.
+Removed old URLs
+
+No functionality changes. Update to fix bug with new version of huxtable.
 
 ## Test environments
 * local Ubuntu 18.04.4 LTS, R 3.6.2

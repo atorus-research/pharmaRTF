@@ -36,5 +36,5 @@ Suggests:
     kableExtra (>= 1.1.0),
     plyr (>= 1.8.5),
     tidyverse (>= 1.3.0)
-RoxygenNote: 7.1.1
+RoxygenNote: 7.3.2
 VignetteBuilder: knitr
