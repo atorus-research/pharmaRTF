@@ -59,6 +59,10 @@ get_table_body.huxtable <- function(doc) {
   start_row <- header_rows(doc$table) + 1
   body <- doc$table[start_row:nrow(doc$table), ]
 
+  # The body is written once and must be able to flow across pages. Column
+  # headers are repeated by pharmaRTF, so they stay unbreakable.
+  body <- make_breakable(body)
+
   # Turn off cell padding if specified
   out <- huxtable::to_rtf(body, fc_tables = huxtable::rtf_fc_tables(doc$table, extra_fonts = c("Times", font(doc))))
   if (ignore_cell_padding(doc)) {
@@ -73,3 +77,25 @@ get_table_body.huxtable <- function(doc) {
 #   data <- gt:::build_data(doc$table, context='rtf')
 #   gt:::create_body_component_r(data = data)
 # }
+
+#' Mark a huxtable as breakable across pages
+#'
+#' huxtable 6.0.0 added a table level \code{breakable} property. When it is
+#' FALSE (the default) \code{huxtable::to_rtf()} writes \code{\\trkeepfollow} on
+#' every row but the last, which glues the whole table onto a single page. The
+#' table body is written once and must be allowed to break; column headers are
+#' repeated on each page by pharmaRTF and are correctly left unbreakable.
+#'
+#' On huxtable 5.x the property does not exist and this is a no-op.
+#'
+#' @param ht A \code{huxtable} object.
+#'
+#' @return The \code{huxtable}, marked breakable when the installed huxtable
+#'   supports it.
+#' @noRd
+make_breakable <- function(ht) {
+  if (packageVersion("huxtable") >= "6.0.0") {
+    huxtable::breakable(ht) <- TRUE
+  }
+  ht
+}

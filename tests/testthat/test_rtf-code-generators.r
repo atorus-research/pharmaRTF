@@ -29,7 +29,26 @@ test_that("hf_string orderes lines properly", {
   pharmaRTF::index(rtf$footnotes[[2]]) <- 1
   pharmaRTF::index(rtf$footnotes[[3]]) <- 2
 
-  expect_equal(hf_string(rtf, "titles"), "{\\header\n\\qc\n{\\f1\\fs24 rtf_doc Title 3}\n\\par\\qc\n{\\f1\\fs24 rtf_doc Title 2}\n\\par\\qc\n{\\f1\\fs24 rtf_doc Title 1}\n\\par\n\n{\n\\trowd\n\\trqc \\clbrdrt\\clbrdrl\\clbrdrb\\clbrdrr\\clvertalt\\clNoWrap\\clpadfl0\\clpadl80 \\clpadft0\\clpadt80 \\clpadfb0\\clpadb80 \\clpadfr0\\clpadr80 \\cellx2160 \n\\clbrdrt\\clbrdrl\\clbrdrb\\clbrdrr\\clvertalt\\clNoWrap\\clpadfl0\\clpadl80 \\clpadft0\\clpadt80 \\clpadfb0\\clpadb80 \\clpadfr0\\clpadr80 \\cellx4320 \\pard\\intbl\\ql{\\fs24 {Header1}}\\cell\n\\pard\\intbl\\ql{\\fs24 {Header2}}\\cell\n\\row\n}\n\n}")
+  titles_string <- hf_string(rtf, "titles")
+
+  # The column header block embedded in the titles is produced by
+  # huxtable::to_rtf() and its exact encoding changes between huxtable versions,
+  # so assert on the part pharmaRTF generates rather than on huxtable internals.
+  expect_equal(
+    titles_string,
+    paste0(
+      "{\\header\n\\qc\n{\\f1\\fs24 rtf_doc Title 3}",
+      "\n\\par\\qc\n{\\f1\\fs24 rtf_doc Title 2}",
+      "\n\\par\\qc\n{\\f1\\fs24 rtf_doc Title 1}\n\\par\n",
+      get_column_headers(rtf),
+      "\n}"
+    )
+  )
+
+  # Titles are ordered by their index, not the order they were supplied in
+  title_positions <- str_locate(titles_string, c("Title 3", "Title 2", "Title 1"))[, "start"]
+  expect_equal(title_positions, sort(title_positions))
+
   expect_equal(hf_string(rtf, "footnotes"), "{\\footer\n\\qc\n{\\f1\\fs24 rtf_doc Footnote 2}\n\\par\\qc\n{\\f1\\fs24 rtf_doc Footnote 3}\n\\par\\qc\n{\\f1\\fs24 rtf_doc Footnote 1}\\par\n}")
 })
 
