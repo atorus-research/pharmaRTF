@@ -111,14 +111,25 @@ Here can see the data frame that the function processes and returns. In this exa
 Now with an understanding of how a custom reader function works, let's tie it all together. Let's assume that our table has been programmed, and that the huxtable table is ready in our session (see the [huxtable tips vignette](https://atorus-research.github.io/pharmaRTF/articles/huxtable_tips.html) to for tips on how to prepare your table). The huxtable table is our session looks like this: 
 
 ```{r prep_huxtable, echo=FALSE, results='hide'}
-huxtable::as_hux(load('t14_4_01.Rdata'))
+# load() brings in the object `ht`. It was serialized under an older huxtable
+# and so is missing table level properties added since (`breakable`, for
+# example), which newer huxtable versions error on. Rebuild it under the
+# installed huxtable and carry the saved properties back over, leaving any
+# newer property at its current default.
+load('t14_4_01.Rdata')
+saved <- ht
+ht <- huxtable::as_hux(as.data.frame(saved), add_colnames = FALSE)
+for (prop in setdiff(names(attributes(saved)), c('class', 'names', 'row.names'))) {
+  attr(ht, prop) <- attr(saved, prop)
+}
+rm(saved, prop)
 ```
 
 ```{r show_huxtable, echo=FALSE}
 ht
 ```
 
-_Note: The data here comes from the CDISC Pilot, which you can read about [here](https://bitbucket.cdisc.org/projects/CED/repos/sdtm-adam-pilot-project/browse). Also, see our replication of the tables from this CDISC pilot in our [Github repository](https://github.com/atorus-research/CDISC_pilot_replication)._
+_Note: See our replication of the tables from this CDISC pilot in our [Github repository](https://github.com/atorus-research/CDISC_pilot_replication)._
 
 Here's how you would go about creating your `rtf_doc` object. (For more information about the functions being used here, see our [advanced usage](https://atorus-research.github.io/advanced_usage.html) vignette)
 

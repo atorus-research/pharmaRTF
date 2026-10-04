@@ -1004,10 +1004,6 @@ set_header_rows <- function(x, value) UseMethod('header_rows<-')
 #' RTF is rendered inside Word. This effectively closes the gap between rows,
 #' which may be a desirable appearance in some outputs.
 #'
-#' More information on these RTF settings can be found
-#' \href{http://www.biblioscape.com/rtf15_spec.htm}{here}.
-#'
-#'
 #' @return For \code{ignore_cell_padding()}, the ignore_cell_padding attribute
 #'   of the supplied \code{rtf_doc} object. For
 #'   \code{`ignore_cell_padding<-`()} and \code{set_ignore_cell_padding()}, the

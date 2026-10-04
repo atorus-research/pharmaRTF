@@ -50,9 +50,6 @@ in the RTF document to 0 instead of 3. By using Word 97 style cell padding,
 the minimum amount of space is closer than using the 0 twips setting when the
 RTF is rendered inside Word. This effectively closes the gap between rows,
 which may be a desirable appearance in some outputs.
-
-More information on these RTF settings can be found
-\href{http://www.biblioscape.com/rtf15_spec.htm}{here}.
 }
 \examples{
 library(huxtable)

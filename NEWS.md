@@ -1,3 +1,20 @@
+# pharmaRTF 0.1.5
+
+No user facing API changes. Compatibility fixes for huxtable 6.0.0, which
+introduced a table level `breakable` property.
+
+### Bug Fixes
+- The table body is now explicitly marked breakable before it is handed to
+  `huxtable::to_rtf()`. Under huxtable 6 the default (`breakable = FALSE`)
+  emitted `\trkeepfollow` on every body row, which forced a multi-page table
+  onto a single page. Column headers remain unbreakable, which is correct since
+  pharmaRTF repeats them on each page.
+- The `tf_from_file` vignette rebuilds its stored example huxtable under the
+  installed huxtable version, rather than using an object serialized before
+  huxtable's newer table level properties existed.
+- `test_rtf-code-generators.r` no longer asserts on huxtable's internal RTF
+  encoding when checking that titles are ordered correctly.
+
 # pharmaRTF 0.1.4
 
 No functionality changes. Bug fix for tibble 3.1.0 update identified in https://github.com/atorus-research/pharmaRTF/issues/6
